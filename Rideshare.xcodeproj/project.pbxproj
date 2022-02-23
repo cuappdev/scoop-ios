@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		64556347971A3C1A904765FA /* Pods_Rideshare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B214B94B4BFFCDCBB71CFD2 /* Pods_Rideshare.framework */; };
+		C8025CC227C6F5D900130B19 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8025CC127C6F5D900130B19 /* HomeViewController.swift */; };
 		C81E808827A33042009CEC49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81E808727A33042009CEC49 /* AppDelegate.swift */; };
 		C81E808A27A33042009CEC49 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81E808927A33042009CEC49 /* SceneDelegate.swift */; };
 		C81E808C27A33042009CEC49 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81E808B27A33042009CEC49 /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 		053050DF37C2CACCD22D149E /* Pods-Rideshare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rideshare.release.xcconfig"; path = "Target Support Files/Pods-Rideshare/Pods-Rideshare.release.xcconfig"; sourceTree = "<group>"; };
 		2A8098FBCE80141C8E4E1CFD /* Pods-Rideshare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rideshare.debug.xcconfig"; path = "Target Support Files/Pods-Rideshare/Pods-Rideshare.debug.xcconfig"; sourceTree = "<group>"; };
 		8B214B94B4BFFCDCBB71CFD2 /* Pods_Rideshare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rideshare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8025CC127C6F5D900130B19 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C81E808427A33042009CEC49 /* Rideshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rideshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81E808727A33042009CEC49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C81E808927A33042009CEC49 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				C81E808B27A33042009CEC49 /* ViewController.swift */,
+				C8025CC127C6F5D900130B19 /* HomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				C81E808C27A33042009CEC49 /* ViewController.swift in Sources */,
 				C81E808827A33042009CEC49 /* AppDelegate.swift in Sources */,
 				C8771DD527B4740500FACD97 /* Ride.swift in Sources */,
+				C8025CC227C6F5D900130B19 /* HomeViewController.swift in Sources */,
 				C81E808A27A33042009CEC49 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
