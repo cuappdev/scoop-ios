@@ -1,13 +1,13 @@
 //
-//  RideshareUITests.swift
-//  RideshareUITests
+//  ScoopUITests.swift
+//  ScoopUITests
 //
-//  Created by Reade Plunkett on 1/27/22.
+//  Created by Reade Plunkett on 3/3/22.
 //
 
 import XCTest
 
-class RideshareUITests: XCTestCase {
+class ScoopUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

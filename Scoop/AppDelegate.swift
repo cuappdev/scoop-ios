@@ -1,26 +1,20 @@
 //
 //  AppDelegate.swift
-//  Rideshare
+//  Scoop
 //
 //  Created by Reade Plunkett on 1/27/22.
 //
 
 import UIKit
 import GoogleSignIn
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // Restores user's past login if they have one.
-        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-            if error != nil || user == nil {
-              // Show the app's signed-out state.
-            } else {
-              // Show the app's signed-in state.
-            }
-          }
+        FirebaseApp.configure()
         
         return true
     }
