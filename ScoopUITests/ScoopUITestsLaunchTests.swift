@@ -1,13 +1,13 @@
 //
-//  RideshareUITestsLaunchTests.swift
-//  RideshareUITests
+//  ScoopUITestsLaunchTests.swift
+//  ScoopUITests
 //
-//  Created by Reade Plunkett on 1/27/22.
+//  Created by Reade Plunkett on 3/3/22.
 //
 
 import XCTest
 
-class RideshareUITestsLaunchTests: XCTestCase {
+class ScoopUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

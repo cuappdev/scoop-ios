@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Rideshare
+//  Scoop
 //
 //  Created by Reade Plunkett on 1/27/22.
 //
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         label.font = .systemFont(ofSize: 36, weight: .semibold)
         label.textColor = .systemRed
         label.textAlignment = .center
-        label.text = "Welcome to Rideshare!"
+        label.text = "Welcome to Scoop!"
         label.numberOfLines = 0
         view.addSubview(label)
         

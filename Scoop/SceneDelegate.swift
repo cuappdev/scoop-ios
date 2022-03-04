@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  Rideshare
+//  Scoop
 //
 //  Created by Reade Plunkett on 1/27/22.
 //
@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         
         restoreSignIn()
+        
     }
     
     private func restoreSignIn() {

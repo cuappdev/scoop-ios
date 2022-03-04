@@ -4,18 +4,58 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
-  - GoogleSignIn (6.0.2):
+  - FirebaseAuth (8.12.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GTMSessionFetcher/Core (~> 1.5)
+  - FirebaseCore (8.12.1):
+    - FirebaseCoreDiagnostics (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
+  - FirebaseCoreDiagnostics (8.12.0):
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
+    - nanopb (~> 2.30908.0)
+  - GoogleDataTransport (9.1.2):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleSignIn (6.1.0):
     - AppAuth (~> 1.4)
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.7.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.7.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.7.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.7.0)"
+  - GoogleUtilities/Reachability (7.7.0):
+    - GoogleUtilities/Logger
   - GTMAppAuth (1.2.2):
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
+  - PromisesObjC (2.0.0)
   - SnapKit (5.0.1)
   - SwiftLint (0.46.2)
 
 DEPENDENCIES:
+  - FirebaseAuth
   - GoogleSignIn
   - SnapKit
   - SwiftLint
@@ -23,20 +63,34 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - FirebaseAuth
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - GoogleDataTransport
     - GoogleSignIn
+    - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - nanopb
+    - PromisesObjC
     - SnapKit
     - SwiftLint
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
-  GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
+  FirebaseAuth: 5250d7bdba35e57cc34ec7ddc525f82b2757f2a0
+  FirebaseCore: 8138de860a90ca7eec5e324da5788fb0ebf1d93c
+  FirebaseCoreDiagnostics: 3b40dfadef5b90433a60ae01f01e90fe87aa76aa
+  GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleSignIn: c90b5bec45e780f54c6a8e1e3c182a86e3dda69d
+  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
 
-PODFILE CHECKSUM: 1f2a809d0d788d954679857554eb1fef5ee0aeeb
+PODFILE CHECKSUM: a4c49f70ad97d3ac9fd81a9d4bf7623bf0bdb05b
 
 COCOAPODS: 1.11.2
