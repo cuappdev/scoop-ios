@@ -2,8 +2,8 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-Rideshare/Supporting/GoogleService-Info.plist
-Rideshare/Supporting/Keys.plist
+Scoop/Supporting/GoogleService-Info.plist
+Scoop/Supporting/Keys.plist
 
 *.DS_Store
 
