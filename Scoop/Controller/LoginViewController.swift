@@ -9,11 +9,11 @@ import SnapKit
 import UIKit
 import GoogleSignIn
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
     
     private let label = UILabel()
     private let signInButton = GIDSignInButton()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
                 return
             }
             
-            let homeVC = HomeViewController()
+            let homeVC = HomeViewController() // TODO: Show the tab bar controller
             homeVC.modalPresentationStyle = .fullScreen
             self.present(homeVC, animated: true)
             

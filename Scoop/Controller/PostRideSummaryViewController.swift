@@ -1,0 +1,174 @@
+//
+//  PostRideSummaryViewController.swift
+//  Scoop
+//
+//  Created by Reade Plunkett on 3/9/22.
+//
+
+import CoreLocation
+import MapKit
+import UIKit
+
+class PostRideSummaryViewController: UIViewController {
+    
+    // UI Components
+    private let containerView = UIView()
+    private let postButton = UIButton()
+    
+    // MapKit
+    private let locationManager = CLLocationManager()
+    private let mapView = MKMapView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        setupMapView()
+        setupContainerView()
+        setupPostButton()
+    }
+    
+    private func setupMapView() {
+        view.addSubview(mapView)
+        
+        mapView.snp.makeConstraints { make in
+            make.leading.top.trailing.equalToSuperview()
+            make.bottom.equalTo(view.snp.centerY)
+        }
+        
+        mapView.delegate = self
+        mapView.mapType = .standard
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
+        
+        if let coor = mapView.userLocation.location?.coordinate {
+            mapView.setCenter(coor, animated: true)
+        }
+    }
+    
+    private func setupContainerView() {
+        containerView.backgroundColor = .white
+        containerView.layer.cornerRadius = 24
+        view.addSubview(containerView)
+        
+        containerView.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.top.equalTo(mapView.snp.bottom).offset(-20)
+        }
+        
+        let scrollView = UIScrollView()
+        scrollView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 120, right: 0)
+        containerView.addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        let detailsStackView = UIStackView()
+        detailsStackView.axis = .vertical
+        detailsStackView.distribution = .fill
+        detailsStackView.spacing = 20
+        detailsStackView.alignment = .leading
+        scrollView.addSubview(detailsStackView)
+        
+        detailsStackView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view).inset(20)
+            make.top.bottom.equalToSuperview()
+        }
+        
+        let rideTitleLabel = UILabel()
+        rideTitleLabel.font = .systemFont(ofSize: 24, weight: .semibold)
+        rideTitleLabel.text = "Trip to Connecticut"
+        rideTitleLabel.textColor = .black
+        rideTitleLabel.numberOfLines = 2
+        rideTitleLabel.adjustsFontSizeToFitWidth = true
+        detailsStackView.addArrangedSubview(rideTitleLabel)
+        detailsStackView.setCustomSpacing(10, after: rideTitleLabel)
+        
+        let organizerLabel = UILabel()
+        organizerLabel.font = .systemFont(ofSize: 12)
+        organizerLabel.text = "Organizer: @reade"
+        organizerLabel.textColor = .black
+        organizerLabel.numberOfLines = 1
+        organizerLabel.adjustsFontSizeToFitWidth = true
+        detailsStackView.addArrangedSubview(organizerLabel)
+        
+        let drivingSection = SummaryInfoSection(title: "Driving", image: UIImage(systemName: "car", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        detailsStackView.addArrangedSubview(drivingSection)
+        
+        let startingLocationSection = SummaryInfoSection(title: "Ithaca, NY", image: UIImage(systemName: "paperplane", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        detailsStackView.addArrangedSubview(startingLocationSection)
+        
+        let endingLocationSection = SummaryInfoSection(title: "Darien, CT", image: UIImage(systemName: "mappin", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        detailsStackView.addArrangedSubview(endingLocationSection)
+        
+        let dateSection = SummaryInfoSection(title: "3/17/22 @ 2:15 pm", image: UIImage(systemName: "calendar.badge.clock", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        detailsStackView.addArrangedSubview(dateSection)
+        
+        let peopleSection = SummaryInfoSection(title: "2 to 4 other travelers", image: UIImage(systemName: "person.2", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        detailsStackView.addArrangedSubview(peopleSection)
+        
+        let detailsLabel = UILabel()
+        detailsLabel.font = .systemFont(ofSize: 18)
+        detailsLabel.text = "Details:"
+        detailsLabel.textColor = .black
+        detailsStackView.addArrangedSubview(detailsLabel)
+        detailsStackView.setCustomSpacing(5, after: detailsLabel)
+        
+        let detailsTextView = UITextView()
+        detailsTextView.textContainerInset = .zero
+        detailsTextView.textContainer.lineFragmentPadding = .zero
+        detailsTextView.isEditable = false
+        detailsTextView.isScrollEnabled = false
+        detailsTextView.font = .systemFont(ofSize: 14)
+        detailsTextView.text = "departure time flexible, meet at baker flagpole, $20 for gas & tolls, can also make a stop in westchester if needed"
+        detailsStackView.addArrangedSubview(detailsTextView)
+    }
+    
+    private func setupPostButton() {
+        postButton.setTitle("Post Trip", for: .normal)
+        postButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+        postButton.setTitleColor(.black, for: .normal)
+        postButton.backgroundColor = .systemGray5
+        postButton.layer.cornerRadius = 25
+        postButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        postButton.layer.shadowColor = UIColor.darkGray.cgColor
+        postButton.layer.shadowOpacity = 0.5
+        postButton.layer.shadowRadius = 4
+        view.addSubview(postButton)
+        
+        postButton.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.width.equalTo(200)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+    }
+    
+}
+
+// MARK: - MKMapViewDelegate
+extension PostRideSummaryViewController: MKMapViewDelegate {
+    
+}
+
+// MARK: - CLLLocationManagerDelegate
+extension PostRideSummaryViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        
+        mapView.mapType = .standard
+        
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: locValue, span: span)
+        mapView.setRegion(region, animated: true)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = locValue
+        annotation.title = "Ride Pickup!"
+        annotation.subtitle = "Your ride is here."
+        mapView.addAnnotation(annotation)
+    }
+    
+}
