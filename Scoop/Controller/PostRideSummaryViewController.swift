@@ -156,16 +156,16 @@ extension PostRideSummaryViewController: MKMapViewDelegate {
 extension PostRideSummaryViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        
-        mapView.mapType = .standard
+        guard let coordinate = manager.location?.coordinate else {
+            return
+        }
         
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegion(center: locValue, span: span)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
         
         let annotation = MKPointAnnotation()
-        annotation.coordinate = locValue
+        annotation.coordinate = coordinate
         annotation.title = "Ride Pickup!"
         annotation.subtitle = "Your ride is here."
         mapView.addAnnotation(annotation)
