@@ -5,49 +5,42 @@
 //  Created by Reade Plunkett on 2/23/22.
 //
 
-import CoreLocation
 import GoogleSignIn
-import MapKit
 import UIKit
 
 class HomeViewController: UIViewController {
     
-    private let locationManager = CLLocationManager()
-    private let mapView = MKMapView()
+    private let postRideButton = UIButton()
     private let signOutButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
+        navigationItem.title = "Scoop"
+        
+        setupPostRideButton()
         //        setupSignOutButton()
-        
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.startUpdatingLocation()
-        }
-        
-        setupMapView()
     }
     
-    private func setupMapView() {
-        view.addSubview(mapView)
+    private func setupPostRideButton() {
+        postRideButton.setImage(UIImage(systemName: "car", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28)), for: .normal)
+        postRideButton.backgroundColor = .systemGray5
+        postRideButton.layer.cornerRadius = 35
+        view.addSubview(postRideButton)
         
-        mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        postRideButton.snp.makeConstraints { make in
+            make.size.equalTo(70)
+            make.trailing.equalToSuperview().inset(30)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
         }
         
-        mapView.delegate = self
-        mapView.mapType = .standard
-        mapView.isZoomEnabled = true
-        mapView.isScrollEnabled = true
-        
-        if let coor = mapView.userLocation.location?.coordinate {
-            mapView.setCenter(coor, animated: true)
+        let postRideAction = UIAction { _ in
+            let postRideSummaryVC = PostRideSummaryViewController()
+            postRideSummaryVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(postRideSummaryVC, animated: true)
         }
+        
+        postRideButton.addAction(postRideAction, for: .touchUpInside)
     }
     
     private func setupSignOutButton() {
@@ -70,32 +63,6 @@ class HomeViewController: UIViewController {
     private func signOut() {
         GIDSignIn.sharedInstance.signOut()
         dismiss(animated: true)
-    }
-    
-}
-
-// MARK: - MKMapViewDelegate
-extension HomeViewController: MKMapViewDelegate {
-    
-}
-
-// MARK: - CLLLocationManagerDelegate
-extension HomeViewController: CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        
-        mapView.mapType = .standard
-        
-        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegion(center: locValue, span: span)
-        mapView.setRegion(region, animated: true)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = locValue
-        annotation.title = "Ride Pickup!"
-        annotation.subtitle = "Your ride is here."
-        mapView.addAnnotation(annotation)
     }
     
 }
