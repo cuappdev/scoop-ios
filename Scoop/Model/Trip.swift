@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Ride: Codable {
+struct Trip: Codable {
     
 }

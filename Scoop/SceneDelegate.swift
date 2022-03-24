@@ -16,34 +16,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: scene)
-        window.rootViewController = LoginViewController()
         self.window = window
         window.makeKeyAndVisible()
         
-        restoreSignIn()
+        NotificationCenter.default.addObserver(self, selector: #selector(didCompleteLogin), name: NSNotification.Name("didCompleteLogin"), object: nil)
         
+        GIDSignIn.sharedInstance.signOut()
+        restoreSignIn()
     }
     
     private func restoreSignIn() {
         guard GIDSignIn.sharedInstance.hasPreviousSignIn() else {
+            self.window?.rootViewController = LoginViewController()
             return
         }
         
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             if let error = error {
+                self.window?.rootViewController = LoginViewController()
                 print(error.localizedDescription)
                 return
             }
             
             guard let user = user else {
+                self.window?.rootViewController = LoginViewController()
                 return
             }
             
-            let homeVC = self.createTabBarController()
-            homeVC.modalPresentationStyle = .fullScreen
-            self.window?.rootViewController?.present(homeVC, animated: true)
-            
+            self.didCompleteLogin()
         }
+    }
+    
+    @objc
+    private func didCompleteLogin() {
+        self.window?.rootViewController = self.createTabBarController()
     }
     
     private func createTabBarController() -> UITabBarController {
@@ -67,7 +73,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let profileNavController = UINavigationController(rootViewController: profileViewController)
         profileNavController.navigationBar.prefersLargeTitles = true
         
-        tabBarController.setViewControllers([homeNavController, searchNavController, profileNavController], animated: true)
+        tabBarController.setViewControllers([homeNavController, searchNavController, profileNavController], animated: false)
         
         return tabBarController
     }

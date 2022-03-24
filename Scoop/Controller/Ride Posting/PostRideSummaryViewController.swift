@@ -93,19 +93,34 @@ class PostRideSummaryViewController: UIViewController {
         organizerLabel.adjustsFontSizeToFitWidth = true
         detailsStackView.addArrangedSubview(organizerLabel)
         
-        let drivingSection = SummaryInfoSection(title: "Driving", image: UIImage(systemName: "car", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        let drivingSection = ImageLabelView()
+        drivingSection.label.font = .systemFont(ofSize: 18)
+        drivingSection.label.text = "Driving"
+        drivingSection.imageView.image = UIImage(systemName: "car", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(drivingSection)
         
-        let startingLocationSection = SummaryInfoSection(title: "Ithaca, NY", image: UIImage(systemName: "paperplane", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        let startingLocationSection = ImageLabelView()
+        startingLocationSection.label.font = .systemFont(ofSize: 18)
+        startingLocationSection.label.text = "Ithaca, NY"
+        startingLocationSection.imageView.image = UIImage(systemName: "paperplane", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(startingLocationSection)
         
-        let endingLocationSection = SummaryInfoSection(title: "Darien, CT", image: UIImage(systemName: "mappin", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        let endingLocationSection = ImageLabelView()
+        endingLocationSection.label.font = .systemFont(ofSize: 18)
+        endingLocationSection.label.text = "Darien, CT"
+        endingLocationSection.imageView.image = UIImage(systemName: "mappin", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(endingLocationSection)
         
-        let dateSection = SummaryInfoSection(title: "3/17/22 @ 2:15 pm", image: UIImage(systemName: "calendar.badge.clock", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        let dateSection = ImageLabelView()
+        dateSection.label.font = .systemFont(ofSize: 18)
+        dateSection.label.text = "3/17/22 @ 2:15 pm"
+        dateSection.imageView.image = UIImage(systemName: "calendar.badge.clock", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(dateSection)
         
-        let peopleSection = SummaryInfoSection(title: "2 to 4 other travelers", image: UIImage(systemName: "person.2", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36)))
+        let peopleSection = ImageLabelView()
+        peopleSection.label.font = .systemFont(ofSize: 18)
+        peopleSection.label.text = "2 to 4 other travelers"
+        peopleSection.imageView.image = UIImage(systemName: "person.2", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(peopleSection)
         
         let detailsLabel = UILabel()
@@ -143,6 +158,12 @@ class PostRideSummaryViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
+        
+        let postAction = UIAction { _ in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        
+        postButton.addAction(postAction, for: .touchUpInside)
     }
     
 }
