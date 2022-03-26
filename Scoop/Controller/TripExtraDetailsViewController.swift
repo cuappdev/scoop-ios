@@ -11,172 +11,190 @@ class TripExtraDetailsViewController: UIViewController {
     
     private let travelersLabel = UILabel()
     private let toLabel = UILabel()
-    private let count1Field = UITextField()
-    private let count2Field = UITextField()
+    private let count1TextField = UITextField()
+    private let count2TextField = UITextField()
+    private let peopleImageView = UIImageView()
     
     private let dateLabel = UILabel()
-    private let dateField = UITextField()
+    private let dateTextField = UITextField()
+    private let calendarImageView = UIImageView()
     
     private let timeLabel = UILabel()
-    private let timeField = UITextField()
+    private let timeTextField = UITextField()
+    private let clockImageView = UIImageView()
     
     private let detailsLabel = UILabel()
-    private let detailsField = UITextField()
-
+    private let detailsTextField = UITextField()
+    
+    private var containerView = UIView()
+    
+    private let labelSpace = 5
+    private let fieldSpace = 40
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         
-
-        
-        self.navigationItem.title = "Trip Details"
+        navigationItem.title = "Trip Details"
         view.backgroundColor = .white
         
+        view.addSubview(containerView)
+        
+        setupContainerView()
+        setupTravelers()
+        setupDate()
+        setupTime()
+        setupOtherDetails()
+    }
+    
+    func setupContainerView() {
+        containerView.backgroundColor = .clear
+        view.addSubview(containerView)
+        
+        containerView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(20)
+        }
+    }
+    
+    func setupTravelers() {
         travelersLabel.text = "Number of Travelers"
         travelersLabel.textColor = .black
-        view.addSubview(travelersLabel)
+        containerView.addSubview(travelersLabel)
         
-        let peopleImage = UIImage(systemName: "person.2")
-        let peopleView = UIImageView(image: peopleImage)
-        peopleView.tintColor = .black
-        view.addSubview(peopleView)
+        travelersLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
+        }
         
-        count1Field.placeholder = "0"
-        count1Field.textColor = .black
-        view.addSubview(count1Field)
+        peopleImageView.image = UIImage(systemName: "person.2")
+        peopleImageView.tintColor = .black
+        containerView.addSubview(peopleImageView)
+        
+        peopleImageView.snp.makeConstraints { make in
+            make.top.equalTo(travelersLabel.snp.bottom).offset(labelSpace)
+            make.leading.equalTo(travelersLabel)
+        }
+        
+        count1TextField.placeholder = "0"
+        count1TextField.textColor = .black
+        containerView.addSubview(count1TextField)
+        
+        count1TextField.snp.makeConstraints { make in
+            make.top.equalTo(peopleImageView)
+            make.leading.equalTo(peopleImageView.snp.trailing).offset(10)
+        }
         
         toLabel.text = "to"
         toLabel.textColor = .black
-        view.addSubview(toLabel)
+        containerView.addSubview(toLabel)
         
-        count2Field.placeholder = "0"
-        count2Field.tintColor = .black
-        view.addSubview(count2Field)
-        
-        
-        dateLabel.text = "Date of Trip"
-        dateLabel.textColor = .black
-        view.addSubview(dateLabel)
-        
-        let calendarView = UIImageView(image: UIImage(systemName: "calendar"))
-        calendarView.tintColor = .black
-        view.addSubview(calendarView)
-        
-        dateField.placeholder = "mm/dd/yyyy"
-        dateField.textColor = .black
-        view.addSubview(dateField)
-        
-        
-        timeLabel.text = "Time of Trip"
-        timeLabel.textColor = .black
-        view.addSubview(timeLabel)
-        
-        let clockView = UIImageView(image: UIImage(systemName: "clock"))
-        clockView.tintColor = .black
-        view.addSubview(clockView)
-        
-        timeField.placeholder = "1:33 AM"
-        timeField.textColor = .black
-        view.addSubview(timeField)
-        
-        
-        detailsLabel.text = "Other Details"
-        detailsLabel.textColor = .black
-        view.addSubview(detailsLabel)
-        
-        let writeView = UIImageView(image: UIImage(systemName: "square.and.pencil"))
-        writeView.tintColor = .black
-        view.addSubview(writeView)
-        
-        detailsField.placeholder = "enter details..."
-        detailsField.textColor = .black
-        view.addSubview(detailsField)
-
-//        let transImage = UIImage(systemName: "location")
-//        let transView = UIImageView(image: transImage)
-//        transView.tintColor = .black
-//        transView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-//        view.addSubview(transView)
-        
-        
-        travelersLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(300)
-            make.leading.equalToSuperview().offset(80)
-        }
-        
-        peopleView.snp.makeConstraints { make in
-            make.top.equalTo(travelersLabel.snp.bottom).offset(10)
-            make.leading.equalTo(travelersLabel.snp.leading)
-        }
-        
-        count1Field.snp.makeConstraints { make in
-            make.top.equalTo(peopleView.snp.top)
-            make.leading.equalTo(peopleView.snp.trailing).offset(10)
-        }
         toLabel.snp.makeConstraints { make in
-            make.top.equalTo(peopleView.snp.top)
-            make.leading.equalTo(count1Field.snp.trailing).offset(10)
+            make.top.equalTo(peopleImageView)
+            make.leading.equalTo(count1TextField.snp.trailing).offset(10)
         }
-        count2Field.snp.makeConstraints { make in
-            make.top.equalTo(peopleView.snp.top)
+        
+        count2TextField.placeholder = "0"
+        count2TextField.tintColor = .black
+        containerView.addSubview(count2TextField)
+        
+        count2TextField.snp.makeConstraints { make in
+            make.top.equalTo(peopleImageView)
             make.leading.equalTo(toLabel.snp.trailing).offset(10)
         }
-        
-        dateLabel.snp.makeConstraints { make in
-            make.leading.equalTo(travelersLabel.snp.leading)
-            make.top.equalTo(peopleView.snp.bottom).offset(25)
-        }
-        
-        calendarView.snp.makeConstraints { make in
-            make.leading.equalTo(dateLabel)
-            make.top.equalTo(dateLabel.snp.bottom).offset(10)
-        }
-        
-        dateField.snp.makeConstraints { make in
-            make.leading.equalTo(calendarView.snp.trailing).offset(10)
-            make.top.equalTo(calendarView.snp.top)
-        }
-        
-       timeLabel.snp.makeConstraints { make in
-            make.leading.equalTo(travelersLabel.snp.leading)
-            make.top.equalTo(calendarView.snp.bottom).offset(25)
-        }
-        
-        clockView.snp.makeConstraints { make in
-            make.leading.equalTo(timeLabel)
-            make.top.equalTo(timeLabel.snp.bottom).offset(10)
-        }
-        
-        timeField.snp.makeConstraints { make in
-            make.leading.equalTo(clockView.snp.trailing).offset(10)
-            make.top.equalTo(clockView.snp.top)
-        }
-        
-        detailsLabel.snp.makeConstraints { make in
-             make.leading.equalTo(travelersLabel.snp.leading)
-             make.top.equalTo(clockView.snp.bottom).offset(25)
-         }
-         
-         writeView.snp.makeConstraints { make in
-             make.leading.equalTo(detailsLabel)
-             make.top.equalTo(detailsLabel.snp.bottom).offset(10)
-         }
-         
-         detailsField.snp.makeConstraints { make in
-             make.leading.equalTo(writeView.snp.trailing).offset(10)
-             make.top.equalTo(writeView.snp.top)
-         }
-         
-//        dateLabel.snp.makeConstraints { make in
-//            make.leading.equalTo()
-//        }
-        
-//        super.viewDidLoad()
-
-        
-//        view.backgroundColor = .red
-        
-        
     }
     
-
+    func setupDate() {
+        dateLabel.text = "Date of Trip"
+        dateLabel.textColor = .black
+        containerView.addSubview(dateLabel)
+        
+        dateLabel.snp.makeConstraints { make in
+            make.leading.equalTo(travelersLabel)
+            make.top.equalTo(peopleImageView.snp.bottom).offset(25)
+        }
+        
+        calendarImageView.image = UIImage(systemName: "calendar")
+        calendarImageView.tintColor = .black
+        containerView.addSubview(calendarImageView)
+        
+        calendarImageView.snp.makeConstraints { make in
+            make.leading.equalTo(dateLabel)
+            make.top.equalTo(dateLabel.snp.bottom).offset(labelSpace)
+            make.width.equalTo(calendarImageView.snp.height)
+        }
+        
+        dateTextField.placeholder = "mm/dd/yyyy"
+        dateTextField.textColor = .black
+        containerView.addSubview(dateTextField)
+        
+        dateTextField.snp.makeConstraints { make in
+            make.leading.equalTo(calendarImageView.snp.trailing).offset(10)
+            make.top.equalTo(calendarImageView)
+            make.trailing.equalToSuperview()
+        }
+    }
+    
+    func setupTime() {
+        timeLabel.text = "Time of Trip"
+        timeLabel.textColor = .black
+        containerView.addSubview(timeLabel)
+        
+        timeLabel.snp.makeConstraints { make in
+            make.leading.equalTo(travelersLabel)
+            make.top.equalTo(calendarImageView.snp.bottom).offset(fieldSpace)
+        }
+        
+        clockImageView.image = UIImage(systemName: "clock")
+        clockImageView.tintColor = .black
+        containerView.addSubview(clockImageView)
+        
+        clockImageView.snp.makeConstraints { make in
+            make.leading.equalTo(timeLabel)
+            make.top.equalTo(timeLabel.snp.bottom).offset(labelSpace)
+            make.width.equalTo(clockImageView.snp.height)
+        }
+        
+        timeTextField.placeholder = "1:33 AM"
+        timeTextField.textColor = .black
+        containerView.addSubview(timeTextField)
+        
+        timeTextField.snp.makeConstraints { make in
+            make.leading.equalTo(clockImageView.snp.trailing).offset(10)
+            make.top.equalTo(clockImageView)
+            make.trailing.equalToSuperview()
+       }
+    }
+    
+    func setupOtherDetails(){
+        detailsLabel.text = "Other Details"
+        detailsLabel.textColor = .black
+        containerView.addSubview(detailsLabel)
+        
+        detailsLabel.snp.makeConstraints { make in
+            make.leading.equalTo(travelersLabel)
+            make.top.equalTo(clockImageView.snp.bottom).offset(fieldSpace)
+         }
+        
+        let writeImageView = UIImageView(image: UIImage(systemName: "square.and.pencil"))
+        writeImageView.tintColor = .black
+        containerView.addSubview(writeImageView)
+        
+        writeImageView.snp.makeConstraints { make in
+            make.leading.equalTo(detailsLabel)
+            make.top.equalTo(detailsLabel.snp.bottom).offset(labelSpace)
+            make.width.equalTo(writeImageView.snp.height)
+        }
+        
+        detailsTextField.placeholder = "enter details..."
+        detailsTextField.textColor = .black
+        containerView.addSubview(detailsTextField)
+        
+        detailsTextField.snp.makeConstraints { make in
+            make.leading.equalTo(writeImageView.snp.trailing).offset(10)
+            make.top.equalTo(writeImageView)
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(labelSpace)
+         }
+    }
 }

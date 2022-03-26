@@ -9,96 +9,112 @@ import UIKit
 
 class PostRideLocationViewController: UIViewController {
     
-    private let methodLabel = UILabel()
-    private let transField = UITextField()
-//    private var transLabel = UIImage()
+    private let transportationMethodLabel = UILabel()
+    private let transportationTextField = UITextField()
     
     private let locationLabel = UILabel()
+    private let departureTextField = UITextField()
+    private let arrivalTextField = UITextField()
     
-    private let departureField = UITextField()
-    private let arrivalField = UITextField()
+    private var containerView = UIView()
+
+    private let labelSpace = 5
+    private let fieldSpace = 40
+    private let textFieldSpace = 20
 
     override func viewDidLoad() {
-        
-        self.navigationItem.title = "Trip Details"
+        super.viewDidLoad()
+        navigationItem.title = "Trip Details"
         view.backgroundColor = .white
         
-        methodLabel.text = "Method of Transportation"
-        methodLabel.textColor = .black
-        view.addSubview(methodLabel)
-        
-        transField.placeholder = "select"
-        transField.textColor = .black
-        view.addSubview(transField)
-        
-        let transImage = UIImage(systemName: "location")
-        let transView = UIImageView(image: transImage)
-        transView.tintColor = .black
-        transView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        view.addSubview(transView)
-        
-        let destImage = UIImage(systemName: "mappin.and.ellipse")
-        let destView = UIImageView(image: destImage)
-        destView.tintColor = .black
-        destView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        view.addSubview(destView)
-        
-        locationLabel.text = "Locations"
-        locationLabel.textColor = .black
-        view.addSubview(locationLabel)
-
-        departureField.placeholder = "Departure Location..."
-        departureField.textColor = .black
-        view.addSubview(departureField)
-
-        arrivalField.placeholder = "Arrival Location..."
-        arrivalField.textColor = .black
-        view.addSubview(arrivalField)
-        
-        methodLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(300)
-            make.leading.equalToSuperview().offset(80)
-        }
-        
-        transField.snp.makeConstraints { make in
-            make.leading.equalTo(methodLabel.snp.leading)
-            make.top.equalTo(methodLabel.snp.bottom).offset(10)
-        }
-                
-        locationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(transField.snp.leading)
-            make.top.equalTo(transField.snp.bottom).offset(30)
-//            make.centerY.
-        }
-//
-        transView.snp.makeConstraints { make in
-            make.leading.equalTo(locationLabel.snp.leading)
-            make.top.equalTo(locationLabel.snp.bottom).offset(10)
-        }
-//
-        departureField.snp.makeConstraints { make in
-            make.top.equalTo(transView.snp.top)
-            make.leading.equalTo(transView.snp.trailing).offset(10)
-        }
-        
-        destView.snp.makeConstraints { make in
-            make.leading.equalTo(transView.snp.leading)
-            make.top.equalTo(transView.snp.bottom).offset(25)
-        }
-        arrivalField.snp.makeConstraints { make in
-            make.leading.equalTo(destView.snp.trailing).offset(10)
-            make.top.equalTo(destView.snp.top)
-        }
-//        
-    
-        
-        
-        
-        
-//        super.viewDidLoad()
-
+        setupContainerView()
+        setupTransporationMethod()
+        setupLocation()
     }
     
+    func setupContainerView() {
+        containerView.backgroundColor = .red
+        view.addSubview(containerView)
+        
+        containerView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(20)
+        }
+    }
+    
+    func setupTransporationMethod() {
+        transportationMethodLabel.text = "Method of Transportation"
+        transportationMethodLabel.textColor = .black
+        containerView.addSubview(transportationMethodLabel)
+        
+        transportationMethodLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(fieldSpace)
+            make.centerX.equalToSuperview()
+        }
+        
+        transportationTextField.placeholder = "select"
+        transportationTextField.textColor = .black
+        containerView.addSubview(transportationTextField)
+        
+        transportationTextField.snp.makeConstraints { make in
+            make.leading.equalTo(transportationMethodLabel.snp.leading)
+            make.top.equalTo(transportationMethodLabel.snp.bottom).offset(labelSpace)
+            make.trailing.equalToSuperview()
+        }
+    }
+        
+    func setupLocation() {
+        locationLabel.text = "Locations"
+        locationLabel.textColor = .black
+        containerView.addSubview(locationLabel)
+        
+        locationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(transportationTextField.snp.leading)
+            make.top.equalTo(transportationTextField.snp.bottom).offset(fieldSpace)
+            make.trailing.equalToSuperview()
+        }
+        
+        let transportationImageView = UIImageView(image: UIImage(systemName: "location"))
+        transportationImageView.tintColor = .black
+        containerView.addSubview(transportationImageView)
+        
+        transportationImageView.snp.makeConstraints { make in
+            make.width.equalTo(transportationImageView.snp.height)
+            make.leading.equalTo(locationLabel.snp.leading)
+            make.top.equalTo(locationLabel.snp.bottom).offset(labelSpace)
+        }
+        
+        let destinationImageView = UIImageView(image: UIImage(systemName: "mappin.and.ellipse"))
+        destinationImageView.tintColor = .black
+        destinationImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        containerView.addSubview(destinationImageView)
+        
+        destinationImageView.snp.makeConstraints { make in
+            make.leading.equalTo(transportationImageView.snp.leading)
+            make.top.equalTo(transportationImageView.snp.bottom).offset(textFieldSpace)
+            make.width.equalTo(destinationImageView.snp.height)
+        }
+        
+        departureTextField.placeholder = "departure location"
+        departureTextField.textColor = .black
+        containerView.addSubview(departureTextField)
+        
+        departureTextField.snp.makeConstraints { make in
+            make.top.equalTo(transportationImageView.snp.top)
+            make.leading.equalTo(transportationImageView.snp.trailing).offset(10)
+            make.trailing.equalToSuperview()
+        }
+        
+        arrivalTextField.placeholder = "arrival location"
+        arrivalTextField.textColor = .black
+        containerView.addSubview(arrivalTextField)
 
-
+        arrivalTextField.snp.makeConstraints { make in
+            make.leading.equalTo(destinationImageView.snp.trailing).offset(10)
+            make.top.equalTo(destinationImageView.snp.top)
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(fieldSpace)
+        }
+    }
 }
