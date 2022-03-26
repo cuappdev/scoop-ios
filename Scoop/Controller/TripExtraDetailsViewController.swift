@@ -9,6 +9,8 @@ import UIKit
 
 class TripExtraDetailsViewController: UIViewController {
     
+    private var containerView = UIView()
+    
     private let travelersLabel = UILabel()
     private let toLabel = UILabel()
     private let count1TextField = UITextField()
@@ -25,8 +27,6 @@ class TripExtraDetailsViewController: UIViewController {
     
     private let detailsLabel = UILabel()
     private let detailsTextField = UITextField()
-    
-    private var containerView = UIView()
     
     private let labelSpace = 5
     private let fieldSpace = 40

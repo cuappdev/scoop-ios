@@ -9,17 +9,17 @@ import UIKit
 
 class PostRideLocationViewController: UIViewController {
     
+    private var containerView = UIView()
+    
     private let transportationMethodLabel = UILabel()
     private let transportationTextField = UITextField()
     
-    private let locationLabel = UILabel()
-    private let departureTextField = UITextField()
     private let arrivalTextField = UITextField()
-    
-    private var containerView = UIView()
+    private let departureTextField = UITextField()
+    private let locationLabel = UILabel()
 
-    private let labelSpace = 5
     private let fieldSpace = 40
+    private let labelSpace = 5
     private let textFieldSpace = 20
 
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ class PostRideLocationViewController: UIViewController {
     }
     
     func setupContainerView() {
-        containerView.backgroundColor = .red
+        containerView.backgroundColor = .clear
         view.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
