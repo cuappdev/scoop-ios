@@ -166,7 +166,6 @@ extension AboutYouViewController: UIPickerViewDataSource {
         } else if pickerView == yearPicker {
             return years.count
         }
-        
         return 0
     }
     

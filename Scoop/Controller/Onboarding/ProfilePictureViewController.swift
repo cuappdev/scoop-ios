@@ -19,9 +19,7 @@ class ProfilePictureViewController: OnboardingViewController {
         navigationItem.title = "Profile Picture"
         
         nextAction = UIAction { _ in
-            guard let navCtrl = self.navigationController else {
-                return
-            }
+            guard let navCtrl = self.navigationController else { return }
             
             guard let image = self.pictureImageView.image else {
                 self.presentErrorAlert(title: "Error", message: "Please select an image.")

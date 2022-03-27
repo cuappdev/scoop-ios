@@ -34,8 +34,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
+            make.bottom.leading.trailing.equalToSuperview()
             make.top.equalToSuperview().inset(125)
         }
     }

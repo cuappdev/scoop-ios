@@ -73,21 +73,13 @@ extension OnboardingPageViewController: UIPageViewControllerDelegate {
 extension OnboardingPageViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let index = pages.firstIndex(of: viewController), index > 0 else {
-            return nil
-        }
+        guard let index = pages.firstIndex(of: viewController), index > 0 else { return nil }
         
         return pages[index - 1]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let index = pages.firstIndex(of: viewController) else {
-            return nil
-        }
-        
-        guard index + 1 < pages.count else {
-            return nil
-        }
+        guard let index = pages.firstIndex(of: viewController), index + 1 < pages.count else { return nil }
         
         return pages[index + 1]
     }
@@ -97,8 +89,7 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let currentController = viewControllers?.first else { return 0 }
-        guard let index = pages.firstIndex(of: currentController) else { return 0 }
+        guard let currentController = viewControllers?.first, let index = pages.firstIndex(of: currentController) else { return 0 }
         return index
     }
     

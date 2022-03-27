@@ -13,7 +13,6 @@ public class PhoneFormatter {
     // MARK: - Properties
     
     private var pattern: String
-    
     private let digit: Character = "#"
     private let alphabetic: Character = "*"
     
@@ -35,11 +34,9 @@ public class PhoneFormatter {
         var patternIndex = 0
         var inputIndex = 0
         
-        while inputIndex < input.count {
+        while inputIndex < input.count, patternIndex < pattern.count {
             let inputCharacter = input[inputIndex]
             let allowed: CharacterSet
-            
-            guard patternIndex < pattern.count else { break }
             
             switch pattern[patternIndex] {
             case digit:
