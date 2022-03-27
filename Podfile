@@ -11,5 +11,4 @@ target 'Scoop' do
   pod 'SnapKit'
   pod 'SwiftLint'
 
-
 end

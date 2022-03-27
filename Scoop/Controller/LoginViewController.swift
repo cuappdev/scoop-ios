@@ -66,9 +66,15 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            let homeVC = HomeViewController() // TODO: Show the tab bar controller
-            homeVC.modalPresentationStyle = .fullScreen
-            self.present(homeVC, animated: true)
+            guard let window = UIApplication.shared.windows.first else {
+                return
+            }
+            
+            NotificationCenter.default.post(name: NSNotification.Name("didCompleteLogin"), object: nil)
+            
+            let onboardingVC = OnboardingPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+            onboardingVC.modalPresentationStyle = .fullScreen
+            window.rootViewController?.present(onboardingVC, animated: false)
             
             print("User successfully signed in with Cornell email.")
         }
