@@ -58,7 +58,7 @@ class PostRideLocationViewController: UIViewController {
         containerView.addSubview(transportationTextField)
         
         transportationTextField.snp.makeConstraints { make in
-            make.leading.equalTo(transportationMethodLabel.snp.leading)
+            make.leading.equalTo(transportationMethodLabel)
             make.top.equalTo(transportationMethodLabel.snp.bottom).offset(labelSpace)
             make.trailing.equalToSuperview()
         }
@@ -81,17 +81,17 @@ class PostRideLocationViewController: UIViewController {
         
         transportationImageView.snp.makeConstraints { make in
             make.width.equalTo(transportationImageView.snp.height)
-            make.leading.equalTo(locationLabel.snp.leading)
+            make.leading.equalTo(locationLabel)
             make.top.equalTo(locationLabel.snp.bottom).offset(labelSpace)
         }
         
         let destinationImageView = UIImageView(image: UIImage(systemName: "mappin.and.ellipse"))
         destinationImageView.tintColor = .black
-        destinationImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         containerView.addSubview(destinationImageView)
         
         destinationImageView.snp.makeConstraints { make in
-            make.leading.equalTo(transportationImageView.snp.leading)
+            make.leading.equalTo(transportationImageView)
+            make.size.equalTo(20)
             make.top.equalTo(transportationImageView.snp.bottom).offset(textFieldSpace)
             make.width.equalTo(destinationImageView.snp.height)
         }
@@ -101,7 +101,7 @@ class PostRideLocationViewController: UIViewController {
         containerView.addSubview(departureTextField)
         
         departureTextField.snp.makeConstraints { make in
-            make.top.equalTo(transportationImageView.snp.top)
+            make.top.equalTo(transportationImageView)
             make.leading.equalTo(transportationImageView.snp.trailing).offset(10)
             make.trailing.equalToSuperview()
         }
@@ -112,7 +112,7 @@ class PostRideLocationViewController: UIViewController {
 
         arrivalTextField.snp.makeConstraints { make in
             make.leading.equalTo(destinationImageView.snp.trailing).offset(10)
-            make.top.equalTo(destinationImageView.snp.top)
+            make.top.equalTo(destinationImageView)
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview().inset(fieldSpace)
         }
