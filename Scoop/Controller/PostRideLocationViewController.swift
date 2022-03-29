@@ -70,7 +70,7 @@ class PostRideLocationViewController: UIViewController {
         containerView.addSubview(locationLabel)
         
         locationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(transportationTextField.snp.leading)
+            make.leading.equalTo(transportationTextField)
             make.top.equalTo(transportationTextField.snp.bottom).offset(fieldSpace)
             make.trailing.equalToSuperview()
         }
