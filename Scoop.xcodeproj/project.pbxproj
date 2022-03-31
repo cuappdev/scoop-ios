@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8E4464A344C5B1529768FAF3 /* Pods_Scoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */; };
 		C83419EF27E65A4B00491306 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83419EE27E65A4B00491306 /* User.swift */; };
+		C83CD58727F3B0AE00EDA255 /* PostRideLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CD58527F3B0AE00EDA255 /* PostRideLocationViewController.swift */; };
+		C83CD58827F3B0AE00EDA255 /* TripExtraDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CD58627F3B0AE00EDA255 /* TripExtraDetailsViewController.swift */; };
+		C83CD58A27F3B27200EDA255 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CD58927F3B27200EDA255 /* Extension+UIViewController.swift */; };
 		C845953927ED01B200D2C7F0 /* PhoneFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845953827ED01B200D2C7F0 /* PhoneFormatter.swift */; };
 		C85E2E1D27DBFFFA0004C506 /* ProfilePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85E2E1C27DBFFFA0004C506 /* ProfilePictureViewController.swift */; };
 		C85E2E1F27DC0D850004C506 /* AboutYouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85E2E1E27DC0D850004C506 /* AboutYouViewController.swift */; };
@@ -29,7 +32,7 @@
 		C8D2805B27D96AFA00EDD5D3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */; };
 		C8D2805D27D96B0000EDD5D3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805C27D96B0000EDD5D3 /* ProfileViewController.swift */; };
 		C8D2805F27D985FA00EDD5D3 /* ImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */; };
-		C8D2806227D9992600EDD5D3 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2806127D9992600EDD5D3 /* Trip.swift */; };
+		C8D2806227D9992600EDD5D3 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2806127D9992600EDD5D3 /* Ride.swift */; };
 		C8EF10C427E2BB8000642B40 /* PreferredContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF10C327E2BB8000642B40 /* PreferredContactViewController.swift */; };
 		C8EF10C627E2CA9D00642B40 /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF10C527E2CA9D00642B40 /* PhoneNumberViewController.swift */; };
 		C8EF10C827E2CCB800642B40 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF10C727E2CCB800642B40 /* OnboardingPageViewController.swift */; };
@@ -59,6 +62,9 @@
 		164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scoop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1D395A7C12CE21AD7158CDF /* Pods-Scoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.debug.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.debug.xcconfig"; sourceTree = "<group>"; };
 		C83419EE27E65A4B00491306 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C83CD58527F3B0AE00EDA255 /* PostRideLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostRideLocationViewController.swift; path = "Scoop/Controller/Ride Posting/PostRideLocationViewController.swift"; sourceTree = SOURCE_ROOT; };
+		C83CD58627F3B0AE00EDA255 /* TripExtraDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TripExtraDetailsViewController.swift; path = "Scoop/Controller/Ride Posting/TripExtraDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
+		C83CD58927F3B27200EDA255 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
 		C845953827ED01B200D2C7F0 /* PhoneFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneFormatter.swift; sourceTree = "<group>"; };
 		C85E2E1C27DBFFFA0004C506 /* ProfilePictureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureViewController.swift; sourceTree = "<group>"; };
 		C85E2E1E27DC0D850004C506 /* AboutYouViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutYouViewController.swift; sourceTree = "<group>"; };
@@ -83,7 +89,7 @@
 		C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C8D2805C27D96B0000EDD5D3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabelView.swift; sourceTree = "<group>"; };
-		C8D2806127D9992600EDD5D3 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		C8D2806127D9992600EDD5D3 /* Ride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ride.swift; sourceTree = "<group>"; };
 		C8EF10C327E2BB8000642B40 /* PreferredContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredContactViewController.swift; sourceTree = "<group>"; };
 		C8EF10C527E2CA9D00642B40 /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		C8EF10C727E2CCB800642B40 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +145,8 @@
 		C83419F027E66FAF00491306 /* Ride Posting */ = {
 			isa = PBXGroup;
 			children = (
+				C83CD58527F3B0AE00EDA255 /* PostRideLocationViewController.swift */,
+				C83CD58627F3B0AE00EDA255 /* TripExtraDetailsViewController.swift */,
 				C8D2805627D9670100EDD5D3 /* PostRideSummaryViewController.swift */,
 			);
 			path = "Ride Posting";
@@ -148,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				C845953827ED01B200D2C7F0 /* PhoneFormatter.swift */,
+				C83CD58927F3B27200EDA255 /* Extension+UIViewController.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -223,11 +232,11 @@
 			isa = PBXGroup;
 			children = (
 				C8A5449027D185BD00132ACC /* LoginViewController.swift */,
-				C85E2E1B27DBFFE90004C506 /* Onboarding */,
-				C83419F027E66FAF00491306 /* Ride Posting */,
 				C8A544BC27D18D0200132ACC /* HomeViewController.swift */,
 				C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */,
 				C8D2805C27D96B0000EDD5D3 /* ProfileViewController.swift */,
+				C85E2E1B27DBFFE90004C506 /* Onboarding */,
+				C83419F027E66FAF00491306 /* Ride Posting */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -235,7 +244,7 @@
 		C8A544BF27D18D0E00132ACC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C8D2806127D9992600EDD5D3 /* Trip.swift */,
+				C8D2806127D9992600EDD5D3 /* Ride.swift */,
 				C886C97527EBCD2F0029DCE9 /* Networking.swift */,
 				C83419EE27E65A4B00491306 /* User.swift */,
 			);
@@ -443,11 +452,14 @@
 				C8A5449127D185BD00132ACC /* LoginViewController.swift in Sources */,
 				C886C97627EBCD2F0029DCE9 /* Networking.swift in Sources */,
 				C8A5448D27D185BD00132ACC /* AppDelegate.swift in Sources */,
+				C83CD58827F3B0AE00EDA255 /* TripExtraDetailsViewController.swift in Sources */,
+				C83CD58727F3B0AE00EDA255 /* PostRideLocationViewController.swift in Sources */,
 				C85E2E1F27DC0D850004C506 /* AboutYouViewController.swift in Sources */,
 				C85E2E1D27DBFFFA0004C506 /* ProfilePictureViewController.swift in Sources */,
 				C8EF10C627E2CA9D00642B40 /* PhoneNumberViewController.swift in Sources */,
+				C83CD58A27F3B27200EDA255 /* Extension+UIViewController.swift in Sources */,
 				C8D2805B27D96AFA00EDD5D3 /* SearchViewController.swift in Sources */,
-				C8D2806227D9992600EDD5D3 /* Trip.swift in Sources */,
+				C8D2806227D9992600EDD5D3 /* Ride.swift in Sources */,
 				C8EF10C827E2CCB800642B40 /* OnboardingPageViewController.swift in Sources */,
 				C8EF10CC27E2CEF800642B40 /* FavoritesViewController.swift in Sources */,
 				C8D2805F27D985FA00EDD5D3 /* ImageLabelView.swift in Sources */,

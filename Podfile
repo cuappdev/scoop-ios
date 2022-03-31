@@ -9,6 +9,6 @@ target 'Scoop' do
   pod 'FirebaseAuth'
   pod 'GoogleSignIn'
   pod 'SnapKit'
-  pod 'SwiftLint'
+  pod 'IQKeyboardManager'
 
 end

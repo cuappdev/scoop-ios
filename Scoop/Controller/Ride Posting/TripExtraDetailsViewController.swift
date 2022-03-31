@@ -18,26 +18,62 @@ class TripExtraDetailsViewController: UIViewController {
     private let peopleImageView = UIImageView()
     
     private let dateLabel = UILabel()
-    private let dateTextField = UITextField()
+    private let datePicker = UIDatePicker()
     private let calendarImageView = UIImageView()
     
     private let timeLabel = UILabel()
-    private let timeTextField = UITextField()
+    private let timePicker = UIDatePicker()
     private let clockImageView = UIImageView()
     
     private let detailsLabel = UILabel()
-    private let detailsTextField = UITextField()
+    private let detailsTextView = UITextView()
     
     private let labelSpace = 5
     private let fieldSpace = 40
-
+    
+    private var ride: Ride!
+    
+    init(ride: Ride) {
+        super.init(nibName: nil, bundle: nil)
+        self.ride = ride
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "Trip Details"
         view.backgroundColor = .white
+        navigationItem.title = "Trip Details"
         
-        view.addSubview(containerView)
+        let nextAction = UIAction { _ in
+            guard let travelerCountLowerText = self.count1TextField.text,
+                  let travelerCountUpperText = self.count2TextField.text else {
+                      self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
+                      return
+                  }
+            
+            guard let travelerCountLower = Int(travelerCountLowerText),
+                  let travelerCountUpper = Int(travelerCountUpperText),
+                  travelerCountLower <= travelerCountUpper,
+                  let date = self.getTravelDate() else {
+                      self.presentErrorAlert(title: "Error", message: "Please enter valid input.")
+                      return
+                  }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "M/dd/yy @ h:mm a"
+            
+            self.ride.travelerCountLower = travelerCountLower
+            self.ride.travelerCountUpper = travelerCountUpper
+            self.ride.date = dateFormatter.string(from: date)
+            self.ride.details = self.detailsTextView.textColor == .placeholderText ? "" : self.detailsTextView.text
+            
+            self.navigationController?.pushViewController(PostRideSummaryViewController(ride: self.ride), animated: true)
+        }
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
         
         setupContainerView()
         setupTravelers()
@@ -46,7 +82,7 @@ class TripExtraDetailsViewController: UIViewController {
         setupOtherDetails()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.backgroundColor = .clear
         view.addSubview(containerView)
         
@@ -57,7 +93,7 @@ class TripExtraDetailsViewController: UIViewController {
         }
     }
     
-    func setupTravelers() {
+    private func setupTravelers() {
         travelersLabel.text = "Number of Travelers"
         travelersLabel.textColor = .black
         containerView.addSubview(travelersLabel)
@@ -76,6 +112,7 @@ class TripExtraDetailsViewController: UIViewController {
             make.leading.equalTo(travelersLabel)
         }
         
+        count1TextField.delegate = self
         count1TextField.placeholder = "0"
         count1TextField.textColor = .black
         containerView.addSubview(count1TextField)
@@ -94,6 +131,7 @@ class TripExtraDetailsViewController: UIViewController {
             make.leading.equalTo(count1TextField.snp.trailing).offset(10)
         }
         
+        count2TextField.delegate = self
         count2TextField.placeholder = "0"
         count2TextField.tintColor = .black
         containerView.addSubview(count2TextField)
@@ -104,7 +142,7 @@ class TripExtraDetailsViewController: UIViewController {
         }
     }
     
-    func setupDate() {
+    private func setupDate() {
         dateLabel.text = "Date of Trip"
         dateLabel.textColor = .black
         containerView.addSubview(dateLabel)
@@ -124,18 +162,16 @@ class TripExtraDetailsViewController: UIViewController {
             make.width.equalTo(calendarImageView.snp.height)
         }
         
-        dateTextField.placeholder = "mm/dd/yyyy"
-        dateTextField.textColor = .black
-        containerView.addSubview(dateTextField)
+        datePicker.datePickerMode = .date
+        containerView.addSubview(datePicker)
         
-        dateTextField.snp.makeConstraints { make in
+        datePicker.snp.makeConstraints { make in
             make.leading.equalTo(calendarImageView.snp.trailing).offset(10)
-            make.top.equalTo(calendarImageView)
-            make.trailing.equalToSuperview()
+            make.centerY.equalTo(calendarImageView)
         }
     }
     
-    func setupTime() {
+    private func setupTime() {
         timeLabel.text = "Time of Trip"
         timeLabel.textColor = .black
         containerView.addSubview(timeLabel)
@@ -155,18 +191,16 @@ class TripExtraDetailsViewController: UIViewController {
             make.width.equalTo(clockImageView.snp.height)
         }
         
-        timeTextField.placeholder = "1:33 AM"
-        timeTextField.textColor = .black
-        containerView.addSubview(timeTextField)
+        timePicker.datePickerMode = .time
+        containerView.addSubview(timePicker)
         
-        timeTextField.snp.makeConstraints { make in
+        timePicker.snp.makeConstraints { make in
             make.leading.equalTo(clockImageView.snp.trailing).offset(10)
-            make.top.equalTo(clockImageView)
-            make.trailing.equalToSuperview()
-       }
+            make.centerY.equalTo(clockImageView)
+        }
     }
     
-    func setupOtherDetails(){
+    private func setupOtherDetails() {
         detailsLabel.text = "Other Details"
         detailsLabel.textColor = .black
         containerView.addSubview(detailsLabel)
@@ -174,7 +208,7 @@ class TripExtraDetailsViewController: UIViewController {
         detailsLabel.snp.makeConstraints { make in
             make.leading.equalTo(travelersLabel)
             make.top.equalTo(clockImageView.snp.bottom).offset(fieldSpace)
-         }
+        }
         
         let writeImageView = UIImageView(image: UIImage(systemName: "square.and.pencil"))
         writeImageView.tintColor = .black
@@ -186,15 +220,70 @@ class TripExtraDetailsViewController: UIViewController {
             make.width.equalTo(writeImageView.snp.height)
         }
         
-        detailsTextField.placeholder = "enter details..."
-        detailsTextField.textColor = .black
-        containerView.addSubview(detailsTextField)
+        detailsTextView.backgroundColor = .clear
+        detailsTextView.delegate = self
+        detailsTextView.text = "enter details..."
+        detailsTextView.textColor = .placeholderText
+        detailsTextView.textContainerInset = .zero
+        detailsTextView.textContainer.lineFragmentPadding = .zero
+        detailsTextView.font = .systemFont(ofSize: 18)
+        containerView.addSubview(detailsTextView)
         
-        detailsTextField.snp.makeConstraints { make in
+        detailsTextView.snp.makeConstraints { make in
             make.leading.equalTo(writeImageView.snp.trailing).offset(10)
             make.top.equalTo(writeImageView)
             make.trailing.equalToSuperview()
+            make.height.equalTo(80)
             make.bottom.equalToSuperview().inset(labelSpace)
-         }
+        }
     }
+    
+    private func getTravelDate() -> Date? {
+        let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
+        
+        let timeComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: timePicker.date)
+        
+        var mergedComponents = DateComponents()
+        mergedComponents.year = dateComponents.year
+        mergedComponents.month = dateComponents.month
+        mergedComponents.day = dateComponents.day
+        mergedComponents.hour = timeComponents.hour
+        mergedComponents.minute = timeComponents.minute
+        mergedComponents.second = timeComponents.second
+        
+        return Calendar.current.date(from: mergedComponents)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension TripExtraDetailsViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Source: https://stackoverflow.com/a/31363255/5278889
+        let maxLength = 1
+        let currentString: NSString = (textField.text ?? "") as NSString
+        let newString: NSString =
+        currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+    }
+    
+}
+
+// MARK: - UITextViewDelegate
+extension TripExtraDetailsViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .placeholderText {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "enter details..."
+            textView.textColor = .placeholderText
+        }
+    }
+    
 }

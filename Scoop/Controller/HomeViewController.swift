@@ -35,10 +35,9 @@ class HomeViewController: UIViewController {
         }
         
         let postRideAction = UIAction { _ in
-//            let postRideLocationVC = PostRideLocationViewController()
-//            postRideLocationVC.hidesBottomBarWhenPushed = true
-//            postRideLocationVC.navigationItem.title = "Trip Details"
-//            self.navigationController?.pushViewController(postRideLocationVC, animated: true)
+            let postRideLocationVC = PostRideLocationViewController()
+            postRideLocationVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(postRideLocationVC, animated: true)
         }
         
         postRideButton.addAction(postRideAction, for: .touchUpInside)
