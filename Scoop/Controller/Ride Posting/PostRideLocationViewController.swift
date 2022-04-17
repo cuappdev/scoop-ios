@@ -162,7 +162,6 @@ extension PostRideLocationViewController: UIPickerViewDelegate {
         if pickerView == transportationPicker {
             return methods[row]
         }
-        
         return nil
     }
     
