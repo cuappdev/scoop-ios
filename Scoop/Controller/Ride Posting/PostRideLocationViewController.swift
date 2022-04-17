@@ -11,29 +11,51 @@ class PostRideLocationViewController: UIViewController {
     
     private var containerView = UIView()
     
+    private let transportationPicker = UIPickerView()
     private let transportationMethodLabel = UILabel()
     private let transportationTextField = UITextField()
     
     private let arrivalTextField = UITextField()
     private let departureTextField = UITextField()
     private let locationLabel = UILabel()
-
+    
     private let fieldSpace = 40
     private let labelSpace = 5
     private let textFieldSpace = 20
-
+    
+    private var ride = Ride()
+    private var methods = ["Student Driver", "Shared Taxi"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Trip Details"
         view.backgroundColor = .white
+        navigationItem.title = "Trip Details"
+        
+        let nextAction = UIAction { _ in
+            guard let method = self.transportationTextField.text, !method.isEmpty,
+                  let departureLocation = self.departureTextField.text, !departureLocation.isEmpty,
+                  let arrivalLocation = self.arrivalTextField.text, !arrivalLocation.isEmpty else {
+                      self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
+                      return
+                  }
+            
+            self.ride.method = method
+            self.ride.departureLocation = departureLocation
+            self.ride.arrivalLocation = arrivalLocation
+            
+            self.navigationController?.pushViewController(TripExtraDetailsViewController(ride: self.ride), animated: true)
+        }
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
         
         setupContainerView()
         setupTransporationMethod()
         setupLocation()
     }
     
-    func setupContainerView() {
+    private func setupContainerView() {
         containerView.backgroundColor = .clear
+        containerView.clipsToBounds = true
         view.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
@@ -43,7 +65,7 @@ class PostRideLocationViewController: UIViewController {
         }
     }
     
-    func setupTransporationMethod() {
+    private func setupTransporationMethod() {
         transportationMethodLabel.text = "Method of Transportation"
         transportationMethodLabel.textColor = .black
         containerView.addSubview(transportationMethodLabel)
@@ -53,8 +75,13 @@ class PostRideLocationViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
+        transportationPicker.delegate = self
+        transportationPicker.dataSource = self
+        
+        transportationTextField.delegate = self
         transportationTextField.placeholder = "select"
         transportationTextField.textColor = .black
+        transportationTextField.inputView = transportationPicker
         containerView.addSubview(transportationTextField)
         
         transportationTextField.snp.makeConstraints { make in
@@ -63,8 +90,8 @@ class PostRideLocationViewController: UIViewController {
             make.trailing.equalToSuperview()
         }
     }
-        
-    func setupLocation() {
+    
+    private func setupLocation() {
         locationLabel.text = "Locations"
         locationLabel.textColor = .black
         containerView.addSubview(locationLabel)
@@ -109,7 +136,7 @@ class PostRideLocationViewController: UIViewController {
         arrivalTextField.placeholder = "arrival location"
         arrivalTextField.textColor = .black
         containerView.addSubview(arrivalTextField)
-
+        
         arrivalTextField.snp.makeConstraints { make in
             make.leading.equalTo(destinationImageView.snp.trailing).offset(10)
             make.top.equalTo(destinationImageView)
@@ -118,3 +145,47 @@ class PostRideLocationViewController: UIViewController {
         }
     }
 }
+
+// MARK: - UITextFieldDelegate
+extension PostRideLocationViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return false
+    }
+    
+}
+
+// MARK: - UIPickerViewDelegate
+extension PostRideLocationViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == transportationPicker {
+            return methods[row]
+        }
+        return nil
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == transportationPicker {
+            transportationTextField.text = methods[row]
+        }
+    }
+    
+}
+
+// MARK: - UIPickerViewDataSource
+extension PostRideLocationViewController: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == transportationPicker {
+            return methods.count
+        }
+        return 0
+    }
+    
+}
+

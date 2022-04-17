@@ -21,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(didCompleteLogin), name: NSNotification.Name("didCompleteLogin"), object: nil)
         
-        GIDSignIn.sharedInstance.signOut()
         restoreSignIn()
     }
     

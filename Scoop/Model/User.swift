@@ -12,6 +12,7 @@ class User {
     var id: String = ""
     var image: UIImage? = nil
     var name: String = ""
+    var username: String = ""
     var pronouns: String = ""
     var hometown: String = ""
     var year: String = ""
