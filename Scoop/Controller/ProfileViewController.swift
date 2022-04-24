@@ -10,6 +10,7 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     private let containerView = UIView()
+    private let headerImageView = UIImageView()
     private let profileImageView = UIImageView()
     private let profileStackView = UIStackView()
     private let detailsStackView = UIStackView()
@@ -20,8 +21,9 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray5
+        view.backgroundColor = .gray
         
+        setupHeaderImage()
         setupContainerView()
         setupEditButton()
         setupProfileImageView()
@@ -39,10 +41,20 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private func setupHeaderImage() {
+        headerImageView.contentMode = .scaleAspectFill
+        headerImageView.image = UIImage(named: "ProfileHeader")
+        view.addSubview(headerImageView)
+        
+        headerImageView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+        }
+    }
+    
     private func setupEditButton() {
         let editButton = UIButton()
         editButton.setImage(UIImage(systemName: "square.and.pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36, weight: .semibold)), for: .normal)
-        editButton.tintColor = .black
+        editButton.tintColor = .scoopGreen
         editButton.imageView?.contentMode = .scaleAspectFit
         containerView.addSubview(editButton)
         
@@ -58,6 +70,8 @@ class ProfileViewController: UIViewController {
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.image = user.image
         profileImageView.clipsToBounds = true
+        profileImageView.layer.borderColor = UIColor.scoopGreen.cgColor
+        profileImageView.layer.borderWidth = 3
         view.addSubview(profileImageView)
         
         profileImageView.snp.makeConstraints { make in

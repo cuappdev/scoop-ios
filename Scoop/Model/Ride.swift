@@ -19,6 +19,7 @@ class Ride {
     var travelerCountUpper: Int = 0
     var date: String = ""
     var details: String = ""
+    var isActive: Bool = false
 }
 
 class Coordinates {
