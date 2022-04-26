@@ -10,19 +10,23 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    // MARK: Views
     private var headerView = UIImageView()
     private let postRideButton = UIButton()
     private let signOutButton = UIButton()
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
+    // MARK: Identifers
     private let homeCellIdenitifer = "HomeCell"
-    private var activeRides = [Ride]()
-    private var pendingRides = [Ride]()
     
     private enum TableSection: String, CaseIterable {
         case activeTrips = "Active Trips"
         case pendingTrips = "Pending Trips"
     }
+    
+    // MARK: Data
+    private var activeRides = [Ride]()
+    private var pendingRides = [Ride]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +66,6 @@ class HomeViewController: UIViewController {
         postRideButton.setImage(UIImage(systemName: "car.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28)), for: .normal)
         postRideButton.backgroundColor = .white
         postRideButton.layer.shadowColor = UIColor.black.cgColor
-        postRideButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         postRideButton.layer.shadowOpacity = 0.25
         postRideButton.layer.shadowOffset = CGSize(width: 0, height: 4)
         postRideButton.layer.shadowRadius = 4
@@ -171,17 +174,9 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let titleLabel = UILabel()
-        titleLabel.font = .systemFont(ofSize: 22, weight: .regular)
-        titleLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
-        
-        let headerView = UIView()
-        headerView.addSubview(titleLabel)
-        
-        titleLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+        let headerView = HomeTableViewHeader()
+        let title = self.tableView(tableView, titleForHeaderInSection: section)
+        headerView.configure(title: title)
         return headerView
     }
     

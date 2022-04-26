@@ -9,6 +9,7 @@ import UIKit
 
 class HomeTableViewCell: UITableViewCell {
     
+    // MARK: Views
     private let containerView = UIView()
     private let titleLabel = UILabel()
     private let depatureLabel = ImageLabelView()

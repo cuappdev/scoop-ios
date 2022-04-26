@@ -30,6 +30,7 @@
 		C8A544C727D193D400132ACC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8A544C627D193D400132ACC /* GoogleService-Info.plist */; };
 		C8CB5E892811CC4C007FB8A8 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E882811CC4C007FB8A8 /* Extension+UIColor.swift */; };
 		C8CB5E8C2811CEC9007FB8A8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */; };
+		C8CB5E8E28182CC3007FB8A8 /* HomeTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */; };
 		C8D2805727D9670100EDD5D3 /* PostRideSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805627D9670100EDD5D3 /* PostRideSummaryViewController.swift */; };
 		C8D2805B27D96AFA00EDD5D3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */; };
 		C8D2805D27D96B0000EDD5D3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805C27D96B0000EDD5D3 /* ProfileViewController.swift */; };
@@ -89,6 +90,7 @@
 		C8A544C627D193D400132ACC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C8CB5E882811CC4C007FB8A8 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewHeader.swift; sourceTree = "<group>"; };
 		C8D2805627D9670100EDD5D3 /* PostRideSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideSummaryViewController.swift; sourceTree = "<group>"; };
 		C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C8D2805C27D96B0000EDD5D3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 		C8A544C027D18D1300132ACC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */,
 				C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */,
 			);
 			path = View;
@@ -483,6 +486,7 @@
 				C845953927ED01B200D2C7F0 /* PhoneFormatter.swift in Sources */,
 				C8A544BD27D18D0200132ACC /* HomeViewController.swift in Sources */,
 				C8EF10CE27E50BFA00642B40 /* OnboardingViewController.swift in Sources */,
+				C8CB5E8E28182CC3007FB8A8 /* HomeTableViewHeader.swift in Sources */,
 				C8EF10CA27E2CEE400642B40 /* PreferencesViewController.swift in Sources */,
 				C8D2805D27D96B0000EDD5D3 /* ProfileViewController.swift in Sources */,
 				C8EF10C427E2BB8000642B40 /* PreferredContactViewController.swift in Sources */,
