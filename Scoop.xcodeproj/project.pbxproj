@@ -28,6 +28,9 @@
 		C8A544C427D18D5400132ACC /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A544C227D18D5400132ACC /* Keys.swift */; };
 		C8A544C527D18D5400132ACC /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8A544C327D18D5400132ACC /* Keys.plist */; };
 		C8A544C727D193D400132ACC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8A544C627D193D400132ACC /* GoogleService-Info.plist */; };
+		C8CB5E892811CC4C007FB8A8 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E882811CC4C007FB8A8 /* Extension+UIColor.swift */; };
+		C8CB5E8C2811CEC9007FB8A8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */; };
+		C8CB5E8E28182CC3007FB8A8 /* HomeTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */; };
 		C8D2805727D9670100EDD5D3 /* PostRideSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805627D9670100EDD5D3 /* PostRideSummaryViewController.swift */; };
 		C8D2805B27D96AFA00EDD5D3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */; };
 		C8D2805D27D96B0000EDD5D3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805C27D96B0000EDD5D3 /* ProfileViewController.swift */; };
@@ -85,6 +88,9 @@
 		C8A544C227D18D5400132ACC /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C8A544C327D18D5400132ACC /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		C8A544C627D193D400132ACC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C8CB5E882811CC4C007FB8A8 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
+		C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewHeader.swift; sourceTree = "<group>"; };
 		C8D2805627D9670100EDD5D3 /* PostRideSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideSummaryViewController.swift; sourceTree = "<group>"; };
 		C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C8D2805C27D96B0000EDD5D3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +163,7 @@
 			children = (
 				C845953827ED01B200D2C7F0 /* PhoneFormatter.swift */,
 				C83CD58927F3B27200EDA255 /* Extension+UIViewController.swift */,
+				C8CB5E882811CC4C007FB8A8 /* Extension+UIColor.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -232,7 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				C8A5449027D185BD00132ACC /* LoginViewController.swift */,
-				C8A544BC27D18D0200132ACC /* HomeViewController.swift */,
+				C8CB5E8A2811CEAA007FB8A8 /* Home */,
 				C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */,
 				C8D2805C27D96B0000EDD5D3 /* ProfileViewController.swift */,
 				C85E2E1B27DBFFE90004C506 /* Onboarding */,
@@ -254,6 +261,7 @@
 		C8A544C027D18D1300132ACC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */,
 				C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */,
 			);
 			path = View;
@@ -271,6 +279,15 @@
 				C8A5449527D185BF00132ACC /* Assets.xcassets */,
 			);
 			path = Supporting;
+			sourceTree = "<group>";
+		};
+		C8CB5E8A2811CEAA007FB8A8 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				C8A544BC27D18D0200132ACC /* HomeViewController.swift */,
+				C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,6 +468,7 @@
 			files = (
 				C8A5449127D185BD00132ACC /* LoginViewController.swift in Sources */,
 				C886C97627EBCD2F0029DCE9 /* Networking.swift in Sources */,
+				C8CB5E8C2811CEC9007FB8A8 /* HomeTableViewCell.swift in Sources */,
 				C8A5448D27D185BD00132ACC /* AppDelegate.swift in Sources */,
 				C83CD58827F3B0AE00EDA255 /* TripExtraDetailsViewController.swift in Sources */,
 				C83CD58727F3B0AE00EDA255 /* PostRideLocationViewController.swift in Sources */,
@@ -460,6 +478,7 @@
 				C83CD58A27F3B27200EDA255 /* Extension+UIViewController.swift in Sources */,
 				C8D2805B27D96AFA00EDD5D3 /* SearchViewController.swift in Sources */,
 				C8D2806227D9992600EDD5D3 /* Ride.swift in Sources */,
+				C8CB5E892811CC4C007FB8A8 /* Extension+UIColor.swift in Sources */,
 				C8EF10C827E2CCB800642B40 /* OnboardingPageViewController.swift in Sources */,
 				C8EF10CC27E2CEF800642B40 /* FavoritesViewController.swift in Sources */,
 				C8D2805F27D985FA00EDD5D3 /* ImageLabelView.swift in Sources */,
@@ -467,6 +486,7 @@
 				C845953927ED01B200D2C7F0 /* PhoneFormatter.swift in Sources */,
 				C8A544BD27D18D0200132ACC /* HomeViewController.swift in Sources */,
 				C8EF10CE27E50BFA00642B40 /* OnboardingViewController.swift in Sources */,
+				C8CB5E8E28182CC3007FB8A8 /* HomeTableViewHeader.swift in Sources */,
 				C8EF10CA27E2CEE400642B40 /* PreferencesViewController.swift in Sources */,
 				C8D2805D27D96B0000EDD5D3 /* ProfileViewController.swift in Sources */,
 				C8EF10C427E2BB8000642B40 /* PreferredContactViewController.swift in Sources */,
