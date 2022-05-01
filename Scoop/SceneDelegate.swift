@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(didCompleteLogin), name: NSNotification.Name("didCompleteLogin"), object: nil)
         
-        GIDSignIn.sharedInstance.signOut()
+        configureNavBar()
         restoreSignIn()
     }
     
@@ -54,12 +54,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func createTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.tintColor = .scoopGreen
         
         let homeViewController = HomeViewController()
         homeViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         
         let homeNavController = UINavigationController(rootViewController: homeViewController)
-        homeNavController.navigationBar.prefersLargeTitles = true
+        homeNavController.navigationBar.prefersLargeTitles = false
         
         let searchViewController = SearchViewController()
         searchViewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), selectedImage: UIImage(systemName: "magnifyingglass"))
@@ -76,5 +77,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.setViewControllers([homeNavController, searchNavController, profileNavController], animated: false)
         
         return tabBarController
+    }
+    
+    // MARK: Configure Nav Bar
+    private func configureNavBar() {
+        let backArrowImage = UIImage(named: "BackArrow")
+        let transparentImage = UIImage(named: "Transparent") // Hides "Back" text
+        UINavigationBar.appearance().tintColor = .black
+        UINavigationBar.appearance().backIndicatorImage = backArrowImage
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backArrowImage
+        UIBarButtonItem.appearance().setBackButtonBackgroundImage(transparentImage, for: .normal, barMetrics: .default)
     }
 }

@@ -19,6 +19,17 @@ class PostRideSummaryViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private let mapView = MKMapView()
     
+    private var ride: Ride!
+    
+    init(ride: Ride) {
+        super.init(nibName: nil, bundle: nil)
+        self.ride = ride
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -78,7 +89,7 @@ class PostRideSummaryViewController: UIViewController {
         
         let rideTitleLabel = UILabel()
         rideTitleLabel.font = .systemFont(ofSize: 24, weight: .semibold)
-        rideTitleLabel.text = "Trip to Connecticut"
+        rideTitleLabel.text = "Trip to \(ride.arrivalLocation)"
         rideTitleLabel.textColor = .black
         rideTitleLabel.numberOfLines = 2
         rideTitleLabel.adjustsFontSizeToFitWidth = true
@@ -87,9 +98,8 @@ class PostRideSummaryViewController: UIViewController {
         
         let organizerLabel = UILabel()
         organizerLabel.font = .systemFont(ofSize: 12)
-        organizerLabel.text = "Organizer: @reade"
+        organizerLabel.text = "Organizer: @\(ride.organizer.username)" // TODO: We need to support Usernames during onboarding
         organizerLabel.textColor = .black
-        organizerLabel.numberOfLines = 1
         organizerLabel.adjustsFontSizeToFitWidth = true
         detailsStackView.addArrangedSubview(organizerLabel)
         
@@ -101,25 +111,25 @@ class PostRideSummaryViewController: UIViewController {
         
         let startingLocationSection = ImageLabelView()
         startingLocationSection.label.font = .systemFont(ofSize: 18)
-        startingLocationSection.label.text = "Ithaca, NY"
+        startingLocationSection.label.text = ride.departureLocation
         startingLocationSection.imageView.image = UIImage(systemName: "paperplane", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(startingLocationSection)
         
         let endingLocationSection = ImageLabelView()
         endingLocationSection.label.font = .systemFont(ofSize: 18)
-        endingLocationSection.label.text = "Darien, CT"
+        endingLocationSection.label.text = ride.arrivalLocation
         endingLocationSection.imageView.image = UIImage(systemName: "mappin", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(endingLocationSection)
         
         let dateSection = ImageLabelView()
         dateSection.label.font = .systemFont(ofSize: 18)
-        dateSection.label.text = "3/17/22 @ 2:15 pm"
+        dateSection.label.text = ride.date
         dateSection.imageView.image = UIImage(systemName: "calendar.badge.clock", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(dateSection)
         
         let peopleSection = ImageLabelView()
         peopleSection.label.font = .systemFont(ofSize: 18)
-        peopleSection.label.text = "2 to 4 other travelers"
+        peopleSection.label.text = "\(ride.travelerCountLower) to \(ride.travelerCountUpper) other travelers"
         peopleSection.imageView.image = UIImage(systemName: "person.2", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(peopleSection)
         
@@ -136,7 +146,7 @@ class PostRideSummaryViewController: UIViewController {
         detailsTextView.isEditable = false
         detailsTextView.isScrollEnabled = false
         detailsTextView.font = .systemFont(ofSize: 14)
-        detailsTextView.text = "departure time flexible, meet at baker flagpole, $20 for gas & tolls, can also make a stop in westchester if needed"
+        detailsTextView.text = ride.details
         detailsStackView.addArrangedSubview(detailsTextView)
     }
     
