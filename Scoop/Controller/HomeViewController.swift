@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
         navigationItem.title = "Scoop"
         
         setupPostRideButton()
+        //        setupSignOutButton()
     }
     
     private func setupPostRideButton() {
