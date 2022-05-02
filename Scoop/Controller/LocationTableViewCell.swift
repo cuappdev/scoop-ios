@@ -10,6 +10,7 @@ import UIKit
 class LocationTableViewCell: UITableViewCell {
 
     private var locationLabel = UILabel()
+    static let reuseIdentifier = "locationCellReuse"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
