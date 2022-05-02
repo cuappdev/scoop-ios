@@ -13,14 +13,16 @@ protocol SearchInitialViewControllerDelegate: AnyObject {
 
 class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
-    private var searchController = UISearchController()
-    private var locationController: LocationViewController!
-    
     weak var delegate: SearchInitialViewControllerDelegate?
+    
+    private var locationController: LocationViewController!
+    private var searchController = UISearchController()
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        let searchText = searchBar.text!
+        guard let searchText = searchBar.text else{
+            return
+        }
         
         locationController.filterText(searchText: searchText)
     }
@@ -50,4 +52,5 @@ extension SearchInitialViewController: LocationViewControllerDelegate {
     func didSelectLocation(location: String) {
         delegate?.didSelectLocation(viewController: self, location: location)
     }
+    
 }
