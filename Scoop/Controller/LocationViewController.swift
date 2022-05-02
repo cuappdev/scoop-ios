@@ -13,12 +13,11 @@ protocol LocationViewControllerDelegate: AnyObject {
 
 class LocationViewController: UIViewController {
     
-    private var tableView = UITableView()
-    private var locations:[String] = []
-    private var filteredLocations:[String] = []
-    private let reuseIdentifier = "locationCellReuse"
-    private let cellHeight: CGFloat = 50
+    private let tableView = UITableView()
     
+    private let cellHeight: CGFloat = 50
+    private var filteredLocations: [String] = []
+    private var locations: [String] = []
     weak var delegate: LocationViewControllerDelegate?
     
     private var searchController: SearchInitialViewController!
@@ -29,8 +28,8 @@ class LocationViewController: UIViewController {
     }
     
     init(searchController: SearchInitialViewController) {
-        super.init(nibName: nil, bundle: nil)
         self.searchController = searchController
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -40,7 +39,7 @@ class LocationViewController: UIViewController {
     func setupTableView() {
         locations = ["Ithaca, NY", "Duffield Hall", "Gates Hall", "Klarman Hall", "Roselle Park, NJ", "Albany, NY", "Cupertino, CA", "Cayuga Lake, NY", "Rhodes Hall, NY"]
         filteredLocations = locations
-        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: LocationTableViewCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
@@ -52,9 +51,8 @@ class LocationViewController: UIViewController {
     }
     
     func filterText(searchText: String) {
-        filteredLocations = locations.filter {
-            loc in
-            if(searchText != "") {
+        filteredLocations = locations.filter { loc in
+            if(!searchText.isEmpty) {
                 let searchTextMatch = loc.lowercased().contains(searchText.lowercased())
                 return searchTextMatch
             }
@@ -64,16 +62,17 @@ class LocationViewController: UIViewController {
         }
         tableView.reloadData()
     }
+    
 }
-
+// MARK: - UITableViewDataSource
 extension LocationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredLocations.count
+        filteredLocations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? LocationTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: LocationTableViewCell.reuseIdentifier, for: indexPath) as? LocationTableViewCell {
             let location = filteredLocations[indexPath.row]
             cell.configure(location: location)
             return cell
@@ -81,12 +80,14 @@ extension LocationViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
+    
 }
-
+// MARK: - UITableViewDelegate
 extension LocationViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.didSelectLocation(location: filteredLocations[indexPath.row])
         searchController.navigationController?.popViewController(animated: true)
     }
+    
 }
