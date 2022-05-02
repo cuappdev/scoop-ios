@@ -9,14 +9,14 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    private let arrivalTextField = UITextField()
+    private let departLocationTextField = UITextField()
+    private let departureTextField = UITextField()
+    
+    private let findTripsButton = UIButton()
     private let findTripsLabel = UILabel()
     private let tripInfoStackView = UIStackView()
     private let tripInfoContainerView = UIView()
-    private let findTripsButton = UIButton()
-    
-    private let departLocationTextField = UITextField()
-    private let arrivalTextField = UITextField()
-    private let departureTextField = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +35,7 @@ class SearchViewController: UIViewController {
         tripInfoContainerView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(225)
             make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
+            make.trailing.equalToSuperview().inset(20)
         }
         
         tripInfoStackView.axis = .vertical
@@ -53,7 +53,6 @@ class SearchViewController: UIViewController {
         let departLocationView = UIView()
         let departLocationImageView = UIImageView(image: UIImage(systemName: "location", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24)))
         departLocationView.tintColor = .black
-        
         departLocationView.addSubview(departLocationImageView)
         
         departLocationTextField.placeholder = "departure location"
@@ -105,7 +104,6 @@ class SearchViewController: UIViewController {
          This line is to get rid of the background on the UIDatePicker
          datePicker.subviews[0].subviews[0].subviews[0].alpha = 0
          */
-        datePicker.setValue(UIColor.systemGray, forKey: "textColor")
         departureView.addSubview(datePicker)
         datePicker.addTarget(self, action: #selector(openDatePicker), for: .touchDown)
         departureView.addSubview(datePicker)
@@ -161,6 +159,7 @@ class SearchViewController: UIViewController {
     }
 }
 
+// MARK: - SearchInitialViewControllerDelegate
 extension SearchViewController: SearchInitialViewControllerDelegate {
     
     func didSelectLocation(viewController: UIViewController, location: String) {
@@ -170,4 +169,5 @@ extension SearchViewController: SearchInitialViewControllerDelegate {
             arrivalTextField.text = location
         }
     }
+    
 }
