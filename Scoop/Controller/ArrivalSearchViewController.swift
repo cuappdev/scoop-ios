@@ -13,4 +13,5 @@ class ArrivalSearchViewController: SearchInitialViewController {
         super.viewDidLoad()
         navigationItem.title = "Arrival Location"
     }
+    
 }
