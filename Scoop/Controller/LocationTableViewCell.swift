@@ -9,28 +9,29 @@ import UIKit
 
 class LocationTableViewCell: UITableViewCell {
 
-    private var LocationLabel = UILabel()
+    private var locationLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        LocationLabel.font = .systemFont(ofSize: 14)
-        contentView.addSubview(LocationLabel)
+        locationLabel.font = .systemFont(ofSize: 14)
+        contentView.addSubview(locationLabel)
         setupConstraints()
     }
 
     func configure(location: String) {
-        LocationLabel.text = location
+        locationLabel.text = location
     }
 
     func setupConstraints() {
         let padding: CGFloat = 8
         let labelHeight: CGFloat = 20
 
-        LocationLabel.snp.makeConstraints { make in
+        locationLabel.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().inset(padding)
             make.height.equalTo(labelHeight)
         }
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
