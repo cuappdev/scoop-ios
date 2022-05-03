@@ -14,4 +14,5 @@ class MatchesViewController: UIViewController {
         view.backgroundColor = .white
         navigationItem.title = "Best Matches"
     }
+    
 }
