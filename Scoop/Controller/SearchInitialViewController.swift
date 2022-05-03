@@ -19,11 +19,7 @@ class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UI
     private var searchController = UISearchController()
     
     func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
-        guard let searchText = searchBar.text else{
-            return
-        }
-        
+        guard let searchText = searchController.searchBar.text else { return }
         locationController.filterText(searchText: searchText)
     }
     
