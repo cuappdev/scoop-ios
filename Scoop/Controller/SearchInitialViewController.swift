@@ -26,8 +26,7 @@ class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        locationController = LocationViewController(searchController: self)
-        locationController.delegate = self
+        locationController = LocationViewController(searchController: self, delegate: self)
         setupSearchController()
     }
     
