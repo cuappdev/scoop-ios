@@ -53,7 +53,7 @@ class LocationViewController: UIViewController {
     
     func filterText(searchText: String) {
         filteredLocations = locations.filter { loc in
-            if(!searchText.isEmpty) {
+            if !searchText.isEmpty {
                 let searchTextMatch = loc.lowercased().contains(searchText.lowercased())
                 return searchTextMatch
             }
