@@ -100,10 +100,7 @@ class SearchViewController: UIViewController {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.backgroundColor = .clear
-        /*
-         This line is to get rid of the background on the UIDatePicker
-         datePicker.subviews[0].subviews[0].subviews[0].alpha = 0
-         */
+
         departureView.addSubview(datePicker)
         datePicker.addTarget(self, action: #selector(openDatePicker), for: .touchDown)
         departureView.addSubview(datePicker)
