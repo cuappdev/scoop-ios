@@ -27,11 +27,12 @@ class LocationViewController: UIViewController {
         setupTableView()
     }
     
-    init(searchController: SearchInitialViewController) {
+    init(searchController: SearchInitialViewController, delegate: LocationViewControllerDelegate) {
         self.searchController = searchController
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
