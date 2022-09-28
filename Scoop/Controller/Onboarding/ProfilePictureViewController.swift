@@ -12,6 +12,7 @@ class ProfilePictureViewController: OnboardingViewController {
     private let imagePicker = UIImagePickerController()
     private let titleLabel = UILabel()
     private let pictureImageView = UIImageView()
+    private let nextButton = UIButton(type: .custom)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +32,12 @@ class ProfilePictureViewController: OnboardingViewController {
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
-        
         setupImagePicker()
         setupPictureImageView()
         setupTitleLabel()
+        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
+            return
+        }), button: nextButton)
     }
     
     private func setupImagePicker() {
@@ -80,7 +82,6 @@ class ProfilePictureViewController: OnboardingViewController {
     private func uploadProfilePicture(_ sender: UITapGestureRecognizer) {
         present(imagePicker, animated: true)
     }
-
 }
 
 // MARK: UIImagePickerControllerDelegate
@@ -100,5 +101,4 @@ extension ProfilePictureViewController: UINavigationControllerDelegate, UIImageP
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
-    
 }

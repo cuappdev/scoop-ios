@@ -93,6 +93,17 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
         return index
     }
     
+    func setupNextButton(view: UIView, action: UIAction, button: UIButton) {
+        button.setImage(UIImage(named: "nextbutton"), for: .normal)
+        button.clipsToBounds = true
+        button.addAction(action, for: .touchUpInside) //EDIT LATER
+        view.addSubview(button)
+        
+        button.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(282)
+            make.top.equalToSuperview().offset(601)
+        }
+    }
 }
 
 // MARK: - OnboardingDelegate
@@ -106,5 +117,4 @@ extension OnboardingPageViewController: OnboardingDelegate {
         
         presentNextVC(nextVC)
     }
-    
 }

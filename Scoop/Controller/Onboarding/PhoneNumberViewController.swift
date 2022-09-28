@@ -12,6 +12,7 @@ class PhoneNumberViewController: OnboardingViewController {
     private let stackView = UIStackView()
     private let numberTextField = UITextField()
     private let formatter = PhoneFormatter()
+    private let nextButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +33,11 @@ class PhoneNumberViewController: OnboardingViewController {
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
-        
+       
         setupStackView()
+        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
+            return
+        }), button: nextButton)
     }
     
     private func setupStackView() {
@@ -81,5 +83,4 @@ extension PhoneNumberViewController: UITextFieldDelegate {
         textField.text = formatted
         return formatted.isEmpty
     }
-    
 }

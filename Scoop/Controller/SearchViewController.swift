@@ -132,7 +132,7 @@ class SearchViewController: UIViewController {
             make.height.equalTo(70)
         }
     }
-    
+
     @objc func presentDepartureSearch() {
         let depatureVC = DepartureSearchViewController()
         depatureVC.delegate = self
@@ -144,11 +144,11 @@ class SearchViewController: UIViewController {
         arrivalVC.delegate = self
         navigationController?.pushViewController(arrivalVC, animated: true)
     }
-    
+
     @objc func presentMatches() {
         navigationController?.pushViewController(MatchesViewController(), animated: true)
     }
-    
+
     @objc func openDatePicker() {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
@@ -158,7 +158,7 @@ class SearchViewController: UIViewController {
 
 // MARK: - SearchInitialViewControllerDelegate
 extension SearchViewController: SearchInitialViewControllerDelegate {
-    
+
     func didSelectLocation(viewController: UIViewController, location: String) {
         if viewController is DepartureSearchViewController {
             departLocationTextField.text = location
@@ -166,5 +166,5 @@ extension SearchViewController: SearchInitialViewControllerDelegate {
             arrivalTextField.text = location
         }
     }
-    
+
 }

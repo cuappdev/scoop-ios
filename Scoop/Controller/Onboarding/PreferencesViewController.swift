@@ -12,6 +12,7 @@ class PreferencesViewController: OnboardingViewController {
     private let stackView = UIStackView()
     private let talkativeSlider = UISlider()
     private let musicSlider = UISlider()
+    private let nextButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +30,10 @@ class PreferencesViewController: OnboardingViewController {
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
-        
         setupStackView()
+        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
+            return
+        }), button: nextButton)
     }
     
     private func setupStackView() {
@@ -138,5 +140,4 @@ class PreferencesViewController: OnboardingViewController {
             make.width.equalToSuperview()
         }
     }
-
 }

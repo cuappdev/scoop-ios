@@ -14,6 +14,7 @@ class AboutYouViewController: OnboardingViewController {
     private let pronounsTextField = UITextField()
     private let hometownTextField = UITextField()
     private let yearTextField = UITextField()
+    private let nextButton = UIButton()
     
     private let pronounsPicker = UIPickerView()
     private let yearPicker = UIPickerView()
@@ -47,9 +48,10 @@ class AboutYouViewController: OnboardingViewController {
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
-        
         setupStackView()
+        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
+            return
+        }), button: nextButton)
     }
     
     private func setupStackView() {
@@ -127,7 +129,6 @@ extension AboutYouViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return false
     }
-    
 }
 
 // MARK: - UIPickerViewDelegate
@@ -150,7 +151,6 @@ extension AboutYouViewController: UIPickerViewDelegate {
             yearTextField.text = years[row]
         }
     }
-    
 }
 
 // MARK: - UIPickerViewDataSource
@@ -168,5 +168,4 @@ extension AboutYouViewController: UIPickerViewDataSource {
         }
         return 0
     }
-    
 }
