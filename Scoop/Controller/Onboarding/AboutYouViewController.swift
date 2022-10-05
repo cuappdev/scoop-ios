@@ -14,7 +14,6 @@ class AboutYouViewController: OnboardingViewController {
     private let pronounsTextField = UITextField()
     private let hometownTextField = UITextField()
     private let yearTextField = UITextField()
-    private let nextButton = UIButton()
     
     private let pronounsPicker = UIPickerView()
     private let yearPicker = UIPickerView()
@@ -49,9 +48,9 @@ class AboutYouViewController: OnboardingViewController {
         }
         
         setupStackView()
-        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
-        }), button: nextButton)
+        }))
     }
     
     private func setupStackView() {

@@ -12,7 +12,6 @@ class PhoneNumberViewController: OnboardingViewController {
     private let stackView = UIStackView()
     private let numberTextField = UITextField()
     private let formatter = PhoneFormatter()
-    private let nextButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +34,9 @@ class PhoneNumberViewController: OnboardingViewController {
         }
        
         setupStackView()
-        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
-        }), button: nextButton)
+        }))
     }
     
     private func setupStackView() {

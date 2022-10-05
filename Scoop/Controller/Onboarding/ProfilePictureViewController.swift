@@ -12,7 +12,6 @@ class ProfilePictureViewController: OnboardingViewController {
     private let imagePicker = UIImagePickerController()
     private let titleLabel = UILabel()
     private let pictureImageView = UIImageView()
-    private let nextButton = UIButton(type: .custom)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +34,9 @@ class ProfilePictureViewController: OnboardingViewController {
         setupImagePicker()
         setupPictureImageView()
         setupTitleLabel()
-        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
-        }), button: nextButton)
+        }))
     }
     
     private func setupImagePicker() {

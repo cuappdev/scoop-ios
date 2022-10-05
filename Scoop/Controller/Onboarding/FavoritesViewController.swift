@@ -13,7 +13,6 @@ class FavoritesViewController: OnboardingViewController {
     private let snackTextField = UITextField()
     private let songTextField = UITextField()
     private let stopTextField = UITextField()
-    private let nextButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +36,9 @@ class FavoritesViewController: OnboardingViewController {
         }
         
         setupStackView()
-        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
-        }), button: nextButton)
+        }))
     }
     
     private func setupStackView() {

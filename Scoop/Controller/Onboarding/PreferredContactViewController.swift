@@ -12,7 +12,6 @@ class PreferredContactViewController: OnboardingViewController {
     private let stackView = UIStackView()
     private let emailButton = UIButton()
     private let phoneButton = UIButton()
-    private let nextButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +36,9 @@ class PreferredContactViewController: OnboardingViewController {
         }
         
         
-        setupNextButton(view: self.view, action: nextAction ?? UIAction(handler: { _ in
-            print("I'm bugging")
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
-        }), button: nextButton)
+        }))
     }
 
     private func setupStackView() {

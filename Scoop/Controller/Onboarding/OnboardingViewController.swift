@@ -21,15 +21,22 @@ class OnboardingViewController: UIViewController {
         view.backgroundColor = .white
     }
     
-    func setupNextButton(view: UIView, action: UIAction, button: UIButton) {
+    func setupNextButton(action: UIAction) {
+        let trailingButtonMultiplier = 0.14
+        let bottomButtonMultiplier = 0.12
+        
+        let button = UIButton()
         button.setImage(UIImage(named: "nextbutton"), for: .normal)
         button.clipsToBounds = true
-        button.addAction(action, for: .touchUpInside) //EDIT LATER
+        button.addAction(action, for: .touchUpInside)
         view.addSubview(button)
         
         button.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(282)
-            make.top.equalToSuperview().offset(601)
+
+            let screenSize = UIScreen.main.bounds
+            print(screenSize.width)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(screenSize.width * trailingButtonMultiplier)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(screenSize.height * bottomButtonMultiplier)
         }
     }
 }
