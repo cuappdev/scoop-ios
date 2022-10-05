@@ -26,10 +26,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func restoreSignIn() {
-//        guard GIDSignIn.sharedInstance.hasPreviousSignIn() else {
+        guard GIDSignIn.sharedInstance.hasPreviousSignIn() else {
             self.window?.rootViewController = LoginViewController()
             return
-//        }
+        }
         
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             if let error = error {
@@ -43,7 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 return
             }
             
-//            self.didCompleteLogin()
+            self.didCompleteLogin()
         }
     }
     
