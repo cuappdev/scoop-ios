@@ -106,5 +106,4 @@ extension OnboardingPageViewController: OnboardingDelegate {
         
         presentNextVC(nextVC)
     }
-    
 }

@@ -47,9 +47,10 @@ class AboutYouViewController: OnboardingViewController {
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
-        
         setupStackView()
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
+            return
+        }))
     }
     
     private func setupStackView() {
@@ -127,7 +128,6 @@ extension AboutYouViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return false
     }
-    
 }
 
 // MARK: - UIPickerViewDelegate
@@ -150,7 +150,6 @@ extension AboutYouViewController: UIPickerViewDelegate {
             yearTextField.text = years[row]
         }
     }
-    
 }
 
 // MARK: - UIPickerViewDataSource
@@ -168,5 +167,4 @@ extension AboutYouViewController: UIPickerViewDataSource {
         }
         return 0
     }
-    
 }

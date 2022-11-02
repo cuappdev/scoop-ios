@@ -35,9 +35,10 @@ class FavoritesViewController: OnboardingViewController {
             self.dismiss(animated: true)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", image: nil, primaryAction: nextAction, menu: nil)
-        
         setupStackView()
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
+            return
+        }))
     }
     
     private func setupStackView() {

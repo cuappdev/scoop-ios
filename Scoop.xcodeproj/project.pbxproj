@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C991EB828E0B2E7006301D9 /* ArrivalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB028E0B2E7006301D9 /* ArrivalSearchViewController.swift */; };
+		2C991EB928E0B2E7006301D9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB128E0B2E7006301D9 /* SearchViewController.swift */; };
+		2C991EBA28E0B2E7006301D9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB228E0B2E7006301D9 /* ViewController.swift */; };
+		2C991EBB28E0B2E7006301D9 /* SearchInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB328E0B2E7006301D9 /* SearchInitialViewController.swift */; };
+		2C991EBC28E0B2E7006301D9 /* DepartureSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB428E0B2E7006301D9 /* DepartureSearchViewController.swift */; };
+		2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */; };
+		2C991EBE28E0B2E7006301D9 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB628E0B2E7006301D9 /* LocationViewController.swift */; };
+		2C991EBF28E0B2E7006301D9 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */; };
+		2CFE88F628DBCD5900064F51 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CFE88F428DBCD5900064F51 /* GoogleService-Info.plist */; };
+		2CFE88F728DBCD5900064F51 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CFE88F528DBCD5900064F51 /* Keys.plist */; };
 		8E4464A344C5B1529768FAF3 /* Pods_Scoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */; };
 		C83419EF27E65A4B00491306 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83419EE27E65A4B00491306 /* User.swift */; };
 		C83CD58727F3B0AE00EDA255 /* PostRideLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CD58527F3B0AE00EDA255 /* PostRideLocationViewController.swift */; };
@@ -26,8 +36,6 @@
 		C8A544B027D185BF00132ACC /* ScoopUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A544AF27D185BF00132ACC /* ScoopUITestsLaunchTests.swift */; };
 		C8A544BD27D18D0200132ACC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A544BC27D18D0200132ACC /* HomeViewController.swift */; };
 		C8A544C427D18D5400132ACC /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A544C227D18D5400132ACC /* Keys.swift */; };
-		C8A544C527D18D5400132ACC /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8A544C327D18D5400132ACC /* Keys.plist */; };
-		C8A544C727D193D400132ACC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8A544C627D193D400132ACC /* GoogleService-Info.plist */; };
 		C8CB5E892811CC4C007FB8A8 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E882811CC4C007FB8A8 /* Extension+UIColor.swift */; };
 		C8CB5E8C2811CEC9007FB8A8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */; };
 		C8CB5E8E28182CC3007FB8A8 /* HomeTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */; };
@@ -63,7 +71,18 @@
 
 /* Begin PBXFileReference section */
 		164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scoop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1D395A7C12CE21AD7158CDF /* Pods-Scoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.debug.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.debug.xcconfig"; sourceTree = "<group>"; };
+		2C991EB028E0B2E7006301D9 /* ArrivalSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalSearchViewController.swift; sourceTree = "<group>"; };
+		2C991EB128E0B2E7006301D9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		2C991EB228E0B2E7006301D9 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2C991EB328E0B2E7006301D9 /* SearchInitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchInitialViewController.swift; sourceTree = "<group>"; };
+		2C991EB428E0B2E7006301D9 /* DepartureSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepartureSearchViewController.swift; sourceTree = "<group>"; };
+		2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		2C991EB628E0B2E7006301D9 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
+		2CFE88F428DBCD5900064F51 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2CFE88F528DBCD5900064F51 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		9430FC737D049567581E79B9 /* Pods-Scoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.debug.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.debug.xcconfig"; sourceTree = "<group>"; };
+		BD63C2092AD72CD946F81950 /* Pods-Scoop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.release.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.release.xcconfig"; sourceTree = "<group>"; };
 		C83419EE27E65A4B00491306 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C83CD58527F3B0AE00EDA255 /* PostRideLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostRideLocationViewController.swift; path = "Scoop/Controller/Ride Posting/PostRideLocationViewController.swift"; sourceTree = SOURCE_ROOT; };
 		C83CD58627F3B0AE00EDA255 /* TripExtraDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TripExtraDetailsViewController.swift; path = "Scoop/Controller/Ride Posting/TripExtraDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
@@ -86,8 +105,6 @@
 		C8A544AF27D185BF00132ACC /* ScoopUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoopUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C8A544BC27D18D0200132ACC /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C8A544C227D18D5400132ACC /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
-		C8A544C327D18D5400132ACC /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
-		C8A544C627D193D400132ACC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C8CB5E882811CC4C007FB8A8 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewHeader.swift; sourceTree = "<group>"; };
@@ -102,7 +119,6 @@
 		C8EF10C927E2CEE400642B40 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		C8EF10CB27E2CEF800642B40 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		C8EF10CD27E50BFA00642B40 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		E6752F08D58B27C9706D7CCE /* Pods-Scoop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.release.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,8 +150,8 @@
 		8FBFA8714955D4038DDF0D52 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A1D395A7C12CE21AD7158CDF /* Pods-Scoop.debug.xcconfig */,
-				E6752F08D58B27C9706D7CCE /* Pods-Scoop.release.xcconfig */,
+				9430FC737D049567581E79B9 /* Pods-Scoop.debug.xcconfig */,
+				BD63C2092AD72CD946F81950 /* Pods-Scoop.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -238,6 +254,14 @@
 		C8A544BE27D18D0800132ACC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2C991EB028E0B2E7006301D9 /* ArrivalSearchViewController.swift */,
+				2C991EB428E0B2E7006301D9 /* DepartureSearchViewController.swift */,
+				2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */,
+				2C991EB628E0B2E7006301D9 /* LocationViewController.swift */,
+				2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */,
+				2C991EB328E0B2E7006301D9 /* SearchInitialViewController.swift */,
+				2C991EB128E0B2E7006301D9 /* SearchViewController.swift */,
+				2C991EB228E0B2E7006301D9 /* ViewController.swift */,
 				C8A5449027D185BD00132ACC /* LoginViewController.swift */,
 				C8CB5E8A2811CEAA007FB8A8 /* Home */,
 				C8D2805A27D96AFA00EDD5D3 /* SearchViewController.swift */,
@@ -270,11 +294,11 @@
 		C8A544C127D18D1B00132ACC /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				2CFE88F428DBCD5900064F51 /* GoogleService-Info.plist */,
+				2CFE88F528DBCD5900064F51 /* Keys.plist */,
 				C845953727ED01A400D2C7F0 /* Utilities */,
 				C8A544C227D18D5400132ACC /* Keys.swift */,
-				C8A544C327D18D5400132ACC /* Keys.plist */,
 				C8A5449A27D185BF00132ACC /* Info.plist */,
-				C8A544C627D193D400132ACC /* GoogleService-Info.plist */,
 				C8A5449727D185BF00132ACC /* LaunchScreen.storyboard */,
 				C8A5449527D185BF00132ACC /* Assets.xcassets */,
 			);
@@ -301,7 +325,7 @@
 				C8A5448527D185BD00132ACC /* Sources */,
 				C8A5448627D185BD00132ACC /* Frameworks */,
 				C8A5448727D185BD00132ACC /* Resources */,
-				2C22D24C45A776A94FCC4B34 /* [CP] Embed Pods Frameworks */,
+				8A632C6414BAE6D83ED8989B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -396,10 +420,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8A544C527D18D5400132ACC /* Keys.plist in Resources */,
-				C8A544C727D193D400132ACC /* GoogleService-Info.plist in Resources */,
+				2CFE88F728DBCD5900064F51 /* Keys.plist in Resources */,
 				C8A5449927D185BF00132ACC /* LaunchScreen.storyboard in Resources */,
 				C8A5449627D185BF00132ACC /* Assets.xcassets in Resources */,
+				2CFE88F628DBCD5900064F51 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,23 +444,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2C22D24C45A776A94FCC4B34 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Scoop/Pods-Scoop-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Scoop/Pods-Scoop-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Scoop/Pods-Scoop-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		77E809C4032732B51F52BC4A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -459,6 +466,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8A632C6414BAE6D83ED8989B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Scoop/Pods-Scoop-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Scoop/Pods-Scoop-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Scoop/Pods-Scoop-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -466,12 +490,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C991EBA28E0B2E7006301D9 /* ViewController.swift in Sources */,
+				2C991EBB28E0B2E7006301D9 /* SearchInitialViewController.swift in Sources */,
 				C8A5449127D185BD00132ACC /* LoginViewController.swift in Sources */,
 				C886C97627EBCD2F0029DCE9 /* Networking.swift in Sources */,
 				C8CB5E8C2811CEC9007FB8A8 /* HomeTableViewCell.swift in Sources */,
 				C8A5448D27D185BD00132ACC /* AppDelegate.swift in Sources */,
 				C83CD58827F3B0AE00EDA255 /* TripExtraDetailsViewController.swift in Sources */,
+				2C991EBF28E0B2E7006301D9 /* MatchesViewController.swift in Sources */,
 				C83CD58727F3B0AE00EDA255 /* PostRideLocationViewController.swift in Sources */,
+				2C991EB828E0B2E7006301D9 /* ArrivalSearchViewController.swift in Sources */,
 				C85E2E1F27DC0D850004C506 /* AboutYouViewController.swift in Sources */,
 				C85E2E1D27DBFFFA0004C506 /* ProfilePictureViewController.swift in Sources */,
 				C8EF10C627E2CA9D00642B40 /* PhoneNumberViewController.swift in Sources */,
@@ -484,15 +512,19 @@
 				C8D2805F27D985FA00EDD5D3 /* ImageLabelView.swift in Sources */,
 				C8A5448F27D185BD00132ACC /* SceneDelegate.swift in Sources */,
 				C845953927ED01B200D2C7F0 /* PhoneFormatter.swift in Sources */,
+				2C991EBE28E0B2E7006301D9 /* LocationViewController.swift in Sources */,
 				C8A544BD27D18D0200132ACC /* HomeViewController.swift in Sources */,
 				C8EF10CE27E50BFA00642B40 /* OnboardingViewController.swift in Sources */,
+				2C991EBC28E0B2E7006301D9 /* DepartureSearchViewController.swift in Sources */,
 				C8CB5E8E28182CC3007FB8A8 /* HomeTableViewHeader.swift in Sources */,
 				C8EF10CA27E2CEE400642B40 /* PreferencesViewController.swift in Sources */,
 				C8D2805D27D96B0000EDD5D3 /* ProfileViewController.swift in Sources */,
 				C8EF10C427E2BB8000642B40 /* PreferredContactViewController.swift in Sources */,
 				C8D2805727D9670100EDD5D3 /* PostRideSummaryViewController.swift in Sources */,
 				C8A544C427D18D5400132ACC /* Keys.swift in Sources */,
+				2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */,
 				C83419EF27E65A4B00491306 /* User.swift in Sources */,
+				2C991EB928E0B2E7006301D9 /* SearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,7 +690,7 @@
 		};
 		C8A544B427D185BF00132ACC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1D395A7C12CE21AD7158CDF /* Pods-Scoop.debug.xcconfig */;
+			baseConfigurationReference = 9430FC737D049567581E79B9 /* Pods-Scoop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -689,7 +721,7 @@
 		};
 		C8A544B527D185BF00132ACC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E6752F08D58B27C9706D7CCE /* Pods-Scoop.release.xcconfig */;
+			baseConfigurationReference = BD63C2092AD72CD946F81950 /* Pods-Scoop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

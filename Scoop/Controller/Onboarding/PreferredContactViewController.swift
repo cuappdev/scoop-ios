@@ -35,7 +35,10 @@ class PreferredContactViewController: OnboardingViewController {
             self.navigationController?.pushViewController(phoneVC, animated: true)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
+        
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
+            return
+        }))
     }
 
     private func setupStackView() {
@@ -88,5 +91,4 @@ class PreferredContactViewController: OnboardingViewController {
         emailButton.addAction(selectContactAction, for: .touchUpInside)
         phoneButton.addAction(selectContactAction, for: .touchUpInside)
     }
-    
 }
