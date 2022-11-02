@@ -10,13 +10,13 @@ import UIKit
 class PhoneNumberViewController: OnboardingViewController {
     
     private let stackView = UIStackView()
-    private let numberTextField = UITextField()
+    private let numberTextField = OnboardingTextField()
     private let formatter = PhoneFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationItem.title = "About You"
+        setupTitle(name: "About you")
         
         nextAction = UIAction { _ in
             guard let navCtrl = self.navigationController else {
@@ -29,10 +29,11 @@ class PhoneNumberViewController: OnboardingViewController {
             }
             
             Networking.shared.currentUser.phoneNumber =  phoneNumber
-            
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
-       
+        
+        setupTitleLines()
+        setBackButtonVisibility(isHidden: true)
         setupStackView()
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
@@ -40,29 +41,43 @@ class PhoneNumberViewController: OnboardingViewController {
     }
     
     private func setupStackView() {
+        let textFieldBorderWidth = 1.0
+        let textFieldCornerRadius = 8.0
+        let textFieldBorderColor = UIColor(red: 0.584, green: 0.616, blue: 0.647, alpha: 1).cgColor
+        let leadtrailInset = 20
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = 20
+        stackView.spacing = 12
         stackView.alignment = .leading
         view.addSubview(stackView)
 
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(60)
+            make.leading.trailing.equalToSuperview().inset(leadtrailInset)
             make.center.equalToSuperview()
         }
         
         let titleLabel = UILabel()
         titleLabel.font = .systemFont(ofSize: 22)
-        titleLabel.text = "Phone Number"
+        titleLabel.text = "PHONE NUMBER"
         titleLabel.textColor = .black
+        titleLabel.font = UIFont(name: "Rambla-Regular", size: 16)
         stackView.addArrangedSubview(titleLabel)
         
         numberTextField.delegate = self
         numberTextField.font = .systemFont(ofSize: 22)
         numberTextField.textColor = .darkGray
         numberTextField.placeholder = "000-000-0000"
+        numberTextField.layer.borderWidth = 1
+        numberTextField.layer.borderWidth = textFieldBorderWidth
+        numberTextField.layer.borderColor = textFieldBorderColor
+        numberTextField.layer.cornerRadius = textFieldCornerRadius
+        numberTextField.font = UIFont(name: "SFPro", size: 16)
         numberTextField.keyboardType = .phonePad
         stackView.addArrangedSubview(numberTextField)
+        numberTextField.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).inset(-10)
+            make.leading.trailing.equalToSuperview()
+        }
     }
     
     func validateNumber(value: String) -> Bool {
