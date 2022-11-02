@@ -30,7 +30,7 @@ class PreferencesViewController: OnboardingViewController {
         }
         
         setupTitleLines()
-        setBackButtonVisibility(isHidden: false)
+        backButton.isHidden = false
         setupStackView()
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
@@ -121,7 +121,7 @@ class PreferencesViewController: OnboardingViewController {
         talkativeSlider.minimumTrackTintColor = .black
         talkativeSlider.maximumTrackTintColor = .black
         talkativeSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
-        talkativeSlider.value = talkativeSlider.maximumValue/2
+        talkativeSlider.value = talkativeSlider.maximumValue / 2
         stackView.addArrangedSubview(talkativeSlider)
         stackView.setCustomSpacing(60, after: talkativeSlider)
         

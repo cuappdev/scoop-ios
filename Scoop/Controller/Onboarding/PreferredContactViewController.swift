@@ -15,7 +15,7 @@ class PreferredContactViewController: OnboardingViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setBackButtonVisibility(isHidden: false)
+        backButton.isHidden = false
     }
 
     override func viewDidLoad() {
@@ -36,11 +36,11 @@ class PreferredContactViewController: OnboardingViewController {
             }
             let phoneVC = PhoneNumberViewController()
             phoneVC.delegate = self.delegate
-            self.setBackButtonVisibility(isHidden: true)
+            self.backButton.isHidden = true
             self.navigationController?.pushViewController(phoneVC, animated: true)
         }
         
-        setBackButtonVisibility(isHidden: false)
+        backButton.isHidden = false
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
         }))

@@ -49,7 +49,7 @@ class AboutYouViewController: OnboardingViewController {
         
         setupTitleLines()
         setupStackView()
-        setBackButtonVisibility(isHidden: true)
+        backButton.isHidden = true
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
         }))
@@ -58,8 +58,8 @@ class AboutYouViewController: OnboardingViewController {
     
     private func setupStackView() {
         let stackviewMultiplier = 0.10
-        let leadtrailInset = 20.0
-        let spacing = -12
+        let leadingTrailingInset = 20.0
+        let spacing = 12.0
         let screenSize = UIScreen.main.bounds
         let labelFont = UIFont(name: "Rambla-Regular", size: 16)
         let textFieldBorderWidth = 1.0
@@ -74,7 +74,7 @@ class AboutYouViewController: OnboardingViewController {
         view.addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(leadtrailInset)
+            make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
             make.top.equalTo(view.safeAreaLayoutGuide).inset(stackviewMultiplier * screenSize.height)
         }
         
@@ -83,12 +83,12 @@ class AboutYouViewController: OnboardingViewController {
         nameLabel.text = "NAME"
         nameLabel.textColor = .black
         stackView.addArrangedSubview(nameLabel)
+        stackView.setCustomSpacing(spacing, after: nameLabel)
         
         nameTextField.textColor = .darkGray
         nameTextField.placeholder = "Enter name..."
         stackView.addArrangedSubview(nameTextField)
         nameTextField.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).inset(spacing)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(43)
         }
@@ -97,6 +97,7 @@ class AboutYouViewController: OnboardingViewController {
         pronounsLabel.text = "PRONOUNS"
         pronounsLabel.textColor = .black
         stackView.addArrangedSubview(pronounsLabel)
+        stackView.setCustomSpacing(spacing, after: pronounsLabel)
         
         pronounsPicker.delegate = self
         pronounsPicker.dataSource = self
@@ -107,7 +108,6 @@ class AboutYouViewController: OnboardingViewController {
         pronounsTextField.inputView = pronounsPicker
         stackView.addArrangedSubview(pronounsTextField)
         pronounsTextField.snp.makeConstraints { make in
-            make.top.equalTo(pronounsLabel.snp.bottom).inset(spacing)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(43)
         }
@@ -116,12 +116,12 @@ class AboutYouViewController: OnboardingViewController {
         hometownLabel.text = "HOMETOWN"
         hometownLabel.textColor = .black
         stackView.addArrangedSubview(hometownLabel)
+        stackView.setCustomSpacing(spacing, after: hometownLabel)
         
         hometownTextField.textColor = .darkGray
         hometownTextField.placeholder = "Enter town..."
         stackView.addArrangedSubview(hometownTextField)
         hometownTextField.snp.makeConstraints { make in
-            make.top.equalTo(hometownLabel.snp.bottom).inset(spacing)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(43)
         }
@@ -130,6 +130,7 @@ class AboutYouViewController: OnboardingViewController {
         yearLabel.text = "CLASS YEAR"
         yearLabel.textColor = .black
         stackView.addArrangedSubview(yearLabel)
+        stackView.setCustomSpacing(spacing, after: yearLabel)
         
         yearPicker.delegate = self
         yearPicker.dataSource = self
@@ -141,13 +142,14 @@ class AboutYouViewController: OnboardingViewController {
         yearTextField.inputView = yearPicker
         stackView.addArrangedSubview(yearTextField)
         yearTextField.snp.makeConstraints { make in
-            make.top.equalTo(yearLabel.snp.bottom).inset(spacing)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(43)
         }
+        
         [nameLabel, pronounsLabel, hometownLabel, yearLabel].forEach { label in
             label.font = labelFont
         }
+        
         [nameTextField, pronounsTextField, hometownTextField, yearTextField].forEach { text in
             text.layer.borderWidth = textFieldBorderWidth
             text.layer.borderColor = textFieldBorderColor

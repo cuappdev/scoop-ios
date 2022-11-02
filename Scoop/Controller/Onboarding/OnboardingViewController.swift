@@ -14,8 +14,8 @@ protocol OnboardingDelegate: AnyObject {
 
 class OnboardingViewController: UIViewController {
     
-    internal weak var delegate: OnboardingDelegate?
-    internal var nextAction: UIAction?
+    weak var delegate: OnboardingDelegate?
+    var nextAction: UIAction?
     let backButton = UIButton()
 
     override func viewDidLoad() {
@@ -46,15 +46,9 @@ class OnboardingViewController: UIViewController {
         self.navigationController?.navigationBar.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(25)
-            make.top.centerY.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
     }
-
-    func setBackButtonVisibility(isHidden: Bool) {
-        backButton.isHidden = isHidden
-        backButton.isEnabled = !isHidden
-    }
-    
     
     func setupTitle(name: String) {
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)]

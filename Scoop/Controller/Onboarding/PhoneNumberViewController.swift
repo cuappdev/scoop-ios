@@ -33,7 +33,7 @@ class PhoneNumberViewController: OnboardingViewController {
         }
         
         setupTitleLines()
-        setBackButtonVisibility(isHidden: true)
+        backButton.isHidden = true
         setupStackView()
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
@@ -44,7 +44,7 @@ class PhoneNumberViewController: OnboardingViewController {
         let textFieldBorderWidth = 1.0
         let textFieldCornerRadius = 8.0
         let textFieldBorderColor = UIColor(red: 0.584, green: 0.616, blue: 0.647, alpha: 1).cgColor
-        let leadtrailInset = 20
+        let leadingTrailingInset = 20
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 12
@@ -52,7 +52,7 @@ class PhoneNumberViewController: OnboardingViewController {
         view.addSubview(stackView)
 
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(leadtrailInset)
+            make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
             make.center.equalToSuperview()
         }
         
@@ -75,7 +75,6 @@ class PhoneNumberViewController: OnboardingViewController {
         numberTextField.keyboardType = .phonePad
         stackView.addArrangedSubview(numberTextField)
         numberTextField.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).inset(-10)
             make.leading.trailing.equalToSuperview()
         }
     }

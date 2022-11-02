@@ -49,8 +49,8 @@ class FavoritesViewController: OnboardingViewController {
         let textFieldCornerRadius = 8.0
         let textFieldBorderColor = UIColor(red: 0.584, green: 0.616, blue: 0.647, alpha: 1).cgColor
         let textFieldFont = UIFont(name: "SFPro", size: 16)
-        let leadtrailInset = 25
-        let spacing = -12
+        let leadingTrailingInset = 25
+        let spacing = 12.0
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 24
@@ -58,7 +58,7 @@ class FavoritesViewController: OnboardingViewController {
         view.addSubview(stackView)
 
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(leadtrailInset)
+            make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
             make.centerY.equalToSuperview()
         }
         
@@ -66,12 +66,12 @@ class FavoritesViewController: OnboardingViewController {
         songLabel.text = "ROADTRIP SONG"
         songLabel.textColor = .black
         stackView.addArrangedSubview(songLabel)
+        stackView.setCustomSpacing(spacing, after: songLabel)
         
         songTextField.textColor = .darkGray
         songTextField.placeholder = "Enter song..."
         stackView.addArrangedSubview(songTextField)
         songTextField.snp.makeConstraints { make in
-            make.top.equalTo(songLabel.snp.bottom).inset(spacing)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(43)
         }
@@ -80,12 +80,12 @@ class FavoritesViewController: OnboardingViewController {
         snackLabel.text = "ROADTRIP SNACK"
         snackLabel.textColor = .black
         stackView.addArrangedSubview(snackLabel)
+        stackView.setCustomSpacing(spacing, after: snackLabel)
         
         snackTextField.textColor = .darkGray
         snackTextField.placeholder = "Enter snack..."
         stackView.addArrangedSubview(snackTextField)
         snackTextField.snp.makeConstraints { make in
-            make.top.equalTo(snackLabel.snp.bottom).inset(spacing)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(43)
         }
@@ -94,12 +94,12 @@ class FavoritesViewController: OnboardingViewController {
         stopLabel.text = "ROADTRIP STOP"
         stopLabel.textColor = .black
         stackView.addArrangedSubview(stopLabel)
+        stackView.setCustomSpacing(spacing, after: stopLabel)
         
         stopTextField.textColor = .darkGray
         stopTextField.placeholder = "Enter stop..."
         stackView.addArrangedSubview(stopTextField)
         stopTextField.snp.makeConstraints { make in
-            make.top.equalTo(stopLabel.snp.bottom).inset(spacing)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(43)
         }

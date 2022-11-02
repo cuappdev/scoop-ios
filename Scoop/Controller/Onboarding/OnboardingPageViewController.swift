@@ -63,13 +63,14 @@ class OnboardingPageViewController: UIPageViewController {
     }
     
     private func presentPreviousVC(_ viewController: UIViewController) {
-        if let viewControllerIndex = pages.firstIndex(of: viewController) {
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
+            return
+        }
             if viewControllerIndex > 0 {
                 let vc = pages[viewControllerIndex - 1]
                 self.setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
             }
         }
-    }
 
 }
 
