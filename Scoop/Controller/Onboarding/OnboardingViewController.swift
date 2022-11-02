@@ -70,7 +70,7 @@ class OnboardingViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide)
         }
         
-        let solidline = UILabel()
+        let solidline = UIView()
         solidline.backgroundColor = .black
         view.addSubview(solidline)
         solidline.snp.makeConstraints { make in

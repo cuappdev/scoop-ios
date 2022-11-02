@@ -59,6 +59,7 @@ class PreferencesViewController: OnboardingViewController {
         let talkingLabel = UILabel()
         talkingLabel.font = UIFont(name: "Rambla-Regular", size: 16)
         talkingLabel.text = "HOW TALKATIVE ARE YOU?"
+        talkingLabel.accessibilityLabel = "how talkative are you?"
         talkingLabel.numberOfLines = 2
         talkingLabel.textColor = .black
         view.addSubview(talkingLabel)
@@ -79,6 +80,7 @@ class PreferencesViewController: OnboardingViewController {
         let musicLabel = UILabel()
         musicLabel.font = UIFont(name: "Rambla-Regular", size: 16)
         musicLabel.text = "DO YOU LIKE LISTENING TO MUSIC?"
+        musicLabel.accessibilityLabel = "do you like listening to music?"
         musicLabel.numberOfLines = 2
         musicLabel.textColor = .black
         view.addSubview(musicLabel)

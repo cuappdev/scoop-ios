@@ -51,7 +51,7 @@ class ProfilePictureViewController: OnboardingViewController {
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.clipsToBounds = true
         pictureImageView.layer.cornerRadius = 100
-        pictureImageView.layer.borderColor = UIColor(red: 0.376, green: 0.749, blue: 0.627, alpha: 1).cgColor
+        pictureImageView.layer.borderColor = UIColor.scoopGreen.cgColor
         pictureImageView.layer.borderWidth = 3
         view.addSubview(pictureImageView)
         
@@ -71,8 +71,13 @@ class ProfilePictureViewController: OnboardingViewController {
             self.dismiss(animated: true)
         }
         
-        skipButton.setTitle("  Add photo later  ", for: .normal)
-        skipButton.backgroundColor = UIColor(red: 0.592, green: 0.592, blue: 0.592, alpha: 1)
+        skipButton.setTitle("Add photo later", for: .normal)
+        if #available(iOS 15.0, *) {
+            skipButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 19, bottom: 0, trailing: 19)
+        } else {
+            skipButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 19, bottom: 0, right: 19)
+        }
+        skipButton.backgroundColor = UIColor.skipButtonColor
         skipButton.layer.cornerRadius = 10
         skipButton.addAction(skipAction, for: .touchUpInside)
         view.addSubview(skipButton)
@@ -84,8 +89,13 @@ class ProfilePictureViewController: OnboardingViewController {
             make.centerX.equalToSuperview()
         }
         
-        uploadButton.setTitle("  Upload  ", for: .normal)
-        uploadButton.backgroundColor = UIColor(red: 0.227, green: 0.573, blue: 0.459, alpha: 1)
+        uploadButton.setTitle("Upload", for: .normal)
+        if #available(iOS 15.0, *) {
+            uploadButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 64, bottom: 0, trailing: 64)
+        } else {
+            uploadButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64)
+        }
+        uploadButton.backgroundColor = UIColor.scoopGreen
         uploadButton.layer.cornerRadius = 10
         uploadButton.addAction(nextAction ?? UIAction(handler: { _ in
             return

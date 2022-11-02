@@ -64,7 +64,6 @@ class AboutYouViewController: OnboardingViewController {
         let labelFont = UIFont(name: "Rambla-Regular", size: 16)
         let textFieldBorderWidth = 1.0
         let textFieldCornerRadius = 8.0
-        let textFieldBorderColor = UIColor(red: 0.584, green: 0.616, blue: 0.647, alpha: 1).cgColor
         let textFieldFont = UIFont(name: "SFPro", size: 16)
         
         stackView.axis = .vertical
@@ -81,6 +80,7 @@ class AboutYouViewController: OnboardingViewController {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: 16)
         nameLabel.text = "NAME"
+        nameLabel.accessibilityLabel = "name"
         nameLabel.textColor = .black
         stackView.addArrangedSubview(nameLabel)
         stackView.setCustomSpacing(spacing, after: nameLabel)
@@ -95,6 +95,7 @@ class AboutYouViewController: OnboardingViewController {
         
         let pronounsLabel = UILabel()
         pronounsLabel.text = "PRONOUNS"
+        pronounsLabel.accessibilityLabel = "pronouns"
         pronounsLabel.textColor = .black
         stackView.addArrangedSubview(pronounsLabel)
         stackView.setCustomSpacing(spacing, after: pronounsLabel)
@@ -114,6 +115,7 @@ class AboutYouViewController: OnboardingViewController {
         
         let hometownLabel = UILabel()
         hometownLabel.text = "HOMETOWN"
+        hometownLabel.accessibilityLabel = "hometown"
         hometownLabel.textColor = .black
         stackView.addArrangedSubview(hometownLabel)
         stackView.setCustomSpacing(spacing, after: hometownLabel)
@@ -128,6 +130,7 @@ class AboutYouViewController: OnboardingViewController {
         
         let yearLabel = UILabel()
         yearLabel.text = "CLASS YEAR"
+        yearLabel.accessibilityLabel = "class year"
         yearLabel.textColor = .black
         stackView.addArrangedSubview(yearLabel)
         stackView.setCustomSpacing(spacing, after: yearLabel)
@@ -152,7 +155,7 @@ class AboutYouViewController: OnboardingViewController {
         
         [nameTextField, pronounsTextField, hometownTextField, yearTextField].forEach { text in
             text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = textFieldBorderColor
+            text.layer.borderColor = UIColor.textFieldBorderColor
             text.layer.cornerRadius = textFieldCornerRadius
             text.font = textFieldFont
         }

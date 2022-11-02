@@ -47,7 +47,6 @@ class FavoritesViewController: OnboardingViewController {
     private func setupStackView() {
         let textFieldBorderWidth = 1.0
         let textFieldCornerRadius = 8.0
-        let textFieldBorderColor = UIColor(red: 0.584, green: 0.616, blue: 0.647, alpha: 1).cgColor
         let textFieldFont = UIFont(name: "SFPro", size: 16)
         let leadingTrailingInset = 25
         let spacing = 12.0
@@ -64,6 +63,7 @@ class FavoritesViewController: OnboardingViewController {
         
         let songLabel = UILabel()
         songLabel.text = "ROADTRIP SONG"
+        songLabel.accessibilityLabel = "roadtrip song"
         songLabel.textColor = .black
         stackView.addArrangedSubview(songLabel)
         stackView.setCustomSpacing(spacing, after: songLabel)
@@ -78,6 +78,7 @@ class FavoritesViewController: OnboardingViewController {
         
         let snackLabel = UILabel()
         snackLabel.text = "ROADTRIP SNACK"
+        snackLabel.accessibilityLabel = "roadtrip snack"
         snackLabel.textColor = .black
         stackView.addArrangedSubview(snackLabel)
         stackView.setCustomSpacing(spacing, after: snackLabel)
@@ -92,6 +93,7 @@ class FavoritesViewController: OnboardingViewController {
         
         let stopLabel = UILabel()
         stopLabel.text = "ROADTRIP STOP"
+        stopLabel.accessibilityLabel = "roadtrip stop"
         stopLabel.textColor = .black
         stackView.addArrangedSubview(stopLabel)
         stackView.setCustomSpacing(spacing, after: stopLabel)
@@ -110,7 +112,7 @@ class FavoritesViewController: OnboardingViewController {
         
         [songTextField, snackTextField, stopTextField].forEach { text in
             text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = textFieldBorderColor
+            text.layer.borderColor = UIColor.textFieldBorderColor
             text.layer.cornerRadius = textFieldCornerRadius
             text.font = textFieldFont
         }

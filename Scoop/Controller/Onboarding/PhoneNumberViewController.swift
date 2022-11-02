@@ -43,7 +43,6 @@ class PhoneNumberViewController: OnboardingViewController {
     private func setupStackView() {
         let textFieldBorderWidth = 1.0
         let textFieldCornerRadius = 8.0
-        let textFieldBorderColor = UIColor(red: 0.584, green: 0.616, blue: 0.647, alpha: 1).cgColor
         let leadingTrailingInset = 20
         stackView.axis = .vertical
         stackView.distribution = .fill
@@ -59,6 +58,7 @@ class PhoneNumberViewController: OnboardingViewController {
         let titleLabel = UILabel()
         titleLabel.font = .systemFont(ofSize: 22)
         titleLabel.text = "PHONE NUMBER"
+        titleLabel.accessibilityLabel = "phone number"
         titleLabel.textColor = .black
         titleLabel.font = UIFont(name: "Rambla-Regular", size: 16)
         stackView.addArrangedSubview(titleLabel)
@@ -69,7 +69,7 @@ class PhoneNumberViewController: OnboardingViewController {
         numberTextField.placeholder = "000-000-0000"
         numberTextField.layer.borderWidth = 1
         numberTextField.layer.borderWidth = textFieldBorderWidth
-        numberTextField.layer.borderColor = textFieldBorderColor
+        numberTextField.layer.borderColor = UIColor.textFieldBorderColor
         numberTextField.layer.cornerRadius = textFieldCornerRadius
         numberTextField.font = UIFont(name: "SFPro", size: 16)
         numberTextField.keyboardType = .phonePad

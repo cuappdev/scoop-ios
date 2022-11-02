@@ -61,6 +61,7 @@ class PreferredContactViewController: OnboardingViewController {
         let titleLabel = UILabel()
         titleLabel.font = UIFont(name: "Rambla-Regular", size: 16)
         titleLabel.text = "PREFERRED CONTACT METHOD"
+        titleLabel.accessibilityLabel = "preferred contact method"
         titleLabel.numberOfLines = 2
         titleLabel.textColor = .black
         stackView.addArrangedSubview(titleLabel)
