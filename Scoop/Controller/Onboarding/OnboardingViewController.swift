@@ -32,7 +32,6 @@ class OnboardingViewController: UIViewController {
         button.clipsToBounds = true
         button.addAction(action, for: .touchUpInside)
         view.addSubview(button)
-        
         button.snp.makeConstraints { make in
             let screenSize = UIScreen.main.bounds
             make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
