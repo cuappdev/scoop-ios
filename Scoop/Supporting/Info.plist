@@ -36,5 +36,10 @@
 	<string>This app uses the photo library for uploading profile pictures.</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Rambla-Regular.ttf</string>
+		<string>Sen-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

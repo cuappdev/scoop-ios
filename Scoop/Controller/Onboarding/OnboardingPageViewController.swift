@@ -27,11 +27,11 @@ class OnboardingPageViewController: UIPageViewController {
     
     private func setupPages() {
         pages = [
-            ProfilePictureViewController(),
             AboutYouViewController(),
             PreferredContactViewController(),
             PreferencesViewController(),
-            FavoritesViewController()
+            FavoritesViewController(),
+            ProfilePictureViewController()
         ]
         
         for i in 0..<pages.count {
@@ -61,6 +61,16 @@ class OnboardingPageViewController: UIPageViewController {
             }
         }
     }
+    
+    private func presentPreviousVC(_ viewController: UIViewController) {
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
+            return
+        }
+            if viewControllerIndex > 0 {
+                let vc = pages[viewControllerIndex - 1]
+                self.setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
+            }
+        }
 
 }
 
@@ -97,6 +107,15 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
 
 // MARK: - OnboardingDelegate
 extension OnboardingPageViewController: OnboardingDelegate {
+    
+    func didTapBack(_ viewController: UIViewController, previousViewController: UIViewController?) {
+        guard let prevVC = previousViewController else {
+            presentPreviousVC(viewController)
+            return
+        }
+        
+        presentPreviousVC(prevVC)
+    }
     
     func didTapNext(_ viewController: UIViewController, nextViewController: UIViewController?) {
         guard let nextVC = nextViewController else {

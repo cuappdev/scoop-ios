@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C42B51E290F12B400D053A3 /* Sen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */; };
+		2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C42B520290F767600D053A3 /* Rambla-Regular.ttf */; };
 		2C991EB828E0B2E7006301D9 /* ArrivalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB028E0B2E7006301D9 /* ArrivalSearchViewController.swift */; };
 		2C991EB928E0B2E7006301D9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB128E0B2E7006301D9 /* SearchViewController.swift */; };
 		2C991EBA28E0B2E7006301D9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB228E0B2E7006301D9 /* ViewController.swift */; };
@@ -71,6 +73,8 @@
 
 /* Begin PBXFileReference section */
 		164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scoop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sen-Regular.ttf"; sourceTree = "<group>"; };
+		2C42B520290F767600D053A3 /* Rambla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rambla-Regular.ttf"; sourceTree = "<group>"; };
 		2C991EB028E0B2E7006301D9 /* ArrivalSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrivalSearchViewController.swift; sourceTree = "<group>"; };
 		2C991EB128E0B2E7006301D9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2C991EB228E0B2E7006301D9 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +151,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C42B51F290F765B00D053A3 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				2C42B520290F767600D053A3 /* Rambla-Regular.ttf */,
+				2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		8FBFA8714955D4038DDF0D52 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,12 +202,12 @@
 			children = (
 				C8EF10C727E2CCB800642B40 /* OnboardingPageViewController.swift */,
 				C8EF10CD27E50BFA00642B40 /* OnboardingViewController.swift */,
-				C85E2E1C27DBFFFA0004C506 /* ProfilePictureViewController.swift */,
 				C85E2E1E27DC0D850004C506 /* AboutYouViewController.swift */,
 				C8EF10C327E2BB8000642B40 /* PreferredContactViewController.swift */,
 				C8EF10C527E2CA9D00642B40 /* PhoneNumberViewController.swift */,
 				C8EF10C927E2CEE400642B40 /* PreferencesViewController.swift */,
 				C8EF10CB27E2CEF800642B40 /* FavoritesViewController.swift */,
+				C85E2E1C27DBFFFA0004C506 /* ProfilePictureViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -294,6 +307,7 @@
 		C8A544C127D18D1B00132ACC /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				2C42B51F290F765B00D053A3 /* fonts */,
 				2CFE88F428DBCD5900064F51 /* GoogleService-Info.plist */,
 				2CFE88F528DBCD5900064F51 /* Keys.plist */,
 				C845953727ED01A400D2C7F0 /* Utilities */,
@@ -420,7 +434,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C42B51E290F12B400D053A3 /* Sen-Regular.ttf in Resources */,
 				2CFE88F728DBCD5900064F51 /* Keys.plist in Resources */,
+				2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */,
 				C8A5449927D185BF00132ACC /* LaunchScreen.storyboard in Resources */,
 				C8A5449627D185BF00132ACC /* Assets.xcassets in Resources */,
 				2CFE88F628DBCD5900064F51 /* GoogleService-Info.plist in Resources */,

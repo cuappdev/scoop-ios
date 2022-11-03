@@ -16,7 +16,7 @@ class PreferencesViewController: OnboardingViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationItem.title = "During Roadtrips"
+        setupTitle(name: "During roadtrips...")
         
         nextAction = UIAction { _ in
             guard let navCtrl = self.navigationController else {
@@ -29,6 +29,8 @@ class PreferencesViewController: OnboardingViewController {
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
+        setupTitleLines()
+        backButton.isHidden = false
         setupStackView()
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
@@ -38,30 +40,54 @@ class PreferencesViewController: OnboardingViewController {
     private func setupStackView() {
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = 20
+        stackView.spacing = 12
         stackView.alignment = .leading
         view.addSubview(stackView)
 
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(60)
+            make.leading.trailing.equalToSuperview().inset(47)
             make.center.equalToSuperview()
         }
         
+        let talkingLabelIndent = UILabel()
+        stackView.addArrangedSubview(talkingLabelIndent)
+        talkingLabelIndent.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(20)
+        }
+        
         let talkingLabel = UILabel()
-        talkingLabel.font = .systemFont(ofSize: 22)
-        talkingLabel.text = "How talkative are you?"
+        talkingLabel.font = UIFont(name: "Rambla-Regular", size: 16)
+        talkingLabel.text = "HOW TALKATIVE ARE YOU?"
+        talkingLabel.accessibilityLabel = "how talkative are you?"
         talkingLabel.numberOfLines = 2
         talkingLabel.textColor = .black
-        stackView.addArrangedSubview(talkingLabel)
+        view.addSubview(talkingLabel)
+        talkingLabel.snp.makeConstraints { make in
+            make.top.equalTo(talkingLabelIndent.snp.top)
+            make.leading.equalTo(view.snp.leading).inset(20)
+        }
         
         createTalkingSlider()
         
+        let musicLabelIndent = UILabel()
+        stackView.addArrangedSubview(musicLabelIndent)
+        musicLabelIndent.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(20)
+        }
+        
         let musicLabel = UILabel()
-        musicLabel.font = .systemFont(ofSize: 22)
-        musicLabel.text = "Do you like listening to music?"
+        musicLabel.font = UIFont(name: "Rambla-Regular", size: 16)
+        musicLabel.text = "DO YOU LIKE LISTENING TO MUSIC?"
+        musicLabel.accessibilityLabel = "do you like listening to music?"
         musicLabel.numberOfLines = 2
         musicLabel.textColor = .black
-        stackView.addArrangedSubview(musicLabel)
+        view.addSubview(musicLabel)
+        musicLabel.snp.makeConstraints { make in
+            make.top.equalTo(musicLabelIndent.snp.top)
+            make.leading.equalTo(view.snp.leading).inset(20)
+        }
         
         createMusicSlider()
     }
@@ -75,7 +101,7 @@ class PreferencesViewController: OnboardingViewController {
         }
         
         let quietLabel = UILabel()
-        quietLabel.font = .systemFont(ofSize: 12)
+        quietLabel.font = UIFont(name: "SFPro", size: 16)
         quietLabel.text = "Quiet"
         quietLabel.textAlignment = .left
         talkingView.addSubview(quietLabel)
@@ -85,7 +111,7 @@ class PreferencesViewController: OnboardingViewController {
         }
         
         let talkativeLabel = UILabel()
-        talkativeLabel.font = .systemFont(ofSize: 12)
+        talkativeLabel.font = UIFont(name: "SFPro", size: 16)
         talkativeLabel.text = "Talkative"
         talkativeLabel.textAlignment = .right
         talkingView.addSubview(talkativeLabel)
@@ -93,13 +119,26 @@ class PreferencesViewController: OnboardingViewController {
         talkativeLabel.snp.makeConstraints { make in
             make.top.trailing.bottom.equalToSuperview()
         }
-        
+    
         talkativeSlider.minimumTrackTintColor = .black
-        talkativeSlider.maximumTrackTintColor = .systemGray5
+        talkativeSlider.maximumTrackTintColor = .black
+        talkativeSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
+        talkativeSlider.value = talkativeSlider.maximumValue / 2
         stackView.addArrangedSubview(talkativeSlider)
+        stackView.setCustomSpacing(60, after: talkativeSlider)
         
         talkativeSlider.snp.makeConstraints { make in
             make.width.equalToSuperview()
+        }
+        
+        let talkativeTicks = UIButton()
+        talkativeTicks.setImage(UIImage(named: "SliderTicks"), for: .normal)
+        talkativeSlider.addSubview(talkativeTicks)
+        talkativeSlider.sendSubviewToBack(talkativeTicks)
+        talkativeTicks.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(1.5)
+            make.height.equalTo(18)
+            make.centerY.equalToSuperview()
         }
     }
     
@@ -112,7 +151,7 @@ class PreferencesViewController: OnboardingViewController {
         }
         
         let noMusicLabel = UILabel()
-        noMusicLabel.font = .systemFont(ofSize: 12)
+        noMusicLabel.font = UIFont(name: "SFPro", size: 16)
         noMusicLabel.text = "No Music"
         noMusicLabel.textAlignment = .left
         musicView.addSubview(noMusicLabel)
@@ -122,7 +161,7 @@ class PreferencesViewController: OnboardingViewController {
         }
         
         let musicLabel = UILabel()
-        musicLabel.font = .systemFont(ofSize: 12)
+        musicLabel.font = UIFont(name: "SFPro", size: 16)
         musicLabel.text = "Music"
         musicLabel.textAlignment = .right
         musicView.addSubview(musicLabel)
@@ -132,11 +171,23 @@ class PreferencesViewController: OnboardingViewController {
         }
         
         musicSlider.minimumTrackTintColor = .black
-        musicSlider.maximumTrackTintColor = .systemGray5
+        musicSlider.maximumTrackTintColor = .black
+        musicSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
+        musicSlider.value = musicSlider.maximumValue/2
         stackView.addArrangedSubview(musicSlider)
         
         musicSlider.snp.makeConstraints { make in
             make.width.equalToSuperview()
+        }
+        
+        let musicTicks = UIButton()
+        musicTicks.setImage(UIImage(named: "SliderTicks"), for: .normal)
+        musicSlider.addSubview(musicTicks)
+        musicSlider.sendSubviewToBack(musicTicks)
+        musicTicks.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(1.5)
+            make.height.equalTo(18)
+            make.centerY.equalToSuperview()
         }
     }
 }
