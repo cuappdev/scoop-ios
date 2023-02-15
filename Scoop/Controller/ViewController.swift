@@ -55,22 +55,22 @@ class ViewController: UIViewController {
     private func signIn() {
         let signInConfig = GIDConfiguration.init(clientID: Keys.googleClientID)
         
-        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+        GIDSignIn.sharedInstance.configuration = signInConfig
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
             guard error == nil else { return }
             
-            guard let email = user?.profile?.email else { return }
+            guard let email = result?.user.profile?.email else { return }
             
             guard email.contains("@cornell.edu") else {
                 GIDSignIn.sharedInstance.signOut()
                 print("User is not a cornell student")
                 return
             }
-            
+
             let homeVC = HomeViewController()
             homeVC.modalPresentationStyle = .fullScreen
             self.present(homeVC, animated: true)
-            
-            print("User successfully signed in with Cornell email.")
         }
     }
 }

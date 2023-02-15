@@ -24,3 +24,13 @@ class User {
     var favoriteSong: String = ""
     var favoriteStop: String = ""
 }
+
+class BaseUser: Codable {
+    let id: String
+    let netid: String
+    let first_name: String
+    let last_name: String
+    let phone_number: String
+    let grade: String
+    let pronouns: String
+}
