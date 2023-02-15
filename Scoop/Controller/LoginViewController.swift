@@ -55,10 +55,12 @@ class LoginViewController: UIViewController {
     private func signIn() {
         let signInConfig = GIDConfiguration.init(clientID: Keys.googleClientID)
         
-        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+        GIDSignIn.sharedInstance.configuration = signInConfig
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
             guard error == nil else { return }
             
-            guard let email = user?.profile?.email else { return }
+            guard let email = result?.user.profile?.email else { return }
             
             guard email.contains("@cornell.edu") else {
                 GIDSignIn.sharedInstance.signOut()
