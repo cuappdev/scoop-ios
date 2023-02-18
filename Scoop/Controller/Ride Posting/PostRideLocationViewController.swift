@@ -22,8 +22,7 @@ class PostRideLocationViewController: UIViewController {
     private let fieldSpace = 40
     private let labelSpace = 5
     private let textFieldSpace = 20
-    
-    private var ride = Ride()
+    private var ride = try! Ride()
     private var methods = ["Student Driver", "Shared Taxi"]
     
     override func viewDidLoad() {
@@ -40,8 +39,8 @@ class PostRideLocationViewController: UIViewController {
                   }
             
             self.ride.method = method
-            self.ride.departureLocation = departureLocation
-            self.ride.arrivalLocation = arrivalLocation
+            self.ride.path.depatureName = departureLocation
+            self.ride.path.arrivalName = arrivalLocation
             
             self.navigationController?.pushViewController(TripExtraDetailsViewController(ride: self.ride), animated: true)
         }

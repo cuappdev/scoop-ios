@@ -35,7 +35,7 @@ class HomeViewController: UIViewController {
         setupTableView()
         setupPostRideButton()
         
-        getRides()
+//        getRides()
         //        setupSignOutButton()
     }
     
@@ -132,36 +132,36 @@ class HomeViewController: UIViewController {
     
     private func getRides() {
         // Populate table view with dummy data
-        let readesRide = Ride()
-        readesRide.organizer.name = "Reade"
-        readesRide.departureLocation = "Ithaca, NY"
-        readesRide.arrivalLocation = "Darien, CT"
-        readesRide.date = "Mar 3"
-        readesRide.isActive = true
-        
-        let annesRide = Ride()
-        annesRide.organizer.name = "Anne"
-        annesRide.departureLocation = "Ithaca, NY"
-        annesRide.arrivalLocation = "Orlando, FL"
-        annesRide.date = "Apr 10"
-        annesRide.isActive = true
-        
-        let karlsRide = Ride()
-        karlsRide.organizer.name = "Karl"
-        karlsRide.departureLocation = "Ithaca, NY"
-        karlsRide.arrivalLocation = "Pittsburgh, PA"
-        karlsRide.date = "May 13"
-        karlsRide.isActive = true
-        
-        let sarahsRide = Ride()
-        sarahsRide.organizer.name = "Sarah"
-        sarahsRide.departureLocation = "Ithaca, NY"
-        sarahsRide.arrivalLocation = "Montreal, CA"
-        sarahsRide.date = "May 20"
-        sarahsRide.isActive = true
-        
-        activeRides = [readesRide, annesRide]
-        pendingRides = [karlsRide, sarahsRide]
+//        let readesRide = Ride()
+//        readesRide.creator.name = "Reade"
+//        readesRide.departureLocation = "Ithaca, NY"
+//        readesRide.arrivalLocation = "Darien, CT"
+//        readesRide.date = "Mar 3"
+//        readesRide.isActive = true
+//        
+//        let annesRide = Ride()
+//        annesRide.creator.name = "Anne"
+//        annesRide.departureLocation = "Ithaca, NY"
+//        annesRide.arrivalLocation = "Orlando, FL"
+//        annesRide.date = "Apr 10"
+//        annesRide.isActive = true
+//        
+//        let karlsRide = Ride()
+//        karlsRide.creator.name = "Karl"
+//        karlsRide.departureLocation = "Ithaca, NY"
+//        karlsRide.arrivalLocation = "Pittsburgh, PA"
+//        karlsRide.date = "May 13"
+//        karlsRide.isActive = true
+//        
+//        let sarahsRide = Ride()
+//        sarahsRide.creator.name = "Sarah"
+//        sarahsRide.departureLocation = "Ithaca, NY"
+//        sarahsRide.arrivalLocation = "Montreal, CA"
+//        sarahsRide.date = "May 20"
+//        sarahsRide.isActive = true
+//        
+//        activeRides = [readesRide, annesRide]
+//        pendingRides = [karlsRide, sarahsRide]
     }
     
 }
