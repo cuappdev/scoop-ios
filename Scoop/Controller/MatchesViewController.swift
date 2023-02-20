@@ -34,7 +34,6 @@ class MatchesViewController: UIViewController {
     }
     
     func setupTableView() {
-        tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = .white
@@ -51,11 +50,8 @@ class MatchesViewController: UIViewController {
     }
 }
 
-extension MatchesViewController: UITableViewDelegate {
-    
-}
-
 extension MatchesViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         matchedRides.count
     }

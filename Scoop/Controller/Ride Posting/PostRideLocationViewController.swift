@@ -22,6 +22,7 @@ class PostRideLocationViewController: UIViewController {
     private let fieldSpace = 40
     private let labelSpace = 5
     private let textFieldSpace = 20
+    // Currently unwrapped unsafely, but will be addressed in a future PR. 
     private var ride = try! Ride()
     private var methods = ["Student Driver", "Shared Taxi"]
     

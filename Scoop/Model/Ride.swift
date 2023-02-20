@@ -8,7 +8,7 @@
 import Foundation
 
 struct Ride: Codable {
-    var id: String
+    var id: Int
     var creator: BaseUser
     var travelerCountLower: Int
     var travelerCountUpper: Int
@@ -20,8 +20,6 @@ struct Ride: Codable {
     var estimatedCost: Int
     var path: Path
     var type: String
-    
-    
 }
 
 /// Temporary, just so hardcoded data can still load while networking is not fully implemented
