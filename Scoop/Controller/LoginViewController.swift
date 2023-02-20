@@ -73,16 +73,15 @@ class LoginViewController: UIViewController {
                   let familyName = result?.user.profile?.familyName,
                   let idtoken = result?.user.idToken?.tokenString else {
                 GIDSignIn.sharedInstance.signOut()
-                print("Unable to Authorize User")
                 return
             }
             
-            NetworkManager.authenticateUser(googleID: userID, email: email, firstName: firstName, lastName: familyName, id_token: idtoken) { result in
+            NetworkManager.shared.authenticateUser(googleID: userID, email: email, firstName: firstName, lastName: familyName, id_token: idtoken) { result in
                 switch result {
                 case .success(let user):
                     self.setNetID(email: email)
-                    NetworkManager.shared.currentUser.first_name = firstName
-                    NetworkManager.shared.currentUser.last_name = familyName
+                    NetworkManager.shared.currentUser.firstName = firstName
+                    NetworkManager.shared.currentUser.lastName = familyName
                     NetworkManager.userToken = user.accessToken
                 case .failure:
                     print("Unable to Authorize")
@@ -114,7 +113,7 @@ class LoginViewController: UIViewController {
     }
     
     private func getUser() {
-        
+        //TODO: Will Define once backend finishes user preferences Endpoint
     }
     
     

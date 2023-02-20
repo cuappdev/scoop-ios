@@ -98,7 +98,7 @@ class PostRideSummaryViewController: UIViewController {
         
         let organizerLabel = UILabel()
         organizerLabel.font = .systemFont(ofSize: 12)
-        organizerLabel.text = "Organizer: @\(ride.organizer.first_name)" // TODO: We need to support Usernames during onboarding
+        organizerLabel.text = "Organizer: @\(ride.organizer.firstName)" // TODO: We need to support Usernames during onboarding
         organizerLabel.textColor = .black
         organizerLabel.adjustsFontSizeToFitWidth = true
         detailsStackView.addArrangedSubview(organizerLabel)

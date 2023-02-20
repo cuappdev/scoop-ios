@@ -133,28 +133,28 @@ class HomeViewController: UIViewController {
     private func getRides() {
         // Populate table view with dummy data
         let readesRide = Ride()
-        readesRide.organizer.first_name = "Reade"
+        readesRide.organizer.firstName = "Reade"
         readesRide.departureLocation = "Ithaca, NY"
         readesRide.arrivalLocation = "Darien, CT"
         readesRide.date = "Mar 3"
         readesRide.isActive = true
         
         let annesRide = Ride()
-        annesRide.organizer.first_name = "Anne"
+        annesRide.organizer.firstName = "Anne"
         annesRide.departureLocation = "Ithaca, NY"
         annesRide.arrivalLocation = "Orlando, FL"
         annesRide.date = "Apr 10"
         annesRide.isActive = true
         
         let karlsRide = Ride()
-        karlsRide.organizer.first_name = "Karl"
+        karlsRide.organizer.firstName = "Karl"
         karlsRide.departureLocation = "Ithaca, NY"
         karlsRide.arrivalLocation = "Pittsburgh, PA"
         karlsRide.date = "May 13"
         karlsRide.isActive = true
         
         let sarahsRide = Ride()
-        sarahsRide.organizer.first_name = "Sarah"
+        sarahsRide.organizer.firstName = "Sarah"
         sarahsRide.departureLocation = "Ithaca, NY"
         sarahsRide.arrivalLocation = "Montreal, CA"
         sarahsRide.date = "May 20"

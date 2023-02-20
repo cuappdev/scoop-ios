@@ -16,17 +16,17 @@ class NetworkManager {
     
     static let shared: NetworkManager = NetworkManager()
     
-    private static let hostEndpoint = "https://\(Keys.scoopedServer)"
+    private let hostEndpoint = "https://\(Keys.scoopedServer)"
     
-    static var headers: HTTPHeaders {
-            let accessToken = userToken
-            let headers: HTTPHeaders = [
-                "Authorization": "Token \(accessToken)"
+    var headers: HTTPHeaders {
+        let accessToken = NetworkManager.userToken
+        let headers: HTTPHeaders = [
+            "Authorization": "Token \(accessToken)"
             ]
-            return headers
+        return headers
         }
     
-    static func authenticateUser(googleID: String, email: String, firstName: String, lastName: String, id_token: String, completion: @escaping (Result<UserSession, Error>) -> Void) {
+    func authenticateUser(googleID: String, email: String, firstName: String, lastName: String, id_token: String, completion: @escaping (Result<UserSession, Error>) -> Void) {
         let parameters: [String : String] = [
             "sub": googleID,
             "email": email,
@@ -43,9 +43,9 @@ class NetworkManager {
                 do{
                     let userData = try jsonDecoder.decode(UserSession.self, from: data)
                     completion(.success(userData))
-                }
-                catch{
+                } catch{
                     completion(.failure(error))
+                    print("Failed to decode authenticateUser")
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -54,7 +54,7 @@ class NetworkManager {
         }
     }
     
-    static func updateAuthenticatedUser(netid: String, first_name: String, last_name: String, grade: String, phone_number: String, pronouns: String, prof_pic: String, completion: @escaping (Result<BaseUser, Error>) -> Void) {
+    func updateAuthenticatedUser(netid: String, first_name: String, last_name: String, grade: String, phone_number: String, pronouns: String, prof_pic: String, completion: @escaping (Result<BaseUser, Error>) -> Void) {
             let parameters: [String: String] = [
                 "netid": netid,
                 "first_name": first_name,
@@ -62,7 +62,7 @@ class NetworkManager {
                 "grade": grade,
                 "phone_number": phone_number,
                 "pronouns": pronouns,
-                "profile_pic_url": prof_pic
+                "profile_pic_base64": prof_pic
             ]
         AF.request("\(hostEndpoint)/api/me/", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
                 switch response.result {
@@ -73,9 +73,9 @@ class NetworkManager {
                     do {
                         let authUser = try jsonDecoder.decode(BaseUser.self, from: data)
                         completion(.success(authUser))
-                    }
-                    catch {
+                    } catch {
                         completion(.failure(error))
+                        print("Failed to decode updateAuthenticatedUser")
                     }
                 case .failure(let error):
                     completion(.failure(error))
@@ -84,7 +84,7 @@ class NetworkManager {
             }
         }
     
-    static func getUser(completion: @escaping (Result<BaseUser, Error>) -> Void) {
+    func getUser(completion: @escaping (Result<BaseUser, Error>) -> Void) {
         AF.request("\(hostEndpoint)/api/me/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result{
             case .success(let data):
@@ -94,9 +94,9 @@ class NetworkManager {
                 do {
                     let user = try jsonDecoder.decode(BaseUser.self, from: data)
                     completion(.success(user))
-                }
-                catch {
+                } catch {
                     completion(.failure(error))
+                    print("Failed to decode getUser")
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -106,7 +106,7 @@ class NetworkManager {
     }
     
     //MARK: Debugging Developer Requests
-    static func getAllUsers(completion: @escaping (Result<[BaseUser], Error>) -> Void ) {
+    func getAllUsers(completion: @escaping (Result<[BaseUser], Error>) -> Void ) {
         AF.request("\(hostEndpoint)/api/dev/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
@@ -116,8 +116,7 @@ class NetworkManager {
                 do {
                     let allUsers = try jsonDecoder.decode([BaseUser].self, from: data)
                     completion(.success(allUsers))
-                }
-                catch {
+                } catch {
                     completion(.failure(error))
                 }
             case .failure(let error):

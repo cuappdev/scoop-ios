@@ -97,7 +97,7 @@ class ProfileViewController: UIViewController {
         nameLabel.font = .systemFont(ofSize: 30, weight: .semibold)
         nameLabel.textAlignment = .center
         nameLabel.adjustsFontSizeToFitWidth = true
-        nameLabel.text = user.first_name
+        nameLabel.text = user.firstName
         profileStackView.addArrangedSubview(nameLabel)
         profileStackView.setCustomSpacing(10, after: nameLabel)
         

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfilePictureViewController: OnboardingViewController {
     
@@ -27,7 +28,6 @@ class ProfilePictureViewController: OnboardingViewController {
                 return
             }
             
-            //MARK: Throws Error 413: Content Too Large, when uploading image string
             self.updateAuthenticatedUser(image: image)
             
         }
@@ -66,23 +66,25 @@ class ProfilePictureViewController: OnboardingViewController {
     }
     
     private func updateAuthenticatedUser(image: UIImage) {
-        guard let imageBase64 = image.pngData()?.base64EncodedString() else {
-            self.presentErrorAlert(title: "Error", message: "Unable to decode image")
-            return
-        }
+        let imageBase64 = convertImage(img: image)
         
-        NetworkManager.shared.currentUser.profile_pic_url = imageBase64
+        NetworkManager.shared.currentUser.profilePicUrl = imageBase64
         let user = NetworkManager.shared.currentUser
-        NetworkManager.updateAuthenticatedUser(netid: user.netid, first_name: user.first_name, last_name: user.last_name, grade: user.grade, phone_number: user.phone_number, pronouns: user.pronouns, prof_pic: imageBase64) { result in
+        //MARK: Request works, but deocding error with image, since backend debugging still in progress
+        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: user.grade, phone_number: user.phoneNumber, pronouns: user.pronouns, prof_pic: imageBase64) { result in
             switch result {
             case .success(let user):
-                print("\(user.first_name) has been updated")
+                print("\(user.firstName) has been updated")
                 self.dismiss(animated: true)
             case .failure:
                 return
-                
             }
         }
+    }
+    
+    private func convertImage (img: UIImage) -> String {
+        let base64 = img.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        return "data:image/png;base64," + base64
     }
     
     private func setupButtons() {
