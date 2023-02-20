@@ -101,9 +101,9 @@ class HomeTableViewCell: UITableViewCell {
     
     func configure(ride: Ride) {
         dateLabel.label.text = ride.date
-        titleLabel.text = "\(ride.organizer.name)'s Ride"
-        depatureLabel.label.text = ride.departureLocation
-        arrivalLabel.label.text = ride.arrivalLocation
+        titleLabel.text = "\(ride.creator.first_name)'s Ride"
+        depatureLabel.label.text = ride.path.depatureName
+        arrivalLabel.label.text = ride.path.depatureName
     }
     
     required init?(coder: NSCoder) {
