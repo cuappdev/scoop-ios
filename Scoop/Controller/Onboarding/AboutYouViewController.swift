@@ -38,11 +38,9 @@ class AboutYouViewController: OnboardingViewController {
                       self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
                       return
                   }
-            
-            Networking.shared.currentUser.name = name
-            Networking.shared.currentUser.pronouns = pronouns
-            Networking.shared.currentUser.hometown = hometown
-            Networking.shared.currentUser.year = year
+            NetworkManager.shared.currentUser.pronouns = pronouns
+            NetworkManager.shared.currentUser.hometown = hometown
+            NetworkManager.shared.currentUser.grade = year
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }

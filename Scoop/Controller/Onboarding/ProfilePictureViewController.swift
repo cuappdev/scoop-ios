@@ -27,8 +27,9 @@ class ProfilePictureViewController: OnboardingViewController {
                 return
             }
             
-            Networking.shared.currentUser.image = image
-            self.dismiss(animated: true)
+            //MARK: Throws Error 413: Content Too Large, when uploading image string
+            self.updateAuthenticatedUser(image: image)
+            
         }
         
         setupTitleLines()
@@ -64,10 +65,33 @@ class ProfilePictureViewController: OnboardingViewController {
         pictureImageView.addGestureRecognizer(tapGesture)
     }
     
+    private func updateAuthenticatedUser(image: UIImage) {
+        guard let imageBase64 = image.pngData()?.base64EncodedString() else {
+            self.presentErrorAlert(title: "Error", message: "Unable to decode image")
+            return
+        }
+        
+        NetworkManager.shared.currentUser.profile_pic_url = imageBase64
+        let user = NetworkManager.shared.currentUser
+        NetworkManager.updateAuthenticatedUser(netid: user.netid, first_name: user.first_name, last_name: user.last_name, grade: user.grade, phone_number: user.phone_number, pronouns: user.pronouns, prof_pic: imageBase64) { result in
+            switch result {
+            case .success(let user):
+                print("\(user.first_name) has been updated")
+                self.dismiss(animated: true)
+            case .failure:
+                return
+                
+            }
+        }
+    }
+    
     private func setupButtons() {
         let buttonMultiplier = 0.09
         let screenSize = UIScreen.main.bounds
         let skipAction = UIAction { _ in
+            if let placeholder = UIImage(named: "emptyimage"){
+                self.updateAuthenticatedUser(image: placeholder)
+            }
             self.dismiss(animated: true)
         }
         

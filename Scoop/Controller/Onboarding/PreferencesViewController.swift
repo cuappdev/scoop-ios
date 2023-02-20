@@ -23,8 +23,8 @@ class PreferencesViewController: OnboardingViewController {
                 return
             }
             
-            Networking.shared.currentUser.talkingPref = self.talkativeSlider.value
-            Networking.shared.currentUser.musicPref = self.musicSlider.value
+            NetworkManager.shared.currentUser.talkingPref = self.talkativeSlider.value
+            NetworkManager.shared.currentUser.musicPref = self.musicSlider.value
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }

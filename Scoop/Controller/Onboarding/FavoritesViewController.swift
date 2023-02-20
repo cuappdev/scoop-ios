@@ -30,9 +30,9 @@ class FavoritesViewController: OnboardingViewController {
                       return
                   }
             
-            Networking.shared.currentUser.favoriteSnack = snack
-            Networking.shared.currentUser.favoriteSong = song
-            Networking.shared.currentUser.favoriteStop = stop
+            NetworkManager.shared.currentUser.favoriteSnack = snack
+            NetworkManager.shared.currentUser.favoriteSong = song
+            NetworkManager.shared.currentUser.favoriteStop = stop
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
