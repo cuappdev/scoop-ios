@@ -18,7 +18,7 @@ class NetworkManager {
     
     private let hostEndpoint = "https://\(Keys.scoopedServer)"
     
-    var headers: HTTPHeaders {
+    private var headers: HTTPHeaders {
         let accessToken = NetworkManager.userToken
         let headers: HTTPHeaders = [
             "Authorization": "Token \(accessToken)"
@@ -40,10 +40,10 @@ class NetworkManager {
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                do{
+                do {
                     let userData = try jsonDecoder.decode(UserSession.self, from: data)
                     completion(.success(userData))
-                } catch{
+                } catch {
                     completion(.failure(error))
                     print("Failed to decode authenticateUser")
                 }

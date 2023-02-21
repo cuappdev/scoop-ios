@@ -66,7 +66,7 @@ class ProfilePictureViewController: OnboardingViewController {
     }
     
     private func updateAuthenticatedUser(image: UIImage) {
-        let imageBase64 = convertImage(img: image)
+        let imageBase64 = convertImage(image: image)
         
         NetworkManager.shared.currentUser.profilePicUrl = imageBase64
         let user = NetworkManager.shared.currentUser
@@ -82,8 +82,8 @@ class ProfilePictureViewController: OnboardingViewController {
         }
     }
     
-    private func convertImage (img: UIImage) -> String {
-        let base64 = img.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+    private func convertImage (image: UIImage) -> String {
+        let base64 = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         return "data:image/png;base64," + base64
     }
     
