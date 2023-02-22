@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfilePictureViewController: OnboardingViewController {
     
@@ -27,8 +28,8 @@ class ProfilePictureViewController: OnboardingViewController {
                 return
             }
             
-            Networking.shared.currentUser.image = image
-            self.dismiss(animated: true)
+            self.updateAuthenticatedUser(image: image)
+            
         }
         
         setupTitleLines()
@@ -64,10 +65,35 @@ class ProfilePictureViewController: OnboardingViewController {
         pictureImageView.addGestureRecognizer(tapGesture)
     }
     
+    private func updateAuthenticatedUser(image: UIImage) {
+        let imageBase64 = convertImage(image: image)
+        
+        NetworkManager.shared.currentUser.profilePicUrl = imageBase64
+        let user = NetworkManager.shared.currentUser
+        //MARK: Request works, but deocding error with image, since backend debugging still in progress
+        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: user.grade, phone_number: user.phoneNumber, pronouns: user.pronouns, prof_pic: imageBase64) { result in
+            switch result {
+            case .success(let user):
+                print("\(user.firstName) has been updated")
+                self.dismiss(animated: true)
+            case .failure:
+                return
+            }
+        }
+    }
+    
+    private func convertImage (image: UIImage) -> String {
+        let base64 = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        return "data:image/png;base64," + base64
+    }
+    
     private func setupButtons() {
         let buttonMultiplier = 0.09
         let screenSize = UIScreen.main.bounds
         let skipAction = UIAction { _ in
+            if let placeholder = UIImage(named: "emptyimage"){
+                self.updateAuthenticatedUser(image: placeholder)
+            }
             self.dismiss(animated: true)
         }
         

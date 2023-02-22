@@ -41,7 +41,10 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.1.0)
   - IQKeyboardManager (6.5.11)
-  - PromisesObjC (2.1.1)
+  - PromisesObjC (2.2.0)
+  - SDWebImage (5.15.3):
+    - SDWebImage/Core (= 5.15.3)
+  - SDWebImage/Core (5.15.3)
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
@@ -49,6 +52,7 @@ DEPENDENCIES:
   - FirebaseAuth
   - GoogleSignIn
   - IQKeyboardManager
+  - SDWebImage
   - SnapKit
 
 SPEC REPOS:
@@ -64,6 +68,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - IQKeyboardManager
     - PromisesObjC
+    - SDWebImage
     - SnapKit
 
 SPEC CHECKSUMS:
@@ -77,9 +82,10 @@ SPEC CHECKSUMS:
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
   IQKeyboardManager: ef43ce1ba1e5aaf4adf222c0a46f39761f246879
-  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  SDWebImage: 302d4e14efff86b36b5f36d1bf891b635436d071
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 76a73028a539fd19d32d605212c12c1c9d910b8a
+PODFILE CHECKSUM: 3850b20e2711cfde078d62d9222405c280ba0f60
 
 COCOAPODS: 1.11.3

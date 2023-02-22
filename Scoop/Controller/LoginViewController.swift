@@ -68,6 +68,26 @@ class LoginViewController: UIViewController {
                 return
             }
             
+            guard let userID = result?.user.userID,
+                  let firstName = result?.user.profile?.givenName,
+                  let familyName = result?.user.profile?.familyName,
+                  let idtoken = result?.user.idToken?.tokenString else {
+                GIDSignIn.sharedInstance.signOut()
+                return
+            }
+            
+            NetworkManager.shared.authenticateUser(googleID: userID, email: email, firstName: firstName, lastName: familyName, id_token: idtoken) { result in
+                switch result {
+                case .success(let user):
+                    self.setNetID(email: email)
+                    NetworkManager.shared.currentUser.firstName = firstName
+                    NetworkManager.shared.currentUser.lastName = familyName
+                    NetworkManager.userToken = user.accessToken
+                case .failure:
+                    print("Unable to Authorize")
+                }
+            }
+            
             guard let window = UIApplication.shared.windows.first else {
                 return
             }
@@ -81,4 +101,20 @@ class LoginViewController: UIViewController {
             print("User successfully signed in with Cornell email.")
         }
     }
+    
+    private func setNetID(email: String) {
+        guard let strIndex = email.firstIndex(of: "@") else{
+            print("Not a valid Cornell email")
+            return
+        }
+        let index = email.index(strIndex, offsetBy: -1)
+        let netID = String(email[...index])
+        NetworkManager.shared.currentUser.netid = netID
+    }
+    
+    private func getUser() {
+        //TODO: Will Define once backend finishes user preferences Endpoint
+    }
+    
+    
 }

@@ -31,6 +31,7 @@ class PreferredContactViewController: OnboardingViewController {
             }
             
             guard self.phoneButton.isSelected else {
+                NetworkManager.shared.currentUser.phoneNumber = ""
                 self.delegate?.didTapNext(navCtrl, nextViewController: nil)
                 return
             }

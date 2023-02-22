@@ -10,14 +10,15 @@ import UIKit
 
 class User {
     var id: String = ""
-    var image: UIImage? = nil
-    var name: String = ""
-    var username: String = ""
+    var profilePicUrl: String = ""
+    var netid: String = ""
+    var firstName: String = ""
+    var lastName: String = ""
     var pronouns: String = ""
     var hometown: String = ""
-    var year: String = ""
+    var grade: String = ""
     var email: String = ""
-    var phoneNumber: String? = nil
+    var phoneNumber: String = ""
     var talkingPref: Float = 0.0
     var musicPref: Float = 0.0
     var favoriteSnack: String = ""
@@ -26,11 +27,12 @@ class User {
 }
 
 class BaseUser: Codable {
-    let id: String
+    let id: Int
     let netid: String
-    let first_name: String
-    let last_name: String
-    let phone_number: String
+    let firstName: String
+    let lastName: String
+    let phoneNumber: String
     let grade: String
     let pronouns: String
+    let profilePicUrl: String
 }

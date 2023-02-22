@@ -27,9 +27,9 @@ class PhoneNumberViewController: OnboardingViewController {
                 self.presentErrorAlert(title: "Error", message: "Please enter a valid phone number.")
                 return
             }
-            
-            Networking.shared.currentUser.phoneNumber =  phoneNumber
+            NetworkManager.shared.currentUser.phoneNumber = phoneNumber
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
+            
         }
         
         setupTitleLines()

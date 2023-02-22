@@ -101,7 +101,7 @@ class HomeTableViewCell: UITableViewCell {
     
     func configure(ride: Ride) {
         dateLabel.label.text = ride.date
-        titleLabel.text = "\(ride.creator.first_name)'s Ride"
+        titleLabel.text = "\(ride.creator.firstName)'s Ride"
         depatureLabel.label.text = ride.path.depatureName
         arrivalLabel.label.text = ride.path.depatureName
     }

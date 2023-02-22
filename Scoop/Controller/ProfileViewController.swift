@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController {
     private let travelingStackView = UIStackView()
     private let favoritesStackView = UIStackView()
     
-    private let user = Networking.shared.currentUser
+    private let user = NetworkManager.shared.currentUser
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +68,7 @@ class ProfileViewController: UIViewController {
         profileImageView.backgroundColor = .systemGray3
         profileImageView.layer.cornerRadius = 60
         profileImageView.contentMode = .scaleAspectFill
-        profileImageView.image = user.image
+        profileImageView.image = UIImage(named: "logo") //Change to UIImage from URL
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderColor = UIColor.scoopGreen.cgColor
         profileImageView.layer.borderWidth = 3
@@ -97,7 +97,7 @@ class ProfileViewController: UIViewController {
         nameLabel.font = .systemFont(ofSize: 30, weight: .semibold)
         nameLabel.textAlignment = .center
         nameLabel.adjustsFontSizeToFitWidth = true
-        nameLabel.text = user.name
+        nameLabel.text = user.firstName
         profileStackView.addArrangedSubview(nameLabel)
         profileStackView.setCustomSpacing(10, after: nameLabel)
         
@@ -105,7 +105,7 @@ class ProfileViewController: UIViewController {
         subLabel.font = .systemFont(ofSize: 14)
         subLabel.textAlignment = .center
         subLabel.adjustsFontSizeToFitWidth = true
-        subLabel.text = "(\(user.pronouns)) | \(user.year)"
+        subLabel.text = "(\(user.pronouns)) | \(user.grade)"
         profileStackView.addArrangedSubview(subLabel)
         
         let hometownSection = ImageLabelView()
