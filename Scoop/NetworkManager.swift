@@ -127,7 +127,7 @@ class NetworkManager {
     }
     
     func searchLocation(depatureDate: String, startLocation: String, endLocation: String, completion: @escaping (RideResponse) -> Void) {
-        let endpoint = "\(NetworkManager.hostEndpoint)/api/search/"
+        let endpoint = "\(hostEndpoint)/api/search/"
         let params = [
             "departure_datetime": depatureDate,
             "start_location_name": startLocation,
@@ -152,7 +152,7 @@ class NetworkManager {
     }
     
     func getAllRides(completion: @escaping(RideResponse) -> Void) {
-        let endpoint = "\(NetworkManager.hostEndpoint)/api/rides/"
+        let endpoint = "\(hostEndpoint)/api/rides/"
         
         AF.request(endpoint, method: .get).validate().responseData { response in
         switch (response.result) {
@@ -172,7 +172,7 @@ class NetworkManager {
     }
     
     func getSpecificRide(rideID: Int, completion: @escaping(Ride) -> Void) {
-        let endpoint = "\(NetworkManager.hostEndpoint)/api/ride/\(rideID)/"
+        let endpoint = "\(hostEndpoint)/api/ride/\(rideID)/"
         
         AF.request(endpoint, method: .get).validate().responseData { response in
         switch (response.result) {
@@ -192,7 +192,7 @@ class NetworkManager {
     }
     
     func postRide(startID: Int, startName: String, endID: Int, endName: String, creator: BaseUser, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, completion: @escaping(Ride) -> Void) {
-        let endpoint = "\(NetworkManager.hostEndpoint)/api/ride/"
+        let endpoint = "\(hostEndpoint)/api/ride/"
         let params: [String : Any] = [
             "start_location_place_id": startID,
             "start_location_name": startName,
