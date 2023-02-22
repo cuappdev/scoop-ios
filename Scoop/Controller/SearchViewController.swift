@@ -9,19 +9,28 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    // MARK: Views
     private let arrivalTextField = UITextField()
     private let departLocationTextField = UITextField()
     private let departureTextField = UITextField()
-    
     private let findTripsButton = UIButton()
     private let findTripsLabel = UILabel()
     private let tripInfoStackView = UIStackView()
     private let tripInfoContainerView = UIView()
+    private let datePicker = UIDatePicker()
+    
+    // MARK: Data
+    private var tripDate: String = ""
+    
+    // MARK: Networking
+    private let networkManager = NetworkManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.title = "Find Trips"
+        /// Default date if user does not change, set to today's date
+        tripDate = formatDate(dateToConvert: Date())
         
         setupTripInfoView()
         setupButton()
@@ -57,7 +66,7 @@ class SearchViewController: UIViewController {
         
         departLocationTextField.placeholder = "departure location"
         departLocationView.addSubview(departLocationTextField)
-        departLocationTextField.addTarget(self, action: #selector(presentDepartureSearch), for: UIControl.Event.touchDown)
+        departLocationTextField.addTarget(self, action: #selector(presentDepartureSearch), for: .touchDown)
         
         departLocationTextField.snp.makeConstraints { make in
             make.leading.equalTo(departLocationImageView.snp.trailing).offset(10)
@@ -78,7 +87,7 @@ class SearchViewController: UIViewController {
         
         arrivalTextField.placeholder = "arrival location"
         arrivalView.addSubview(arrivalTextField)
-        arrivalTextField.addTarget(self, action: #selector(arrivalSearch), for: UIControl.Event.touchDown)
+        arrivalTextField.addTarget(self, action: #selector(arrivalSearch), for: .touchDown)
         
         arrivalTextField.snp.makeConstraints { make in
             make.leading.equalTo(arrivalImageView.snp.trailing).offset(10)
@@ -97,13 +106,11 @@ class SearchViewController: UIViewController {
         departureView.addSubview(departureImageView)
         
         departureTextField.placeholder = "departure date"
-        let datePicker = UIDatePicker()
+        
         datePicker.datePickerMode = .date
         datePicker.backgroundColor = .clear
-
         departureView.addSubview(datePicker)
-        datePicker.addTarget(self, action: #selector(openDatePicker), for: .touchDown)
-        departureView.addSubview(datePicker)
+        datePicker.addTarget(self, action: #selector(onDateValueChanged), for: .valueChanged)
 
         datePicker.snp.makeConstraints { make in
             make.leading.equalTo(departureImageView.snp.trailing)
@@ -145,15 +152,27 @@ class SearchViewController: UIViewController {
         navigationController?.pushViewController(arrivalVC, animated: true)
     }
 
-    @objc func presentMatches() {
-        navigationController?.pushViewController(MatchesViewController(), animated: true)
+    @objc private func presentMatches() {
+        if let startLocation = departLocationTextField.text, let endLocation = arrivalTextField.text {
+            networkManager.searchLocation (depatureDate: tripDate, startLocation: startLocation, endLocation: endLocation)
+            { response in
+                self.navigationController?.pushViewController(MatchesViewController(rides: response.rides), animated: true)
+            }
+        }
     }
-
-    @objc func openDatePicker() {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        departureTextField.inputView = datePicker
+    
+    /** Change the value of tripDate every time the user taps on a different  day of the calendar. */
+    @objc private func onDateValueChanged() {
+        tripDate = formatDate(dateToConvert: datePicker.date)
     }
+    
+    /** Converts a Date object into String format, where this one is specifically in the YYYY-MM-dd format. */
+    private func formatDate(dateToConvert: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        return dateFormatter.string(from: dateToConvert)
+    }
+    
 }
 
 // MARK: - SearchInitialViewControllerDelegate

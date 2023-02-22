@@ -89,7 +89,7 @@ class PostRideSummaryViewController: UIViewController {
         
         let rideTitleLabel = UILabel()
         rideTitleLabel.font = .systemFont(ofSize: 24, weight: .semibold)
-        rideTitleLabel.text = "Trip to \(ride.arrivalLocation)"
+        rideTitleLabel.text = "Trip to \(ride.path.arrivalName)"
         rideTitleLabel.textColor = .black
         rideTitleLabel.numberOfLines = 2
         rideTitleLabel.adjustsFontSizeToFitWidth = true
@@ -98,7 +98,7 @@ class PostRideSummaryViewController: UIViewController {
         
         let organizerLabel = UILabel()
         organizerLabel.font = .systemFont(ofSize: 12)
-        organizerLabel.text = "Organizer: @\(ride.organizer.firstName)" // TODO: We need to support Usernames during onboarding
+        organizerLabel.text = "Organizer: @\(ride.creator.netid)" // TODO: We need to support Usernames during onboarding
         organizerLabel.textColor = .black
         organizerLabel.adjustsFontSizeToFitWidth = true
         detailsStackView.addArrangedSubview(organizerLabel)
@@ -111,13 +111,13 @@ class PostRideSummaryViewController: UIViewController {
         
         let startingLocationSection = ImageLabelView()
         startingLocationSection.label.font = .systemFont(ofSize: 18)
-        startingLocationSection.label.text = ride.departureLocation
+        startingLocationSection.label.text = ride.path.depatureName
         startingLocationSection.imageView.image = UIImage(systemName: "paperplane", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(startingLocationSection)
         
         let endingLocationSection = ImageLabelView()
         endingLocationSection.label.font = .systemFont(ofSize: 18)
-        endingLocationSection.label.text = ride.arrivalLocation
+        endingLocationSection.label.text = ride.path.depatureName
         endingLocationSection.imageView.image = UIImage(systemName: "mappin", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(endingLocationSection)
         
@@ -170,6 +170,7 @@ class PostRideSummaryViewController: UIViewController {
         }
         
         let postAction = UIAction { _ in
+            // TODO: getAllRides networking call goes here after backend is finalized
             self.navigationController?.popToRootViewController(animated: true)
         }
         

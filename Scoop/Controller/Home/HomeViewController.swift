@@ -28,6 +28,9 @@ class HomeViewController: UIViewController {
     private var activeRides = [Ride]()
     private var pendingRides = [Ride]()
     
+    // MARK: Networking
+    private let networkManager = NetworkManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -36,6 +39,7 @@ class HomeViewController: UIViewController {
         setupPostRideButton()
         
         getRides()
+        // Commented out currently because signing out functionality is not yet implemented
         //        setupSignOutButton()
     }
     
@@ -131,40 +135,48 @@ class HomeViewController: UIViewController {
     }
     
     private func getRides() {
+        networkManager.getAllRides { RideResponse in
+            for ride in RideResponse.rides {
+                // Note: Technically need to split this into pending + active rides but for some reason the new Ride
+                // model does not have something for it so will fix this asap after backend models are confirmed
+                self.activeRides.append(ride)
+            }
+        }
+        // Keeping dummy data here so UI work can be done if needed when networking is still not yet finished
         // Populate table view with dummy data
-        let readesRide = Ride()
-        readesRide.organizer.firstName = "Reade"
-        readesRide.departureLocation = "Ithaca, NY"
-        readesRide.arrivalLocation = "Darien, CT"
-        readesRide.date = "Mar 3"
-        readesRide.isActive = true
-        
-        let annesRide = Ride()
-        annesRide.organizer.firstName = "Anne"
-        annesRide.departureLocation = "Ithaca, NY"
-        annesRide.arrivalLocation = "Orlando, FL"
-        annesRide.date = "Apr 10"
-        annesRide.isActive = true
-        
-        let karlsRide = Ride()
-        karlsRide.organizer.firstName = "Karl"
-        karlsRide.departureLocation = "Ithaca, NY"
-        karlsRide.arrivalLocation = "Pittsburgh, PA"
-        karlsRide.date = "May 13"
-        karlsRide.isActive = true
-        
-        let sarahsRide = Ride()
-        sarahsRide.organizer.firstName = "Sarah"
-        sarahsRide.departureLocation = "Ithaca, NY"
-        sarahsRide.arrivalLocation = "Montreal, CA"
-        sarahsRide.date = "May 20"
-        sarahsRide.isActive = true
-        
-        activeRides = [readesRide, annesRide]
-        pendingRides = [karlsRide, sarahsRide]
+        //        let readesRide = Ride()
+        //        readesRide.creator.name = "Reade"
+        //        readesRide.departureLocation = "Ithaca, NY"
+        //        readesRide.arrivalLocation = "Darien, CT"
+        //        readesRide.date = "Mar
+        //        readesRide.isActive
+        //        let annesRide =
+        //        annesRide.creator.name = "
+        //        annesRide.departureLocation = "Ithaca,
+        //        annesRide.arrivalLocation = "Orlando,
+        //        annesRide.date = "Apr
+        //        annesRide.isActive
+        //        let karlsRide =
+        //        karlsRide.creator.name = "
+        //        karlsRide.departureLocation = "Ithaca,
+        //        karlsRide.arrivalLocation = "Pittsburgh,
+        //        karlsRide.date = "May
+        //        karlsRide.isActive
+        //        let sarahsRide =
+        //        sarahsRide.creator.name = "
+        //        sarahsRide.departureLocation = "Ithaca,
+        //        sarahsRide.arrivalLocation = "Montreal,
+        //        sarahsRide.date = "May
+        //        sarahsRide.isActive
+        //        activeRides = [readesRide,
+        //        pendingRides = [karlsRide, sarahsRide]
     }
     
 }
+                
+            
+        
+
 
 // MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
