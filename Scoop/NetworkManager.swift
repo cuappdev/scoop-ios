@@ -86,7 +86,7 @@ class NetworkManager {
     
     func getUser(completion: @escaping (Result<BaseUser, Error>) -> Void) {
         AF.request("\(hostEndpoint)/api/me/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
-            switch response.result{
+            switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -134,7 +134,7 @@ class NetworkManager {
         ]
         
         AF.request(endpoint, method: .get, parameters: params).validate().responseData { response in
-            switch (response.result) {
+            switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.dateDecodingStrategy = .iso8601
@@ -156,7 +156,7 @@ class NetworkManager {
         let endpoint = "\(hostEndpoint)/api/rides/"
         
         AF.request(endpoint, method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
-            switch (response.result) {
+            switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -178,7 +178,7 @@ class NetworkManager {
         let endpoint = "\(hostEndpoint)/api/ride/\(rideID)/"
         
         AF.request(endpoint, method: .get).validate().responseData { response in
-            switch (response.result) {
+            switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.dateDecodingStrategy = .iso8601
@@ -212,7 +212,7 @@ class NetworkManager {
         ]
         
         AF.request(endpoint, method: .post, parameters: params).validate().responseData { response in
-            switch (response.result) {
+            switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.dateDecodingStrategy = .iso8601
@@ -239,7 +239,7 @@ class NetworkManager {
         ]
         
         AF.request(endpoint, method: .post, parameters: params).validate().responseData { response in
-            switch (response.result) {
+            switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.dateDecodingStrategy = .iso8601

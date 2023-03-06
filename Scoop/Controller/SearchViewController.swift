@@ -151,7 +151,7 @@ class SearchViewController: UIViewController {
 
     @objc private func presentMatches() {
         if let startLocation = departLocationTextField.text, let endLocation = arrivalTextField.text {
-            NetworkManager.shared.searchLocation (depatureDate: tripDate, startLocation: startLocation, endLocation: endLocation)
+            NetworkManager.shared.searchLocation(depatureDate: tripDate, startLocation: startLocation, endLocation: endLocation)
             { response in
                 switch response {
                 case .success(let response):
