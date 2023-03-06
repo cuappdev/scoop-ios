@@ -125,7 +125,7 @@ class NetworkManager {
     }
     
     // MARK: Backend currently changing up this endpoint to incorporate Google Places
-    func searchLocation(depatureDate: String, startLocation: String, endLocation: String, completion: @escaping (RideResponse) -> Void) {
+    func searchLocation(depatureDate: String, startLocation: String, endLocation: String, completion: @escaping (Result<RideResponse, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/search/"
         let params = [
             "departure_datetime": depatureDate,
@@ -139,12 +139,14 @@ class NetworkManager {
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.dateDecodingStrategy = .iso8601
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                if let ridesResponse = try? jsonDecoder.decode(RideResponse.self, from: data) {
-                    completion(ridesResponse)
-                } else {
-                    print("Failed to decode searchLocation from JSON")
+                do {
+                    let filteredRides = try jsonDecoder.decode(RideResponse.self, from: data)
+                    completion(.success(filteredRides))
+                } catch {
+                    completion(.failure(error))
                 }
             case .failure(let error):
+                completion(.failure(error))
                 print(error.localizedDescription)
             }
         }
@@ -154,19 +156,20 @@ class NetworkManager {
         let endpoint = "\(hostEndpoint)/api/rides/"
         
         AF.request(endpoint, method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
-        switch (response.result) {
-        case .success(let data):
-            let jsonDecoder = JSONDecoder()
-            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            jsonDecoder.dateDecodingStrategy = .iso8601
-            do {
-                let allRides = try jsonDecoder.decode([Ride].self, from: data)
-                completion(.success(allRides))
-            } catch {
+            switch (response.result) {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                jsonDecoder.dateDecodingStrategy = .iso8601
+                do {
+                    let allRides = try jsonDecoder.decode([Ride].self, from: data)
+                    completion(.success(allRides))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
                 completion(.failure(error))
-            }
-        case .failure(let error):
-            completion(.failure(error))
+                print(error.localizedDescription)
             }
         }
     }
@@ -175,19 +178,20 @@ class NetworkManager {
         let endpoint = "\(hostEndpoint)/api/ride/\(rideID)/"
         
         AF.request(endpoint, method: .get).validate().responseData { response in
-        switch (response.result) {
-        case .success(let data):
-            let jsonDecoder = JSONDecoder()
-            jsonDecoder.dateDecodingStrategy = .iso8601
-            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let ride = try jsonDecoder.decode(Ride.self, from: data)
-                completion(.success(ride))
-            } catch {
+            switch (response.result) {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.dateDecodingStrategy = .iso8601
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                do {
+                    let ride = try jsonDecoder.decode(Ride.self, from: data)
+                    completion(.success(ride))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
                 completion(.failure(error))
-            }
-        case .failure(let error):
-            print(error.localizedDescription)
+                print(error.localizedDescription)
             }
         }
     }
@@ -208,19 +212,20 @@ class NetworkManager {
         ]
         
         AF.request(endpoint, method: .post, parameters: params).validate().responseData { response in
-        switch (response.result) {
-        case .success(let data):
-            let jsonDecoder = JSONDecoder()
-            jsonDecoder.dateDecodingStrategy = .iso8601
-            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let ride = try jsonDecoder.decode(Ride.self, from: data)
-                completion(.success(ride))
-            } catch {
+            switch (response.result) {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.dateDecodingStrategy = .iso8601
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                do {
+                    let ride = try jsonDecoder.decode(Ride.self, from: data)
+                    completion(.success(ride))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
                 completion(.failure(error))
-            }
-        case .failure(let error):
-            print(error.localizedDescription)
+                print(error.localizedDescription)
             }
         }
     }
@@ -246,6 +251,7 @@ class NetworkManager {
                     completion(.failure(error))
                 }
             case .failure(let error):
+                completion(.failure(error))
                 print(error.localizedDescription)
             }
         }

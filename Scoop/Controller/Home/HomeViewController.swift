@@ -28,9 +28,6 @@ class HomeViewController: UIViewController {
     private var activeRides = [Ride]()
     private var pendingRides = [Ride]()
     
-    // MARK: Networking
-    private let networkManager = NetworkManager()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -135,7 +132,7 @@ class HomeViewController: UIViewController {
     }
     
     private func getRides() {
-        networkManager.getAllRides { rides in
+        NetworkManager.shared.getAllRides { rides in
             switch rides {
             case .success(let rides):
                 for ride in rides {
@@ -157,7 +154,9 @@ class HomeViewController: UIViewController {
                     }
                     self.activeRides.append(rideCopy)
                 }
-                self.tableView.reloadData()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             case .failure(let error):
                 print(error)
             }

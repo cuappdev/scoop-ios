@@ -21,10 +21,6 @@ class PostRideSummaryViewController: UIViewController {
     
     private var ride: Ride!
     
-    // MARK: Networking
-    private let networkManager = NetworkManager()
-    
-    
     init(ride: Ride) {
         super.init(nibName: nil, bundle: nil)
         self.ride = ride
@@ -184,7 +180,7 @@ class PostRideSummaryViewController: UIViewController {
             if let date = dateFormatterGet.date(from: self.ride.departureDatetime) {
                 // TODO: getAllRides networking call goes here after backend is finalized
                 // TODO: Network Manager currently uses a User instead of BaseUser object -> Needs to be adjusted so currently commented out
-                //                networkManager.postRide(startName: ride.path.startLocationName, endName: ride.path.endLocationName, creator: networkManager.currentUser, maxTravellers: ride.maxTravelers, minTravellers: ride.minTravelers, type: ride.type, isFlexible: ride.isFlexible, departureTime: dateFormatterPrint.string(from: date)) { Ride in
+                //                NetworkManager.shared.postRide(startName: ride.path.startLocationName, endName: ride.path.endLocationName, creator: NetworkManager.shared.currentUser, maxTravellers: ride.maxTravelers, minTravellers: ride.minTravelers, type: ride.type, isFlexible: ride.isFlexible, departureTime: dateFormatterPrint.string(from: date)) { Ride in
                 //                    print(ride)
                 //                }
                 self.navigationController?.popToRootViewController(animated: true)
