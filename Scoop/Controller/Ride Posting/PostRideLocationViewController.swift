@@ -39,9 +39,8 @@ class PostRideLocationViewController: UIViewController {
                       return
                   }
             
-            self.ride.method = method
-            self.ride.path.depatureName = departureLocation
-            self.ride.path.arrivalName = arrivalLocation
+            self.ride.path.startLocationName = departureLocation
+            self.ride.path.endLocationName = arrivalLocation
             
             self.navigationController?.pushViewController(TripExtraDetailsViewController(ride: self.ride), animated: true)
         }

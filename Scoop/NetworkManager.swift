@@ -90,7 +90,6 @@ class NetworkManager {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                
                 do {
                     let user = try jsonDecoder.decode(BaseUser.self, from: data)
                     completion(.success(user))
@@ -112,7 +111,6 @@ class NetworkManager {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                
                 do {
                     let allUsers = try jsonDecoder.decode([BaseUser].self, from: data)
                     completion(.success(allUsers))
@@ -126,6 +124,7 @@ class NetworkManager {
         }
     }
     
+    // MARK: Backend currently changing up this endpoint to incorporate Google Places
     func searchLocation(depatureDate: String, startLocation: String, endLocation: String, completion: @escaping (RideResponse) -> Void) {
         let endpoint = "\(hostEndpoint)/api/search/"
         let params = [
@@ -151,27 +150,28 @@ class NetworkManager {
         }
     }
     
-    func getAllRides(completion: @escaping(RideResponse) -> Void) {
+    func getAllRides(completion: @escaping(Result<[Ride], Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/rides/"
         
-        AF.request(endpoint, method: .get).validate().responseData { response in
+        AF.request(endpoint, method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
         switch (response.result) {
         case .success(let data):
             let jsonDecoder = JSONDecoder()
-            jsonDecoder.dateDecodingStrategy = .iso8601
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            if let ridesResponse = try? jsonDecoder.decode(RideResponse.self, from: data) {
-                completion(ridesResponse)
-            } else {
-                print("Failed to decode getAllRides from JSON")
+            jsonDecoder.dateDecodingStrategy = .iso8601
+            do {
+                let allRides = try jsonDecoder.decode([Ride].self, from: data)
+                completion(.success(allRides))
+            } catch {
+                completion(.failure(error))
             }
         case .failure(let error):
-            print(error.localizedDescription)
+            completion(.failure(error))
             }
         }
     }
     
-    func getSpecificRide(rideID: Int, completion: @escaping(Ride) -> Void) {
+    func getSpecificRide(rideID: Int, completion: @escaping(Result<Ride, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/ride/\(rideID)/"
         
         AF.request(endpoint, method: .get).validate().responseData { response in
@@ -180,10 +180,11 @@ class NetworkManager {
             let jsonDecoder = JSONDecoder()
             jsonDecoder.dateDecodingStrategy = .iso8601
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            if let ridesResponse = try? jsonDecoder.decode(Ride.self, from: data) {
-                completion(ridesResponse)
-            } else {
-                print("Failed to decode getSpecific Ride from JSON")
+            do {
+                let ride = try jsonDecoder.decode(Ride.self, from: data)
+                completion(.success(ride))
+            } catch {
+                completion(.failure(error))
             }
         case .failure(let error):
             print(error.localizedDescription)
@@ -191,12 +192,12 @@ class NetworkManager {
         }
     }
     
-    func postRide(startID: Int, startName: String, endID: Int, endName: String, creator: BaseUser, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, completion: @escaping(Ride) -> Void) {
+    func postRide(startName: String, endName: String, creator: BaseUser, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, completion: @escaping(Result<Ride, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/ride/"
         let params: [String : Any] = [
-            "start_location_place_id": startID,
+            "start_location_place_id": "",
             "start_location_name": startName,
-            "end_location_place_id": endID,
+            "end_location_place_id": "",
             "end_location_name": endName,
             "creator": creator,
             "max_travelers": maxTravellers,
@@ -212,14 +213,42 @@ class NetworkManager {
             let jsonDecoder = JSONDecoder()
             jsonDecoder.dateDecodingStrategy = .iso8601
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            if let ride = try? jsonDecoder.decode(Ride.self, from: data) {
-                completion(ride)
-            } else {
-                print("Failed to decode postRide from JSON")
+            do {
+                let ride = try jsonDecoder.decode(Ride.self, from: data)
+                completion(.success(ride))
+            } catch {
+                completion(.failure(error))
             }
         case .failure(let error):
             print(error.localizedDescription)
             }
         }
     }
+    
+    /** IMPORTANT: To remove a driver from ride, pass in null value for driver. Otherwise, must pass in same driver every time even if set before. To update riders, pass in a list of ALL the new rider ids (even if they have been previously added). */
+    func updateRide(driverID: Int, riders: [Int], rideID: Int, completion: @escaping(Result<Ride, Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/rides/\(rideID)"
+        let params: [String : Any] = [
+            "driver": driverID,
+            "riders": riders
+        ]
+        
+        AF.request(endpoint, method: .post, parameters: params).validate().responseData { response in
+            switch (response.result) {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.dateDecodingStrategy = .iso8601
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                do {
+                    let ride = try jsonDecoder.decode(Ride.self, from: data)
+                    completion(.success(ride))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
 }
