@@ -22,6 +22,14 @@ struct Ride: Codable {
     var type: String
 }
 
+/// This version of the Ride model is used in the approving/denying rides networking request. Is there a better way to do this? (only wanting to include certain fields of a model)
+struct truncRide: Codable {
+    let id: Int
+    let departureDatetime: String
+    let path: Path
+    let type: String
+}
+
 /// Temporary, just so hardcoded data can still load while networking is not fully implemented
 //extension Ride {
 //    init() throws {

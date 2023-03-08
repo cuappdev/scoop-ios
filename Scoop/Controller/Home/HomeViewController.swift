@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     private var headerView = UIImageView()
     private let postRideButton = UIButton()
     private let signOutButton = UIButton()
+    private let notificationButton = UIButton()
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     // MARK: Identifers
@@ -34,6 +35,7 @@ class HomeViewController: UIViewController {
         setupHeaderView()
         setupTableView()
         setupPostRideButton()
+        setupNotificationButton()
         
         getRides()
         // Commented out currently because signing out functionality is not yet implemented
@@ -126,6 +128,26 @@ class HomeViewController: UIViewController {
         signOutButton.addAction(signOutAction, for: .touchUpInside)
     }
     
+    private func setupNotificationButton() {
+        notificationButton.setImage(UIImage(named: "notification"), for: .normal)
+        notificationButton.translatesAutoresizingMaskIntoConstraints =  false
+        view.addSubview(notificationButton)
+        
+        notificationButton.snp.makeConstraints { make in
+            make.size.equalTo(45)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(15)
+            make.trailing.equalToSuperview().inset(25)
+        }
+
+        let checkNotifications = UIAction { _ in
+            let notificationsVC = NotificationsViewController()
+            notificationsVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(notificationsVC, animated: true)
+        }
+        
+        notificationButton.addAction(checkNotifications, for: .touchUpInside)
+    }
+    
     private func signOut() {
         GIDSignIn.sharedInstance.signOut()
         dismiss(animated: true)
@@ -212,6 +234,5 @@ extension HomeViewController: UITableViewDataSource {
         
         return cell
     }
-    
     
 }
