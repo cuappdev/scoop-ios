@@ -31,8 +31,7 @@ struct BaseUser: Codable {
     let netid: String
     let firstName: String
     let lastName: String
-    let phoneNumber: String
-    let grade: String
-    let pronouns: String
-    let profilePicUrl: String
+    let profilePicUrl: String?
+    let grade: String?
+    let pronouns: String?
 }

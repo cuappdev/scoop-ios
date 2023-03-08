@@ -9,15 +9,15 @@ import Foundation
 
 struct Ride: Codable {
     var id: Int
-    var creator: User //TODO: Change to BaseUser when backend finished
-    var travelerCountLower: Int
-    var travelerCountUpper: Int
-    var date: String
-    var details: String
-    var method: String
-    var driver: String
-    var riders: [User] //TODO: Change to BaseUser when backend finished
-    var estimatedCost: Int
+    var creator: BaseUser
+    var maxTravelers: Int
+    var minTravelers: Int
+    var departureDatetime: String
+    var description: String = ""
+    var driver: BaseUser? = nil
+    var isFlexible: Bool
+    var riders: [BaseUser]? = []
+    var estimatedCost: Int?
     var path: Path
     var type: String
 }

@@ -322,8 +322,6 @@
 				C845953727ED01A400D2C7F0 /* Utilities */,
 				C8A544C227D18D5400132ACC /* Keys.swift */,
 				2C67E4FB29945E5E00195BB5 /* Constants.swift */,
-				2CFA071129A677990085A0B8 /* GoogleService-Info.plist */,
-				2CFA071329A677A00085A0B8 /* Keys.plist */,
 				C8A5449A27D185BF00132ACC /* Info.plist */,
 				C8A5449727D185BF00132ACC /* LaunchScreen.storyboard */,
 				C8A5449527D185BF00132ACC /* Assets.xcassets */,
@@ -447,10 +445,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CFA071429A677A00085A0B8 /* Keys.plist in Resources */,
 				2C42B51E290F12B400D053A3 /* Sen-Regular.ttf in Resources */,
 				2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */,
-				2CFA071229A677990085A0B8 /* GoogleService-Info.plist in Resources */,
 				C8A5449927D185BF00132ACC /* LaunchScreen.storyboard in Resources */,
 				C8A5449627D185BF00132ACC /* Assets.xcassets in Resources */,
 			);

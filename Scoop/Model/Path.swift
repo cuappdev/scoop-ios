@@ -9,8 +9,8 @@ import Foundation
 
 struct Path: Codable {
     var id: Int
-    var depatureID: String
-    var depatureName: String
-    var arrivalID: String
-    var arrivalName: String
+    var startLocationPlaceId: String
+    var startLocationName: String
+    var endLocationPlaceId: String
+    var endLocationName: String
 }

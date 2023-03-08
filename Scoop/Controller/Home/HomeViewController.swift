@@ -28,9 +28,6 @@ class HomeViewController: UIViewController {
     private var activeRides = [Ride]()
     private var pendingRides = [Ride]()
     
-    // MARK: Networking
-    private let networkManager = NetworkManager()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -135,43 +132,36 @@ class HomeViewController: UIViewController {
     }
     
     private func getRides() {
-        networkManager.getAllRides { RideResponse in
-            for ride in RideResponse.rides {
-                // Note: Technically need to split this into pending + active rides but for some reason the new Ride
-                // model does not have something for it so will fix this asap after backend models are confirmed
-                self.activeRides.append(ride)
+        NetworkManager.shared.getAllRides { rides in
+            switch rides {
+            case .success(let rides):
+                for ride in rides {
+                    // Note: Technically need to split this into pending + active rides but for some reason the new Ride
+                    // model does not have something for it so will fix this asap after backend models are confirmed
+                    var rideCopy = ride
+                    
+                    // Source: https://stackoverflow.com/questions/35700281/date-format-in-swift
+                    let dateFormatterGet = DateFormatter()
+                    dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                    
+                    let dateFormatterPrint = DateFormatter()
+                    dateFormatterPrint.dateFormat = "MMM dd"
+                    
+                    if let date = dateFormatterGet.date(from: ride.departureDatetime) {
+                        rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
+                    } else {
+                        print("There was an error decoding the datetime string")
+                    }
+                    self.activeRides.append(rideCopy)
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
             }
         }
-        // Keeping dummy data here so UI work can be done if needed when networking is still not yet finished
-        // Populate table view with dummy data
-        //        let readesRide = Ride()
-        //        readesRide.creator.name = "Reade"
-        //        readesRide.departureLocation = "Ithaca, NY"
-        //        readesRide.arrivalLocation = "Darien, CT"
-        //        readesRide.date = "Mar
-        //        readesRide.isActive
-        //        let annesRide =
-        //        annesRide.creator.name = "
-        //        annesRide.departureLocation = "Ithaca,
-        //        annesRide.arrivalLocation = "Orlando,
-        //        annesRide.date = "Apr
-        //        annesRide.isActive
-        //        let karlsRide =
-        //        karlsRide.creator.name = "
-        //        karlsRide.departureLocation = "Ithaca,
-        //        karlsRide.arrivalLocation = "Pittsburgh,
-        //        karlsRide.date = "May
-        //        karlsRide.isActive
-        //        let sarahsRide =
-        //        sarahsRide.creator.name = "
-        //        sarahsRide.departureLocation = "Ithaca,
-        //        sarahsRide.arrivalLocation = "Montreal,
-        //        sarahsRide.date = "May
-        //        sarahsRide.isActive
-        //        activeRides = [readesRide,
-        //        pendingRides = [karlsRide, sarahsRide]
     }
-    
 }
                 
             
