@@ -89,7 +89,7 @@ class PostRideSummaryViewController: UIViewController {
         
         let rideTitleLabel = UILabel()
         rideTitleLabel.font = .systemFont(ofSize: 24, weight: .semibold)
-        rideTitleLabel.text = "Trip to \(ride.path.arrivalName)"
+        rideTitleLabel.text = "Trip to \(ride.path.endLocationName)"
         rideTitleLabel.textColor = .black
         rideTitleLabel.numberOfLines = 2
         rideTitleLabel.adjustsFontSizeToFitWidth = true
@@ -111,25 +111,25 @@ class PostRideSummaryViewController: UIViewController {
         
         let startingLocationSection = ImageLabelView()
         startingLocationSection.label.font = .systemFont(ofSize: 18)
-        startingLocationSection.label.text = ride.path.depatureName
+        startingLocationSection.label.text = ride.path.startLocationName
         startingLocationSection.imageView.image = UIImage(systemName: "paperplane", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(startingLocationSection)
         
         let endingLocationSection = ImageLabelView()
         endingLocationSection.label.font = .systemFont(ofSize: 18)
-        endingLocationSection.label.text = ride.path.depatureName
+        endingLocationSection.label.text = ride.path.endLocationName
         endingLocationSection.imageView.image = UIImage(systemName: "mappin", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(endingLocationSection)
         
         let dateSection = ImageLabelView()
         dateSection.label.font = .systemFont(ofSize: 18)
-        dateSection.label.text = ride.date
+        dateSection.label.text = ride.departureDatetime
         dateSection.imageView.image = UIImage(systemName: "calendar.badge.clock", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(dateSection)
         
         let peopleSection = ImageLabelView()
         peopleSection.label.font = .systemFont(ofSize: 18)
-        peopleSection.label.text = "\(ride.travelerCountLower) to \(ride.travelerCountUpper) other travelers"
+        peopleSection.label.text = "\(ride.minTravelers) to \(ride.maxTravelers) other travelers"
         peopleSection.imageView.image = UIImage(systemName: "person.2", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36))
         detailsStackView.addArrangedSubview(peopleSection)
         
@@ -146,7 +146,7 @@ class PostRideSummaryViewController: UIViewController {
         detailsTextView.isEditable = false
         detailsTextView.isScrollEnabled = false
         detailsTextView.font = .systemFont(ofSize: 14)
-        detailsTextView.text = ride.details
+        detailsTextView.text = ride.description
         detailsStackView.addArrangedSubview(detailsTextView)
     }
     
@@ -170,13 +170,24 @@ class PostRideSummaryViewController: UIViewController {
         }
         
         let postAction = UIAction { _ in
-            // TODO: getAllRides networking call goes here after backend is finalized
-            self.navigationController?.popToRootViewController(animated: true)
+            // Convert back to backend's "yyyy-MM-dd'T'HH:mm:ssZ" form.
+            // Source: https://stackoverflow.com/questions/35700281/date-format-in-swift
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "M/dd/yy @ h:mm a"
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            
+            if let date = dateFormatterGet.date(from: self.ride.departureDatetime) {
+                // TODO: getAllRides networking call goes here after backend is finalized
+                // TODO: Network Manager currently uses a User instead of BaseUser object -> Needs to be adjusted so currently commented out
+                //                NetworkManager.shared.postRide(startName: ride.path.startLocationName, endName: ride.path.endLocationName, creator: NetworkManager.shared.currentUser, maxTravellers: ride.maxTravelers, minTravellers: ride.minTravelers, type: ride.type, isFlexible: ride.isFlexible, departureTime: dateFormatterPrint.string(from: date)) { Ride in
+                //                    print(ride)
+                //                }
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            postButton.addAction(postAction, for: .touchUpInside)
         }
-        
-        postButton.addAction(postAction, for: .touchUpInside)
     }
-    
 }
 
 // MARK: - MKMapViewDelegate

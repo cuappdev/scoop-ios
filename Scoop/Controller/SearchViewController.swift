@@ -22,9 +22,6 @@ class SearchViewController: UIViewController {
     // MARK: Data
     private var tripDate: String = ""
     
-    // MARK: Networking
-    private let networkManager = NetworkManager()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -154,9 +151,14 @@ class SearchViewController: UIViewController {
 
     @objc private func presentMatches() {
         if let startLocation = departLocationTextField.text, let endLocation = arrivalTextField.text {
-            networkManager.searchLocation (depatureDate: tripDate, startLocation: startLocation, endLocation: endLocation)
+            NetworkManager.shared.searchLocation(depatureDate: tripDate, startLocation: startLocation, endLocation: endLocation)
             { response in
-                self.navigationController?.pushViewController(MatchesViewController(rides: response.rides), animated: true)
+                switch response {
+                case .success(let response):
+                    self.navigationController?.pushViewController(MatchesViewController(rides: response.rides), animated: true)
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
     }

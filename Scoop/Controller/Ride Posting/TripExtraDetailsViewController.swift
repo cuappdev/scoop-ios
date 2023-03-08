@@ -65,10 +65,10 @@ class TripExtraDetailsViewController: UIViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "M/dd/yy @ h:mm a"
             
-            self.ride.travelerCountLower = travelerCountLower
-            self.ride.travelerCountUpper = travelerCountUpper
-            self.ride.date = dateFormatter.string(from: date)
-            self.ride.details = self.detailsTextView.textColor == .placeholderText ? "" : self.detailsTextView.text
+            self.ride.minTravelers = travelerCountLower
+            self.ride.maxTravelers = travelerCountUpper
+            self.ride.departureDatetime = dateFormatter.string(from: date)
+            self.ride.description = self.detailsTextView.textColor == .placeholderText ? "" : self.detailsTextView.text
             
             self.navigationController?.pushViewController(PostRideSummaryViewController(ride: self.ride), animated: true)
         }
