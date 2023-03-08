@@ -43,7 +43,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 return
             }
             
-            self.didCompleteLogin()
+            guard let email = user.profile?.email else { return }
+            
+            guard let userID = user.userID,
+                  let firstName = user.profile?.givenName,
+                  let familyName = user.profile?.familyName,
+                  let idtoken = user.idToken?.tokenString else {
+                GIDSignIn.sharedInstance.signOut()
+                return
+            }
+            
+            NetworkManager.shared.authenticateUser(googleID: userID, email: email, firstName: firstName, lastName: familyName, id_token: idtoken) { result in
+                switch result {
+                case .success(let user):
+                    self.setNetID(email: email)
+                    NetworkManager.shared.currentUser.firstName = firstName
+                    NetworkManager.shared.currentUser.lastName = familyName
+                    NetworkManager.userToken = user.accessToken
+                    self.didCompleteLogin()
+                case .failure:
+                    print("Unable to Authorize")
+                }
+            }
         }
     }
     
@@ -88,4 +109,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = backArrowImage
         UIBarButtonItem.appearance().setBackButtonBackgroundImage(transparentImage, for: .normal, barMetrics: .default)
     }
+    
+    private func setNetID(email: String) {
+        guard let strIndex = email.firstIndex(of: "@") else{
+            print("Not a valid Cornell email")
+            return
+        }
+        let index = email.index(strIndex, offsetBy: -1)
+        let netID = String(email[...index])
+        NetworkManager.shared.currentUser.netid = netID
+    }
+    
 }
