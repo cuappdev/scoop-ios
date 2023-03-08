@@ -148,13 +148,13 @@ class PostRideLocationViewController: UIViewController {
         }
     }
     
-    @objc func presentDepartureSearch() {
+    @objc private func presentDepartureSearch() {
         let depatureVC = DepartureSearchViewController()
         depatureVC.delegate = self
         navigationController?.pushViewController(depatureVC, animated: true)
     }
 
-    @objc func presentArrivalSearch() {
+    @objc private func presentArrivalSearch() {
         let arrivalVC = ArrivalSearchViewController()
         arrivalVC.delegate = self
         navigationController?.pushViewController(arrivalVC, animated: true)
@@ -213,5 +213,6 @@ extension PostRideLocationViewController: SearchInitialViewControllerDelegate {
             arrivalTextField.text = location.name
         }
     }
+    
 }
 

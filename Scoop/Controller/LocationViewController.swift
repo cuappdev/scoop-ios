@@ -15,7 +15,7 @@ protocol LocationViewControllerDelegate: AnyObject {
 class LocationViewController: UIViewController {
     
     private let tableView = UITableView()
-    private var tableDataSource: GMSAutocompleteTableDataSource!
+    private var tableDataSource = GMSAutocompleteTableDataSource()
     
     private let cellHeight: CGFloat = 50
     private var filteredLocations: [String] = []
@@ -26,7 +26,6 @@ class LocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableDataSource = GMSAutocompleteTableDataSource()
         tableDataSource.delegate = self
         setupTableView()
     }
@@ -81,4 +80,5 @@ extension LocationViewController: GMSAutocompleteTableDataSourceDelegate {
     func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: Error) {
         print("Error: \(error.localizedDescription)")
     }
+    
 }

@@ -18,14 +18,14 @@ class TripDetailsViewController: UIViewController {
     private let transportationMethod = UILabel()
     private let driverType = UILabel()
     private let locations = UILabel()
-    private let arrivalLocation = UILabel()
-    private let departureLocation = UILabel()
+    private let arrivalLocationLabel = UILabel()
+    private let departureLocationLabel = UILabel()
     private let departureDateLabel = UILabel()
     private let departureDate = UILabel()
     private let numberTravelersLabel = UILabel()
     private let numberTravelers = UILabel()
     private let detailsLabel = UILabel()
-    private let details = UITextView()
+    private let detailsTextView = UITextView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class TripDetailsViewController: UIViewController {
     }
     
     private func setUpStackView() {
-        let stackviewMultiplier = 0.10
+        let stackViewMultiplier = 0.10
         let leadingTrailingInset = 20.0
         let spacing = 12.0
         let screenSize = UIScreen.main.bounds
@@ -49,7 +49,8 @@ class TripDetailsViewController: UIViewController {
         
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(stackviewMultiplier * screenSize.height)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(stackViewMultiplier * screenSize.height)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         guard let creator = currentRide?.creator else { return }
