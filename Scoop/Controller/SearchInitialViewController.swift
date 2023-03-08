@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import GooglePlaces
 
 protocol SearchInitialViewControllerDelegate: AnyObject {
-    func didSelectLocation(viewController: UIViewController, location: String)
+    func didSelectLocation(viewController: UIViewController, location: GMSPlace)
 }
 
 class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
@@ -44,7 +45,7 @@ class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UI
 // MARK: - LocationViewControllerDelegate
 extension SearchInitialViewController: LocationViewControllerDelegate {
     
-    func didSelectLocation(location: String) {
+    func didSelectLocation(location: GMSPlace) {
         delegate?.didSelectLocation(viewController: self, location: location)
     }
     

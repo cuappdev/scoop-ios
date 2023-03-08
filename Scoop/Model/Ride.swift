@@ -23,12 +23,12 @@ struct Ride: Codable {
 }
 
 /// Temporary, just so hardcoded data can still load while networking is not fully implemented
-extension Ride {
-    init() throws {
-        let data = try JSONSerialization.data(withJSONObject: [])
-        self = try JSONDecoder().decode(Self.self, from: data)
-    }
-}
+//extension Ride {
+//    init() throws {
+//        let data = try JSONSerialization.data(withJSONObject: [])
+//        self = try JSONDecoder().decode(Self.self, from: data)
+//    }
+//}
 
 struct RideResponse: Codable {
     var rides: [Ride]

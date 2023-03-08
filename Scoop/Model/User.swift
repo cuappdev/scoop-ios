@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class User {
+class User: Codable {
     var id: String = ""
     var profilePicUrl: String = ""
     var netid: String = ""
@@ -26,7 +26,7 @@ class User {
     var favoriteStop: String = ""
 }
 
-class BaseUser: Codable {
+struct BaseUser: Codable {
     let id: Int
     let netid: String
     let firstName: String

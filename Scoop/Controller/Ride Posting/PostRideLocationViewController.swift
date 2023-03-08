@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class PostRideLocationViewController: UIViewController {
     
@@ -22,8 +23,8 @@ class PostRideLocationViewController: UIViewController {
     private let fieldSpace = 40
     private let labelSpace = 5
     private let textFieldSpace = 20
-    // Currently unwrapped unsafely, but will be addressed in a future PR. 
-    private var ride = try! Ride()
+    //TODO: Currently unwrapped unsafely, but will be addressed in a future PR. 
+    private var ride = Ride(id: 0, creator: NetworkManager.shared.currentUser, travelerCountLower: 0, travelerCountUpper: 0, date: "", details: "", method: "", driver: "", riders: [], estimatedCost: 0, path: Path(id: 0, depatureID: "", depatureName: "", arrivalID: "", arrivalName: ""), type: "")
     private var methods = ["Student Driver", "Shared Taxi"]
     
     override func viewDidLoad() {
@@ -124,6 +125,7 @@ class PostRideLocationViewController: UIViewController {
         
         departureTextField.placeholder = "departure location"
         departureTextField.textColor = .black
+        departureTextField.addTarget(self, action: #selector(presentDepartureSearch), for: .touchDown)
         containerView.addSubview(departureTextField)
         
         departureTextField.snp.makeConstraints { make in
@@ -134,6 +136,7 @@ class PostRideLocationViewController: UIViewController {
         
         arrivalTextField.placeholder = "arrival location"
         arrivalTextField.textColor = .black
+        arrivalTextField.addTarget(self, action: #selector(presentArrivalSearch), for: .touchDown)
         containerView.addSubview(arrivalTextField)
         
         arrivalTextField.snp.makeConstraints { make in
@@ -142,6 +145,18 @@ class PostRideLocationViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview().inset(fieldSpace)
         }
+    }
+    
+    @objc private func presentDepartureSearch() {
+        let depatureVC = DepartureSearchViewController()
+        depatureVC.delegate = self
+        navigationController?.pushViewController(depatureVC, animated: true)
+    }
+
+    @objc private func presentArrivalSearch() {
+        let arrivalVC = ArrivalSearchViewController()
+        arrivalVC.delegate = self
+        navigationController?.pushViewController(arrivalVC, animated: true)
     }
 }
 
@@ -184,6 +199,18 @@ extension PostRideLocationViewController: UIPickerViewDataSource {
             return methods.count
         }
         return 0
+    }
+    
+}
+
+extension PostRideLocationViewController: SearchInitialViewControllerDelegate {
+    
+    func didSelectLocation(viewController: UIViewController, location: GMSPlace) {
+        if viewController is DepartureSearchViewController {
+            departureTextField.text = location.name
+        } else if viewController is ArrivalSearchViewController {
+            arrivalTextField.text = location.name
+        }
     }
     
 }

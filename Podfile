@@ -11,4 +11,5 @@ target 'Scoop' do
   pod 'SnapKit'
   pod 'IQKeyboardManager'
   pod 'Alamofire'
+  pod 'GooglePlaces'
 end

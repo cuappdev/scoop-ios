@@ -9,6 +9,7 @@ import UIKit
 import GoogleSignIn
 import FirebaseCore
 import IQKeyboardManager
+import GooglePlaces
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         IQKeyboardManager.shared().isEnabled = true
+        
+        GMSPlacesClient.provideAPIKey(Keys.googlePlacesKey)
         
         return true
     }
