@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Path: Codable {
+struct Path: Codable {
     var id: Int
     var depatureID: String
     var depatureName: String

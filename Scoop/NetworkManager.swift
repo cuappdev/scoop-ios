@@ -10,7 +10,7 @@ import Alamofire
 
 class NetworkManager {
     
-    var currentUser = User() //Swap with BaseUser once backend finishes profile routes
+    var currentUser = User() //TODO: Swap with BaseUser once backend finishes profile routes
     
     static var userToken = Constants.UserDefaults.accessToken
     
@@ -105,7 +105,7 @@ class NetworkManager {
         }
     }
     
-    //MARK: Debugging Developer Requests
+    //MARK: Debugging User Developer Requests
     func getAllUsers(completion: @escaping (Result<[BaseUser], Error>) -> Void ) {
         AF.request("\(hostEndpoint)/api/dev/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {

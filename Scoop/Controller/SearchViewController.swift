@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class SearchViewController: UIViewController {
     
@@ -178,11 +179,11 @@ class SearchViewController: UIViewController {
 // MARK: - SearchInitialViewControllerDelegate
 extension SearchViewController: SearchInitialViewControllerDelegate {
 
-    func didSelectLocation(viewController: UIViewController, location: String) {
+    func didSelectLocation(viewController: UIViewController, location: GMSPlace) {
         if viewController is DepartureSearchViewController {
-            departLocationTextField.text = location
+            departLocationTextField.text = location.name
         } else if viewController is ArrivalSearchViewController {
-            arrivalTextField.text = location
+            arrivalTextField.text = location.name
         }
     }
 

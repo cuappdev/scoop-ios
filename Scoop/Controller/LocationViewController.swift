@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import GooglePlaces
 
 protocol LocationViewControllerDelegate: AnyObject {
-    func didSelectLocation(location: String)
+    func didSelectLocation(location: GMSPlace)
 }
 
 class LocationViewController: UIViewController {
     
     private let tableView = UITableView()
+    private var tableDataSource: GMSAutocompleteTableDataSource!
     
     private let cellHeight: CGFloat = 50
     private var filteredLocations: [String] = []
@@ -24,6 +26,8 @@ class LocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableDataSource = GMSAutocompleteTableDataSource()
+        tableDataSource.delegate = self
         setupTableView()
     }
     
@@ -41,8 +45,8 @@ class LocationViewController: UIViewController {
         locations = ["Ithaca, NY", "Duffield Hall", "Gates Hall", "Klarman Hall", "Roselle Park, NJ", "Albany, NY", "Cupertino, CA", "Cayuga Lake, NY", "Rhodes Hall, NY"]
         filteredLocations = locations
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: LocationTableViewCell.reuseIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.dataSource = tableDataSource
+        tableView.delegate = tableDataSource
         view.addSubview(tableView)
 
         tableView.snp.makeConstraints { make in
@@ -52,43 +56,29 @@ class LocationViewController: UIViewController {
     }
     
     func filterText(searchText: String) {
-        filteredLocations = locations.filter { loc in
-            if !searchText.isEmpty {
-                let searchTextMatch = loc.lowercased().contains(searchText.lowercased())
-                return searchTextMatch
-            }
-            else {
-                return true
-            }
-        }
-        tableView.reloadData()
+        tableDataSource.sourceTextHasChanged(searchText)
     }
-    
 }
-// MARK: - UITableViewDataSource
-extension LocationViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filteredLocations.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: LocationTableViewCell.reuseIdentifier, for: indexPath) as? LocationTableViewCell {
-            let location = filteredLocations[indexPath.row]
-            cell.configure(location: location)
-            return cell
-        } else {
-            return UITableViewCell()
+
+extension LocationViewController: GMSAutocompleteTableDataSourceDelegate {
+    func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     
-}
-// MARK: - UITableViewDelegate
-extension LocationViewController: UITableViewDelegate {
+    func didRequestAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectLocation(location: filteredLocations[indexPath.row])
+    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace) {
+        delegate?.didSelectLocation(location: place)
         searchController.navigationController?.popViewController(animated: true)
     }
     
+    func tableDataSource(_ tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: Error) {
+        print("Error: \(error.localizedDescription)")
+    }
 }
