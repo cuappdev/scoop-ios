@@ -61,8 +61,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     NetworkManager.shared.currentUser.lastName = familyName
                     NetworkManager.userToken = user.accessToken
                     self.didCompleteLogin()
-                case .failure:
-                    print("Unable to Authorize")
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
             }
         }
@@ -111,7 +111,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func setNetID(email: String) {
-        guard let strIndex = email.firstIndex(of: "@") else{
+        guard let strIndex = email.firstIndex(of: "@") else {
             print("Not a valid Cornell email")
             return
         }
