@@ -23,8 +23,8 @@ class PostRideLocationViewController: UIViewController {
     private let fieldSpace = 40
     private let labelSpace = 5
     private let textFieldSpace = 20
-    //TODO: Currently unwrapped unsafely, but will be addressed in a future PR. 
-    private var ride = Ride(id: 0, creator: NetworkManager.shared.currentUser, travelerCountLower: 0, travelerCountUpper: 0, date: "", details: "", method: "", driver: "", riders: [], estimatedCost: 0, path: Path(id: 0, depatureID: "", depatureName: "", arrivalID: "", arrivalName: ""), type: "")
+    //TODO: Placeholder until default values are clarified with Backend
+    private var ride = Ride(id: 0, creator: BaseUser(id: 0, netid: "", firstName: "", lastName: "", profilePicUrl: "", grade: "", pronouns: ""), maxTravelers: 0, minTravelers: 0, departureDatetime: "", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "", startLocationName: "", endLocationPlaceId: "", endLocationName: ""), type: "")
     private var methods = ["Student Driver", "Shared Taxi"]
     
     override func viewDidLoad() {

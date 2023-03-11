@@ -20,8 +20,8 @@
 		2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */; };
 		2C991EBE28E0B2E7006301D9 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB628E0B2E7006301D9 /* LocationViewController.swift */; };
 		2C991EBF28E0B2E7006301D9 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */; };
-		2CFA071229A677990085A0B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA071129A677990085A0B8 /* GoogleService-Info.plist */; };
-		2CFA071429A677A00085A0B8 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA071329A677A00085A0B8 /* Keys.plist */; };
+		2CCC892029B947950010287E /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CCC891E29B947950010287E /* Keys.plist */; };
+		2CCC892129B947950010287E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CCC891F29B947950010287E /* GoogleService-Info.plist */; };
 		2CFA071629A67C710085A0B8 /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFA071529A67C710085A0B8 /* TripDetailsViewController.swift */; };
 		4176A1E9299D2F01008B2BC3 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4176A1E8299D2F01008B2BC3 /* Path.swift */; };
 		8E4464A344C5B1529768FAF3 /* Pods_Scoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */; };
@@ -90,8 +90,8 @@
 		2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		2C991EB628E0B2E7006301D9 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
-		2CFA071129A677990085A0B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		2CFA071329A677A00085A0B8 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		2CCC891E29B947950010287E /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		2CCC891F29B947950010287E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2CFA071529A67C710085A0B8 /* TripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
 		4176A1E8299D2F01008B2BC3 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		9430FC737D049567581E79B9 /* Pods-Scoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.debug.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.debug.xcconfig"; sourceTree = "<group>"; };
@@ -321,6 +321,8 @@
 				2C42B51F290F765B00D053A3 /* fonts */,
 				C845953727ED01A400D2C7F0 /* Utilities */,
 				C8A544C227D18D5400132ACC /* Keys.swift */,
+				2CCC891F29B947950010287E /* GoogleService-Info.plist */,
+				2CCC891E29B947950010287E /* Keys.plist */,
 				2C67E4FB29945E5E00195BB5 /* Constants.swift */,
 				C8A5449A27D185BF00132ACC /* Info.plist */,
 				C8A5449727D185BF00132ACC /* LaunchScreen.storyboard */,
@@ -449,6 +451,8 @@
 				2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */,
 				C8A5449927D185BF00132ACC /* LaunchScreen.storyboard in Resources */,
 				C8A5449627D185BF00132ACC /* Assets.xcassets in Resources */,
+				2CCC892029B947950010287E /* Keys.plist in Resources */,
+				2CCC892129B947950010287E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
