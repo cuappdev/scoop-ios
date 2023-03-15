@@ -328,8 +328,6 @@
 				2C42B51F290F765B00D053A3 /* fonts */,
 				C845953727ED01A400D2C7F0 /* Utilities */,
 				C8A544C227D18D5400132ACC /* Keys.swift */,
-				4183686E29B948DA00F0CE55 /* GoogleService-Info.plist */,
-				4183686F29B948DA00F0CE55 /* Keys.plist */,
 				2C67E4FB29945E5E00195BB5 /* Constants.swift */,
 				C8A5449A27D185BF00132ACC /* Info.plist */,
 				C8A5449727D185BF00132ACC /* LaunchScreen.storyboard */,
@@ -462,6 +460,8 @@
 				4183687029B948DA00F0CE55 /* GoogleService-Info.plist in Resources */,
 				C8A5449927D185BF00132ACC /* LaunchScreen.storyboard in Resources */,
 				C8A5449627D185BF00132ACC /* Assets.xcassets in Resources */,
+				2CCC892029B947950010287E /* Keys.plist in Resources */,
+				2CCC892129B947950010287E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

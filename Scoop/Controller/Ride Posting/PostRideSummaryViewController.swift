@@ -185,8 +185,8 @@ class PostRideSummaryViewController: UIViewController {
                 //                }
                 self.navigationController?.popToRootViewController(animated: true)
             }
-//            postButton.addAction(postAction, for: .touchUpInside)
         }
+        postButton.addAction(postAction, for: .touchUpInside)
     }
 }
 

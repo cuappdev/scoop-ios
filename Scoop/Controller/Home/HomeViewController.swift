@@ -28,7 +28,6 @@ class HomeViewController: UIViewController {
     // MARK: Data
     private var activeRides = [Ride]()
     private var pendingRides = [Ride]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
