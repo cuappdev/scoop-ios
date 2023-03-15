@@ -15,27 +15,12 @@ class RequestTableViewCell: UITableViewCell {
     private let acceptButton = UIButton()
     private let declineButton = UIButton()
     
-    private var requestStatus: Bool
+    private var requestStatus: Bool = false
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        // TODO: Ask for help. Need to figure out how to get this variable to change within the configure function
-        self.requestStatus = false
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        
-        if requestStatus {
-            // Display only the profile picture + request info.
-            setupProfilePictureView()
-            setupRequestDetailLabel()
-        } else {
-            // Give the user the option to either accept/deny the pending request.
-            setupProfilePictureView()
-            setupRequestDetailLabel()
-            setupDeclineButton()
-            setupAcceptButton()
-        }
     }
-
     
     private func setupProfilePictureView() {
         profileImageView.contentMode = .scaleAspectFit
@@ -60,6 +45,23 @@ class RequestTableViewCell: UITableViewCell {
         requestDetailLabel.snp.makeConstraints { make in
             make.leading.equalTo(profileImageView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-15)
+            if requestStatus {
+                make.top.equalTo(profileImageView.snp.top)
+            } else {
+                make.top.equalToSuperview().offset(12)
+            }
+        }
+    }
+    
+    private func setupRespondedDetailLabel() {
+        requestDetailLabel.font = .systemFont(ofSize: 16)
+        requestDetailLabel.lineBreakMode = .byWordWrapping
+        requestDetailLabel.numberOfLines = 0
+        contentView.addSubview(requestDetailLabel)
+        
+        requestDetailLabel.snp.makeConstraints { make in
+            make.leading.equalTo(profileImageView.snp.trailing).offset(20)
+            make.trailing.equalToSuperview().offset(-15)
             make.top.equalToSuperview().offset(12)
         }
     }
@@ -69,19 +71,19 @@ class RequestTableViewCell: UITableViewCell {
         // This button setup code with configurations can definitely be refactored in a future PR
         if #available(iOS 15.0, *) {
             var configuration = UIButton.Configuration.bordered()
-            configuration.baseForegroundColor = UIColor.scoopGreen
+            configuration.baseForegroundColor = UIColor.primaryGrey
             configuration.baseBackgroundColor = UIColor.white
-            configuration.background.strokeColor = UIColor.scoopGreen
+            configuration.background.strokeColor = UIColor.mutedGrey
             configuration.title = "Decline"
             configuration.titleAlignment = .center
-            configuration.background.cornerRadius = 10
+            configuration.background.cornerRadius = 100
             declineButton.configuration = configuration
         } else {
             // Fallback on earlier versions
             declineButton.backgroundColor = UIColor.white
             declineButton.setTitle("Decline", for: .normal)
             declineButton.setTitleColor(UIColor.scoopGreen, for: .normal)
-            declineButton.layer.cornerRadius = 10
+            declineButton.layer.cornerRadius = 100
             declineButton.contentHorizontalAlignment = .center
         }
         
@@ -100,17 +102,17 @@ class RequestTableViewCell: UITableViewCell {
         if #available(iOS 15.0, *) {
             var configuration = UIButton.Configuration.filled()
             configuration.baseForegroundColor = UIColor.white
-            configuration.baseBackgroundColor = UIColor.scoopGreen
+            configuration.baseBackgroundColor = UIColor.scoopDarkGreen
             configuration.title = "Accept"
             configuration.titleAlignment = .center
-            configuration.background.cornerRadius = 10
+            configuration.background.cornerRadius = 100
             acceptButton.configuration = configuration
         } else {
             // Fallback on earlier versions
             acceptButton.setTitle("Accept", for: .normal)
             acceptButton.setTitleColor(.white, for: .normal)
             acceptButton.layer.cornerRadius = 10
-            acceptButton.backgroundColor = UIColor.scoopGreen
+            acceptButton.backgroundColor = UIColor.scoopDarkGreen
         }
         
         acceptButton.addTarget(self, action: #selector(acceptRequest), for: .touchUpInside)
@@ -123,15 +125,27 @@ class RequestTableViewCell: UITableViewCell {
         }
     }
     
+    private func setUpViews(isResponded: Bool) {
+        if isResponded {
+            // Display only the profile picture + request info.
+            setupProfilePictureView()
+            setupRequestDetailLabel()
+        } else {
+            // Give the user the option to either accept/deny the pending request.
+            setupProfilePictureView()
+            setupRequestDetailLabel()
+            setupDeclineButton()
+            setupAcceptButton()
+        }
+    }
+    
     @objc func denyRequest() {
         // TODO: Networking
-//        NetworkManager.shared.handleRideRequest(requestID: <#T##Int#>, approved: <#T##Bool#>, completion: <#T##(Result<RequestResponse, Error>) -> Void#>)
         // Configure the cell to change 
     }
 
     @objc func acceptRequest() {
         // TODO: Networking
-//        NetworkManager.shared.handleRideReques t(requestID: <#T##Int#>, approved: <#T##Bool#>, completion: <#T##(Result<RequestResponse, Error>) -> Void#>)
     }
     
     func configure(request: RequestResponse, status: Bool) {
@@ -143,6 +157,7 @@ class RequestTableViewCell: UITableViewCell {
         requestDetailLabel.attributedText = boldedName
         profileImageView.image = UIImage(named: "notification") //Change to UIImage from URL
         requestStatus = status
+        setUpViews(isResponded: status)
     }
     
     required init?(coder: NSCoder) {
