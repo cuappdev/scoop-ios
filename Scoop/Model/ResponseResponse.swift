@@ -9,8 +9,9 @@ import Foundation
 
 struct RequestResponse: Codable {
     let id: Int
-    let approvee: BaseUser
-    let approver: BaseUser
-    let ride: truncRide
+    let approvee: User
+    let approver: User
+    // needs to be replaced with a truncated ride model, tbd need to check with Kate on this 
+    let ride: Ride
     let approved: Bool
 }
