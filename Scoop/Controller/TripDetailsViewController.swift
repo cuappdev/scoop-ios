@@ -9,6 +9,10 @@ import UIKit
 
 class TripDetailsViewController: UIViewController {
     
+    private let iconTextSpacing = 10
+    private let iconSize = 19
+    private let spacing = 10
+    
     var currentRide: Ride?
     
     private let stackView = UIStackView()
@@ -59,9 +63,6 @@ class TripDetailsViewController: UIViewController {
     private func setUpStackView() {
         let stackViewMultiplier = 0.05
         let leadingTrailingInset = 32
-        let iconTextSpacing = 10
-        let iconSize = 19
-        let spacing = 10
         let screenSize = UIScreen.main.bounds
         
         stackView.axis = .vertical
@@ -76,7 +77,15 @@ class TripDetailsViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(0.15 * screenSize.height)
         }
         
-        guard let ride = currentRide else { return }
+        setUpDriverInfo()
+        setUpTransportationInfo()
+        setUpLocationInfo()
+        setUpDateInfo()
+        setUpTravelerInfo()
+        setUpDetailsInfo()
+    }
+    
+    private func setUpDriverInfo() {
         guard let creator = currentRide?.creator else { return }
         
         creatorProfile.image = UIImage(named: "emptyimage") //TODO: Replaces once Backend finishes
@@ -119,6 +128,11 @@ class TripDetailsViewController: UIViewController {
             make.height.equalTo(41)
         }
         
+    }
+    
+    private func setUpTransportationInfo() {
+        guard let ride = currentRide else { return }
+        
         transportationMethod.text = "TRANSPORTATION METHOD"
         transportationContainerView.addSubview(transportationMethod)
         transportationMethod.snp.makeConstraints { make in
@@ -144,6 +158,10 @@ class TripDetailsViewController: UIViewController {
         transportationContainerView.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
+    }
+    
+    private func setUpLocationInfo() {
+        guard let ride = currentRide else { return }
         
         locations.text = "LOCATIONS"
         locationsContainerView.addSubview(locations)
@@ -192,6 +210,10 @@ class TripDetailsViewController: UIViewController {
         locationsContainerView.snp.makeConstraints { make in
             make.height.equalTo(85)
         }
+    }
+    
+    private func setUpDateInfo() {
+        guard let ride = currentRide else { return }
         
         departureDateLabel.text = "DEPARTURE DATE"
         dateContainerView.addSubview(departureDateLabel)
@@ -218,6 +240,10 @@ class TripDetailsViewController: UIViewController {
         dateContainerView.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
+    }
+    
+    private func setUpTravelerInfo() {
+        guard let ride = currentRide else { return }
         
         numberTravelersLabel.text = "NUMBER OF TRAVELERS"
         numberTravelersContainerView.addSubview(numberTravelersLabel)
@@ -237,6 +263,10 @@ class TripDetailsViewController: UIViewController {
         numberTravelersContainerView.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
+    }
+    
+    private func setUpDetailsInfo() {
+        guard let ride = currentRide else { return }
         
         detailsLabel.text = "DETAILS"
         detailsContainerView.addSubview(detailsLabel)
@@ -280,7 +310,6 @@ class TripDetailsViewController: UIViewController {
     @objc private func requestRide() {
         //TODO: Networking Goes here
         self.dismiss(animated: true)
-        print("press")
     }
     
     private func setUpLabelFont() {
