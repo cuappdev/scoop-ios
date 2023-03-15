@@ -96,6 +96,7 @@ class TripDetailsViewController: UIViewController {
         creatorProfile.layer.cornerRadius = 20.5
         creatorProfile.clipsToBounds = true
         driverInfoContainerView.addSubview(creatorProfile)
+        
         creatorProfile.snp.makeConstraints { make in
             make.size.equalTo(41)
             make.leading.equalToSuperview()
@@ -104,12 +105,14 @@ class TripDetailsViewController: UIViewController {
         
         creatorLabel.text = "\(creator.firstName) \(creator.lastName)"
         driverInfoContainerView.addSubview(creatorLabel)
+        
         creatorLabel.snp.makeConstraints { make in
             make.leading.equalTo(creatorProfile.snp.trailing).inset(-iconTextSpacing)
             make.top.equalTo(creatorProfile)
         }
         
         driverInfoContainerView.addSubview(mailIcon)
+        
         mailIcon.snp.makeConstraints { make in
             make.size.equalTo(15)
             make.leading.equalTo(creatorLabel)
@@ -118,12 +121,14 @@ class TripDetailsViewController: UIViewController {
         
         creatorEmail.text = "\(creator.netid)@cornell.edu"
         driverInfoContainerView.addSubview(creatorEmail)
+        
         creatorEmail.snp.makeConstraints { make in
             make.top.equalTo(creatorLabel.snp.bottom)
             make.leading.equalTo(mailIcon.snp.trailing).inset(-iconTextSpacing)
         }
         
         stackView.addArrangedSubview(driverInfoContainerView)
+        
         driverInfoContainerView.snp.makeConstraints { make in
             make.height.equalTo(41)
         }
@@ -135,12 +140,14 @@ class TripDetailsViewController: UIViewController {
         
         transportationMethod.text = "TRANSPORTATION METHOD"
         transportationContainerView.addSubview(transportationMethod)
+        
         transportationMethod.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.top.equalToSuperview()
         }
         
         transportationContainerView.addSubview(carIcon)
+        
         carIcon.snp.makeConstraints { make in
             make.size.equalTo(iconSize)
             make.leading.equalTo(transportationMethod)
@@ -149,12 +156,14 @@ class TripDetailsViewController: UIViewController {
         
         driverType.text = ride.type
         transportationContainerView.addSubview(driverType)
+        
         driverType.snp.makeConstraints { make in
             make.top.equalTo(carIcon)
             make.leading.equalTo(carIcon.snp.trailing).inset(-iconTextSpacing)
         }
         
         stackView.addArrangedSubview(transportationContainerView)
+        
         transportationContainerView.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
@@ -165,12 +174,14 @@ class TripDetailsViewController: UIViewController {
         
         locations.text = "LOCATIONS"
         locationsContainerView.addSubview(locations)
+        
         locations.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.top.equalToSuperview()
         }
         
         locationsContainerView.addSubview(departureIcon)
+        
         departureIcon.snp.makeConstraints { make in
             make.size.equalTo(iconSize)
             make.leading.equalTo(locations)
@@ -179,12 +190,14 @@ class TripDetailsViewController: UIViewController {
         
         departureLocationLabel.text = ride.path.startLocationName
         locationsContainerView.addSubview(departureLocationLabel)
+        
         departureLocationLabel.snp.makeConstraints { make in
             make.top.equalTo(departureIcon)
             make.leading.equalTo(departureIcon.snp.trailing).inset(-iconTextSpacing)
         }
         
         locationsContainerView.addSubview(iconSeperator)
+        
         iconSeperator.snp.makeConstraints { make in
             make.height.equalTo(8)
             make.width.equalTo(1.5)
@@ -193,6 +206,7 @@ class TripDetailsViewController: UIViewController {
         }
         
         locationsContainerView.addSubview(arrivalIcon)
+        
         arrivalIcon.snp.makeConstraints { make in
             make.size.equalTo(iconSize)
             make.leading.equalTo(locations)
@@ -201,12 +215,14 @@ class TripDetailsViewController: UIViewController {
         
         arrivalLocationLabel.text = ride.path.endLocationName
         locationsContainerView.addSubview(arrivalLocationLabel)
+        
         arrivalLocationLabel.snp.makeConstraints { make in
             make.top.equalTo(arrivalIcon)
             make.leading.equalTo(arrivalIcon.snp.trailing).inset(-iconTextSpacing)
         }
         
         stackView.addArrangedSubview(locationsContainerView)
+        
         locationsContainerView.snp.makeConstraints { make in
             make.height.equalTo(85)
         }
@@ -217,12 +233,14 @@ class TripDetailsViewController: UIViewController {
         
         departureDateLabel.text = "DEPARTURE DATE"
         dateContainerView.addSubview(departureDateLabel)
+        
         departureDateLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.top.equalToSuperview()
         }
         
         dateContainerView.addSubview(calendarIcon)
+        
         calendarIcon.snp.makeConstraints { make in
             make.size.equalTo(iconSize)
             make.leading.equalTo(departureDateLabel)
@@ -231,12 +249,14 @@ class TripDetailsViewController: UIViewController {
         
         departureDate.text = ride.departureDatetime
         dateContainerView.addSubview(departureDate)
+        
         departureDate.snp.makeConstraints { make in
             make.top.equalTo(calendarIcon)
             make.leading.equalTo(calendarIcon.snp.trailing).inset(-iconTextSpacing)
         }
         
         stackView.addArrangedSubview(dateContainerView)
+        
         dateContainerView.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
@@ -247,6 +267,7 @@ class TripDetailsViewController: UIViewController {
         
         numberTravelersLabel.text = "NUMBER OF TRAVELERS"
         numberTravelersContainerView.addSubview(numberTravelersLabel)
+        
         numberTravelersLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.top.equalToSuperview()
@@ -254,12 +275,14 @@ class TripDetailsViewController: UIViewController {
         
         numberTravelers.text = "\(ride.minTravelers) to \(ride.maxTravelers) people"
         numberTravelersContainerView.addSubview(numberTravelers)
+        
         numberTravelers.snp.makeConstraints { make in
             make.top.equalTo(numberTravelersLabel.snp.bottom).inset(-spacing)
             make.leading.equalTo(numberTravelers)
         }
         
         stackView.addArrangedSubview(numberTravelersContainerView)
+        
         numberTravelersContainerView.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
@@ -270,6 +293,7 @@ class TripDetailsViewController: UIViewController {
         
         detailsLabel.text = "DETAILS"
         detailsContainerView.addSubview(detailsLabel)
+        
         detailsLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.top.equalToSuperview()
@@ -279,6 +303,7 @@ class TripDetailsViewController: UIViewController {
         detailsTextView.font = UIFont(name: "SFPro", size: 16)
         detailsTextView.textColor = .black
         detailsContainerView.addSubview(detailsTextView)
+        
         detailsTextView.snp.makeConstraints { make in
             make.top.equalTo(detailsLabel.snp.bottom).inset(-spacing)
             make.leading.equalToSuperview()
@@ -287,6 +312,7 @@ class TripDetailsViewController: UIViewController {
         }
         
         stackView.addArrangedSubview(detailsContainerView)
+        
         detailsContainerView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
         }
@@ -299,6 +325,7 @@ class TripDetailsViewController: UIViewController {
         requestButton.layer.cornerRadius = 25
         requestButton.addTarget(self, action: #selector(requestRide), for: .touchUpInside)
         view.addSubview(requestButton)
+        
         requestButton.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom)
             make.centerX.equalToSuperview()
@@ -309,7 +336,7 @@ class TripDetailsViewController: UIViewController {
     
     @objc private func requestRide() {
         //TODO: Networking Goes here
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
     
     private func setUpLabelFont() {
