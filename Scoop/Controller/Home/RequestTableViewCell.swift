@@ -117,6 +117,7 @@ class RequestTableViewCell: UITableViewCell {
         
         acceptButton.addTarget(self, action: #selector(acceptRequest), for: .touchUpInside)
         contentView.addSubview(acceptButton)
+        
         acceptButton.snp.makeConstraints { make in
             make.top.equalTo(declineButton.snp.top)
             make.leading.equalTo(declineButton.snp.trailing).offset(15)

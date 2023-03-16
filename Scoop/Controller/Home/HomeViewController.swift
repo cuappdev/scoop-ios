@@ -129,7 +129,6 @@ class HomeViewController: UIViewController {
     
     private func setupNotificationButton() {
         notificationButton.setImage(UIImage(named: "notification"), for: .normal)
-        notificationButton.translatesAutoresizingMaskIntoConstraints =  false
         view.addSubview(notificationButton)
         
         notificationButton.snp.makeConstraints { make in

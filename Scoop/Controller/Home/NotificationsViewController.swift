@@ -33,7 +33,8 @@ class NotificationsViewController: UIViewController {
     private func setupBackButton() {
         backButton.setImage(UIImage(named: "BackArrow"), for: .normal)
         backButton.addTarget(self, action: #selector(popVC), for: .touchUpInside)
-        self.navigationController?.navigationBar.addSubview(backButton)
+        navigationController?.navigationBar.addSubview(backButton)
+        
         backButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(25)
             make.centerY.equalToSuperview()
@@ -44,7 +45,7 @@ class NotificationsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
-        tableView.separatorInset = UIEdgeInsets.zero
+        tableView.separatorInset = .zero
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         tableView.separatorColor = .systemGray
         tableView.separatorStyle = .singleLine
@@ -54,14 +55,14 @@ class NotificationsViewController: UIViewController {
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(-35)
+            make.top.equalToSuperview().inset(35)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
-    @objc func popVC() {
-        self.navigationController?.popViewController(animated: true)
+    @objc private func popVC() {
+        navigationController?.popViewController(animated: true)
     }
     
 }
@@ -80,11 +81,7 @@ extension NotificationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: requestCellIdentifier) as! RequestTableViewCell
-        if requests[indexPath.row].approved {
-            cell.configure(request: requests[indexPath.row], status: true)
-        } else {
-            cell.configure(request: requests[indexPath.row], status: false)
-        }
+        cell.configure(request: requests[indexPath.row], status: requests[indexPath.row].approved)
         return cell
     }
     

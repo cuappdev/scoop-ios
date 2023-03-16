@@ -23,7 +23,7 @@ struct Ride: Codable {
 }
 
 /// This version of the Ride model is used in the approving/denying rides networking request. Is there a better way to do this? (only wanting to include certain fields of a model)
-struct truncRide: Codable {
+struct TruncRide: Codable {
     let id: Int
     let departureDatetime: String
     let path: Path
