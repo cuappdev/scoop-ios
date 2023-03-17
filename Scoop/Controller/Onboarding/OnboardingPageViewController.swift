@@ -126,3 +126,7 @@ extension OnboardingPageViewController: OnboardingDelegate {
         presentNextVC(nextVC)
     }
 }
+
+protocol AnimationDelegate: UIViewController {
+  func animateCar(startPage: Int, endPage: Int)
+}

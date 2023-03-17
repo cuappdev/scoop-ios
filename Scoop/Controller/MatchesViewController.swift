@@ -63,3 +63,12 @@ extension MatchesViewController: UITableViewDataSource {
     }
     
 }
+
+extension MatchesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: homeCellIdenitifer, for: indexPath) as! HomeTableViewCell
+        guard let ride = cell.selectedRide else { return }
+        let selectedVC = TripDetailsViewController(currentRide: ride)
+        present(selectedVC, animated: true)
+    }
+}

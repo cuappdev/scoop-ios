@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class TripDetailsViewController: UIViewController {
     
@@ -46,13 +47,20 @@ class TripDetailsViewController: UIViewController {
     private let numberTravelersContainerView = UIView()
     private let detailsContainerView = UIView()
     
+    init(currentRide: Ride) {
+        super.init(nibName: nil, bundle: nil)
+        self.currentRide = currentRide
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //TODO: Messy Data will be replaced once backend is finished
-        currentRide = Ride(id: 0, creator: BaseUser(id: 0, netid: "rs929", firstName: "Richie", lastName: "Sun", profilePicUrl: "", grade: "Sophomore", pronouns: "He/Him"), maxTravelers: 2, minTravelers: 1, departureDatetime: "11/22/2022 @3:00 PM", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "id", startLocationName: "Ithaca, NY", endLocationPlaceId: "id2", endLocationName: "New York, NY"), type: "Student Driver")
-        
         view.backgroundColor = .white
-        navigationItem.title = "\(NetworkManager.shared.currentUser.firstName)'s Ride" //TODO: Change to selected ride driver
+        guard let driver = currentRide?.driver else { return }
+        navigationItem.title = "\(driver.firstName)'s Ride"
         setUpStackView()
         setUpButton()
         setUpLabelFont()
@@ -87,8 +95,9 @@ class TripDetailsViewController: UIViewController {
     
     private func setUpDriverInfo() {
         guard let creator = currentRide?.creator else { return }
+        guard let imageURL = creator.profilePicUrl else {return}
         
-        creatorProfile.image = UIImage(named: "emptyimage") //TODO: Replaces once Backend finishes
+        creatorProfile.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
         creatorProfile.contentMode = .scaleAspectFill
         creatorProfile.layer.borderWidth = 1
         creatorProfile.layer.masksToBounds = false

@@ -5,6 +5,7 @@
 //  Created by Reade Plunkett on 3/16/22.
 //
 
+//TODO: DELETE VIEW LATER
 import UIKit
 
 class PhoneNumberViewController: OnboardingViewController {
@@ -42,8 +43,10 @@ class PhoneNumberViewController: OnboardingViewController {
     
     private func setupStackView() {
         let textFieldBorderWidth = 1.0
-        let textFieldCornerRadius = 8.0
+        let textFieldCornerRadius = 4.0
         let leadingTrailingInset = 20
+        let textFieldHeight = 56
+        
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 12
@@ -69,13 +72,14 @@ class PhoneNumberViewController: OnboardingViewController {
         numberTextField.placeholder = "000-000-0000"
         numberTextField.layer.borderWidth = 1
         numberTextField.layer.borderWidth = textFieldBorderWidth
-        numberTextField.layer.borderColor = UIColor.textFieldBorderColor
+        numberTextField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
         numberTextField.layer.cornerRadius = textFieldCornerRadius
         numberTextField.font = UIFont(name: "SFPro", size: 16)
         numberTextField.keyboardType = .phonePad
         stackView.addArrangedSubview(numberTextField)
         numberTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
+            make.height.equalTo(textFieldHeight)
         }
     }
     
