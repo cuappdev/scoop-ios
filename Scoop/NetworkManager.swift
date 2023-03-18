@@ -257,4 +257,29 @@ class NetworkManager {
         }
     }
     
+    func handleRideRequest(requestID: Int, approved: Bool, completion: @escaping(Result<RequestResponse, Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/requests/\(requestID)"
+        let params = [
+            "approved": approved
+        ]
+        
+        AF.request(endpoint, method: .post, parameters: params).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.dateDecodingStrategy = .iso8601
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                do {
+                    let request = try jsonDecoder.decode(RequestResponse.self, from: data)
+                    completion(.success(request))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
 }
