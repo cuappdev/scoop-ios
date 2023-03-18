@@ -25,7 +25,12 @@ class OnboardingViewController: UIViewController {
     }
     
     func setupNextButton(action: UIAction) {
-        let bottomButtonMultiplier = 0.07
+        var bottomButtonMultiplier = 0.1
+        let screenSize = UIScreen.main.bounds
+        
+        if screenSize.height < 2000 {
+            bottomButtonMultiplier = 0
+        }
         
         let button = UIButton()
         button.setTitle("Next", for: .normal)
@@ -35,8 +40,8 @@ class OnboardingViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         button.addAction(action, for: .touchUpInside)
         view.addSubview(button)
+        
         button.snp.makeConstraints { make in
-            let screenSize = UIScreen.main.bounds
             make.trailing.equalTo(view.safeAreaLayoutGuide).inset(32)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(screenSize.height * bottomButtonMultiplier)
             make.height.equalTo(51)
@@ -45,7 +50,12 @@ class OnboardingViewController: UIViewController {
     }
     
     func setupBackButton() {
-        let bottomButtonMultiplier = 0.07
+        var bottomButtonMultiplier = 0.1
+        let screenSize = UIScreen.main.bounds
+        
+        if screenSize.height < 2000 {
+            bottomButtonMultiplier = 0
+        }
         
         backButton.setTitle("Back", for: .normal)
         backButton.layer.borderColor = UIColor.offBlack.cgColor
@@ -56,8 +66,8 @@ class OnboardingViewController: UIViewController {
         backButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         backButton.addTarget(self, action: #selector(prevVC), for: .touchUpInside)
         view.addSubview(backButton)
+        
         backButton.snp.makeConstraints { make in
-            let screenSize = UIScreen.main.bounds
             make.leading.equalTo(view.safeAreaLayoutGuide).inset(32)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(screenSize.height * bottomButtonMultiplier)
             make.height.equalTo(51)

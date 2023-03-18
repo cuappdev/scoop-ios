@@ -94,7 +94,7 @@ class LoginViewController: UIViewController {
             
             NotificationCenter.default.post(name: NSNotification.Name("didCompleteLogin"), object: nil)
             
-            let onboardingVC = OnboardingPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+            let onboardingVC = OnboardingContainerViewController()
             onboardingVC.modalPresentationStyle = .fullScreen
             window.rootViewController?.present(onboardingVC, animated: false)
             

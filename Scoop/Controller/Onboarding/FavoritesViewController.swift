@@ -72,6 +72,7 @@ class FavoritesViewController: OnboardingViewController {
             string: "Roadtrip snack",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         stackView.addArrangedSubview(snackTextField)
+        
         snackTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)
@@ -83,6 +84,7 @@ class FavoritesViewController: OnboardingViewController {
             string: "Roadtrip song",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         stackView.addArrangedSubview(songTextField)
+        
         songTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)
@@ -94,6 +96,7 @@ class FavoritesViewController: OnboardingViewController {
             string: "Roadtrip stop",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         stackView.addArrangedSubview(stopTextField)
+        
         stopTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)

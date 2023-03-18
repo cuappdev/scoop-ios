@@ -61,14 +61,18 @@ class AboutYouViewController: OnboardingViewController {
     }
     
     private func setupStackView() {
-        let stackviewMultiplier = 0.20
+        var stackviewMultiplier = 0.20
         let leadingTrailingInset = 32
         let spacing = 12.0
         let screenSize = UIScreen.main.bounds
         let textFieldBorderWidth = 1.0
-        let textFieldCornerRadius = 8.0
+        let textFieldCornerRadius = 4.0
         let textFieldFont = UIFont(name: "SFPro", size: 16)
         let textFieldHeight = 56
+        
+        if screenSize.height < 2000 {
+            stackviewMultiplier = 0.15
+        }
         
         stackView.axis = .vertical
         stackView.distribution = .fill
