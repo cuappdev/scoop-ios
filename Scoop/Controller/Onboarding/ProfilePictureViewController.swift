@@ -31,6 +31,7 @@ class ProfilePictureViewController: OnboardingViewController {
             
         }
         
+        updateBackButton()
         setupTitleLines()
         setupImagePicker()
         setupPictureImageView()
@@ -96,41 +97,39 @@ class ProfilePictureViewController: OnboardingViewController {
             self.dismiss(animated: true)
         }
         
-        skipButton.setTitle("Add photo later", for: .normal)
-        if #available(iOS 15.0, *) {
-            skipButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 19, bottom: 0, trailing: 19)
-        } else {
-            skipButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 19, bottom: 0, right: 19)
-        }
-        skipButton.backgroundColor = UIColor.skipButtonColor
-        skipButton.layer.cornerRadius = 10
-        skipButton.addAction(skipAction, for: .touchUpInside)
-        view.addSubview(skipButton)
-        
-        skipButton.snp.makeConstraints { make in
-            make.height.equalTo(49)
-            make.width.equalTo(193)
-            make.top.equalTo(pictureImageView.snp.bottom).inset(-screenSize.height * buttonMultiplier)
-            make.centerX.equalToSuperview()
-        }
-        
-        uploadButton.setTitle("Upload", for: .normal)
+        uploadButton.setTitle("Upload photo", for: .normal)
         if #available(iOS 15.0, *) {
             uploadButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 64, bottom: 0, trailing: 64)
         } else {
             uploadButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64)
         }
-        uploadButton.backgroundColor = UIColor.scoopGreen
-        uploadButton.layer.cornerRadius = 10
+        uploadButton.backgroundColor = UIColor.scoopDarkGreen
+        uploadButton.layer.cornerRadius = 25
+        uploadButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         uploadButton.addAction(nextAction ?? UIAction(handler: { _ in
             return
         }), for: .touchUpInside)
         view.addSubview(uploadButton)
         
         uploadButton.snp.makeConstraints { make in
+            make.height.equalTo(51)
+            make.width.equalTo(296)
+            make.top.equalTo(pictureImageView.snp.bottom).inset(-screenSize.height * buttonMultiplier)
+            make.centerX.equalToSuperview()
+        }
+        
+        let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
+        let underlineAddLaterString = NSAttributedString(string: "Add later", attributes: underlineAttribute)
+        skipButton.setAttributedTitle(underlineAddLaterString, for: .normal)
+        skipButton.setTitleColor(.scoopDarkGreen, for: .normal)
+        skipButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        skipButton.addAction(skipAction, for: .touchUpInside)
+        view.addSubview(skipButton)
+        
+        skipButton.snp.makeConstraints { make in
             make.height.equalTo(49)
             make.width.equalTo(193)
-            make.top.equalTo(skipButton.snp.bottom).inset(-27)
+            make.top.equalTo(uploadButton.snp.bottom).inset(-15)
             make.centerX.equalToSuperview()
         }
     }
@@ -145,6 +144,19 @@ class ProfilePictureViewController: OnboardingViewController {
             make.width.equalTo(43)
             make.bottom.equalTo(pictureImageView.snp.bottom)
             make.trailing.equalTo(pictureImageView.snp.trailing)
+        }
+    }
+    
+    private func updateBackButton() {
+        backButton.setImage(UIImage(named: "BackArrow"), for: .normal)
+        backButton.setTitle("", for: .normal)
+        backButton.layer.borderWidth = 0
+        navigationController?.navigationBar.addSubview(backButton)
+        
+        backButton.snp.removeConstraints()
+        backButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(20)
         }
     }
     

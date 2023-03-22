@@ -12,4 +12,5 @@ target 'Scoop' do
   pod 'IQKeyboardManager'
   pod 'Alamofire'
   pod 'GooglePlaces'
+  pod 'SDWebImage'
 end

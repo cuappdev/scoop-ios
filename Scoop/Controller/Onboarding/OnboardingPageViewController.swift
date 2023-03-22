@@ -10,16 +10,22 @@ import UIKit
 class OnboardingPageViewController: UIPageViewController {
     
     private var pages = [UIViewController]()
-
+    weak var animationDelegate: AnimationDelegate?
+    
+    init(delegate: AnimationDelegate) {
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        animationDelegate = delegate
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         delegate = self
         dataSource = self
-        
-        let appearance = UIPageControl.appearance()
-        appearance.pageIndicatorTintColor = .systemGray5
-        appearance.currentPageIndicatorTintColor = .systemGray3
         
         setupPages()
         disableSwiping()
@@ -57,6 +63,7 @@ class OnboardingPageViewController: UIPageViewController {
         if let viewControllerIndex = pages.firstIndex(of: viewController) {
             if viewControllerIndex < pages.count - 1 {
                 let vc = pages[viewControllerIndex + 1]
+                animationDelegate?.animateCar(startPage: viewControllerIndex, endPage: viewControllerIndex + 1)
                 self.setViewControllers([vc], direction: .forward, animated: true, completion: nil)
             }
         }
@@ -68,6 +75,7 @@ class OnboardingPageViewController: UIPageViewController {
         }
             if viewControllerIndex > 0 {
                 let vc = pages[viewControllerIndex - 1]
+                animationDelegate?.animateCar(startPage: viewControllerIndex, endPage: viewControllerIndex - 1)
                 self.setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
             }
         }
@@ -95,6 +103,11 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
+        for subview in view.subviews {
+            if subview is UIPageControl {
+                subview.isHidden = true
+            }
+        }
         return pages.count
     }
     
@@ -125,4 +138,8 @@ extension OnboardingPageViewController: OnboardingDelegate {
         
         presentNextVC(nextVC)
     }
+}
+
+protocol AnimationDelegate: UIViewController {
+  func animateCar(startPage: Int, endPage: Int)
 }

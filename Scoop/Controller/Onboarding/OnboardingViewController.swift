@@ -25,27 +25,53 @@ class OnboardingViewController: UIViewController {
     }
     
     func setupNextButton(action: UIAction) {
-        let bottomButtonMultiplier = 0.1
+        var bottomButtonMultiplier = 0.1
+        let screenSize = UIScreen.main.bounds
+        
+        if screenSize.height < 2000 {
+            bottomButtonMultiplier = 0
+        }
         
         let button = UIButton()
-        button.setImage(UIImage(named: "nextbutton"), for: .normal)
-        button.clipsToBounds = true
+        button.setTitle("Next", for: .normal)
+        button.backgroundColor = .secondaryGreen
+        button.layer.cornerRadius = 25
+        button.setTitleColor(.offBlack, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         button.addAction(action, for: .touchUpInside)
         view.addSubview(button)
+        
         button.snp.makeConstraints { make in
-            let screenSize = UIScreen.main.bounds
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(32)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(screenSize.height * bottomButtonMultiplier)
+            make.height.equalTo(51)
+            make.width.equalTo(86)
         }
     }
     
     func setupBackButton() {
-        backButton.setImage(UIImage(named: "BackArrow"), for: .normal)
+        var bottomButtonMultiplier = 0.1
+        let screenSize = UIScreen.main.bounds
+        
+        if screenSize.height < 2000 {
+            bottomButtonMultiplier = 0
+        }
+        
+        backButton.setTitle("Back", for: .normal)
+        backButton.layer.borderColor = UIColor.offBlack.cgColor
+        backButton.layer.borderWidth = 1
+        backButton.backgroundColor = .white
+        backButton.layer.cornerRadius = 25
+        backButton.setTitleColor(.scoopDarkGreen, for: .normal)
+        backButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         backButton.addTarget(self, action: #selector(prevVC), for: .touchUpInside)
-        self.navigationController?.navigationBar.addSubview(backButton)
+        view.addSubview(backButton)
+        
         backButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(25)
-            make.centerY.equalToSuperview()
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(32)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(screenSize.height * bottomButtonMultiplier)
+            make.height.equalTo(51)
+            make.width.equalTo(86)
         }
     }
     
@@ -93,7 +119,7 @@ class OnboardingViewController: UIViewController {
 
 class OnboardingTextField: UITextField {
     
-    let padding = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+    let padding = UIEdgeInsets(top: 18.5, left: 16, bottom: 18.5, right: 16)
 
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
@@ -106,4 +132,5 @@ class OnboardingTextField: UITextField {
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
+    
 }

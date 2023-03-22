@@ -13,6 +13,9 @@ class FavoritesViewController: OnboardingViewController {
     private let snackTextField = OnboardingTextField()
     private let songTextField = OnboardingTextField()
     private let stopTextField = OnboardingTextField()
+    private let snackLabel = UILabel()
+    private let songLabel = UILabel()
+    private let stopLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +42,7 @@ class FavoritesViewController: OnboardingViewController {
         
         setupTitleLines()
         setupStackView()
+        setupLabels()
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
         }))
@@ -46,10 +50,11 @@ class FavoritesViewController: OnboardingViewController {
     
     private func setupStackView() {
         let textFieldBorderWidth = 1.0
-        let textFieldCornerRadius = 8.0
+        let textFieldCornerRadius = 4.0
         let textFieldFont = UIFont(name: "SFPro", size: 16)
-        let leadingTrailingInset = 25
-        let spacing = 12.0
+        let leadingTrailingInset = 32
+        let textFieldHeight = 56
+        
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 24
@@ -61,60 +66,120 @@ class FavoritesViewController: OnboardingViewController {
             make.centerY.equalToSuperview()
         }
         
-        let songLabel = UILabel()
-        songLabel.text = "ROADTRIP SONG"
-        songLabel.accessibilityLabel = "roadtrip song"
-        songLabel.textColor = .black
-        stackView.addArrangedSubview(songLabel)
-        stackView.setCustomSpacing(spacing, after: songLabel)
-        
-        songTextField.textColor = .darkGray
-        songTextField.placeholder = "Enter song..."
-        stackView.addArrangedSubview(songTextField)
-        songTextField.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(43)
-        }
-        
-        let snackLabel = UILabel()
-        snackLabel.text = "ROADTRIP SNACK"
-        snackLabel.accessibilityLabel = "roadtrip snack"
-        snackLabel.textColor = .black
-        stackView.addArrangedSubview(snackLabel)
-        stackView.setCustomSpacing(spacing, after: snackLabel)
-        
         snackTextField.textColor = .darkGray
-        snackTextField.placeholder = "Enter snack..."
+        snackTextField.delegate = self
+        snackTextField.attributedPlaceholder = NSAttributedString(
+            string: "Roadtrip snack",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         stackView.addArrangedSubview(snackTextField)
+        
         snackTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(43)
+            make.height.equalTo(textFieldHeight)
         }
         
-        let stopLabel = UILabel()
-        stopLabel.text = "ROADTRIP STOP"
-        stopLabel.accessibilityLabel = "roadtrip stop"
-        stopLabel.textColor = .black
-        stackView.addArrangedSubview(stopLabel)
-        stackView.setCustomSpacing(spacing, after: stopLabel)
+        songTextField.textColor = .darkGray
+        songTextField.delegate = self
+        songTextField.attributedPlaceholder = NSAttributedString(
+            string: "Roadtrip song",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+        stackView.addArrangedSubview(songTextField)
+        
+        songTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(textFieldHeight)
+        }
         
         stopTextField.textColor = .darkGray
-        stopTextField.placeholder = "Enter stop..."
+        stopTextField.delegate = self
+        stopTextField.attributedPlaceholder = NSAttributedString(
+            string: "Roadtrip stop",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         stackView.addArrangedSubview(stopTextField)
+        
         stopTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(43)
-        }
-        
-        [songLabel, snackLabel, stopLabel].forEach { label in
-            label.font = UIFont(name: "Rambla-Regular", size: 16)
+            make.height.equalTo(textFieldHeight)
         }
         
         [songTextField, snackTextField, stopTextField].forEach { text in
             text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = UIColor.textFieldBorderColor
+            text.layer.borderColor = UIColor.textFieldBorderColor.cgColor
             text.layer.cornerRadius = textFieldCornerRadius
             text.font = textFieldFont
         }
+    }
+    
+    private func setupLabels() {
+        let labelLeading = 10
+        let labelTop = 8
+        [songLabel, snackLabel, stopLabel].forEach { label in
+            label.font = .systemFont(ofSize: 12)
+            label.textColor = .scoopDarkGreen
+            label.backgroundColor = .white
+            label.textAlignment = .center
+            label.isHidden = true
+            view.addSubview(label)
+        }
+        
+        songLabel.text = "Roadtrip song"
+        songLabel.snp.makeConstraints { make in
+            make.top.equalTo(songTextField).inset(-labelTop)
+            make.leading.equalTo(songTextField).inset(labelLeading)
+            make.height.equalTo(16)
+            make.width.equalTo(98)
+        }
+        
+        snackLabel.text = "Roadtrip snack"
+        snackLabel.snp.makeConstraints { make in
+            make.top.equalTo(snackTextField).inset(-labelTop)
+            make.leading.equalTo(snackTextField).inset(labelLeading)
+            make.height.equalTo(16)
+            make.width.equalTo(92)
+        }
+        
+        stopLabel.text = "Roadtrip stop"
+        stopLabel.snp.makeConstraints { make in
+            make.top.equalTo(stopTextField).inset(-labelTop)
+            make.leading.equalTo(stopTextField).inset(labelLeading)
+            make.height.equalTo(16)
+            make.width.equalTo(90)
+        }
+    }
+    
+}
+
+extension FavoritesViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 2
+        textField.layer.borderColor = UIColor.scoopDarkGreen.cgColor
+        textField.placeholder = ""
+        if textField == snackTextField {
+            snackLabel.textColor = .scoopDarkGreen
+            snackLabel.isHidden = false
+        } else if textField == songTextField {
+            songLabel.textColor = .scoopDarkGreen
+            songLabel.isHidden = false
+        } else {
+            stopLabel.textColor = .scoopDarkGreen
+            stopLabel.isHidden = false
+        }
+        
+        return
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+        if textField == snackTextField {
+            snackLabel.textColor = .textFieldBorderColor
+        } else if textField == songTextField {
+            songLabel.textColor = .textFieldBorderColor
+        } else {
+            stopLabel.textColor = .textFieldBorderColor
+        }
+        
+        return
     }
 }

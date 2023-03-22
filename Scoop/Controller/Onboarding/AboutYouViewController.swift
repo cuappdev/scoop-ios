@@ -15,6 +15,11 @@ class AboutYouViewController: OnboardingViewController {
     private let hometownTextField = OnboardingTextField()
     private let yearTextField = OnboardingTextField()
     
+    private let nameLabel = UILabel()
+    private let pronounsLabel = UILabel()
+    private let hometownLabel = UILabel()
+    private let yearLabel = UILabel()
+    
     private let pronounsPicker = UIPickerView()
     private let yearPicker = UIPickerView()
     
@@ -47,6 +52,7 @@ class AboutYouViewController: OnboardingViewController {
         
         setupTitleLines()
         setupStackView()
+        setupLabels()
         backButton.isHidden = true
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
@@ -55,14 +61,18 @@ class AboutYouViewController: OnboardingViewController {
     }
     
     private func setupStackView() {
-        let stackviewMultiplier = 0.10
-        let leadingTrailingInset = 20.0
+        var stackviewMultiplier = 0.20
+        let leadingTrailingInset = 32
         let spacing = 12.0
         let screenSize = UIScreen.main.bounds
-        let labelFont = UIFont(name: "Rambla-Regular", size: 16)
         let textFieldBorderWidth = 1.0
-        let textFieldCornerRadius = 8.0
+        let textFieldCornerRadius = 4.0
         let textFieldFont = UIFont(name: "SFPro", size: 16)
+        let textFieldHeight = 56
+        
+        if screenSize.height < 2000 {
+            stackviewMultiplier = 0.15
+        }
         
         stackView.axis = .vertical
         stackView.distribution = .fill
@@ -75,96 +85,164 @@ class AboutYouViewController: OnboardingViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).inset(stackviewMultiplier * screenSize.height)
         }
         
-        let nameLabel = UILabel()
-        nameLabel.font = .systemFont(ofSize: 16)
-        nameLabel.text = "NAME"
-        nameLabel.accessibilityLabel = "name"
-        nameLabel.textColor = .black
-        stackView.addArrangedSubview(nameLabel)
-        stackView.setCustomSpacing(spacing, after: nameLabel)
-        
         nameTextField.textColor = .darkGray
-        nameTextField.placeholder = "Enter name..."
+        nameTextField.delegate = self
+        nameTextField.attributedPlaceholder = NSAttributedString(
+            string: "Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         stackView.addArrangedSubview(nameTextField)
+        
         nameTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(43)
+            make.height.equalTo(textFieldHeight)
         }
-        
-        let pronounsLabel = UILabel()
-        pronounsLabel.text = "PRONOUNS"
-        pronounsLabel.accessibilityLabel = "pronouns"
-        pronounsLabel.textColor = .black
-        stackView.addArrangedSubview(pronounsLabel)
-        stackView.setCustomSpacing(spacing, after: pronounsLabel)
         
         pronounsPicker.delegate = self
         pronounsPicker.dataSource = self
         
         pronounsTextField.delegate = self
         pronounsTextField.textColor = .darkGray
-        pronounsTextField.placeholder = "Enter pronouns..."
+        pronounsTextField.attributedPlaceholder = NSAttributedString(
+            string: "Pronouns",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         pronounsTextField.inputView = pronounsPicker
         stackView.addArrangedSubview(pronounsTextField)
+        
         pronounsTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(43)
+            make.height.equalTo(textFieldHeight)
         }
-        
-        let hometownLabel = UILabel()
-        hometownLabel.text = "HOMETOWN"
-        hometownLabel.accessibilityLabel = "hometown"
-        hometownLabel.textColor = .black
-        stackView.addArrangedSubview(hometownLabel)
-        stackView.setCustomSpacing(spacing, after: hometownLabel)
         
         hometownTextField.textColor = .darkGray
-        hometownTextField.placeholder = "Enter town..."
+        hometownTextField.delegate = self
+        hometownTextField.attributedPlaceholder = NSAttributedString(
+            string: "Hometown",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         stackView.addArrangedSubview(hometownTextField)
+        
         hometownTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(43)
+            make.height.equalTo(textFieldHeight)
         }
-        
-        let yearLabel = UILabel()
-        yearLabel.text = "CLASS YEAR"
-        yearLabel.accessibilityLabel = "class year"
-        yearLabel.textColor = .black
-        stackView.addArrangedSubview(yearLabel)
-        stackView.setCustomSpacing(spacing, after: yearLabel)
         
         yearPicker.delegate = self
         yearPicker.dataSource = self
         
         yearTextField.delegate = self
         yearTextField.textColor = .darkGray
-        yearTextField.placeholder = "Select"
+        yearTextField.attributedPlaceholder = NSAttributedString(
+            string: "Class Year",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         yearTextField.keyboardType = .numberPad
         yearTextField.inputView = yearPicker
         stackView.addArrangedSubview(yearTextField)
+        
         yearTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(43)
-        }
-        
-        [nameLabel, pronounsLabel, hometownLabel, yearLabel].forEach { label in
-            label.font = labelFont
+            make.height.equalTo(textFieldHeight)
         }
         
         [nameTextField, pronounsTextField, hometownTextField, yearTextField].forEach { text in
             text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = UIColor.textFieldBorderColor
+            text.layer.borderColor = UIColor.textFieldBorderColor.cgColor
             text.layer.cornerRadius = textFieldCornerRadius
             text.font = textFieldFont
         }
     }
+    
+    private func setupLabels() {
+        let labelLeading = 10
+        let labelTop = 8
+        [nameLabel, pronounsLabel, hometownLabel, yearLabel].forEach { label in
+            label.font = .systemFont(ofSize: 12)
+            label.textColor = .scoopDarkGreen
+            label.backgroundColor = .white
+            label.textAlignment = .center
+            label.isHidden = true
+            view.addSubview(label)
+        }
+        
+        nameLabel.text = "Name"
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameTextField).inset(-labelTop)
+            make.leading.equalTo(nameTextField).inset(labelLeading)
+            make.height.equalTo(16)
+            make.width.equalTo(43)
+        }
+        
+        pronounsLabel.text = "Pronouns"
+        pronounsLabel.snp.makeConstraints { make in
+            make.top.equalTo(pronounsTextField).inset(-labelTop)
+            make.leading.equalTo(pronounsTextField).inset(labelLeading)
+            make.height.equalTo(16)
+            make.width.equalTo(65)
+        }
+        
+        hometownLabel.text = "Hometown"
+        hometownLabel.snp.makeConstraints { make in
+            make.top.equalTo(hometownTextField).inset(-labelTop)
+            make.leading.equalTo(hometownTextField).inset(labelLeading)
+            make.height.equalTo(16)
+            make.width.equalTo(72)
+        }
+        
+        yearLabel.text = "Class Year"
+        yearLabel.snp.makeConstraints { make in
+            make.top.equalTo(yearTextField).inset(-labelTop)
+            make.leading.equalTo(yearTextField).inset(labelLeading)
+            make.height.equalTo(16)
+            make.width.equalTo(70)
+        }
+    }
+
 }
 
 // MARK: - UITextFielDelegate
 extension AboutYouViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return false
+        if textField == yearTextField || textField == pronounsTextField {
+            return false
+        } else{
+            return true
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 2
+        textField.layer.borderColor = UIColor.scoopDarkGreen.cgColor
+        textField.placeholder = ""
+        if textField == nameTextField {
+            nameLabel.textColor = .scoopDarkGreen
+            nameLabel.isHidden = false
+        } else if textField == pronounsTextField {
+            pronounsLabel.textColor = .scoopDarkGreen
+            pronounsLabel.isHidden = false
+        } else if textField == hometownTextField {
+            hometownLabel.textColor = .scoopDarkGreen
+            hometownLabel.isHidden = false
+        } else {
+            yearLabel.textColor = .scoopDarkGreen
+            yearLabel.isHidden = false
+        }
+        
+        return
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+        if textField == nameTextField {
+            nameLabel.textColor = .textFieldBorderColor
+        } else if textField == pronounsTextField {
+            pronounsLabel.textColor = .textFieldBorderColor
+        } else if textField == hometownTextField {
+            hometownLabel.textColor = .textFieldBorderColor
+        } else {
+            yearLabel.textColor = .textFieldBorderColor
+        }
+        
+        return
     }
 }
 

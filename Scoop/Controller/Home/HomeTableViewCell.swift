@@ -9,6 +9,8 @@ import UIKit
 
 class HomeTableViewCell: UITableViewCell {
     
+    var selectedRide: Ride?
+    
     // MARK: Views
     private let containerView = UIView()
     private let titleLabel = UILabel()
@@ -100,6 +102,7 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     func configure(ride: Ride) {
+        selectedRide = ride
         dateLabel.label.text = ride.departureDatetime
         titleLabel.text = "\(ride.creator.firstName)'s Ride"
         depatureLabel.label.text = ride.path.startLocationName

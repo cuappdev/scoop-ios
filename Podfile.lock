@@ -43,6 +43,9 @@ PODS:
   - GTMSessionFetcher/Core (3.1.0)
   - IQKeyboardManager (6.5.11)
   - PromisesObjC (2.2.0)
+  - SDWebImage (5.15.5):
+    - SDWebImage/Core (= 5.15.5)
+  - SDWebImage/Core (5.15.5)
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
@@ -51,6 +54,7 @@ DEPENDENCIES:
   - GooglePlaces
   - GoogleSignIn
   - IQKeyboardManager
+  - SDWebImage
   - SnapKit
 
 SPEC REPOS:
@@ -67,6 +71,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - IQKeyboardManager
     - PromisesObjC
+    - SDWebImage
     - SnapKit
 
 SPEC CHECKSUMS:
@@ -82,8 +87,9 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
   IQKeyboardManager: ef43ce1ba1e5aaf4adf222c0a46f39761f246879
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: a01643193598e31a380effae23b87f72931dc669
+PODFILE CHECKSUM: 5b2c1a4d3cdc79fad0bec2ff116bfcf4640db690
 
 COCOAPODS: 1.11.3

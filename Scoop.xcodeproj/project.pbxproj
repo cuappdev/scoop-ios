@@ -20,6 +20,9 @@
 		2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */; };
 		2C991EBE28E0B2E7006301D9 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB628E0B2E7006301D9 /* LocationViewController.swift */; };
 		2C991EBF28E0B2E7006301D9 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */; };
+		2CCC892029B947950010287E /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CCC891E29B947950010287E /* Keys.plist */; };
+		2CCC892129B947950010287E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CCC891F29B947950010287E /* GoogleService-Info.plist */; };
+		2CD7304429C35F6F00F4CF5A /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7304329C35F6E00F4CF5A /* OnboardingContainerViewController.swift */; };
 		2CFA071629A67C710085A0B8 /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFA071529A67C710085A0B8 /* TripDetailsViewController.swift */; };
 		410D78B229B67D370007E434 /* ResponseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D78B129B67D370007E434 /* ResponseResponse.swift */; };
 		410D78C029B8166D0007E434 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D78BF29B8166D0007E434 /* NotificationsViewController.swift */; };
@@ -93,6 +96,9 @@
 		2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		2C991EB628E0B2E7006301D9 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
+		2CCC891E29B947950010287E /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		2CCC891F29B947950010287E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2CD7304329C35F6E00F4CF5A /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		2CFA071529A67C710085A0B8 /* TripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
 		410D78B129B67D370007E434 /* ResponseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseResponse.swift; sourceTree = "<group>"; };
 		410D78BF29B8166D0007E434 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				C8EF10C727E2CCB800642B40 /* OnboardingPageViewController.swift */,
+				2CD7304329C35F6E00F4CF5A /* OnboardingContainerViewController.swift */,
 				C8EF10CD27E50BFA00642B40 /* OnboardingViewController.swift */,
 				C85E2E1E27DC0D850004C506 /* AboutYouViewController.swift */,
 				C8EF10C327E2BB8000642B40 /* PreferredContactViewController.swift */,
@@ -582,6 +589,7 @@
 				C8A5448F27D185BD00132ACC /* SceneDelegate.swift in Sources */,
 				412EDB9029B950D300C1C265 /* RequestTableViewCell.swift in Sources */,
 				C845953927ED01B200D2C7F0 /* PhoneFormatter.swift in Sources */,
+				2CD7304429C35F6F00F4CF5A /* OnboardingContainerViewController.swift in Sources */,
 				2CFA071629A67C710085A0B8 /* TripDetailsViewController.swift in Sources */,
 				410D78B229B67D370007E434 /* ResponseResponse.swift in Sources */,
 				2C991EBE28E0B2E7006301D9 /* LocationViewController.swift in Sources */,
