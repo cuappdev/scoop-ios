@@ -43,7 +43,7 @@ class PostRideLocationViewController: UIViewController {
             self.ride.path.startLocationName = departureLocation
             self.ride.path.endLocationName = arrivalLocation
             
-            self.navigationController?.pushViewController(TripExtraDetailsViewController(ride: self.ride), animated: true)
+            self.navigationController?.pushViewController(PostRideTripDetailsViewController(ride: self.ride), animated: true)
         }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)

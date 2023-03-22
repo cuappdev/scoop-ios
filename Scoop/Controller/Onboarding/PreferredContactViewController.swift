@@ -112,8 +112,10 @@ class PreferredContactViewController: OnboardingViewController {
             if self.emailButton.isSelected {
                 self.numberTextField.isHidden = true
                 self.phoneLabel.isHidden = true
+                self.phoneLabel.textColor = .textFieldBorderColor
             } else {
                 self.numberTextField.isHidden = false
+                self.phoneLabel.isHidden = false
             }
         }
         
@@ -123,7 +125,7 @@ class PreferredContactViewController: OnboardingViewController {
         numberTextField.isHidden = true
         numberTextField.delegate = self
         numberTextField.font = .systemFont(ofSize: 22)
-        numberTextField.textColor = .darkGray
+        numberTextField.textColor = .offBlack
         numberTextField.placeholder = "000-000-0000"
         numberTextField.layer.borderWidth = 1
         numberTextField.layer.borderWidth = textFieldBorderWidth
@@ -184,13 +186,12 @@ extension PreferredContactViewController: UITextFieldDelegate {
         textField.placeholder = ""
         phoneLabel.textColor = .scoopDarkGreen
         phoneLabel.isHidden = false
-        return
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
         phoneLabel.textColor = .textFieldBorderColor
-        return
     }
+    
 }
