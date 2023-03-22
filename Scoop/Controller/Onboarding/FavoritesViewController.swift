@@ -66,7 +66,7 @@ class FavoritesViewController: OnboardingViewController {
             make.centerY.equalToSuperview()
         }
         
-        snackTextField.textColor = .darkGray
+        snackTextField.textColor = .offBlack
         snackTextField.delegate = self
         snackTextField.attributedPlaceholder = NSAttributedString(
             string: "Roadtrip snack",
@@ -78,7 +78,7 @@ class FavoritesViewController: OnboardingViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        songTextField.textColor = .darkGray
+        songTextField.textColor = .offBlack
         songTextField.delegate = self
         songTextField.attributedPlaceholder = NSAttributedString(
             string: "Roadtrip song",
@@ -90,7 +90,7 @@ class FavoritesViewController: OnboardingViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        stopTextField.textColor = .darkGray
+        stopTextField.textColor = .offBlack
         stopTextField.delegate = self
         stopTextField.attributedPlaceholder = NSAttributedString(
             string: "Roadtrip stop",
@@ -165,8 +165,6 @@ extension FavoritesViewController: UITextFieldDelegate {
             stopLabel.textColor = .scoopDarkGreen
             stopLabel.isHidden = false
         }
-        
-        return
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -179,7 +177,6 @@ extension FavoritesViewController: UITextFieldDelegate {
         } else {
             stopLabel.textColor = .textFieldBorderColor
         }
-        
-        return
     }
+    
 }

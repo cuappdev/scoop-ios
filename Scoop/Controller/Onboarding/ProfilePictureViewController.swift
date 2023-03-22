@@ -9,13 +9,24 @@ import UIKit
 
 class ProfilePictureViewController: OnboardingViewController {
     
+    weak var containerDelegate: AnimationDelegate?
+    
     private let imagePicker = UIImagePickerController()
     private let titleLabel = UILabel()
     private let pictureImageView = UIImageView()
     private let profileButton = UIButton()
     private let skipButton = UIButton()
     private let uploadButton = UIButton()
-
+    
+    init(containerDelegate: AnimationDelegate?) {
+        super.init(nibName: nil, bundle: nil)
+        self.containerDelegate = containerDelegate
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -76,6 +87,7 @@ class ProfilePictureViewController: OnboardingViewController {
             case .success(let user):
                 print("\(user.firstName) has been updated")
                 self.dismiss(animated: true)
+                self.containerDelegate?.dismiss(animated: true)
             case .failure:
                 return
             }

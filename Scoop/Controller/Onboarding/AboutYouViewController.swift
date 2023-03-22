@@ -61,7 +61,7 @@ class AboutYouViewController: OnboardingViewController {
     }
     
     private func setupStackView() {
-        var stackviewMultiplier = 0.20
+        var stackViewMultiplier = 0.20
         let leadingTrailingInset = 32
         let spacing = 12.0
         let screenSize = UIScreen.main.bounds
@@ -71,7 +71,7 @@ class AboutYouViewController: OnboardingViewController {
         let textFieldHeight = 56
         
         if screenSize.height < 2000 {
-            stackviewMultiplier = 0.15
+            stackViewMultiplier = 0.15
         }
         
         stackView.axis = .vertical
@@ -82,10 +82,10 @@ class AboutYouViewController: OnboardingViewController {
         
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(stackviewMultiplier * screenSize.height)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(stackViewMultiplier * screenSize.height)
         }
         
-        nameTextField.textColor = .darkGray
+        nameTextField.textColor = .offBlack
         nameTextField.delegate = self
         nameTextField.attributedPlaceholder = NSAttributedString(
             string: "Name",
@@ -101,7 +101,7 @@ class AboutYouViewController: OnboardingViewController {
         pronounsPicker.dataSource = self
         
         pronounsTextField.delegate = self
-        pronounsTextField.textColor = .darkGray
+        pronounsTextField.textColor = .offBlack
         pronounsTextField.attributedPlaceholder = NSAttributedString(
             string: "Pronouns",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
@@ -113,7 +113,7 @@ class AboutYouViewController: OnboardingViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        hometownTextField.textColor = .darkGray
+        hometownTextField.textColor = .offBlack
         hometownTextField.delegate = self
         hometownTextField.attributedPlaceholder = NSAttributedString(
             string: "Hometown",
@@ -129,7 +129,7 @@ class AboutYouViewController: OnboardingViewController {
         yearPicker.dataSource = self
         
         yearTextField.delegate = self
-        yearTextField.textColor = .darkGray
+        yearTextField.textColor = .offBlack
         yearTextField.attributedPlaceholder = NSAttributedString(
             string: "Class Year",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
@@ -201,11 +201,7 @@ class AboutYouViewController: OnboardingViewController {
 extension AboutYouViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == yearTextField || textField == pronounsTextField {
-            return false
-        } else{
-            return true
-        }
+        return !(textField == yearTextField || textField == pronounsTextField)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -225,8 +221,6 @@ extension AboutYouViewController: UITextFieldDelegate {
             yearLabel.textColor = .scoopDarkGreen
             yearLabel.isHidden = false
         }
-        
-        return
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -241,9 +235,8 @@ extension AboutYouViewController: UITextFieldDelegate {
         } else {
             yearLabel.textColor = .textFieldBorderColor
         }
-        
-        return
     }
+    
 }
 
 // MARK: - UIPickerViewDelegate

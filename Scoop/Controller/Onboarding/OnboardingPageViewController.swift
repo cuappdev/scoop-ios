@@ -37,7 +37,7 @@ class OnboardingPageViewController: UIPageViewController {
             PreferredContactViewController(),
             PreferencesViewController(),
             FavoritesViewController(),
-            ProfilePictureViewController()
+            ProfilePictureViewController(containerDelegate: animationDelegate)
         ]
         
         for i in 0..<pages.count {
@@ -141,5 +141,5 @@ extension OnboardingPageViewController: OnboardingDelegate {
 }
 
 protocol AnimationDelegate: UIViewController {
-  func animateCar(startPage: Int, endPage: Int)
+    func animateCar(startPage: Int, endPage: Int)
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C12DEB629C64D11003D6683 /* PostRideTripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C12DEB529C64D11003D6683 /* PostRideTripDetailsViewController.swift */; };
 		2C42B51E290F12B400D053A3 /* Sen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */; };
 		2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C42B520290F767600D053A3 /* Rambla-Regular.ttf */; };
 		2C67E4FC29945E5E00195BB5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C67E4FB29945E5E00195BB5 /* Constants.swift */; };
@@ -33,7 +34,6 @@
 		8E4464A344C5B1529768FAF3 /* Pods_Scoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */; };
 		C83419EF27E65A4B00491306 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83419EE27E65A4B00491306 /* User.swift */; };
 		C83CD58727F3B0AE00EDA255 /* PostRideLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CD58527F3B0AE00EDA255 /* PostRideLocationViewController.swift */; };
-		C83CD58827F3B0AE00EDA255 /* TripExtraDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CD58627F3B0AE00EDA255 /* TripExtraDetailsViewController.swift */; };
 		C83CD58A27F3B27200EDA255 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CD58927F3B27200EDA255 /* Extension+UIViewController.swift */; };
 		C845953927ED01B200D2C7F0 /* PhoneFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845953827ED01B200D2C7F0 /* PhoneFormatter.swift */; };
 		C85E2E1D27DBFFFA0004C506 /* ProfilePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85E2E1C27DBFFFA0004C506 /* ProfilePictureViewController.swift */; };
@@ -57,7 +57,6 @@
 		C8D2805F27D985FA00EDD5D3 /* ImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */; };
 		C8D2806227D9992600EDD5D3 /* Ride.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D2806127D9992600EDD5D3 /* Ride.swift */; };
 		C8EF10C427E2BB8000642B40 /* PreferredContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF10C327E2BB8000642B40 /* PreferredContactViewController.swift */; };
-		C8EF10C627E2CA9D00642B40 /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF10C527E2CA9D00642B40 /* PhoneNumberViewController.swift */; };
 		C8EF10C827E2CCB800642B40 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF10C727E2CCB800642B40 /* OnboardingPageViewController.swift */; };
 		C8EF10CA27E2CEE400642B40 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF10C927E2CEE400642B40 /* PreferencesViewController.swift */; };
 		C8EF10CC27E2CEF800642B40 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF10CB27E2CEF800642B40 /* FavoritesViewController.swift */; };
@@ -83,6 +82,7 @@
 
 /* Begin PBXFileReference section */
 		164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scoop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C12DEB529C64D11003D6683 /* PostRideTripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideTripDetailsViewController.swift; sourceTree = "<group>"; };
 		2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sen-Regular.ttf"; sourceTree = "<group>"; };
 		2C42B520290F767600D053A3 /* Rambla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rambla-Regular.ttf"; sourceTree = "<group>"; };
 		2C67E4FB29945E5E00195BB5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -112,7 +112,6 @@
 		BD63C2092AD72CD946F81950 /* Pods-Scoop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.release.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.release.xcconfig"; sourceTree = "<group>"; };
 		C83419EE27E65A4B00491306 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C83CD58527F3B0AE00EDA255 /* PostRideLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostRideLocationViewController.swift; path = "Scoop/Controller/Ride Posting/PostRideLocationViewController.swift"; sourceTree = SOURCE_ROOT; };
-		C83CD58627F3B0AE00EDA255 /* TripExtraDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TripExtraDetailsViewController.swift; path = "Scoop/Controller/Ride Posting/TripExtraDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		C83CD58927F3B27200EDA255 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
 		C845953827ED01B200D2C7F0 /* PhoneFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneFormatter.swift; sourceTree = "<group>"; };
 		C85E2E1C27DBFFFA0004C506 /* ProfilePictureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureViewController.swift; sourceTree = "<group>"; };
@@ -140,7 +139,6 @@
 		C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabelView.swift; sourceTree = "<group>"; };
 		C8D2806127D9992600EDD5D3 /* Ride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ride.swift; sourceTree = "<group>"; };
 		C8EF10C327E2BB8000642B40 /* PreferredContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredContactViewController.swift; sourceTree = "<group>"; };
-		C8EF10C527E2CA9D00642B40 /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		C8EF10C727E2CCB800642B40 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		C8EF10C927E2CEE400642B40 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		C8EF10CB27E2CEF800642B40 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -212,7 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				C83CD58527F3B0AE00EDA255 /* PostRideLocationViewController.swift */,
-				C83CD58627F3B0AE00EDA255 /* TripExtraDetailsViewController.swift */,
+				2C12DEB529C64D11003D6683 /* PostRideTripDetailsViewController.swift */,
 				C8D2805627D9670100EDD5D3 /* PostRideSummaryViewController.swift */,
 			);
 			path = "Ride Posting";
@@ -236,7 +234,6 @@
 				C8EF10CD27E50BFA00642B40 /* OnboardingViewController.swift */,
 				C85E2E1E27DC0D850004C506 /* AboutYouViewController.swift */,
 				C8EF10C327E2BB8000642B40 /* PreferredContactViewController.swift */,
-				C8EF10C527E2CA9D00642B40 /* PhoneNumberViewController.swift */,
 				C8EF10C927E2CEE400642B40 /* PreferencesViewController.swift */,
 				C8EF10CB27E2CEF800642B40 /* FavoritesViewController.swift */,
 				C85E2E1C27DBFFFA0004C506 /* ProfilePictureViewController.swift */,
@@ -570,14 +567,12 @@
 				C8A5449127D185BD00132ACC /* LoginViewController.swift in Sources */,
 				C8CB5E8C2811CEC9007FB8A8 /* HomeTableViewCell.swift in Sources */,
 				C8A5448D27D185BD00132ACC /* AppDelegate.swift in Sources */,
-				C83CD58827F3B0AE00EDA255 /* TripExtraDetailsViewController.swift in Sources */,
 				2C991EBF28E0B2E7006301D9 /* MatchesViewController.swift in Sources */,
 				C83CD58727F3B0AE00EDA255 /* PostRideLocationViewController.swift in Sources */,
 				4176A1E9299D2F01008B2BC3 /* Path.swift in Sources */,
 				2C991EB828E0B2E7006301D9 /* ArrivalSearchViewController.swift in Sources */,
 				C85E2E1F27DC0D850004C506 /* AboutYouViewController.swift in Sources */,
 				C85E2E1D27DBFFFA0004C506 /* ProfilePictureViewController.swift in Sources */,
-				C8EF10C627E2CA9D00642B40 /* PhoneNumberViewController.swift in Sources */,
 				C83CD58A27F3B27200EDA255 /* Extension+UIViewController.swift in Sources */,
 				410D78C029B8166D0007E434 /* NotificationsViewController.swift in Sources */,
 				C8D2805B27D96AFA00EDD5D3 /* SearchViewController.swift in Sources */,
@@ -602,6 +597,7 @@
 				C8D2805D27D96B0000EDD5D3 /* ProfileViewController.swift in Sources */,
 				C8EF10C427E2BB8000642B40 /* PreferredContactViewController.swift in Sources */,
 				C8D2805727D9670100EDD5D3 /* PostRideSummaryViewController.swift in Sources */,
+				2C12DEB629C64D11003D6683 /* PostRideTripDetailsViewController.swift in Sources */,
 				C8A544C427D18D5400132ACC /* Keys.swift in Sources */,
 				2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */,
 				C83419EF27E65A4B00491306 /* User.swift in Sources */,
