@@ -10,9 +10,11 @@ import Alamofire
 
 class NetworkManager {
     
-    var currentUser = User() //TODO: Swap with BaseUser once backend finishes profile routes
+    var currentUser = Constants.defaultUser
+    var currentRide = Constants.defaultRide
+    var userPromptAnswers: [UserAnswer] = []
     
-    static var userToken = Constants.UserDefaults.accessToken
+    static var userToken = Constants.accessToken
     
     static let shared: NetworkManager = NetworkManager()
     
@@ -54,15 +56,28 @@ class NetworkManager {
         }
     }
     
-    func updateAuthenticatedUser(netid: String, first_name: String, last_name: String, grade: String, phone_number: String, pronouns: String, prof_pic: String, completion: @escaping (Result<BaseUser, Error>) -> Void) {
-            let parameters: [String: String] = [
+    func updateAuthenticatedUser(netid: String, first_name: String, last_name: String, grade: String, phone_number: String, pronouns: String, prof_pic: String, prompts: [UserAnswer], completion: @escaping (Result<BaseUser, Error>) -> Void) {
+            print(prompts.map({ prompt -> [String: Any] in
+                return [
+                    "id": prompt.id,
+                    "answer": prompt.answer
+                ]
+        }))
+            let parameters: [String: Any] = [
                 "netid": netid,
                 "first_name": first_name,
                 "last_name": last_name,
                 "grade": grade,
                 "phone_number": phone_number,
                 "pronouns": pronouns,
-                "profile_pic_base64": prof_pic
+                "profile_pic_base64": prof_pic,
+                //Encode [UserAnswer] to JSON
+                "prompts": prompts.map({ prompt -> [String: Any] in
+                        return [
+                            "id": prompt.id,
+                            "answer": prompt.answer
+                        ]
+                })
             ]
         AF.request("\(hostEndpoint)/api/me/", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
                 switch response.result {
@@ -80,6 +95,8 @@ class NetworkManager {
                 case .failure(let error):
                     completion(.failure(error))
                     print(error.localizedDescription)
+                    print(error)
+                    print("updateAuth Failed")
                 }
             }
         }
@@ -274,6 +291,83 @@ class NetworkManager {
                     completion(.success(request))
                 } catch {
                     completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func postPrompt(name: String, placeholder: String, completion: @escaping(Result<Prompt, Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/prompts/"
+        let params = [
+            "question_name": name,
+            "question_placeholder": placeholder
+        ]
+        
+        AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let prompt = try jsonDecoder.decode(Prompt.self, from: data)
+                    completion(.success(prompt))
+                } catch {
+                    completion(.failure(error))
+                    print("Failed to decode postPrompt")
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func updatePrompt(id: Int, name: String, placeholder: String, completion: @escaping(Result<Prompt, Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/prompts/\(id)/"
+        let params = [
+            "question_name": name,
+            "question_placeholder": placeholder
+        ]
+        
+        AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let prompt = try jsonDecoder.decode(Prompt.self, from: data)
+                    completion(.success(prompt))
+                } catch {
+                    completion(.failure(error))
+                    print("Failed to decode updatePrompt")
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getAllPrompts(completion: @escaping(Result<[Prompt], Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/prompts/"
+        
+        AF.request(endpoint, method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let prompts = try jsonDecoder.decode([Prompt].self, from: data)
+                    completion(.success(prompts))
+                } catch {
+                    completion(.failure(error))
+                    print("Failed to decode getAllPrompts")
                 }
             case .failure(let error):
                 completion(.failure(error))

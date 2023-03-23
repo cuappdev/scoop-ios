@@ -5,7 +5,6 @@
 //  Created by Richie Sun on 3/16/23.
 //
 
-//TODO: Implement Animation with images
 import UIKit
 
 class OnboardingContainerViewController: ViewController {

@@ -33,9 +33,9 @@ class FavoritesViewController: OnboardingViewController {
                       return
                   }
             
-            NetworkManager.shared.currentUser.favoriteSnack = snack
-            NetworkManager.shared.currentUser.favoriteSong = song
-            NetworkManager.shared.currentUser.favoriteStop = stop
+            self.addPrompt(name: "Snack", placeholder: "Chips", answer: snack)
+            self.addPrompt(name: "Song", placeholder: "Favorite Song", answer: song)
+            self.addPrompt(name: "Stop", placeholder: "Gates Hall", answer: stop)
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }

@@ -108,6 +108,19 @@ class OnboardingViewController: UIViewController {
 
     }
     
+    func addPrompt(name: String, placeholder: String, answer: String) {
+        NetworkManager.shared.postPrompt(name: name, placeholder: placeholder) { result in
+            switch result {
+            case .success(var prompt):
+                let userAnswer = UserAnswer(id: prompt.id, answer: answer)
+                NetworkManager.shared.userPromptAnswers.append(userAnswer)
+                print("Updated: \(prompt.questionName) to \(answer)")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     @objc func prevVC() {
         guard let navCtrl = self.navigationController else {
             return

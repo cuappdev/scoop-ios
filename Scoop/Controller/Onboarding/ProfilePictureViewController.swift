@@ -81,14 +81,17 @@ class ProfilePictureViewController: OnboardingViewController {
         
         NetworkManager.shared.currentUser.profilePicUrl = imageBase64
         let user = NetworkManager.shared.currentUser
-        //MARK: Request works, but deocding error with image, since backend debugging still in progress
-        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: user.grade, phone_number: user.phoneNumber, pronouns: user.pronouns, prof_pic: imageBase64) { result in
+        let answers = NetworkManager.shared.userPromptAnswers
+
+        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: user.grade, phone_number: user.phoneNumber, pronouns: user.pronouns, prof_pic: imageBase64, prompts: answers) { result in
             switch result {
             case .success(let user):
                 print("\(user.firstName) has been updated")
                 self.dismiss(animated: true)
                 self.containerDelegate?.dismiss(animated: true)
-            case .failure:
+            case .failure(let error):
+                print("Request Failed")
+                print(error.localizedDescription)
                 return
             }
         }

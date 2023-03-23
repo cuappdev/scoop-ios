@@ -17,17 +17,33 @@ class ProfileViewController: UIViewController {
     private let travelingStackView = UIStackView()
     private let favoritesStackView = UIStackView()
     
-    private let user = NetworkManager.shared.currentUser
-
+    private var user = NetworkManager.shared.currentUser
+    
+    private var hometown: String?
+    private var talkative: Float?
+    private var music: Float?
+    private var snack: String?
+    private var song: String?
+    private var stop: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
         
-        setupHeaderImage()
-        setupContainerView()
-        setupEditButton()
-        setupProfileImageView()
-        setupProfileStackView()
+        NetworkManager.shared.getUser { result in
+            switch result {
+            case.success(let user):
+                self.user = user
+                self.getUserPreferences()
+                self.setupHeaderImage()
+                self.setupContainerView()
+                self.setupEditButton()
+                self.setupProfileImageView()
+                self.setupProfileStackView()
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func setupContainerView() {
@@ -110,7 +126,7 @@ class ProfileViewController: UIViewController {
         
         let hometownSection = ImageLabelView()
         hometownSection.label.font = .systemFont(ofSize: 14)
-        hometownSection.label.text = "Hometown: \(user.hometown)"
+        hometownSection.label.text = "Hometown: \(hometown ?? "")"
         hometownSection.imageView.image = UIImage(systemName: "house", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
         profileStackView.addArrangedSubview(hometownSection)
         
@@ -194,7 +210,7 @@ class ProfileViewController: UIViewController {
         
         let talkativeSlider = UISlider()
         talkativeSlider.isUserInteractionEnabled = false
-        talkativeSlider.value = user.talkingPref
+        talkativeSlider.value = talkative ?? 0
         talkativeSlider.minimumTrackTintColor = .black
         talkativeSlider.maximumTrackTintColor = .systemGray3
         travelingStackView.addArrangedSubview(talkativeSlider)
@@ -234,7 +250,8 @@ class ProfileViewController: UIViewController {
         }
         
         let musicSlider = UISlider()
-        musicSlider.value = user.musicPref
+        musicSlider.isUserInteractionEnabled = false
+        musicSlider.value = music ?? 0
         musicSlider.minimumTrackTintColor = .black
         musicSlider.maximumTrackTintColor = .systemGray3
         travelingStackView.addArrangedSubview(musicSlider)
@@ -271,24 +288,44 @@ class ProfileViewController: UIViewController {
         
         let songSection = ImageLabelView()
         songSection.label.font = .systemFont(ofSize: 14)
-        songSection.label.text = "Song: \(user.favoriteSong)"
+        songSection.label.text = "Song: \(song ?? "")"
         songSection.label.adjustsFontSizeToFitWidth = true
         songSection.imageView.image = UIImage(systemName: "music.note", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
         favoritesStackView.addArrangedSubview(songSection)
         
         let snackSection = ImageLabelView()
         snackSection.label.font = .systemFont(ofSize: 14)
-        snackSection.label.text = "Snack: \(user.favoriteSnack)"
+        snackSection.label.text = "Snack: \(snack ?? "")"
         snackSection.label.adjustsFontSizeToFitWidth = true
         snackSection.imageView.image = UIImage(systemName: "bag", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
         favoritesStackView.addArrangedSubview(snackSection)
         
         let stopSection = ImageLabelView()
         stopSection.label.font = .systemFont(ofSize: 14)
-        stopSection.label.text = "Stop: \(user.favoriteStop)"
+        stopSection.label.text = "Stop: \(stop ?? "")"
         stopSection.label.adjustsFontSizeToFitWidth = true
         stopSection.imageView.image = UIImage(systemName: "xmark.octagon", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
         favoritesStackView.addArrangedSubview(stopSection)
+    }
+    
+    private func getUserPreferences() {
+        NetworkManager.shared.currentUser.prompts.forEach({ prompt in
+            if prompt.questionName == "Hometown" {
+                hometown = prompt.answer
+            } else if prompt.questionName == "Talkative" {
+                guard let talkativeFloat = Float(prompt.answer ?? "0") else { return }
+                talkative = talkativeFloat
+            } else if prompt.questionName == "Music" {
+                guard let musicFloat = Float(prompt.answer ?? "0") else { return }
+                talkative = musicFloat
+            } else if prompt.questionName == "Snack" {
+                snack = prompt.answer
+            } else if prompt.questionName == "Song" {
+                song = prompt.answer
+            } else if prompt.questionName == "Stop" {
+                stop = prompt.answer
+            }
+        })
     }
 
 }

@@ -83,6 +83,7 @@ class LoginViewController: UIViewController {
                     NetworkManager.shared.currentUser.firstName = firstName
                     NetworkManager.shared.currentUser.lastName = familyName
                     NetworkManager.userToken = user.accessToken
+                    self.getUser()
                 case .failure:
                     print("Unable to Authorize")
                 }
@@ -113,7 +114,14 @@ class LoginViewController: UIViewController {
     }
     
     private func getUser() {
-        //TODO: Will Define once backend finishes user preferences Endpoint
+        NetworkManager.shared.getUser { result in
+            switch result {
+            case.success(let user):
+                NetworkManager.shared.currentUser = user
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     

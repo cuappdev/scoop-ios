@@ -81,7 +81,7 @@ class PostRideTripDetailsViewController: OnboardingViewController {
             self.ride.departureDatetime = dateFormatter.string(from: date)
             self.ride.description = self.detailsTextField.text ?? ""
             
-            self.navigationController?.pushViewController(PostRideSummaryViewController(ride: self.ride), animated: true)
+            self.navigationController?.pushViewController(PostRideSummaryViewController(currentRide: self.ride), animated: true)
         }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
