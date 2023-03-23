@@ -59,10 +59,6 @@ class InitialPostRideViewController: OnboardingViewController {
         setupLabels()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-
-    }
-    
     private func setupTitleLabel () {
         titleLabel.font = UIFont(name: "Rambla-Regular", size: 16)
         titleLabel.text = "TRANSPORTATION METHOD"
@@ -96,7 +92,6 @@ class InitialPostRideViewController: OnboardingViewController {
             make.top.equalTo(titleLabel.snp.bottom).inset(-20)
             make.leading.equalTo(titleLabel.snp.leading)
             make.width.equalTo(180)
-            
         }
     }
     
@@ -295,4 +290,5 @@ class ShiftedRightTextField: UITextField {
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
+    
 }
