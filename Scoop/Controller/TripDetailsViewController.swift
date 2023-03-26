@@ -59,8 +59,8 @@ class TripDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        guard let driver = currentRide?.driver else { return }
-        navigationItem.title = "\(driver.firstName)'s Ride"
+        guard let creator = currentRide?.creator else { return }
+        navigationItem.title = "\(creator.firstName)'s Ride"
         setUpStackView()
         setUpButton()
         setUpLabelFont()
@@ -301,30 +301,20 @@ class TripDetailsViewController: UIViewController {
         guard let ride = currentRide else { return }
         
         detailsLabel.text = "DETAILS"
-        detailsContainerView.addSubview(detailsLabel)
-        
-        detailsLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.top.equalToSuperview()
-        }
+        stackView.addArrangedSubview(detailsLabel)
         
         detailsTextView.text = ride.description
         detailsTextView.font = UIFont(name: "SFPro", size: 16)
         detailsTextView.textColor = .black
-        detailsContainerView.addSubview(detailsTextView)
-        
+        detailsTextView.isEditable = false
+        stackView.addArrangedSubview(detailsTextView)
+
         detailsTextView.snp.makeConstraints { make in
-            make.top.equalTo(detailsLabel.snp.bottom).inset(-spacing)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(70)
         }
         
         stackView.addArrangedSubview(detailsContainerView)
-        
-        detailsContainerView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-        }
     }
     
     private func setUpButton() {

@@ -23,8 +23,7 @@ class PostRideLocationViewController: UIViewController {
     private let fieldSpace = 40
     private let labelSpace = 5
     private let textFieldSpace = 20
-    //TODO: Placeholder until default values are clarified with Backend
-    private var ride = Ride(id: 0, creator: BaseUser(id: 0, netid: "", firstName: "", lastName: "", profilePicUrl: "", grade: "", pronouns: ""), maxTravelers: 0, minTravelers: 0, departureDatetime: "", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "", startLocationName: "", endLocationPlaceId: "", endLocationName: ""), type: "")
+    private var ride = NetworkManager.shared.currentRide
     private var methods = ["Student Driver", "Shared Taxi"]
     
     override func viewDidLoad() {
@@ -40,6 +39,7 @@ class PostRideLocationViewController: UIViewController {
                       return
                   }
             
+            self.ride.type = method
             self.ride.path.startLocationName = departureLocation
             self.ride.path.endLocationName = arrivalLocation
             

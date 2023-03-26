@@ -44,8 +44,8 @@ class AboutYouViewController: OnboardingViewController {
                       return
                   }
             NetworkManager.shared.currentUser.pronouns = pronouns
-            NetworkManager.shared.currentUser.hometown = hometown
             NetworkManager.shared.currentUser.grade = year
+            self.addPrompt(name: "Hometown", placeholder: "Ithaca", answer: hometown)
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }

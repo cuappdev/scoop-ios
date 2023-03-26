@@ -27,11 +27,13 @@ class User: Codable {
 }
 
 struct BaseUser: Codable {
-    let id: Int
-    let netid: String
-    let firstName: String
-    let lastName: String
-    let profilePicUrl: String?
-    let grade: String?
-    let pronouns: String?
+    var id: Int
+    var netid: String
+    var firstName: String
+    var lastName: String
+    var phoneNumber: String
+    var profilePicUrl: String?
+    var grade: String
+    var pronouns: String
+    var prompts: [Prompt]
 }

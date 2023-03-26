@@ -60,10 +60,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     NetworkManager.shared.currentUser.firstName = firstName
                     NetworkManager.shared.currentUser.lastName = familyName
                     NetworkManager.userToken = user.accessToken
+                    self.getUser()
                     self.didCompleteLogin()
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
+            }
+        }
+    }
+    
+    private func getUser() {
+        NetworkManager.shared.getUser { result in
+            switch result {
+            case.success(let user):
+                NetworkManager.shared.currentUser = user
+                print(user.pronouns)
+            case.failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
