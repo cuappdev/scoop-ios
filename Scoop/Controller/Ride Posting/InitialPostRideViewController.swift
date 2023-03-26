@@ -5,27 +5,27 @@
 //  Created by Tiffany Pan on 3/18/23.
 //
 
-import UIKit
 import GooglePlaces
+import UIKit
 
 /// Conformed to OnboardingViewController because a lot of functionality and page design is carried over/very smiliar. 
 class InitialPostRideViewController: OnboardingViewController {
     
     // MARK: Views
-    private let titleLabel = UILabel()
-    private let studentDriverButton = UIButton()
-    private let taxiButton = UIButton()
-    private let departureTextField = ShiftedRightTextField()
+    private let arrivalLabel = UILabel()
     private let arrivalTextField = ShiftedRightTextField()
+    private let departureLabel = UILabel()
+    private let departureTextField = ShiftedRightTextField()
     private let nextButton = UIButton()
     private let prevButton = UIButton()
-    private let departureLabel = UILabel()
-    private let arrivalLabel = UILabel()
+    private let studentDriverButton = UIButton()
+    private let taxiButton = UIButton()
+    private let titleLabel = UILabel()
     
     override func viewDidLoad() {
         view.backgroundColor = .white
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
-        self.navigationItem.title = "Trip details"
+        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
+        navigationItem.title = "Trip details"
         
         // MARK: Using OnboardingViewController's views
         setupTitle(name: "Trip details")
@@ -89,7 +89,7 @@ class InitialPostRideViewController: OnboardingViewController {
         view.addSubview(studentDriverButton)
         
         studentDriverButton.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).inset(-20)
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.leading.equalTo(titleLabel.snp.leading)
             make.width.equalTo(180)
         }
@@ -97,7 +97,8 @@ class InitialPostRideViewController: OnboardingViewController {
     
     private func setupTaxiButton() {
         taxiButton.isSelected = false
-        taxiButton.setTitle("Taxi                  ", for: .normal)
+        taxiButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        taxiButton.setTitle("Taxi", for: .normal)
         taxiButton.setTitleColor(.black, for: .normal)
         taxiButton.titleLabel?.font = UIFont(name: "SFPro", size: 16)
         taxiButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -110,7 +111,7 @@ class InitialPostRideViewController: OnboardingViewController {
         view.addSubview(taxiButton)
         
         taxiButton.snp.makeConstraints { make in
-            make.top.equalTo(studentDriverButton.snp.bottom).inset(-20)
+            make.top.equalTo(studentDriverButton.snp.bottom).offset(20)
             make.leading.equalTo(studentDriverButton.snp.leading)
             make.width.equalTo(180)
         }
@@ -150,7 +151,7 @@ class InitialPostRideViewController: OnboardingViewController {
         
         departureTextField.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.leading)
-            make.top.equalTo(taxiButton.snp.bottom).inset(-24)
+            make.top.equalTo(taxiButton.snp.bottom).offset(24)
             make.trailing.equalToSuperview().inset(32)
         }
     }
@@ -181,17 +182,15 @@ class InitialPostRideViewController: OnboardingViewController {
         iconContainer.addSubview(arrivalIcon)
         
         arrivalTextField.leftView = iconContainer;
-        arrivalTextField.leftViewMode = UITextField.ViewMode.always
         arrivalTextField.leftViewMode = .always
         arrivalTextField.addTarget(self, action: #selector(presentArrivalSearch), for: .touchDown)
         view.addSubview(arrivalTextField)
         
         arrivalTextField.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.leading)
-            make.top.equalTo(departureTextField.snp.bottom).inset(-24)
+            make.top.equalTo(departureTextField.snp.bottom).offset(24)
             make.trailing.equalToSuperview().inset(32)
         }
-
     }
     
     private func setupLabels() {
@@ -210,37 +209,32 @@ class InitialPostRideViewController: OnboardingViewController {
         arrivalLabel.text = "Arrival"
         
         departureLabel.snp.makeConstraints { make in
-            make.top.equalTo(departureTextField).inset(-labelTop)
+            make.top.equalTo(departureTextField).offset(labelTop)
             make.leading.equalTo(departureTextField).inset(labelLeading)
             make.height.equalTo(16)
             make.width.equalTo(65)
         }
         
         arrivalLabel.snp.makeConstraints { make in
-            make.top.equalTo(arrivalTextField).inset(-labelTop)
+            make.top.equalTo(arrivalTextField).offset(labelTop)
             make.leading.equalTo(arrivalTextField).inset(labelLeading)
             make.height.equalTo(16)
             make.width.equalTo(40)
         }
-        
     }
 
     @objc private func studentDriverButtonToggle() {
         if taxiButton.isSelected {
             taxiButton.isSelected.toggle()
-            studentDriverButton.isSelected.toggle()
-        } else {
-            studentDriverButton.isSelected.toggle()
         }
+        studentDriverButton.isSelected.toggle()
     }
     
     @objc private func taxiButtonToggle() {
         if studentDriverButton.isSelected {
             studentDriverButton.isSelected.toggle()
-            taxiButton.isSelected.toggle()
-        } else {
-            taxiButton.isSelected.toggle()
         }
+        taxiButton.isSelected.toggle()
     }
     
     @objc private func presentDepartureSearch() {

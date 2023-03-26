@@ -13,7 +13,6 @@ class PostRidePageViewController: UIPageViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = .white
-        delegate = self
         dataSource = self
         
         let appearance = UIPageControl.appearance()
@@ -25,7 +24,6 @@ class PostRidePageViewController: UIPageViewController {
     }
     
     private func setupPages() {
-        
         pages = [
             InitialPostRideViewController()
         ]
@@ -34,13 +32,13 @@ class PostRidePageViewController: UIPageViewController {
             if let page = pages[i] as? OnboardingViewController {
                 page.delegate = self
             }
-            
+
             pages[i] = UINavigationController(rootViewController: pages[i])
         }
     }
     
     private func disableSwiping() {
-        for view in view.subviews {
+        view.subviews.forEach { view in
             if let subView = view as? UIScrollView {
                 subView.isScrollEnabled = false
             }
@@ -51,7 +49,7 @@ class PostRidePageViewController: UIPageViewController {
         if let viewControllerIndex = pages.firstIndex(of: viewController) {
             if viewControllerIndex < pages.count - 1 {
                 let vc = pages[viewControllerIndex + 1]
-                self.setViewControllers([vc], direction: .forward, animated: true, completion: nil)
+                setViewControllers([vc], direction: .forward, animated: true, completion: nil)
             }
         }
     }
@@ -62,13 +60,9 @@ class PostRidePageViewController: UIPageViewController {
         }
             if viewControllerIndex > 0 {
                 let vc = pages[viewControllerIndex - 1]
-                self.setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
+                setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
             }
         }
-    
-}
-
-extension PostRidePageViewController: UIPageViewControllerDelegate {
     
 }
 
