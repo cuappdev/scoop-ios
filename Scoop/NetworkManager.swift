@@ -13,6 +13,7 @@ class NetworkManager {
     var currentUser = Constants.defaultUser
     var currentRide = Constants.defaultRide
     var userPromptAnswers: [UserAnswer] = []
+    var profileDelegate: ProfileViewDelegate?
     
     static var userToken = Constants.accessToken
     
@@ -71,7 +72,6 @@ class NetworkManager {
                 "phone_number": phone_number,
                 "pronouns": pronouns,
                 "profile_pic_base64": prof_pic,
-                //Encode [UserAnswer] to JSON
                 "prompts": prompts.map({ prompt -> [String: Any] in
                         return [
                             "id": prompt.id,
@@ -95,8 +95,6 @@ class NetworkManager {
                 case .failure(let error):
                     completion(.failure(error))
                     print(error.localizedDescription)
-                    print(error)
-                    print("updateAuth Failed")
                 }
             }
         }
@@ -344,7 +342,7 @@ class NetworkManager {
                     completion(.success(prompt))
                 } catch {
                     completion(.failure(error))
-                    print("Failed to decode updatePrompt")
+                    print(error.localizedDescription)
                 }
             case .failure(let error):
                 completion(.failure(error))

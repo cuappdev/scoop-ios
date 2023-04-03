@@ -56,7 +56,6 @@ class PostRideTripDetailsViewController: OnboardingViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.title = "Trip Details"
-        backButton.isHidden = true
         
         let nextAction = UIAction { _ in
             guard let travelerCountLowerText = self.minTextField.text,
@@ -93,6 +92,7 @@ class PostRideTripDetailsViewController: OnboardingViewController {
         setupDetailsView()
         setupLabels()
         configTextFields()
+        setupNextButton(action: nextAction)
     }
     
     private func setupStackView() {

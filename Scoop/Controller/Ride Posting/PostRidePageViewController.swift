@@ -7,13 +7,14 @@
 
 import UIKit
 
-class PostRidePageViewController: UIPageViewController {
+class PostRidePageViewController: UIPageViewController, UIPageViewControllerDelegate {
     
     private var pages = [UIViewController]()
     
     override func viewDidLoad() {
         view.backgroundColor = .white
         dataSource = self
+        delegate = self
         
         let appearance = UIPageControl.appearance()
         appearance.pageIndicatorTintColor = .systemGray5
@@ -25,7 +26,9 @@ class PostRidePageViewController: UIPageViewController {
     
     private func setupPages() {
         pages = [
-            InitialPostRideViewController()
+            InitialPostRideViewController(),
+            PostRideTripDetailsViewController(ride: NetworkManager.shared.currentRide),
+            PostRideSummaryViewController(currentRide: NetworkManager.shared.currentRide)
         ]
         
         for i in 0..<pages.count {
@@ -35,6 +38,7 @@ class PostRidePageViewController: UIPageViewController {
 
             pages[i] = UINavigationController(rootViewController: pages[i])
         }
+        setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
     }
     
     private func disableSwiping() {

@@ -11,7 +11,8 @@ class DepartureSearchViewController: SearchInitialViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Departure Location"
+        navigationItem.hidesBackButton = true
+        navigationItem.searchController?.searchBar.placeholder = "Departure location"
     }
     
 }

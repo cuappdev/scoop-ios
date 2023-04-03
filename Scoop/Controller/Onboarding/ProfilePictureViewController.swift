@@ -90,11 +90,12 @@ class ProfilePictureViewController: OnboardingViewController {
                 self.dismiss(animated: true)
                 self.containerDelegate?.dismiss(animated: true)
             case .failure(let error):
-                print("Request Failed")
                 print(error.localizedDescription)
                 return
             }
         }
+        
+        NetworkManager.shared.profileDelegate?.updateProfile()
     }
     
     private func convertImage (image: UIImage) -> String {
