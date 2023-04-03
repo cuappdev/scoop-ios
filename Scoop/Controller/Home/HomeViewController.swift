@@ -204,10 +204,6 @@ class HomeViewController: UIViewController {
         }
     }
 }
-                
-            
-        
-
 
 // MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
