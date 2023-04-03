@@ -33,21 +33,30 @@ class HomeTableViewCell: UITableViewCell {
     
     private func setupContainerView() {
         containerView.clipsToBounds = true
-        containerView.layer.masksToBounds = true
+        containerView.layer.masksToBounds = false
         containerView.layer.cornerRadius = 10
-        containerView.layer.borderWidth = 2
-        containerView.layer.borderColor = UIColor.borderColor.cgColor
+        containerView.backgroundColor = .white
+        containerView.layer.borderColor = UIColor.white.cgColor
+        
+        // MARK: Shadow setup
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOpacity = 0.2
+        containerView.layer.shadowRadius = 5
+        containerView.layer.shadowOffset = CGSize(width: 2, height: 4)
+        containerView.layer.shouldRasterize = true
+        containerView.layer.rasterizationScale = UIScreen.main.scale
+        
         contentView.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(5)
             make.top.bottom.equalToSuperview().inset(10)
         }
     }
     
     private func setupDateLabel() {
-        dateLabel.imageView.image = UIImage(systemName: "calendar")
-        dateLabel.label.font = .systemFont(ofSize: 16)
+        dateLabel.imageView.image = UIImage(named: "date")
+        dateLabel.label.font = UIFont(name: "SFProDisplay-Regular", size: 16)
         containerView.addSubview(dateLabel)
         
         dateLabel.snp.makeConstraints { make in
@@ -56,7 +65,7 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     private func setupTitleLabel() {
-        titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        titleLabel.font = UIFont(name: "SFProDisplay-Bold", size: 18)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textColor = .black
         containerView.addSubview(titleLabel)
@@ -68,8 +77,8 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     private func setupDepartureLabel() {
-        depatureLabel.imageView.image = UIImage(systemName: "location")
-        depatureLabel.label.font = .systemFont(ofSize: 16)
+        depatureLabel.imageView.image = UIImage(named: "locationIcon")
+        depatureLabel.label.font = UIFont(name: "SFProDisplay-Regular", size: 16)
         containerView.addSubview(depatureLabel)
         
         depatureLabel.snp.makeConstraints { make in
@@ -90,8 +99,8 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     private func setupArrivalLabel() {
-        arrivalLabel.imageView.image = UIImage(systemName: "mappin.and.ellipse")
-        arrivalLabel.label.font = .systemFont(ofSize: 16)
+        arrivalLabel.imageView.image = UIImage(named: "destinationIcon")
+        arrivalLabel.label.font = UIFont(name: "SFProDisplay-Regular", size: 16)
         containerView.addSubview(arrivalLabel)
         
         arrivalLabel.snp.makeConstraints { make in
@@ -101,9 +110,24 @@ class HomeTableViewCell: UITableViewCell {
         }
     }
     
+    /// Reformats a date string to only contain the month and day , i.e. [Mar 26]
+    private func formatDate(date: String) -> String {
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd"
+        
+        if let date = dateFormatterGet.date(from: date) {
+            return dateFormatterPrint.string(from: date)
+        }
+        /// Return the original date string if the conversion was not successfully
+        return date
+    }
+    
     func configure(ride: Ride) {
         selectedRide = ride
-        dateLabel.label.text = ride.departureDatetime
+        dateLabel.label.text = formatDate(date: ride.departureDatetime)
         titleLabel.text = "\(ride.creator.firstName)'s Ride"
         depatureLabel.label.text = ride.path.startLocationName
         arrivalLabel.label.text = ride.path.endLocationName

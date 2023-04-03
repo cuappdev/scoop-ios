@@ -21,8 +21,8 @@ class HomeViewController: UIViewController {
     private let homeCellIdenitifer = "HomeCell"
     
     private enum TableSection: String, CaseIterable {
-        case activeTrips = "Active Trips"
-        case pendingTrips = "Pending Trips"
+        case activeTrips = "ACTIVE TRIPS"
+        case pendingTrips = "PENDING TRIPS"
     }
     
     // MARK: Data
@@ -36,7 +36,11 @@ class HomeViewController: UIViewController {
         setupPostRideButton()
         setupNotificationButton()
         
-        getRides()
+//        getRides()
+        // Temporarily here for testing UI
+        activeRides = [ Constants.defaultRide]
+        pendingRides = [Constants.defaultRide]
+        
         // Commented out currently because signing out functionality is not yet implemented
         //        setupSignOutButton()
     }
@@ -128,7 +132,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupNotificationButton() {
-        notificationButton.setImage(UIImage(named: "notification"), for: .normal)
+        notificationButton.setImage(UIImage(named: "notifbutton"), for: .normal)
         view.addSubview(notificationButton)
         
         notificationButton.snp.makeConstraints { make in
@@ -156,8 +160,6 @@ class HomeViewController: UIViewController {
             switch rides {
             case .success(let rides):
                 for ride in rides {
-                    // Note: Technically need to split this into pending + active rides but for some reason the new Ride
-                    // model does not have something for it so will fix this asap after backend models are confirmed
                     var rideCopy = ride
                     
                     // Source: https://stackoverflow.com/questions/35700281/date-format-in-swift
@@ -169,14 +171,33 @@ class HomeViewController: UIViewController {
                     
                     if let date = dateFormatterGet.date(from: ride.departureDatetime) {
                         rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
-                    } else {
-                        print("There was an error decoding the datetime string")
                     }
-                    self.activeRides.append(rideCopy)
+                    
+                    /// Separate a user's rides into those that are active and those that are pending
+                    var activeRidesIDs = []
+                    for ride in NetworkManager.shared.currentUser.rides {
+                        activeRidesIDs.append(ride.id)
+                    }
+
+                    let value = activeRidesIDs.contains { rideID in
+                        if rideID as! Int == rideCopy.id {
+                            return true
+                        } else {
+                            return false
+                        }
+                    }
+                    
+                    if value == true {
+                        self.activeRides.append(ride)
+                    } else {
+                        self.pendingRides.append(ride)
+                    }
                 }
+                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
+                
             case .failure(let error):
                 print(error)
             }
@@ -200,6 +221,18 @@ extension HomeViewController: UITableViewDelegate {
         let title = self.tableView(tableView, titleForHeaderInSection: section)
         headerView.configure(title: title)
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentRide: Ride
+        if indexPath.section == 0 {
+            currentRide = activeRides[indexPath.row]
+        } else {
+            currentRide = pendingRides[indexPath.row]
+        }
+        let tripDetailView = TripDetailsViewController(currentRide: currentRide)
+        tripDetailView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(tripDetailView, animated: true)
     }
     
 }

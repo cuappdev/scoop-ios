@@ -38,6 +38,8 @@
 	<string>Light</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SFProDisplay-Regular.OTF</string>
+		<string>SFProDisplay-Bold.OTF</string>
 		<string>Rambla-Regular.ttf</string>
 		<string>Sen-Regular.ttf</string>
 	</array>
