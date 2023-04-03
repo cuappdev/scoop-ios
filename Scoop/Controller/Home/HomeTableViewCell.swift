@@ -42,14 +42,14 @@ class HomeTableViewCell: UITableViewCell {
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.2
         containerView.layer.shadowRadius = 5
-        containerView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        containerView.layer.shadowOffset = CGSize(width: 2, height: 4)
         containerView.layer.shouldRasterize = true
         containerView.layer.rasterizationScale = UIScreen.main.scale
         
         contentView.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(8)
+            make.leading.trailing.equalToSuperview().inset(5)
             make.top.bottom.equalToSuperview().inset(10)
         }
     }

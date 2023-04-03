@@ -36,10 +36,9 @@ class HomeViewController: UIViewController {
         setupPostRideButton()
         setupNotificationButton()
         
-        // TODO: Fix networking for getting all rides
 //        getRides()
         // Temporarily here for testing UI
-        activeRides = [Constants.defaultRide]
+        activeRides = [ Constants.defaultRide]
         pendingRides = [Constants.defaultRide]
         
         // Commented out currently because signing out functionality is not yet implemented
@@ -183,7 +182,6 @@ class HomeViewController: UIViewController {
                     
                     value ? self.activeRides.append(ride) : self.pendingRides.append(ride)
                 }
-                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
