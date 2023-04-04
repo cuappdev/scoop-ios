@@ -13,6 +13,7 @@ class NetworkManager {
     var currentUser = Constants.defaultUser
     var currentRide = Constants.defaultRide
     var userPromptAnswers: [UserAnswer] = []
+    weak var profileDelegate: ProfileViewDelegate?
     
     static var userToken = Constants.accessToken
     
@@ -51,7 +52,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request authenticateUser Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -71,7 +72,6 @@ class NetworkManager {
                 "phone_number": phone_number,
                 "pronouns": pronouns,
                 "profile_pic_base64": prof_pic,
-                //Encode [UserAnswer] to JSON
                 "prompts": prompts.map({ prompt -> [String: Any] in
                         return [
                             "id": prompt.id,
@@ -94,9 +94,7 @@ class NetworkManager {
                     }
                 case .failure(let error):
                     completion(.failure(error))
-                    print(error.localizedDescription)
-                    print(error)
-                    print("updateAuth Failed")
+                    print("Request updateAuthenticatedUser Failed: \(error.localizedDescription)")
                 }
             }
         }
@@ -116,7 +114,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request getUser Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -136,7 +134,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request getAllUsers Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -164,7 +162,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request searchLocation Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -186,7 +184,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request getAllRides Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -208,7 +206,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request getSpecific Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -242,7 +240,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request postRide Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -269,7 +267,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request updateRide Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -294,7 +292,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request handleRideRequest Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -321,7 +319,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request postPrompt Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -344,11 +342,11 @@ class NetworkManager {
                     completion(.success(prompt))
                 } catch {
                     completion(.failure(error))
-                    print("Failed to decode updatePrompt")
+                    print(error.localizedDescription)
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request updatePrompt Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -371,7 +369,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Request getAllPrompts Failed: \(error.localizedDescription)")
             }
         }
     }

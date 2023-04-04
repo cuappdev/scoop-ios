@@ -25,11 +25,8 @@ class InitialPostRideViewController: OnboardingViewController {
     override func viewDidLoad() {
         view.backgroundColor = .white
         navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
-        navigationItem.title = "Trip details"
         
         // MARK: Using OnboardingViewController's views
-        setupTitle(name: "Trip details")
-        setupTitleLines()
         
         nextAction = UIAction { _ in
             guard let navCtrl = self.navigationController else {
@@ -57,6 +54,8 @@ class InitialPostRideViewController: OnboardingViewController {
         setupDepartureTextField()
         setupArrivalTextField()
         setupLabels()
+        setupBackButton()
+        backButton.isHidden = false
     }
     
     private func setupTitleLabel () {

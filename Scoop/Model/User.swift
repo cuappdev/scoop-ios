@@ -36,4 +36,5 @@ struct BaseUser: Codable {
     var grade: String
     var pronouns: String
     var prompts: [Prompt]
+    var rides: [Ride]
 }

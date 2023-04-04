@@ -18,15 +18,17 @@ class NotificationsViewController: UIViewController {
     private let requestCellIdentifier = "RequestCell"
     
     // MARK: Data
-    private var requests: [RequestResponse] = [RequestResponse(id: 1, approvee: NetworkManager.shared.currentUser, approver: NetworkManager.shared.currentUser, ride: Ride(id: 0, creator: BaseUser(id: 0, netid: "", firstName: "", lastName: "", phoneNumber: "", profilePicUrl: "", grade: "", pronouns: "", prompts: []), maxTravelers: 0, minTravelers: 0, departureDatetime: "", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "", startLocationName: "", endLocationPlaceId: "", endLocationName: ""), type: "") , approved: true), RequestResponse(id: 1, approvee: NetworkManager.shared.currentUser, approver: NetworkManager.shared.currentUser, ride: Ride(id: 0, creator: BaseUser(id: 0, netid: "", firstName: "", lastName: "", phoneNumber: "", profilePicUrl: "", grade: "", pronouns: "", prompts: []), maxTravelers: 0, minTravelers: 0, departureDatetime: "", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "", startLocationName: "", endLocationPlaceId: "", endLocationName: ""), type: "") , approved: false)]
+    private var requests: [RequestResponse] = [RequestResponse(id: 1, approvee: NetworkManager.shared.currentUser, approver: NetworkManager.shared.currentUser, ride: Ride(id: 0, creator: BaseUser(id: 0, netid: "", firstName: "", lastName: "", phoneNumber: "", profilePicUrl: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 0, minTravelers: 0, departureDatetime: "", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "", startLocationName: "", endLocationPlaceId: "", endLocationName: ""), type: "") , approved: true), RequestResponse(id: 1, approvee: NetworkManager.shared.currentUser, approver: NetworkManager.shared.currentUser, ride: Ride(id: 0, creator: BaseUser(id: 0, netid: "", firstName: "", lastName: "", phoneNumber: "", profilePicUrl: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 0, minTravelers: 0, departureDatetime: "", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "", startLocationName: "", endLocationPlaceId: "", endLocationName: ""), type: "") , approved: false)]
     
     override func viewDidLoad() {
         view.backgroundColor = .white
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
         self.navigationItem.title = "Notifications"
-        self.navigationItem.setHidesBackButton(true, animated: true)
         
-        setupBackButton()
+        //TODO: Back Button is causing issues with later screens, figure out how to only display backbutton on certain screens only
+        //self.navigationItem.setHidesBackButton(true, animated: true)
+        
+        //setupBackButton()
         setupTableView()
     }
     
