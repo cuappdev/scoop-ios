@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PostRideSummaryViewController: UIViewController {
+class PostRideSummaryViewController: PostRideViewController {
     
     private let iconTextSpacing = 10
     private let iconSize = 19
@@ -55,20 +55,25 @@ class PostRideSummaryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //TODO: Not good practice, but temporary fix. Will Debug later
+    override func viewDidAppear(_ animated: Bool) {
+        updateBackButton()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         guard let creator = currentRide?.creator else { return }
-        navigationItem.title = "\(creator.firstName)'s Ride"
         setUpStackView()
         setUpButton()
         setUpLabelFont()
         setUpTextFont()
         setUpIcons()
+        updateBackButton()
     }
     
     private func setUpStackView() {
-        let stackViewMultiplier = 0.05
+        let stackViewMultiplier = 0.0
         let leadingTrailingInset = 32
         let screenSize = UIScreen.main.bounds
         
@@ -302,6 +307,8 @@ class PostRideSummaryViewController: UIViewController {
         detailsLabel.text = "DETAILS"
         stackView.addArrangedSubview(detailsLabel)
         
+        stackView.setCustomSpacing(6, after: detailsLabel)
+        
         detailsTextView.text = ride.description
         detailsTextView.font = UIFont(name: "SFPro", size: 16)
         detailsTextView.textColor = .black
@@ -310,10 +317,8 @@ class PostRideSummaryViewController: UIViewController {
 
         detailsTextView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(70)
+            make.height.equalTo(60)
         }
-        
-        stackView.addArrangedSubview(detailsContainerView)
     }
     
     private func setUpButton() {
@@ -325,7 +330,7 @@ class PostRideSummaryViewController: UIViewController {
         view.addSubview(requestButton)
         
         requestButton.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom)
+            make.top.equalTo(stackView.snp.bottom).inset(-20)
             make.centerX.equalToSuperview()
             make.height.equalTo(51)
             make.width.equalTo(296)
@@ -335,6 +340,7 @@ class PostRideSummaryViewController: UIViewController {
     @objc private func postRide() {
         //TODO: Networking Goes here
         dismiss(animated: true)
+        containerDelegate?.navigationController?.popViewController(animated: true)
     }
     
     private func setUpLabelFont() {

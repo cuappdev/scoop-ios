@@ -85,7 +85,7 @@ class HomeViewController: UIViewController {
         }
         
         let postRideAction = UIAction { _ in
-            let postRideLocationVC = PostRidePageViewController()
+            let postRideLocationVC = PostRideContainerViewController()
             postRideLocationVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(postRideLocationVC, animated: true)
         }
