@@ -26,9 +26,9 @@ extension UIView {
         layer.shadowRadius = 5
         layer.shadowOffset = .zero
         
-        //MARK: Caches shadow, so doesn't need to be redrawn
-        layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main.scale
+        //MARK: Caches shadow. Removing does not affect performance, but will leave commented just in case
+//        layer.shouldRasterize = true
+//        layer.rasterizationScale = UIScreen.main.scale
     }
     
 }

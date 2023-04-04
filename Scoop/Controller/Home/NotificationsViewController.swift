@@ -24,9 +24,11 @@ class NotificationsViewController: UIViewController {
         view.backgroundColor = .white
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
         self.navigationItem.title = "Notifications"
-//        self.navigationItem.setHidesBackButton(true, animated: true)
         
-//        setupBackButton()
+        //TODO: Back Button is causing issues with later screens, figure out how to only display backbutton on certain screens only
+        //self.navigationItem.setHidesBackButton(true, animated: true)
+        
+        //setupBackButton()
         setupTableView()
     }
     

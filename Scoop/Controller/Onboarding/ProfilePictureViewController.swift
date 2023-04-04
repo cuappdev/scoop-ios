@@ -90,7 +90,7 @@ class ProfilePictureViewController: OnboardingViewController {
                 self.dismiss(animated: true)
                 self.containerDelegate?.dismiss(animated: true)
             case .failure(let error):
-                print(error.localizedDescription)
+                print("Failed to Authenticate: \(error.localizedDescription)")
                 return
             }
         }

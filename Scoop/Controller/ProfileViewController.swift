@@ -5,10 +5,10 @@
 //  Created by Reade Plunkett on 3/9/22.
 //
 
-import UIKit
 import SDWebImage
+import UIKit
 
-protocol ProfileViewDelegate {
+protocol ProfileViewDelegate: AnyObject {
     func updateProfile()
 }
 
@@ -22,14 +22,14 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     private let travelingStackView = UIStackView()
     private let favoritesStackView = UIStackView()
     
-    private let nameLabel = UILabel()
-    private let subLabel = UILabel()
-    private let phoneLabel = UILabel()
-    private let talkativeSlider = UISlider()
     private let musicSlider = UISlider()
-    private let songSection = ImageLabelView()
+    private let nameLabel = UILabel()
+    private let phoneLabel = UILabel()
     private let snackSection = ImageLabelView()
+    private let songSection = ImageLabelView()
     private let stopSection = ImageLabelView()
+    private let subLabel = UILabel()
+    private let talkativeSlider = UISlider()
     
     private var user = NetworkManager.shared.currentUser
     
@@ -332,7 +332,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     func updateProfile() {
         NetworkManager.shared.getUser { result in
             switch result {
-            case.success(let user):
+            case .success(let user):
                 self.user = user
                 self.getUserPreferences()
                 guard let imageURL = user.profilePicUrl else { return }
@@ -346,7 +346,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
                 self.songSection.label.attributedText = self.makeBoldNormalText(bold: "Song / ", normal: self.song ?? "")
                 self.snackSection.label.attributedText = self.makeBoldNormalText(bold: "Snack / ", normal: self.snack ?? "")
                 self.stopSection.label.attributedText = self.makeBoldNormalText(bold: "Stop / ", normal: self.stop ?? "")
-            case.failure(let error):
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
