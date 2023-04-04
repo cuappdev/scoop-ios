@@ -42,14 +42,14 @@ class HomeTableViewCell: UITableViewCell {
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.2
         containerView.layer.shadowRadius = 5
-        containerView.layer.shadowOffset = CGSize(width: 2, height: 4)
+        containerView.layer.shadowOffset = CGSize(width: 2, height: 2)
         containerView.layer.shouldRasterize = true
         containerView.layer.rasterizationScale = UIScreen.main.scale
         
         contentView.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(5)
+            make.leading.trailing.equalToSuperview().inset(8)
             make.top.bottom.equalToSuperview().inset(10)
         }
     }
@@ -106,11 +106,11 @@ class HomeTableViewCell: UITableViewCell {
         arrivalLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
             make.top.equalTo(dotsImageView.snp.bottom).offset(5)
-            make.bottom.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(15)
         }
     }
     
-    /// Reformats a date string to only contain the month and day , i.e. [Mar 26]
+    /// Reformats a date string to only contain the month and day , i.e. [Mar 26] from "yyyy-MM-dd'T'HH:mm:ssZ" -> "MMM dd"
     private func formatDate(date: String) -> String {
         let dateFormatterGet = DateFormatter()
         dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -121,7 +121,7 @@ class HomeTableViewCell: UITableViewCell {
         if let date = dateFormatterGet.date(from: date) {
             return dateFormatterPrint.string(from: date)
         }
-        /// Return the original date string if the conversion was not successfully
+        // Return the original date string if the conversion was not successfully
         return date
     }
     

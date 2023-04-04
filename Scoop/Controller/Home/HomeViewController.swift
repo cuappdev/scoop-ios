@@ -36,9 +36,10 @@ class HomeViewController: UIViewController {
         setupPostRideButton()
         setupNotificationButton()
         
+        // TODO: Fix networking for getting all rides
 //        getRides()
         // Temporarily here for testing UI
-        activeRides = [ Constants.defaultRide]
+        activeRides = [Constants.defaultRide]
         pendingRides = [Constants.defaultRide]
         
         // Commented out currently because signing out functionality is not yet implemented
@@ -173,25 +174,14 @@ class HomeViewController: UIViewController {
                         rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
                     }
                     
-                    /// Separate a user's rides into those that are active and those that are pending
-                    var activeRidesIDs = []
-                    for ride in NetworkManager.shared.currentUser.rides {
-                        activeRidesIDs.append(ride.id)
-                    }
-
+                    // Separate a user's rides into those that are active and those that are pending so that they can be displayed in different sections
+                    let activeRidesIDs = NetworkManager.shared.currentUser.rides.map { $0.id }
+                    
                     let value = activeRidesIDs.contains { rideID in
-                        if rideID as! Int == rideCopy.id {
-                            return true
-                        } else {
-                            return false
-                        }
+                        rideID == rideCopy.id
                     }
                     
-                    if value == true {
-                        self.activeRides.append(ride)
-                    } else {
-                        self.pendingRides.append(ride)
-                    }
+                    value ? self.activeRides.append(ride) : self.pendingRides.append(ride)
                 }
                 
                 DispatchQueue.main.async {
@@ -199,7 +189,7 @@ class HomeViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                print(error)
+                print("Unable to get all rides: \(error.localizedDescription)")
             }
         }
     }
