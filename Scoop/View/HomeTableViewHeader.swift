@@ -14,7 +14,7 @@ class HomeTableViewHeader: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        titleLabel.font = .systemFont(ofSize: 22, weight: .regular)
+        titleLabel.font = UIFont(name: "Rambla-Regular", size: 16)
         addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints { make in

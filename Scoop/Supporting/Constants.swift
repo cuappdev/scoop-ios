@@ -24,9 +24,9 @@ struct Constants {
         static let prompts: [Prompt] = []
     }
     
-    static let defaultUser = BaseUser(id: 0, netid: "netid", firstName: "firstName", lastName: "lastName", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: [])
+    static let defaultUser = BaseUser(id: 0, netid: "netid", firstName: "Tiffany", lastName: "lastName", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: [])
     
-    static let defaultPath = Path(id: 0, startLocationPlaceId: "", startLocationName: "start", endLocationPlaceId: "", endLocationName: "end")
+    static let defaultPath = Path(id: 0, startLocationPlaceId: "", startLocationName: "Ithaca, NY", endLocationPlaceId: "", endLocationName: "Syracuse, NY")
     
     struct RideDefaults {
         static let id: Int = 0
@@ -43,5 +43,5 @@ struct Constants {
         static let type: String = "type"
     }
     
-    static let defaultRide = Ride(id: 0, creator: defaultUser, maxTravelers: 9, minTravelers: 0, departureDatetime: "", isFlexible: true, path: defaultPath, type: "type")
+    static let defaultRide = Ride(id: 0, creator: defaultUser, maxTravelers: 9, minTravelers: 0, departureDatetime: "2020-03-27T00:00:00Z", isFlexible: true, path: defaultPath, type: "rideshare")
 }
