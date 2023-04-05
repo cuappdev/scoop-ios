@@ -26,9 +26,6 @@ class PreferencesViewController: OnboardingViewController {
             //TODO: Not working: Backend still debugging
             self.addPrompt(name: "Talkative", placeholder: "0", answer: String(self.talkativeSlider.value))
             self.addPrompt(name: "Music", placeholder: "0", answer: String(self.musicSlider.value))
-
-                                                           
-                                                           
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         

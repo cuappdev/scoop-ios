@@ -38,7 +38,12 @@ class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UI
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.enablesReturnKeyAutomatically = false
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        navigationController?.popViewController(animated: true)
     }
 }
 
