@@ -9,7 +9,7 @@ import GooglePlaces
 import UIKit
 
 /// Conformed to OnboardingViewController because a lot of functionality and page design is carried over/very smiliar. 
-class InitialPostRideViewController: OnboardingViewController {
+class InitialPostRideViewController: PostRideViewController {
     
     // MARK: Views
     private let arrivalLabel = UILabel()
@@ -40,7 +40,7 @@ class InitialPostRideViewController: OnboardingViewController {
                 return
             }
             
-            // TODO: Replace nextViewController with the actual next VC to be passed in
+            self.setupBackButton()
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
@@ -55,7 +55,7 @@ class InitialPostRideViewController: OnboardingViewController {
         setupArrivalTextField()
         setupLabels()
         setupBackButton()
-        backButton.isHidden = false
+        backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
     }
     
     private func setupTitleLabel () {
@@ -90,7 +90,7 @@ class InitialPostRideViewController: OnboardingViewController {
         studentDriverButton.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.leading.equalTo(titleLabel.snp.leading)
-            make.width.equalTo(180)
+            make.width.equalTo(156)
         }
     }
     
@@ -111,8 +111,8 @@ class InitialPostRideViewController: OnboardingViewController {
         
         taxiButton.snp.makeConstraints { make in
             make.top.equalTo(studentDriverButton.snp.bottom).offset(20)
-            make.leading.equalTo(studentDriverButton.snp.leading)
-            make.width.equalTo(180)
+            make.leading.equalTo(studentDriverButton)
+            make.width.equalTo(78)
         }
     }
     
@@ -208,14 +208,14 @@ class InitialPostRideViewController: OnboardingViewController {
         arrivalLabel.text = "Arrival"
         
         departureLabel.snp.makeConstraints { make in
-            make.top.equalTo(departureTextField).offset(labelTop)
+            make.top.equalTo(departureTextField).inset(-labelTop)
             make.leading.equalTo(departureTextField).inset(labelLeading)
             make.height.equalTo(16)
             make.width.equalTo(65)
         }
         
         arrivalLabel.snp.makeConstraints { make in
-            make.top.equalTo(arrivalTextField).offset(labelTop)
+            make.top.equalTo(arrivalTextField).inset(-labelTop)
             make.leading.equalTo(arrivalTextField).inset(labelLeading)
             make.height.equalTo(16)
             make.width.equalTo(40)
@@ -239,15 +239,17 @@ class InitialPostRideViewController: OnboardingViewController {
     @objc private func presentDepartureSearch() {
         let departureVC = DepartureSearchViewController()
         departureVC.delegate = self
-        backButton.isHidden = true
         navigationController?.pushViewController(departureVC, animated: true)
     }
     
     @objc private func presentArrivalSearch() {
         let arrivalVC = ArrivalSearchViewController()
         arrivalVC.delegate = self
-        backButton.isHidden = true
         navigationController?.pushViewController(arrivalVC, animated: true)
+    }
+    
+    @objc private func dismissView() {
+        containerDelegate?.navigationController?.popViewController(animated: true)
     }
     
 }

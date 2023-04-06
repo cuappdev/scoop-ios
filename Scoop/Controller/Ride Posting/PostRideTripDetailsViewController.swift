@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PostRideTripDetailsViewController: OnboardingViewController {
+class PostRideTripDetailsViewController: PostRideViewController {
     
     private let textFieldHeight = 56
     private let textFieldBorderWidth = 1.0
@@ -55,9 +55,10 @@ class PostRideTripDetailsViewController: OnboardingViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationItem.title = "Trip Details"
         
-        let nextAction = UIAction { _ in
+        nextAction = UIAction { _ in
+            guard let navCtrl = self.navigationController else { return }
+            
             guard let travelerCountLowerText = self.minTextField.text,
                   let travelerCountUpperText = self.maxTextField.text else {
                       self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
@@ -80,10 +81,8 @@ class PostRideTripDetailsViewController: OnboardingViewController {
             self.ride.departureDatetime = dateFormatter.string(from: date)
             self.ride.description = self.detailsTextField.text ?? ""
             
-            self.navigationController?.pushViewController(PostRideSummaryViewController(currentRide: self.ride), animated: true)
+            self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", image: nil, primaryAction: nextAction, menu: nil)
         
         setupStackView()
         setupDateView()
@@ -92,11 +91,13 @@ class PostRideTripDetailsViewController: OnboardingViewController {
         setupDetailsView()
         setupLabels()
         configTextFields()
-        setupNextButton(action: nextAction)
+        setupNextButton(action: nextAction ?? UIAction(handler: { _ in
+            return
+        }))
     }
     
     private func setupStackView() {
-        let stackViewMultiplier = 0.15
+        let stackViewMultiplier = 0.1
         let leadingTrailingInset = 32
         let screenSize = UIScreen.main.bounds
         

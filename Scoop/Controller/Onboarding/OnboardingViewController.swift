@@ -75,6 +75,19 @@ class OnboardingViewController: UIViewController {
         }
     }
     
+    func updateBackButton() {
+        backButton.setImage(UIImage(named: "BackArrow"), for: .normal)
+        backButton.setTitle("", for: .normal)
+        backButton.layer.borderWidth = 0
+        navigationController?.navigationBar.addSubview(backButton)
+        
+        backButton.snp.removeConstraints()
+        backButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(20)
+        }
+    }
+    
     func setupTitle(name: String) {
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)]
         self.navigationItem.title = name

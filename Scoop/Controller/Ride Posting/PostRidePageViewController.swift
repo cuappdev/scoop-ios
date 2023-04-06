@@ -10,6 +10,16 @@ import UIKit
 class PostRidePageViewController: UIPageViewController, UIPageViewControllerDelegate {
     
     private var pages = [UIViewController]()
+    weak var animationDelegate: AnimationDelegate?
+    
+    init(delegate: AnimationDelegate) {
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        animationDelegate = delegate
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         view.backgroundColor = .white
@@ -25,10 +35,19 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
     }
     
     private func setupPages() {
+        let postRideInitialVC = InitialPostRideViewController()
+        postRideInitialVC.containerDelegate = animationDelegate
+        
+        let postRideDetailsVC = PostRideTripDetailsViewController(ride: NetworkManager.shared.currentRide)
+        postRideDetailsVC.containerDelegate = animationDelegate
+        
+        let postRideSummaryVC = PostRideSummaryViewController(currentRide: NetworkManager.shared.currentRide)
+        postRideSummaryVC.containerDelegate = animationDelegate
+        
         pages = [
-            InitialPostRideViewController(),
-            PostRideTripDetailsViewController(ride: NetworkManager.shared.currentRide),
-            PostRideSummaryViewController(currentRide: NetworkManager.shared.currentRide)
+            postRideInitialVC,
+            postRideDetailsVC,
+            postRideSummaryVC
         ]
         
         for i in 0..<pages.count {
@@ -53,6 +72,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
         if let viewControllerIndex = pages.firstIndex(of: viewController) {
             if viewControllerIndex < pages.count - 1 {
                 let vc = pages[viewControllerIndex + 1]
+                animationDelegate?.animateCar(startPage: viewControllerIndex, endPage: viewControllerIndex + 1)
                 setViewControllers([vc], direction: .forward, animated: true, completion: nil)
             }
         }
@@ -64,6 +84,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
         }
             if viewControllerIndex > 0 {
                 let vc = pages[viewControllerIndex - 1]
+                animationDelegate?.animateCar(startPage: viewControllerIndex, endPage: viewControllerIndex - 1)
                 setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
             }
         }
@@ -85,6 +106,11 @@ extension PostRidePageViewController: UIPageViewControllerDataSource {
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
+        for subview in view.subviews {
+            if subview is UIPageControl {
+                subview.isHidden = true
+            }
+        }
         return pages.count
     }
     
