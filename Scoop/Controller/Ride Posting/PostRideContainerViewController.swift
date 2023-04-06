@@ -23,6 +23,14 @@ class PostRideContainerViewController: ViewController {
         pageViewController = PostRidePageViewController(delegate: self)
         screenWidth = view.frame.width - 24
         view.backgroundColor = .white
+        
+        setupAnimation()
+        setupTitleLines()
+        setupTitle(name: "Trip details")
+        self.navigationItem.hidesBackButton = true
+    }
+    
+    private func setupAnimation() {
         view.addSubview(pageViewController.view)
         view.addSubview(dotsImageView)
         dotsImageView.contentMode = .scaleAspectFill
@@ -47,10 +55,6 @@ class PostRideContainerViewController: ViewController {
             make.height.equalTo(36)
             make.width.equalTo(43)
         }
-        
-        setupTitleLines()
-        setupTitle(name: "Trip details")
-        self.navigationItem.hidesBackButton = true
     }
     
     private func setupTitle(name: String) {
@@ -83,12 +87,12 @@ class PostRideContainerViewController: ViewController {
             make.trailing.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide).inset(solidLineVerticalInset)
         }
-
     }
     
 }
 
 extension PostRideContainerViewController: AnimationDelegate {
+    
     func animateCar(startPage: Int, endPage: Int) {
         let pageCount : Double = 2.5
         let startX = screenWidth * screenMultiplier * CGFloat(startPage) / pageCount

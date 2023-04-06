@@ -57,9 +57,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
         view.backgroundColor = .white
         
         nextAction = UIAction { _ in
-            guard let navCtrl = self.navigationController else {
-                return
-            }
+            guard let navCtrl = self.navigationController else { return }
             
             guard let travelerCountLowerText = self.minTextField.text,
                   let travelerCountUpperText = self.maxTextField.text else {

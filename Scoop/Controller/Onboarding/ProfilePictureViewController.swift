@@ -163,8 +163,7 @@ class ProfilePictureViewController: OnboardingViewController {
         }
     }
     
-    @objc
-    private func uploadProfilePicture(_ sender: UITapGestureRecognizer) {
+    @objc private func uploadProfilePicture(_ sender: UITapGestureRecognizer) {
         present(imagePicker, animated: true)
     }
 }
