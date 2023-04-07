@@ -41,7 +41,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
         let postRideDetailsVC = PostRideTripDetailsViewController(ride: NetworkManager.shared.currentRide)
         postRideDetailsVC.containerDelegate = animationDelegate
         
-        let postRideSummaryVC = PostRideSummaryViewController(currentRide: NetworkManager.shared.currentRide)
+        let postRideSummaryVC = PostRideSummaryViewController()
         postRideSummaryVC.containerDelegate = animationDelegate
         
         pages = [

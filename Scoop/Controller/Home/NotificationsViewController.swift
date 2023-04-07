@@ -18,17 +18,19 @@ class NotificationsViewController: UIViewController {
     private let requestCellIdentifier = "RequestCell"
     
     // MARK: Data
-    private var requests: [RequestResponse] = [RequestResponse(id: 1, approvee: NetworkManager.shared.currentUser, approver: NetworkManager.shared.currentUser, ride: Ride(id: 0, creator: BaseUser(id: 0, netid: "", firstName: "", lastName: "", phoneNumber: "", profilePicUrl: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 0, minTravelers: 0, departureDatetime: "", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "", startLocationName: "", endLocationPlaceId: "", endLocationName: ""), type: "") , approved: true), RequestResponse(id: 1, approvee: NetworkManager.shared.currentUser, approver: NetworkManager.shared.currentUser, ride: Ride(id: 0, creator: BaseUser(id: 0, netid: "", firstName: "", lastName: "", phoneNumber: "", profilePicUrl: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 0, minTravelers: 0, departureDatetime: "", isFlexible: true, path: Path(id: 0, startLocationPlaceId: "", startLocationName: "", endLocationPlaceId: "", endLocationName: ""), type: "") , approved: false)]
+    private var pendingRequests: [Request] = []
+    private var respondedRequests: [Request] = []
+    private var allRequests: [Request] = []
     
     override func viewDidLoad() {
         view.backgroundColor = .white
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
         self.navigationItem.title = "Notifications"
         
-        //TODO: Back Button is causing issues with later screens, figure out how to only display backbutton on certain screens only
-        //self.navigationItem.setHidesBackButton(true, animated: true)
-        
-        //setupBackButton()
+        // MARK: Still needs to be debugged after backend confirmation
+        getRequests()
+        // MARK: Used for building views
+//        allRequests = [Constants.defaultTRequest, Constants.defaultFRequest]
         setupTableView()
     }
     
@@ -51,15 +53,29 @@ class NotificationsViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         tableView.separatorColor = .systemGray
         tableView.separatorStyle = .singleLine
+        tableView.contentInsetAdjustmentBehavior = .never
         // Not sure about this, it makes the entire cell layout shift. Not sure how else to make the separator last the entire line though. 
 //        tableView.layoutMargins = UIEdgeInsets.zero
         tableView.register(RequestTableViewCell.self, forCellReuseIdentifier: requestCellIdentifier)
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(35)
+            make.top.equalToSuperview().inset(50)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func getRequests() {
+        NetworkManager.shared.getAllRequests { response in
+            switch response {
+            case .success(let response):
+                self.pendingRequests = response.waitingApproval
+                self.respondedRequests = response.toApprove
+                self.allRequests = self.respondedRequests + self.pendingRequests
+            case .failure(let error):
+                print("Unable to get all rides: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -78,18 +94,18 @@ extension NotificationsViewController: UITableViewDelegate {
 extension NotificationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        requests.count
+        allRequests.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: requestCellIdentifier) as! RequestTableViewCell
-        cell.configure(request: requests[indexPath.row], status: requests[indexPath.row].approved)
+        cell.configure(request: allRequests[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // TODO: Make this dynamic. Works ok for now, but .automaticDimension didn't really work.
-        requests[indexPath.row].approved ? 100 : 110
+        allRequests[indexPath.row].approved ? 100 : 110
     }
     
 }
