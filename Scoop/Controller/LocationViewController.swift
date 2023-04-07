@@ -41,7 +41,10 @@ class LocationViewController: UIViewController {
     }
     
     func setupTableView() {
-        locations = ["Ithaca, NY", "Duffield Hall", "Gates Hall", "Klarman Hall", "Roselle Park, NJ", "Albany, NY", "Cupertino, CA", "Cayuga Lake, NY", "Rhodes Hall, NY"]
+        let filter = GMSAutocompleteFilter()
+        filter.countries = ["US", "CA"]
+        tableDataSource.autocompleteFilter = filter
+        
         filteredLocations = locations
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: LocationTableViewCell.reuseIdentifier)
         tableView.dataSource = tableDataSource

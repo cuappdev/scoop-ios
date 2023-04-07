@@ -144,11 +144,11 @@ class NetworkManager {
         let endpoint = "\(hostEndpoint)/api/search/"
         let params = [
             "departure_datetime": depatureDate,
-            "start_location_name": startLocation,
-            "end_location_name": endLocation
+            "start_location_place_id": startLocation,
+            "end_location_place_id": endLocation
         ]
         
-        AF.request(endpoint, method: .get, parameters: params).validate().responseData { response in
+        AF.request(endpoint, method: .get, parameters: params, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()

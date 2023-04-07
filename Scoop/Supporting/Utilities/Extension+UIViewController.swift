@@ -13,6 +13,8 @@ extension UIViewController {
     func presentErrorAlert(title: String, message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alertVC.view.tintColor = .scoopDarkGreen
+        alertVC.title
         present(alertVC, animated: true)
     }
     
