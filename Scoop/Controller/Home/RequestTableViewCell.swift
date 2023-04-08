@@ -5,8 +5,8 @@
 //  Created by Tiffany Pan on 3/8/23.
 //
 
-import UIKit
 import SDWebImage
+import UIKit
 
 class RequestTableViewCell: UITableViewCell {
     
@@ -16,7 +16,7 @@ class RequestTableViewCell: UITableViewCell {
     private let acceptButton = UIButton()
     private let declineButton = UIButton()
     
-    private var request: Request?
+    private var request: RideRequest?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -140,14 +140,14 @@ class RequestTableViewCell: UITableViewCell {
                 case .success(let request):
                     // call should happen in here technically
                     self.requestDetailLabel.text = "You've declined \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
-                    declineButton.isHidden = true
-                    acceptButton.isHidden = true
+                    self.declineButton.isHidden = true
+                    self.acceptButton.isHidden = true
                     
-                    requestDetailLabel.snp.removeConstraints()
-                    requestDetailLabel.snp.makeConstraints { make in
-                        make.leading.equalTo(profileImageView.snp.trailing).offset(20)
+                    self.requestDetailLabel.snp.removeConstraints()
+                    self.requestDetailLabel.snp.makeConstraints { make in
+                        make.leading.equalTo(self.profileImageView.snp.trailing).offset(20)
                         make.trailing.equalToSuperview().offset(-15)
-                        make.top.equalTo(profileImageView.snp.top)
+                        make.top.equalTo(self.profileImageView.snp.top)
                     }
                 case .failure(let error):
                     print("Unable to get all rides: \(error.localizedDescription)")
@@ -164,14 +164,14 @@ class RequestTableViewCell: UITableViewCell {
                 switch response {
                 case .success(let request):
                     self.requestDetailLabel.text = "You've accepted \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
-                    declineButton.isHidden = true
-                    acceptButton.isHidden = true
+                    self.declineButton.isHidden = true
+                    self.acceptButton.isHidden = true
                     
-                    requestDetailLabel.snp.removeConstraints()
-                    requestDetailLabel.snp.makeConstraints { make in
-                        make.leading.equalTo(profileImageView.snp.trailing).offset(20)
+                    self.requestDetailLabel.snp.removeConstraints()
+                    self.requestDetailLabel.snp.makeConstraints { make in
+                        make.leading.equalTo(self.profileImageView.snp.trailing).offset(20)
                         make.trailing.equalToSuperview().offset(-15)
-                        make.top.equalTo(profileImageView.snp.top)
+                        make.top.equalTo(self.profileImageView.snp.top)
                     }
                 case .failure(let error):
                     print("Unable to get all rides: \(error.localizedDescription)")
@@ -181,7 +181,7 @@ class RequestTableViewCell: UITableViewCell {
         
     }
     
-    func configure(request: Request) {
+    func configure(request: RideRequest) {
         if let url = request.approvee.profilePicUrl {
             profileImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "emptyimage"))
         }

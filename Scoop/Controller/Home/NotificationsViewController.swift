@@ -18,9 +18,9 @@ class NotificationsViewController: UIViewController {
     private let requestCellIdentifier = "RequestCell"
     
     // MARK: Data
-    private var pendingRequests: [Request] = []
-    private var respondedRequests: [Request] = []
-    private var allRequests: [Request] = []
+    private var pendingRequests: [RideRequest] = []
+    private var respondedRequests: [RideRequest] = []
+    private var allRequests: [RideRequest] = []
     
     override func viewDidLoad() {
         view.backgroundColor = .white

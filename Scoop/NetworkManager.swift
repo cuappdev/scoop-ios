@@ -272,7 +272,7 @@ class NetworkManager {
         }
     }
     
-    func handleRideRequest(requestID: Int, approved: Bool, completion: @escaping(Result<Request, Error>) -> Void) {
+    func handleRideRequest(requestID: Int, approved: Bool, completion: @escaping(Result<RideRequest, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/requests/\(requestID)"
         let params = [
             "approved": approved
@@ -285,7 +285,7 @@ class NetworkManager {
                 jsonDecoder.dateDecodingStrategy = .iso8601
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {
-                    let request = try jsonDecoder.decode(Request.self, from: data)
+                    let request = try jsonDecoder.decode(RideRequest.self, from: data)
                     completion(.success(request))
                 } catch {
                     completion(.failure(error))
@@ -392,12 +392,12 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Unable to get all requests: \(error.localizedDescription)")
             }
         }
     }
     
-    func postRequest(approveeID: Int, rideID: Int, completion: @escaping(Result<Request, Error>) -> Void) {
+    func postRequest(approveeID: Int, rideID: Int, completion: @escaping(Result<RideRequest, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/requests/"
         let params = [
             "approvee_id": approveeID,
@@ -411,7 +411,7 @@ class NetworkManager {
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
-                    let request = try jsonDecoder.decode(Request.self, from: data)
+                    let request = try jsonDecoder.decode(RideRequest.self, from: data)
                     completion(.success(request))
                 } catch {
                     completion(.failure(error))
@@ -419,7 +419,7 @@ class NetworkManager {
                 }
             case .failure(let error):
                 completion(.failure(error))
-                print(error.localizedDescription)
+                print("Unable to postRequest: \(error.localizedDescription)")
             }
         }
     }

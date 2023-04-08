@@ -38,7 +38,7 @@ class HomeViewController: UIViewController {
         
 //        getRides()
         // Temporarily here for testing UI
-        activeRides = [ Constants.defaultRide]
+        activeRides = [Constants.defaultRide]
         pendingRides = [Constants.defaultRide]
         
         // Commented out currently because signing out functionality is not yet implemented

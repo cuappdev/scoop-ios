@@ -332,6 +332,7 @@ class PostRideSummaryViewController: PostRideViewController {
     @objc private func postRide() {
         //TODO: Networking Goes here - still needs to be debugged after backend fixes
         guard let creatorID = currentRide.driver?.id else { return }
+        
         NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime) { response in
             switch response {
             case .success(let _):
