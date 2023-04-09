@@ -10,10 +10,10 @@ import UIKit
 
 class SearchRidesViewController: UIViewController {
     
-    //MARK: Views
+    // MARK: Views
     private let arrivalLabel = UILabel()
     private let arrivalTextField = ImageTextField()
-    private let calendarIcon = UIImageView()
+    private let calendarIconImageView = UIImageView()
     private let datePicker = UIDatePicker()
     private let departureDateLabel = UILabel()
     private let departureDateTextField = OnboardingTextField()
@@ -48,6 +48,7 @@ class SearchRidesViewController: UIViewController {
         
         dottedline.contentMode = .scaleAspectFit
         view.addSubview(dottedline)
+        
         dottedline.snp.makeConstraints { make in
             make.height.equalTo(1)
             make.width.equalTo(screenSize.width*dottedLineMultiplier)
@@ -58,6 +59,7 @@ class SearchRidesViewController: UIViewController {
         let solidline = UIView()
         solidline.backgroundColor = .black
         view.addSubview(solidline)
+        
         solidline.snp.makeConstraints { make in
             make.height.equalTo(1)
             make.width.equalTo(screenSize.width*solidLineMultiplier)
@@ -121,11 +123,11 @@ class SearchRidesViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.addTarget(self, action: #selector(updateDate), for: .valueChanged)
         
-        calendarIcon.image = UIImage(named: "calendarIcon")
-        calendarIcon.contentMode = .scaleAspectFit
-        view.addSubview(calendarIcon)
+        calendarIconImageView.image = UIImage(named: "calendarIcon")
+        calendarIconImageView.contentMode = .scaleAspectFit
+        view.addSubview(calendarIconImageView)
         
-        calendarIcon.snp.makeConstraints { make in
+        calendarIconImageView.snp.makeConstraints { make in
             make.centerY.equalTo(departureDateTextField)
             make.trailing.equalTo(departureDateTextField).inset(12)
             make.size.equalTo(24)
@@ -225,21 +227,22 @@ class SearchRidesViewController: UIViewController {
               let date = self.departureDateTextField.text, !date.isEmpty,
               let departureID = departurePlace?.placeID,
               let arrivalID = arrivalPlace?.placeID else {
-                  self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
+                  presentErrorAlert(title: "Error", message: "Please complete all fields.")
                   return
               }
         
-        NetworkManager.shared.searchLocation(depatureDate: tripDate, startLocation: departureID, endLocation: arrivalID) { response in
+        NetworkManager.shared.searchLocation(depatureDate: tripDate, startLocation: departureID, endLocation: arrivalID) { [weak self] response in
             switch response {
             case .success(let response):
-                self.navigationController?.pushViewController(MatchesViewController(rides: response.rides), animated: true)
+                guard let strongSelf = self else { return }
+                strongSelf.navigationController?.pushViewController(MatchesViewController(rides: response.rides), animated: true)
             case .failure(let error):
-                print(error)
+                print("Error in SearchRidesVC: \(error)")
             }
         }
     }
 
-    /** Converts a Date object into String format, where this one is specifically in the YYYY-MM-dd format. */
+    /// Converts a Date object into String format, where this one is specifically in the YYYY-MM-dd format.
     private func formatDate(dateToConvert: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd"
@@ -248,7 +251,7 @@ class SearchRidesViewController: UIViewController {
     
 }
 
-//MARK: - UITextFieldDelegate
+// MARK: - UITextFieldDelegate
 extension SearchRidesViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -276,7 +279,6 @@ extension SearchRidesViewController: SearchInitialViewControllerDelegate {
         } else if viewController is ArrivalSearchViewController {
             arrivalPlace = location
             arrivalTextField.textField.text = location.name
-            
         }
     }
 

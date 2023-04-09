@@ -58,7 +58,7 @@ class HomeViewController: UIViewController {
         view.addSubview(headerView)
         
         headerView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.height.equalTo(90)
             make.top.equalTo(view.safeAreaLayoutGuide)
         }
