@@ -145,7 +145,6 @@ class PostRideSummaryViewController: PostRideViewController {
         driverInfoContainerView.snp.makeConstraints { make in
             make.height.equalTo(41)
         }
-        
     }
     
     private func setUpTransportationInfo() {

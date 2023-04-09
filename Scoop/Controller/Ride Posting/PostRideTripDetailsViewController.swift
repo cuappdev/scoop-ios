@@ -330,7 +330,6 @@ class PostRideTripDetailsViewController: PostRideViewController {
     }
     
     @objc private func updateDate() {
-        print("click")
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateTextField.text = dateFormatter.string(from: datePicker.date)

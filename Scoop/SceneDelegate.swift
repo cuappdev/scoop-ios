@@ -96,7 +96,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let homeNavController = UINavigationController(rootViewController: homeViewController)
         homeNavController.navigationBar.prefersLargeTitles = false
         
-        let searchViewController = SearchViewController()
+        let searchViewController = SearchRidesViewController()
         searchViewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), selectedImage: UIImage(systemName: "magnifyingglass"))
 
         let searchNavController = UINavigationController(rootViewController: searchViewController)
