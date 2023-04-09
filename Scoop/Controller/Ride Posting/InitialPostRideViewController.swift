@@ -45,7 +45,10 @@ class InitialPostRideViewController: PostRideViewController {
             }
             
             NetworkManager.shared.currentRide.type = self.studentDriverButton.isSelected ? "Student driver" : "Taxi"
-            if let arrival = self.arrivalTextField.text, let departure = self.departureTextField.text, let arrivalID = self.arrivalLocationID, let departureID = self.departureLocationID {
+            if let arrival = self.arrivalTextField.text,
+               let departure = self.departureTextField.text,
+               let arrivalID = self.arrivalLocationID,
+               let departureID = self.departureLocationID {
                 NetworkManager.shared.currentRide.path.endLocationPlaceId = arrivalID
                 NetworkManager.shared.currentRide.path.endLocationName = arrival
                 NetworkManager.shared.currentRide.path.startLocationName = departure

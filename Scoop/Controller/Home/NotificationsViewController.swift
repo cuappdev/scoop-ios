@@ -67,12 +67,13 @@ class NotificationsViewController: UIViewController {
     }
     
     private func getRequests() {
-        NetworkManager.shared.getAllRequests { response in
+        NetworkManager.shared.getAllRequests { [weak self] response in
             switch response {
             case .success(let response):
-                self.pendingRequests = response.waitingApproval
-                self.respondedRequests = response.toApprove
-                self.allRequests = self.respondedRequests + self.pendingRequests
+                guard let strongSelf = self else { return }
+                strongSelf.pendingRequests = response.waitingApproval
+                strongSelf.respondedRequests = response.toApprove
+                strongSelf.allRequests = strongSelf.pendingRequests + strongSelf.respondedRequests
             case .failure(let error):
                 print("Unable to get all rides: \(error.localizedDescription)")
             }

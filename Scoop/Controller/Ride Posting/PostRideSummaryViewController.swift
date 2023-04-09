@@ -56,15 +56,15 @@ class PostRideSummaryViewController: PostRideViewController {
         view.backgroundColor = .white
         self.currentRide = NetworkManager.shared.currentRide
         
-        setUpStackView()
-        setUpButton()
-        setUpLabelFont()
-        setUpTextFont()
-        setUpIcons()
+        setupStackView()
+        setupButton()
+        setupLabelFont()
+        setupTextFont()
+        setupIcons()
         updateBackButton()
     }
     
-    private func setUpStackView() {
+    private func setupStackView() {
         let stackViewMultiplier = 0.0
         let leadingTrailingInset = 32
         let screenSize = UIScreen.main.bounds
@@ -81,15 +81,15 @@ class PostRideSummaryViewController: PostRideViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(0.15 * screenSize.height)
         }
         
-        setUpDriverInfo()
-        setUpTransportationInfo()
-        setUpLocationInfo()
-        setUpDateInfo()
-        setUpTravelerInfo()
-        setUpDetailsInfo()
+        setupDriverInfo()
+        setupTransportationInfo()
+        setupLocationInfo()
+        setupDateInfo()
+        setupTravelerInfo()
+        setupDetailsInfo()
     }
     
-    private func setUpDriverInfo() {
+    private func setupDriverInfo() {
         let creator = currentRide.creator
         guard let imageURL = creator.profilePicUrl else {return}
         
@@ -140,7 +140,7 @@ class PostRideSummaryViewController: PostRideViewController {
         
     }
     
-    private func setUpTransportationInfo() {
+    private func setupTransportationInfo() {
         let ride = currentRide
         
         transportationMethod.text = "TRANSPORTATION METHOD"
@@ -174,7 +174,7 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpLocationInfo() {
+    private func setupLocationInfo() {
         let ride = currentRide
         
         locations.text = "LOCATIONS"
@@ -233,7 +233,7 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpDateInfo() {
+    private func setupDateInfo() {
         let ride = currentRide
         
         departureDateLabel.text = "DEPARTURE DATE"
@@ -267,7 +267,7 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpTravelerInfo() {
+    private func setupTravelerInfo() {
         let ride = currentRide
         
         numberTravelersLabel.text = "NUMBER OF TRAVELERS"
@@ -293,7 +293,7 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpDetailsInfo() {
+    private func setupDetailsInfo() {
         let ride = currentRide
         
         detailsLabel.text = "DETAILS"
@@ -313,7 +313,7 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpButton() {
+    private func setupButton() {
         requestButton.setTitle("Post trip", for: .normal)
         requestButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         requestButton.backgroundColor = UIColor.scoopGreen
@@ -335,11 +335,11 @@ class PostRideSummaryViewController: PostRideViewController {
         
         NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime) { response in
             switch response {
-            case .success(let _):
+            case .success(_):
                 self.dismiss(animated: true)
                 self.containerDelegate?.navigationController?.popViewController(animated: true)
             case .failure(let error):
-                print("Unable to get all rides: \(error.localizedDescription)")
+                print("Unable to post ride: \(error.localizedDescription)")
             }
         }
        
@@ -347,21 +347,21 @@ class PostRideSummaryViewController: PostRideViewController {
         containerDelegate?.navigationController?.popViewController(animated: true)
     }
     
-    private func setUpLabelFont() {
+    private func setupLabelFont() {
         [transportationMethod, locations, departureDateLabel, numberTravelersLabel, detailsLabel].forEach { label in
             label.font = UIFont(name: "Rambla-Regular", size: 16)
             label.textColor = .black
         }
     }
     
-    private func setUpTextFont() {
+    private func setupTextFont() {
         [creatorLabel, creatorEmail, driverType, arrivalLocationLabel, departureLocationLabel, departureDate, numberTravelers].forEach { textView in
             textView.font = UIFont(name: "SFPro-Regular", size: 16)
             textView.textColor = .black
         }
     }
     
-    private func setUpIcons() {
+    private func setupIcons() {
         [mailIcon, carIcon, arrivalIcon, departureIcon, calendarIcon, iconSeperator].forEach { image in
             image.contentMode = .scaleAspectFill
         }

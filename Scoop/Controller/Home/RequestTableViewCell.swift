@@ -116,16 +116,12 @@ class RequestTableViewCell: UITableViewCell {
         }
     }
     
-    private func setUpViews() {
+    private func setupViews() {
         if let request = self.request {
-            if request.approved {
-                // Display only the profile picture + request info.
-                setupProfilePictureView()
-                setupRequestDetailLabel()
-            } else {
-                // Give the user the option to either accept/deny the pending request.
-                setupProfilePictureView()
-                setupRequestDetailLabel()
+            setupProfilePictureView()
+            setupRequestDetailLabel()
+            
+            if !request.approved {
                 setupDeclineButton()
                 setupAcceptButton()
             }
@@ -135,19 +131,21 @@ class RequestTableViewCell: UITableViewCell {
     @objc func denyRequest() {
         // TODO: Networking still needs to be fixed ?!
         if let request = self.request {
-            NetworkManager.shared.handleRideRequest(requestID: request.id, approved: false) { response in
+            NetworkManager.shared.handleRideRequest(requestID: request.id, approved: false) { [weak self] response in
                 switch response {
                 case .success(let request):
-                    // call should happen in here technically
-                    self.requestDetailLabel.text = "You've declined \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
-                    self.declineButton.isHidden = true
-                    self.acceptButton.isHidden = true
+                    guard let strongSelf = self else { return }
                     
-                    self.requestDetailLabel.snp.removeConstraints()
-                    self.requestDetailLabel.snp.makeConstraints { make in
-                        make.leading.equalTo(self.profileImageView.snp.trailing).offset(20)
+                    // call should happen in here technically
+                    strongSelf.requestDetailLabel.text = "You've declined \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
+                    strongSelf.declineButton.isHidden = true
+                    strongSelf.acceptButton.isHidden = true
+                    
+                    strongSelf.requestDetailLabel.snp.removeConstraints()
+                    strongSelf.requestDetailLabel.snp.makeConstraints { make in
+                        make.leading.equalTo(strongSelf.profileImageView.snp.trailing).offset(20)
                         make.trailing.equalToSuperview().offset(-15)
-                        make.top.equalTo(self.profileImageView.snp.top)
+                        make.top.equalTo(strongSelf.profileImageView.snp.top)
                     }
                 case .failure(let error):
                     print("Unable to get all rides: \(error.localizedDescription)")
@@ -160,18 +158,20 @@ class RequestTableViewCell: UITableViewCell {
         // TODO: Networking - pass in the correct request ID depending on the cell
         
         if let request = self.request {
-            NetworkManager.shared.handleRideRequest(requestID: request.id, approved: true) { response in
+            NetworkManager.shared.handleRideRequest(requestID: request.id, approved: true) { [weak self] response in
                 switch response {
                 case .success(let request):
-                    self.requestDetailLabel.text = "You've accepted \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
-                    self.declineButton.isHidden = true
-                    self.acceptButton.isHidden = true
+                    guard let strongSelf = self else { return }
                     
-                    self.requestDetailLabel.snp.removeConstraints()
-                    self.requestDetailLabel.snp.makeConstraints { make in
-                        make.leading.equalTo(self.profileImageView.snp.trailing).offset(20)
+                    strongSelf.requestDetailLabel.text = "You've accepted \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
+                    strongSelf.declineButton.isHidden = true
+                    strongSelf.acceptButton.isHidden = true
+
+                    strongSelf.requestDetailLabel.snp.removeConstraints()
+                    strongSelf.requestDetailLabel.snp.makeConstraints { make in
+                        make.leading.equalTo(strongSelf.profileImageView.snp.trailing).offset(20)
                         make.trailing.equalToSuperview().offset(-15)
-                        make.top.equalTo(self.profileImageView.snp.top)
+                        make.top.equalTo(strongSelf.profileImageView.snp.top)
                     }
                 case .failure(let error):
                     print("Unable to get all rides: \(error.localizedDescription)")
@@ -185,13 +185,15 @@ class RequestTableViewCell: UITableViewCell {
         if let url = request.approvee.profilePicUrl {
             profileImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "emptyimage"))
         }
+        
         if request.approved {
             self.requestDetailLabel.text = "\(request.approver.firstName) accepted your request to join their drive to \(request.ride.path.endLocationName)"
         } else {
             self.requestDetailLabel.text = "\(request.approvee.firstName) requests to join drive to \(request.ride.path.endLocationName)"
         }
+        
         self.request = request
-        setUpViews()
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
