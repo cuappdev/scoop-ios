@@ -5,51 +5,52 @@
 //  Created by Reade Plunkett on 1/27/22.
 //
 
+import GoogleSignIn
 import SnapKit
 import UIKit
-import GoogleSignIn
 
 class LoginViewController: UIViewController {
     
-    private let label = UILabel()
-    private let signInButton = GIDSignInButton()
+    private let backgroundImageView = UIImageView()
+    private let greenSignInButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        setupLabel()
-        setupGoogleSignInButton()
+        setupBackgroundImage()
+        setupGreenSignInButton()
     }
     
-    private func setupLabel() {
-        label.font = .systemFont(ofSize: 36, weight: .semibold)
-        label.textColor = .systemRed
-        label.textAlignment = .center
-        label.text = "Welcome to Scoop!"
-        label.numberOfLines = 0
-        view.addSubview(label)
+    private func setupGreenSignInButton() {
+        greenSignInButton.setTitle("Login with NetID", for: .normal)
+        greenSignInButton.setTitleColor(.white, for: .normal)
+        greenSignInButton.backgroundColor = .scoopDarkGreen
+        greenSignInButton.layer.cornerRadius = 25
+        greenSignInButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
+        view.addSubview(greenSignInButton)
         
-        label.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.centerY.equalToSuperview()
-        }
-    }
-    
-    private func setupGoogleSignInButton() {
-        signInButton.style = .wide
-        view.addSubview(signInButton)
-        
-        signInButton.snp.makeConstraints { make in
-            make.top.equalTo(label.snp.bottom).offset(40)
-            make.centerX.equalToSuperview()
+        greenSignInButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(50)
+            make.height.equalTo(50)
+            make.leading.trailing.equalToSuperview().inset(50)
         }
         
         let signInAction = UIAction { action in
             self.signIn()
         }
         
-        signInButton.addAction(signInAction, for: .touchUpInside)
+        greenSignInButton.addAction(signInAction, for: .touchUpInside)
+    }
+    
+    private func setupBackgroundImage() {
+        backgroundImageView.image = UIImage(named: "loginBackground")
+        backgroundImageView.contentMode = .scaleAspectFit
+        view.addSubview(backgroundImageView)
+        
+        backgroundImageView.snp.makeConstraints { make in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        }
     }
     
     private func signIn() {
