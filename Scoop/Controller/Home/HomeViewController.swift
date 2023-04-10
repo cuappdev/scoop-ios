@@ -36,7 +36,6 @@ class HomeViewController: UIViewController {
         setupPostRideButton()
         setupNotificationButton()
         
-        // TODO: Fix networking for getting all rides
 //        getRides()
         // Temporarily here for testing UI
         activeRides = [Constants.defaultRide]
@@ -70,17 +69,14 @@ class HomeViewController: UIViewController {
     }
     
     private func setupPostRideButton() {
-        postRideButton.setImage(UIImage(systemName: "car.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28)), for: .normal)
-        postRideButton.backgroundColor = .white
+        postRideButton.setImage(UIImage(named: "addride"), for: .normal)
+        postRideButton.backgroundColor = .clear
         postRideButton.layer.shadowColor = UIColor.black.cgColor
         postRideButton.layer.shadowOpacity = 0.25
         postRideButton.layer.shadowOffset = CGSize(width: 0, height: 4)
         postRideButton.layer.shadowRadius = 4
         postRideButton.layer.masksToBounds = false
         postRideButton.layer.cornerRadius = 35
-        postRideButton.tintColor = .scoopGreen
-        postRideButton.layer.borderWidth = 3
-        postRideButton.layer.borderColor = UIColor.scoopGreen.cgColor
         view.addSubview(postRideButton)
         
         postRideButton.snp.makeConstraints { make in
@@ -183,7 +179,6 @@ class HomeViewController: UIViewController {
                     
                     value ? self.activeRides.append(ride) : self.pendingRides.append(ride)
                 }
-                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -216,7 +211,9 @@ extension HomeViewController: UITableViewDelegate {
         } else {
             currentRide = pendingRides[indexPath.row]
         }
+        
         let tripDetailView = TripDetailsViewController(currentRide: currentRide)
+        tripDetailView.hideRequestButton()
         tripDetailView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(tripDetailView, animated: true)
     }

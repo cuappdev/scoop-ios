@@ -211,12 +211,12 @@ class NetworkManager {
         }
     }
     
-    func postRide(startName: String, endName: String, creator: BaseUser, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, completion: @escaping(Result<Ride, Error>) -> Void) {
+    func postRide(startID: String, startName: String, endID: String, endName: String, creator: Int, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, completion: @escaping(Result<Ride, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/ride/"
         let params: [String : Any] = [
-            "start_location_place_id": "",
+            "start_location_place_id": startID,
             "start_location_name": startName,
-            "end_location_place_id": "",
+            "end_location_place_id": endID,
             "end_location_name": endName,
             "creator": creator,
             "max_travelers": maxTravellers,
@@ -272,7 +272,7 @@ class NetworkManager {
         }
     }
     
-    func handleRideRequest(requestID: Int, approved: Bool, completion: @escaping(Result<RequestResponse, Error>) -> Void) {
+    func handleRideRequest(requestID: Int, approved: Bool, completion: @escaping(Result<RideRequest, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/requests/\(requestID)"
         let params = [
             "approved": approved
@@ -285,7 +285,7 @@ class NetworkManager {
                 jsonDecoder.dateDecodingStrategy = .iso8601
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {
-                    let request = try jsonDecoder.decode(RequestResponse.self, from: data)
+                    let request = try jsonDecoder.decode(RideRequest.self, from: data)
                     completion(.success(request))
                 } catch {
                     completion(.failure(error))
@@ -370,6 +370,56 @@ class NetworkManager {
             case .failure(let error):
                 completion(.failure(error))
                 print("Request getAllPrompts Failed: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func getAllRequests(completion: @escaping(Result<RequestResponse, Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/requests/"
+        
+        AF.request(endpoint, method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let requests = try jsonDecoder.decode(RequestResponse.self, from: data)
+                    completion(.success(requests))
+                } catch {
+                    completion(.failure(error))
+                    print("Failed to decode getAllRequests")
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print("Unable to get all requests: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func postRequest(approveeID: Int, rideID: Int, completion: @escaping(Result<RideRequest, Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/requests/"
+        let params = [
+            "approvee_id": approveeID,
+            "ride_id": rideID
+        ]
+        
+        AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let request = try jsonDecoder.decode(RideRequest.self, from: data)
+                    completion(.success(request))
+                } catch {
+                    completion(.failure(error))
+                    print("Failed to decode postRequest")
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print("Unable to postRequest: \(error.localizedDescription)")
             }
         }
     }

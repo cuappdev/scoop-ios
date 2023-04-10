@@ -358,4 +358,8 @@ class TripDetailsViewController: UIViewController {
         }
     }
     
+    func hideRequestButton() {
+        requestButton.isHidden = true
+    }
+    
 }

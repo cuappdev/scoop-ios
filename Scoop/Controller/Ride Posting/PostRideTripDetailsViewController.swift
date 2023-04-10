@@ -76,10 +76,10 @@ class PostRideTripDetailsViewController: PostRideViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "M/dd/yy @ h:mm a"
             
-            self.ride.minTravelers = travelerCountLower
-            self.ride.maxTravelers = travelerCountUpper
-            self.ride.departureDatetime = dateFormatter.string(from: date)
-            self.ride.description = self.detailsTextField.text ?? ""
+            NetworkManager.shared.currentRide.minTravelers = travelerCountLower
+            NetworkManager.shared.currentRide.maxTravelers = travelerCountUpper
+            NetworkManager.shared.currentRide.departureDatetime = dateFormatter.string(from: date)
+            NetworkManager.shared.currentRide.description = self.detailsTextField.text ?? ""
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }

@@ -5,6 +5,7 @@
 //  Created by Tiffany Pan on 3/8/23.
 //
 
+import SDWebImage
 import UIKit
 
 class RequestTableViewCell: UITableViewCell {
@@ -15,7 +16,7 @@ class RequestTableViewCell: UITableViewCell {
     private let acceptButton = UIButton()
     private let declineButton = UIButton()
     
-    private var requestStatus: Bool = false
+    private var request: RideRequest?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,9 +24,9 @@ class RequestTableViewCell: UITableViewCell {
     }
     
     private func setupProfilePictureView() {
-        profileImageView.contentMode = .scaleAspectFit
+        profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.masksToBounds = false
-        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.layer.cornerRadius = 30
         profileImageView.clipsToBounds = true
         contentView.addSubview(profileImageView)
         
@@ -45,24 +46,13 @@ class RequestTableViewCell: UITableViewCell {
         requestDetailLabel.snp.makeConstraints { make in
             make.leading.equalTo(profileImageView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-15)
-            if requestStatus {
-                make.top.equalTo(profileImageView.snp.top)
-            } else {
-                make.top.equalToSuperview().offset(12)
+            if let request = self.request {
+                if request.approved {
+                    make.top.equalTo(profileImageView.snp.top)
+                } else {
+                    make.top.equalToSuperview().offset(12)
+                }
             }
-        }
-    }
-    
-    private func setupRespondedDetailLabel() {
-        requestDetailLabel.font = .systemFont(ofSize: 16)
-        requestDetailLabel.lineBreakMode = .byWordWrapping
-        requestDetailLabel.numberOfLines = 0
-        contentView.addSubview(requestDetailLabel)
-        
-        requestDetailLabel.snp.makeConstraints { make in
-            make.leading.equalTo(profileImageView.snp.trailing).offset(20)
-            make.trailing.equalToSuperview().offset(-15)
-            make.top.equalToSuperview().offset(12)
         }
     }
     
@@ -126,39 +116,84 @@ class RequestTableViewCell: UITableViewCell {
         }
     }
     
-    private func setUpViews(isResponded: Bool) {
-        if isResponded {
-            // Display only the profile picture + request info.
+    private func setupViews() {
+        if let request = self.request {
             setupProfilePictureView()
             setupRequestDetailLabel()
-        } else {
-            // Give the user the option to either accept/deny the pending request.
-            setupProfilePictureView()
-            setupRequestDetailLabel()
-            setupDeclineButton()
-            setupAcceptButton()
+            
+            if !request.approved {
+                setupDeclineButton()
+                setupAcceptButton()
+            }
         }
     }
     
     @objc func denyRequest() {
-        // TODO: Networking
-        // Configure the cell to change 
+        // TODO: Networking still needs to be fixed ?!
+        if let request = self.request {
+            NetworkManager.shared.handleRideRequest(requestID: request.id, approved: false) { [weak self] response in
+                switch response {
+                case .success(let request):
+                    guard let strongSelf = self else { return }
+                    
+                    // call should happen in here technically
+                    strongSelf.requestDetailLabel.text = "You've declined \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
+                    strongSelf.declineButton.isHidden = true
+                    strongSelf.acceptButton.isHidden = true
+                    
+                    strongSelf.requestDetailLabel.snp.removeConstraints()
+                    strongSelf.requestDetailLabel.snp.makeConstraints { make in
+                        make.leading.equalTo(strongSelf.profileImageView.snp.trailing).offset(20)
+                        make.trailing.equalToSuperview().offset(-15)
+                        make.top.equalTo(strongSelf.profileImageView.snp.top)
+                    }
+                case .failure(let error):
+                    print("Unable to get all rides: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 
     @objc func acceptRequest() {
-        // TODO: Networking
+        // TODO: Networking - pass in the correct request ID depending on the cell
+        
+        if let request = self.request {
+            NetworkManager.shared.handleRideRequest(requestID: request.id, approved: true) { [weak self] response in
+                switch response {
+                case .success(let request):
+                    guard let strongSelf = self else { return }
+                    
+                    strongSelf.requestDetailLabel.text = "You've accepted \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
+                    strongSelf.declineButton.isHidden = true
+                    strongSelf.acceptButton.isHidden = true
+
+                    strongSelf.requestDetailLabel.snp.removeConstraints()
+                    strongSelf.requestDetailLabel.snp.makeConstraints { make in
+                        make.leading.equalTo(strongSelf.profileImageView.snp.trailing).offset(20)
+                        make.trailing.equalToSuperview().offset(-15)
+                        make.top.equalTo(strongSelf.profileImageView.snp.top)
+                    }
+                case .failure(let error):
+                    print("Unable to get all rides: \(error.localizedDescription)")
+                }
+            }
+        }
+        
     }
     
-    func configure(request: RequestResponse, status: Bool) {
-        // will replace with information from actual model when backend models are confirmed
-        let boldAttribute = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16)]
-        let boldedName = NSMutableAttributedString(string: "Lia C", attributes: boldAttribute)
-        let regularDescription = NSMutableAttributedString(string: " requests to join Drive to New York, NY")
-        boldedName.append(regularDescription)
-        requestDetailLabel.attributedText = boldedName
-        profileImageView.image = UIImage(named: "notification") //Change to UIImage from URL
-        requestStatus = status
-        setUpViews(isResponded: status)
+    func configure(request: RideRequest) {
+        if let url = request.approvee.profilePicUrl {
+            profileImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "emptyimage"))
+        }
+        
+        if request.approved {
+            self.requestDetailLabel.text = "\(request.approver.firstName) accepted your request to join their drive to \(request.ride.path.endLocationName)"
+        } else {
+            self.requestDetailLabel.text = "\(request.approvee.firstName) requests to join drive to \(request.ride.path.endLocationName)"
+        }
+        
+        self.request = request
+        setupViews()
     }
     
     required init?(coder: NSCoder) {

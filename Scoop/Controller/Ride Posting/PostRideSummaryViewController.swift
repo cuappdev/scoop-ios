@@ -13,7 +13,7 @@ class PostRideSummaryViewController: PostRideViewController {
     private let iconSize = 19
     private let spacing = 10
     
-    var currentRide: Ride?
+    var currentRide = NetworkManager.shared.currentRide
     
     private let stackView = UIStackView()
     private let creatorLabel = UILabel()
@@ -46,15 +46,6 @@ class PostRideSummaryViewController: PostRideViewController {
     private let numberTravelersContainerView = UIView()
     private let detailsContainerView = UIView()
     
-    init(currentRide: Ride) {
-        super.init(nibName: nil, bundle: nil)
-        self.currentRide = currentRide
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     //TODO: Not good practice, but temporary fix. Will Debug later
     override func viewDidAppear(_ animated: Bool) {
         updateBackButton()
@@ -63,16 +54,17 @@ class PostRideSummaryViewController: PostRideViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        guard let creator = currentRide?.creator else { return }
-        setUpStackView()
-        setUpButton()
-        setUpLabelFont()
-        setUpTextFont()
-        setUpIcons()
+        self.currentRide = NetworkManager.shared.currentRide
+        
+        setupStackView()
+        setupButton()
+        setupLabelFont()
+        setupTextFont()
+        setupIcons()
         updateBackButton()
     }
     
-    private func setUpStackView() {
+    private func setupStackView() {
         let stackViewMultiplier = 0.0
         let leadingTrailingInset = 32
         let screenSize = UIScreen.main.bounds
@@ -89,16 +81,16 @@ class PostRideSummaryViewController: PostRideViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(0.15 * screenSize.height)
         }
         
-        setUpDriverInfo()
-        setUpTransportationInfo()
-        setUpLocationInfo()
-        setUpDateInfo()
-        setUpTravelerInfo()
-        setUpDetailsInfo()
+        setupDriverInfo()
+        setupTransportationInfo()
+        setupLocationInfo()
+        setupDateInfo()
+        setupTravelerInfo()
+        setupDetailsInfo()
     }
     
-    private func setUpDriverInfo() {
-        guard let creator = currentRide?.creator else { return }
+    private func setupDriverInfo() {
+        let creator = currentRide.creator
         guard let imageURL = creator.profilePicUrl else {return}
         
         creatorProfile.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
@@ -147,8 +139,8 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpTransportationInfo() {
-        guard let ride = currentRide else { return }
+    private func setupTransportationInfo() {
+        let ride = currentRide
         
         transportationMethod.text = "TRANSPORTATION METHOD"
         transportationContainerView.addSubview(transportationMethod)
@@ -181,8 +173,8 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpLocationInfo() {
-        guard let ride = currentRide else { return }
+    private func setupLocationInfo() {
+        let ride = currentRide
         
         locations.text = "LOCATIONS"
         locationsContainerView.addSubview(locations)
@@ -240,8 +232,8 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpDateInfo() {
-        guard let ride = currentRide else { return }
+    private func setupDateInfo() {
+        let ride = currentRide
         
         departureDateLabel.text = "DEPARTURE DATE"
         dateContainerView.addSubview(departureDateLabel)
@@ -274,8 +266,8 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpTravelerInfo() {
-        guard let ride = currentRide else { return }
+    private func setupTravelerInfo() {
+        let ride = currentRide
         
         numberTravelersLabel.text = "NUMBER OF TRAVELERS"
         numberTravelersContainerView.addSubview(numberTravelersLabel)
@@ -300,8 +292,8 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpDetailsInfo() {
-        guard let ride = currentRide else { return }
+    private func setupDetailsInfo() {
+        let ride = currentRide
         
         detailsLabel.text = "DETAILS"
         stackView.addArrangedSubview(detailsLabel)
@@ -309,7 +301,7 @@ class PostRideSummaryViewController: PostRideViewController {
         stackView.setCustomSpacing(6, after: detailsLabel)
         
         detailsTextView.text = ride.description
-        detailsTextView.font = UIFont(name: "SFPro", size: 16)
+        detailsTextView.font = UIFont(name: "SFProDisplay-Regular", size: 16)
         detailsTextView.textColor = .black
         detailsTextView.isEditable = false
         stackView.addArrangedSubview(detailsTextView)
@@ -320,7 +312,7 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
-    private func setUpButton() {
+    private func setupButton() {
         requestButton.setTitle("Post trip", for: .normal)
         requestButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         requestButton.backgroundColor = UIColor.scoopGreen
@@ -337,26 +329,38 @@ class PostRideSummaryViewController: PostRideViewController {
     }
     
     @objc private func postRide() {
-        //TODO: Networking Goes here
+        //TODO: Networking Goes here - still needs to be debugged after backend fixes
+        guard let creatorID = currentRide.driver?.id else { return }
+        
+        NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime) { response in
+            switch response {
+            case .success(_):
+                self.dismiss(animated: true)
+                self.containerDelegate?.navigationController?.popViewController(animated: true)
+            case .failure(let error):
+                print("Unable to post ride: \(error.localizedDescription)")
+            }
+        }
+       
         dismiss(animated: true)
         containerDelegate?.navigationController?.popViewController(animated: true)
     }
     
-    private func setUpLabelFont() {
+    private func setupLabelFont() {
         [transportationMethod, locations, departureDateLabel, numberTravelersLabel, detailsLabel].forEach { label in
             label.font = UIFont(name: "Rambla-Regular", size: 16)
             label.textColor = .black
         }
     }
     
-    private func setUpTextFont() {
+    private func setupTextFont() {
         [creatorLabel, creatorEmail, driverType, arrivalLocationLabel, departureLocationLabel, departureDate, numberTravelers].forEach { textView in
             textView.font = UIFont(name: "SFPro-Regular", size: 16)
             textView.textColor = .black
         }
     }
     
-    private func setUpIcons() {
+    private func setupIcons() {
         [mailIcon, carIcon, arrivalIcon, departureIcon, calendarIcon, iconSeperator].forEach { image in
             image.contentMode = .scaleAspectFill
         }

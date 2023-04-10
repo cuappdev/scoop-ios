@@ -22,6 +22,10 @@ class InitialPostRideViewController: PostRideViewController {
     private let taxiButton = UIButton()
     private let titleLabel = UILabel()
     
+    // MARK: Data
+    private var departureLocationID: String?
+    private var arrivalLocationID: String?
+    
     override func viewDidLoad() {
         view.backgroundColor = .white
         navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
@@ -38,6 +42,17 @@ class InitialPostRideViewController: PostRideViewController {
             else {
                 self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
                 return
+            }
+            
+            NetworkManager.shared.currentRide.type = self.studentDriverButton.isSelected ? "Student driver" : "Taxi"
+            if let arrival = self.arrivalTextField.text,
+               let departure = self.departureTextField.text,
+               let arrivalID = self.arrivalLocationID,
+               let departureID = self.departureLocationID {
+                NetworkManager.shared.currentRide.path.endLocationPlaceId = arrivalID
+                NetworkManager.shared.currentRide.path.endLocationName = arrival
+                NetworkManager.shared.currentRide.path.startLocationName = departure
+                NetworkManager.shared.currentRide.path.startLocationPlaceId = departureID
             }
             
             self.setupBackButton()
@@ -259,10 +274,12 @@ extension InitialPostRideViewController: SearchInitialViewControllerDelegate {
     func didSelectLocation(viewController: UIViewController, location: GMSPlace) {
         if viewController is DepartureSearchViewController {
             departureTextField.text = location.name
+            departureLocationID = location.placeID
             departureLabel.textColor = .offBlack
             departureLabel.isHidden = false
         } else if viewController is ArrivalSearchViewController {
             arrivalTextField.text = location.name
+            arrivalLocationID = location.placeID
             arrivalLabel.textColor = .offBlack
             arrivalLabel.isHidden = false
         }
