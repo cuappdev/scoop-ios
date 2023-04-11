@@ -38,3 +38,13 @@ struct BaseUser: Codable {
     var prompts: [Prompt]
     var rides: [TruncRide]
 }
+
+struct Creator: Codable {
+    var id: Int
+    var netid: String
+    var firstName: String
+    var lastName: String
+    var profilePicUrl: String
+    var grade: String
+    var pronouns: String
+}

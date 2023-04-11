@@ -36,10 +36,10 @@ class HomeViewController: UIViewController {
         setupPostRideButton()
         setupNotificationButton()
         
-//        getRides()
+        getRides()
         // Temporarily here for testing UI
-        activeRides = [Constants.defaultRide]
-        pendingRides = [Constants.defaultRide]
+//        activeRides = [Constants.defaultRide]
+//        pendingRides = [Constants.defaultRide]
         
         // Commented out currently because signing out functionality is not yet implemented
         //        setupSignOutButton()
@@ -184,7 +184,7 @@ class HomeViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                print("Unable to get all rides: \(error.localizedDescription)")
+                print("Unable to get all rides: \(error)")
             }
         }
     }

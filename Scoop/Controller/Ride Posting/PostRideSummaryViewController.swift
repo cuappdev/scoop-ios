@@ -70,7 +70,7 @@ class PostRideSummaryViewController: PostRideViewController {
         let screenSize = UIScreen.main.bounds
         
         stackView.axis = .vertical
-        stackView.distribution = .fill
+//        stackView.distribution = .fill
         stackView.alignment = .leading
         stackView.spacing = 25
         view.addSubview(stackView)
@@ -78,7 +78,7 @@ class PostRideSummaryViewController: PostRideViewController {
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
             make.top.equalTo(view.safeAreaLayoutGuide).inset(stackViewMultiplier * screenSize.height)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(0.15 * screenSize.height)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(0.1 * screenSize.height)
         }
         
         setupDriverInfo()
@@ -303,7 +303,7 @@ class PostRideSummaryViewController: PostRideViewController {
         detailsLabel.text = "DETAILS"
         stackView.addArrangedSubview(detailsLabel)
         
-        stackView.setCustomSpacing(6, after: detailsLabel)
+//        stackView.setCustomSpacing(1, after: detailsLabel)
         
         detailsTextView.text = ride.description
         detailsTextView.font = UIFont(name: "SFProDisplay-Regular", size: 16)

@@ -15,7 +15,8 @@ class NetworkManager {
     var userPromptAnswers: [UserAnswer] = []
     weak var profileDelegate: ProfileViewDelegate?
     
-    static var userToken = Constants.accessToken
+//    static var userToken = Constants.accessToken
+    static var userToken = "3264321a19f885a283de67a94adae751e1a41d9f"
     
     static let shared: NetworkManager = NetworkManager()
     

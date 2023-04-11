@@ -116,14 +116,28 @@ class RequestTableViewCell: UITableViewCell {
         }
     }
     
-    private func setupViews() {
-        if let approved = request?.approved {
-            setupProfilePictureView()
-            setupRequestDetailLabel()
-            
-            if !approved {
-                setupDeclineButton()
-                setupAcceptButton()
+    private func setupViews(request: RideRequest, status: String) {
+        // Another users sends THIS user a request to join THIS user's ride. Give option to decline/accept
+        if status == "Awaiting" {
+            if let approved = self.request?.approved {
+                setupProfilePictureView()
+                setupRequestDetailLabel()
+                
+                if !approved {
+                    self.requestDetailLabel.text = "\(request.approvee.firstName) requests to join drive to \(request.ride.path.endLocationName)"
+                    setupDeclineButton()
+                    setupAcceptButton()
+                } else {
+                    self.requestDetailLabel.text = "You've approved \(request.approvee.firstName)'s request to join drive to \(request.ride.path.endLocationName)"
+                }
+            }
+        // THIS user has previously sent a request to another user
+        } else if status == "Pending" {
+            if let approved = self.request?.approved {
+                setupProfilePictureView()
+                setupRequestDetailLabel()
+                
+                self.requestDetailLabel.text = approved ? "\(request.approver.firstName) denied your request to join their drive to \(request.ride.path.endLocationName)" : "\(request.approver.firstName) accepted your request to join their drive to \(request.ride.path.endLocationName)"
             }
         }
     }
@@ -155,8 +169,6 @@ class RequestTableViewCell: UITableViewCell {
     }
 
     @objc func acceptRequest() {
-        // TODO: Networking - pass in the correct request ID depending on the cell
-        
         if let request = self.request {
             NetworkManager.shared.handleRideRequest(requestID: request.id, approved: true) { [weak self] response in
                 switch response {
@@ -174,27 +186,19 @@ class RequestTableViewCell: UITableViewCell {
                         make.top.equalTo(strongSelf.profileImageView.snp.top)
                     }
                 case .failure(let error):
-                    print("Unable to get all rides: \(error.localizedDescription)")
+                    print("Unable to get all rides: \(error)")
                 }
             }
         }
         
     }
     
-    func configure(request: RideRequest) {
-        guard let approved = request.approved else { return }
+    func configure(request: RideRequest, status: String) {
         if let url = request.approvee.profilePicUrl {
             profileImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "emptyimage"))
         }
-        
-        if approved {
-            self.requestDetailLabel.text = "\(request.approver.firstName) accepted your request to join their drive to \(request.ride.path.endLocationName)"
-        } else {
-            self.requestDetailLabel.text = "\(request.approvee.firstName) requests to join drive to \(request.ride.path.endLocationName)"
-        }
-        
         self.request = request
-        setupViews()
+        setupViews(request: request, status: status)
     }
     
     required init?(coder: NSCoder) {

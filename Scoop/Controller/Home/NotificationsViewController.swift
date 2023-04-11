@@ -18,8 +18,8 @@ class NotificationsViewController: UIViewController {
     private let requestCellIdentifier = "RequestCell"
     
     // MARK: Data
+    private var awaitingApproval: [RideRequest] = []
     private var pendingRequests: [RideRequest] = []
-    private var respondedRequests: [RideRequest] = []
     private var allRequests: [RideRequest] = []
     
     override func viewDidLoad() {
@@ -30,6 +30,8 @@ class NotificationsViewController: UIViewController {
         // MARK: Still needs to be debugged after backend confirmation
         getRequests()
         // MARK: Used for building views
+//        awaitingApproval = [Constants.defaultFRequest]
+//        pendingRequests = [Constants.defaultTRequest]
 //        allRequests = [Constants.defaultTRequest, Constants.defaultFRequest]
         setupTableView()
     }
@@ -71,11 +73,13 @@ class NotificationsViewController: UIViewController {
             switch response {
             case .success(let response):
                 guard let strongSelf = self else { return }
-                strongSelf.pendingRequests = response.waitingApproval
-                strongSelf.respondedRequests = response.toApprove
-                strongSelf.allRequests = strongSelf.pendingRequests + strongSelf.respondedRequests
+                strongSelf.pendingRequests = response.pendingRequests
+                strongSelf.awaitingApproval = response.awaitingApproval
+                strongSelf.allRequests = strongSelf.pendingRequests + strongSelf.awaitingApproval
+                print(response.awaitingApproval)
+                print(response.pendingRequests)
             case .failure(let error):
-                print("Unable to get all rides: \(error.localizedDescription)")
+                print("Unable to get all requests: \(error)")
             }
         }
     }
@@ -100,14 +104,28 @@ extension NotificationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: requestCellIdentifier) as! RequestTableViewCell
-        cell.configure(request: allRequests[indexPath.row])
+        
+        let value = awaitingApproval.contains { request in
+            request == allRequests[indexPath.row]
+        }
+        
+        if value {
+            cell.configure(request: allRequests[indexPath.row], status: "Awaiting")
+        } else {
+            cell.configure(request: allRequests[indexPath.row], status: "Pending" )
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // TODO: Make this dynamic. Works ok for now, but .automaticDimension didn't really work.
-        if let approved = allRequests[indexPath.row].approved {
-            return approved ? 100 : 110
+//        guard let approved = allRequests[indexPath.row].approved else { return }
+        if let approved =  allRequests[indexPath.row].approved {
+            if approved {
+                return 100
+            } else {
+                return 110
+            }
         }
         return 100
     }
