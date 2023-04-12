@@ -31,10 +31,7 @@ class MatchesViewController: UIViewController {
     var departureName: String = "Date"
     var filteredRides: [Ride] = []
     var matchedRides: [Ride] = []
-    
-    func viewDidAppear() {
-        tableView.reloadData()
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -95,7 +92,6 @@ class MatchesViewController: UIViewController {
         tripDetailsView.backgroundColor = .white
         tripDetailsView.addDropShadow()
         tripDetailsView.layer.cornerRadius = 10
-        
         tripDetailsView.addSubview(departureIconImageView)
         
         departureIconImageView.snp.makeConstraints { make in
