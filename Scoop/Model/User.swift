@@ -31,10 +31,10 @@ struct BaseUser: Codable {
     var netid: String
     var firstName: String
     var lastName: String
-    var phoneNumber: String
+    var phoneNumber: String?
     var profilePicUrl: String?
-    var grade: String
-    var pronouns: String
+    var grade: String?
+    var pronouns: String?
     var prompts: [Prompt]
     var rides: [TruncRide]
 }

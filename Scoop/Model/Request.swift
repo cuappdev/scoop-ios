@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Request: Codable {
+struct RideRequest: Codable {
     let id: Int
     let approvee: BaseUser
     let approver: BaseUser
@@ -17,8 +17,8 @@ struct Request: Codable {
 }
 
 struct RequestResponse: Codable {
-    let toApprove: [Request]
-    let waitingApproval: [Request]
+    let toApprove: [RideRequest]
+    let waitingApproval: [RideRequest]
     
     /** Use of coding keys here because backend named the keys to something unconventional for converting to/from camel case */
     enum CodingKeys: String, CodingKey {

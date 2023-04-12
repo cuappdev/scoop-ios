@@ -46,8 +46,8 @@ class RequestTableViewCell: UITableViewCell {
         requestDetailLabel.snp.makeConstraints { make in
             make.leading.equalTo(profileImageView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-15)
-            if let request = self.request {
-                if request.approved {
+            if let request = request?.approved {
+                if request {
                     make.top.equalTo(profileImageView.snp.top)
                 } else {
                     make.top.equalToSuperview().offset(12)
@@ -117,11 +117,11 @@ class RequestTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
-        if let request = self.request {
+        if let approved = request?.approved {
             setupProfilePictureView()
             setupRequestDetailLabel()
             
-            if !request.approved {
+            if !approved {
                 setupDeclineButton()
                 setupAcceptButton()
             }
@@ -182,11 +182,12 @@ class RequestTableViewCell: UITableViewCell {
     }
     
     func configure(request: RideRequest) {
+        guard let approved = request.approved else { return }
         if let url = request.approvee.profilePicUrl {
             profileImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "emptyimage"))
         }
         
-        if request.approved {
+        if approved {
             self.requestDetailLabel.text = "\(request.approver.firstName) accepted your request to join their drive to \(request.ride.path.endLocationName)"
         } else {
             self.requestDetailLabel.text = "\(request.approvee.firstName) requests to join drive to \(request.ride.path.endLocationName)"

@@ -82,8 +82,11 @@ class ProfilePictureViewController: OnboardingViewController {
         NetworkManager.shared.currentUser.profilePicUrl = imageBase64
         let user = NetworkManager.shared.currentUser
         let answers = NetworkManager.shared.userPromptAnswers
+        guard let grade = user.grade,
+              let phoneNumber = user.phoneNumber,
+              let pronouns = user.pronouns else { return }
 
-        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: user.grade, phone_number: user.phoneNumber, pronouns: user.pronouns, prof_pic: imageBase64, prompts: answers) { result in
+        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: grade, phone_number: phoneNumber, pronouns: pronouns, prof_pic: imageBase64, prompts: answers) { result in
             switch result {
             case .success(let user):
                 print("\(user.firstName) has been updated")

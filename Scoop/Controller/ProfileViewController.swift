@@ -318,7 +318,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
                 talkative = talkativeFloat
             } else if prompt.questionName == "Music" {
                 guard let musicFloat = Float(prompt.answer ?? "0") else { return }
-                talkative = musicFloat
+                music = musicFloat
             } else if prompt.questionName == "Snack" {
                 snack = prompt.answer
             } else if prompt.questionName == "Song" {
@@ -335,11 +335,14 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
             case .success(let user):
                 self.user = user
                 self.getUserPreferences()
-                guard let imageURL = user.profilePicUrl else { return }
+                guard let imageURL = user.profilePicUrl,
+                      let pronouns = user.pronouns,
+                      let grade = user.grade,
+                      let hometown = self.hometown else { return }
                 
                 self.profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
                 self.nameLabel.text = "\(user.firstName) \(user.lastName)"
-                self.subLabel.text = "\(user.pronouns) • \(user.grade) • \(self.hometown ?? "")"
+                self.subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
                 self.phoneLabel.text = user.phoneNumber
                 self.talkativeSlider.value = self.talkative ?? 0
                 self.musicSlider.value = self.music ?? 0
