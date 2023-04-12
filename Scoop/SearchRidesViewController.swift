@@ -236,15 +236,13 @@ class SearchRidesViewController: UIViewController {
             switch response {
             case .success(let response):
                 guard let strongSelf = self else { return }
-                strongSelf.navigationController?.pushViewController(MatchesViewController(arrival: arrival, departure: departure, date: dateString, rides: response.rides), animated: true)
+                let matchesVC = MatchesViewController(arrival: arrival, departure: departure, date: dateString, rides: response)
+                matchesVC.hidesBottomBarWhenPushed = true
+                strongSelf.navigationController?.pushViewController(matchesVC, animated: true)
             case .failure(let error):
                 print("Error in SearchRidesVC: \(error)")
             }
         }
-        // MARK: Move into Network call after backend
-        let matchesVC = MatchesViewController(arrival: arrival, departure: departure, date: dateString, rides: [])
-        matchesVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(matchesVC, animated: true)
     }
 
     /// Converts a Date object into String format, where this one is specifically in the YYYY-MM-dd format.

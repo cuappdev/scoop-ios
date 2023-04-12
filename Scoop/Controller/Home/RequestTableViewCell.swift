@@ -46,7 +46,7 @@ class RequestTableViewCell: UITableViewCell {
         requestDetailLabel.snp.makeConstraints { make in
             make.leading.equalTo(profileImageView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-15)
-            if let request = self.request?.approved {
+            if let request = request?.approved {
                 if request {
                     make.top.equalTo(profileImageView.snp.top)
                 } else {
@@ -117,7 +117,7 @@ class RequestTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
-        if let approved = self.request?.approved {
+        if let approved = request?.approved {
             setupProfilePictureView()
             setupRequestDetailLabel()
             

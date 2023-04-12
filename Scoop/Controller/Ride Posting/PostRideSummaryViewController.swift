@@ -135,8 +135,8 @@ class PostRideSummaryViewController: PostRideViewController {
         stackView.addArrangedSubview(driverInfoContainerView)
         
         driverInfoContainerView.snp.makeConstraints { make in
-            make.height.equalTo(41)
-            make.leading.trailing.equalToSuperview().inset(-12)
+            make.height.equalTo(71)
+            make.leading.trailing.equalToSuperview()
         }
         
         driverInfoContainerView.backgroundColor = .white

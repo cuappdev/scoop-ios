@@ -106,12 +106,8 @@ extension NotificationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // TODO: Make this dynamic. Works ok for now, but .automaticDimension didn't really work.
-        if let approved =  allRequests[indexPath.row].approved {
-            if approved {
-                return 100
-            } else {
-                return 110
-            }
+        if let approved = allRequests[indexPath.row].approved {
+            return approved ? 100 : 110
         }
         return 100
     }

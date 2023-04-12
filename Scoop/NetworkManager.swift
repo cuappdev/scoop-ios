@@ -140,7 +140,7 @@ class NetworkManager {
     }
     
     // MARK: Backend currently changing up this endpoint to incorporate Google Places
-    func searchLocation(depatureDate: String, startLocation: String, endLocation: String, completion: @escaping (Result<RideResponse, Error>) -> Void) {
+    func searchLocation(depatureDate: String, startLocation: String, endLocation: String, completion: @escaping (Result<[Ride], Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/search/"
         let parameters : [String: Any] = [
             "departure_datetime": depatureDate,
@@ -149,7 +149,7 @@ class NetworkManager {
             "radius": 5
         ]
         
-        AF.request(endpoint, method: .get, parameters: parameters, headers: headers).validate().responseData { response in
+        AF.request(endpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             print(parameters)
             switch response.result {
             case .success(let data):
@@ -157,7 +157,7 @@ class NetworkManager {
                 jsonDecoder.dateDecodingStrategy = .iso8601
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 do {
-                    let filteredRides = try jsonDecoder.decode(RideResponse.self, from: data)
+                    let filteredRides = try jsonDecoder.decode([Ride].self, from: data)
                     completion(.success(filteredRides))
                 } catch {
                     completion(.failure(error))

@@ -8,6 +8,7 @@
 import UIKit
 
 class MatchesViewController: UIViewController {
+    
     // MARK: Views
     private let arrivalIconImageView = UIImageView(image: UIImage(named: "destinationIcon"))
     private let arrivalLocationLabel = UILabel()
@@ -38,15 +39,15 @@ class MatchesViewController: UIViewController {
         navigationItem.title = "Best Matches"
         
         // MARK: Dummy Data, replace once backend fixed
-        matchedRides = [
-            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Elvis", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
-            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Richie", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
-            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Tiffany", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
-            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Aarushi", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
-            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Reade", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
-            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Vin", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
-        ]
-        filteredRides = matchedRides
+//        matchedRides = [
+//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Elvis", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
+//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Richie", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
+//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Tiffany", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
+//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Aarushi", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
+//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Reade", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
+//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Vin", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
+//        ]
+//        filteredRides = matchedRides
         
         setupTitleLines()
         setupTripDetails()
@@ -78,7 +79,7 @@ class MatchesViewController: UIViewController {
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(filterView.snp.bottom).inset(-10)
+            make.top.equalTo(filterView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -116,7 +117,7 @@ class MatchesViewController: UIViewController {
             make.height.equalTo(8)
             make.width.equalTo(1.5)
             make.leading.equalTo(departureIconImageView).inset(8)
-            make.top.equalTo(departureIconImageView.snp.bottom).inset(-5)
+            make.top.equalTo(departureIconImageView.snp.bottom).offset(5)
         }
         
         tripDetailsView.addSubview(arrivalIconImageView)
@@ -252,7 +253,9 @@ class MatchesViewController: UIViewController {
             filteredRides = matchedRides
         }
         
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     @objc private func studentDriverClicked() {
@@ -276,7 +279,7 @@ class MatchesViewController: UIViewController {
 extension MatchesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filteredRides.count
+        return filteredRides.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -290,9 +293,12 @@ extension MatchesViewController: UITableViewDataSource {
 extension MatchesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.dequeueReusableCell(withIdentifier: homeCellIdenitifer, for: indexPath) as! HomeTableViewCell
+        print("CLICKED")
         guard let ride = cell.selectedRide else { return }
+        print("Got Ride")
         let selectedVC = TripDetailsViewController(currentRide: ride)
-        present(selectedVC, animated: true)
+        selectedVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(selectedVC, animated: true)
     }
     
 }
