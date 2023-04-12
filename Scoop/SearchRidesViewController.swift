@@ -224,22 +224,27 @@ class SearchRidesViewController: UIViewController {
     @objc private func presentMatches() {
         guard let departure = self.departureTextField.textField.text, !departure.isEmpty,
               let arrival = self.arrivalTextField.textField.text, !arrival.isEmpty,
-              let date = self.departureDateTextField.text, !date.isEmpty,
               let departureID = departurePlace?.placeID,
+              let dateString = departureDateTextField.text, !dateString.isEmpty,
               let arrivalID = arrivalPlace?.placeID else {
                   presentErrorAlert(title: "Error", message: "Please complete all fields.")
                   return
               }
         
+        tripDate = formatDate(dateToConvert: self.datePicker.date)
         NetworkManager.shared.searchLocation(depatureDate: tripDate, startLocation: departureID, endLocation: arrivalID) { [weak self] response in
             switch response {
             case .success(let response):
                 guard let strongSelf = self else { return }
-                strongSelf.navigationController?.pushViewController(MatchesViewController(rides: response.rides), animated: true)
+                strongSelf.navigationController?.pushViewController(MatchesViewController(arrival: arrival, departure: departure, date: dateString, rides: response.rides), animated: true)
             case .failure(let error):
                 print("Error in SearchRidesVC: \(error)")
             }
         }
+        // MARK: Move into Network call after backend
+        let matchesVC = MatchesViewController(arrival: arrival, departure: departure, date: dateString, rides: [])
+        matchesVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(matchesVC, animated: true)
     }
 
     /// Converts a Date object into String format, where this one is specifically in the YYYY-MM-dd format.

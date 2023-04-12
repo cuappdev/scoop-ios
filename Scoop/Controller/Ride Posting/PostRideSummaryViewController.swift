@@ -104,7 +104,7 @@ class PostRideSummaryViewController: PostRideViewController {
         
         creatorProfile.snp.makeConstraints { make in
             make.size.equalTo(41)
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
         }
         
@@ -136,7 +136,12 @@ class PostRideSummaryViewController: PostRideViewController {
         
         driverInfoContainerView.snp.makeConstraints { make in
             make.height.equalTo(41)
+            make.leading.trailing.equalToSuperview().inset(-12)
         }
+        
+        driverInfoContainerView.backgroundColor = .white
+        driverInfoContainerView.addDropShadow()
+        driverInfoContainerView.layer.cornerRadius = 10
     }
     
     private func setupTransportationInfo() {

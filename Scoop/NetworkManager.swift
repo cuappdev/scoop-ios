@@ -142,13 +142,15 @@ class NetworkManager {
     // MARK: Backend currently changing up this endpoint to incorporate Google Places
     func searchLocation(depatureDate: String, startLocation: String, endLocation: String, completion: @escaping (Result<RideResponse, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/search/"
-        let params = [
+        let parameters : [String: Any] = [
             "departure_datetime": depatureDate,
             "start_location_place_id": startLocation,
-            "end_location_place_id": endLocation
+            "end_location_place_id": endLocation,
+            "radius": 5
         ]
         
-        AF.request(endpoint, method: .get, parameters: params, headers: headers).validate().responseData { response in
+        AF.request(endpoint, method: .get, parameters: parameters, headers: headers).validate().responseData { response in
+            print(parameters)
             switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
