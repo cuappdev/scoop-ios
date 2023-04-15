@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
     // MARK: Data
     private var activeRides = [Ride]()
     private var pendingRides = [Ride]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -153,6 +154,7 @@ class HomeViewController: UIViewController {
     }
     
     private func getRides() {
+        // MARK: NEEDS TO BE UDPATED ONCE BACKEND CHANGES THE RIDE MODEL TO THE FULL ONE
         NetworkManager.shared.getAllRides { rides in
             switch rides {
             case .success(let rides):
@@ -187,6 +189,7 @@ class HomeViewController: UIViewController {
                 print("Unable to get all rides: \(error)")
             }
         }
+        
     }
 }
 

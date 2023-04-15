@@ -337,13 +337,13 @@ class PostRideSummaryViewController: PostRideViewController {
         //TODO: Networking Goes here - still needs to be debugged after backend fixes
         guard let creatorID = currentRide.driver?.id else { return }
         
-        NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime) { response in
+        NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime, description: currentRide.description) { response in
             switch response {
             case .success(_):
                 self.dismiss(animated: true)
                 self.containerDelegate?.navigationController?.popViewController(animated: true)
             case .failure(let error):
-                print("Unable to post ride: \(error.localizedDescription)")
+                print("Unable to post ride: \(error)")
             }
         }
        

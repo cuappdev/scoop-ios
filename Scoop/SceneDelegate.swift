@@ -60,6 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     NetworkManager.shared.currentUser.firstName = firstName
                     NetworkManager.shared.currentUser.lastName = familyName
                     NetworkManager.userToken = user.accessToken
+                    print("token: \(user.accessToken)")
                     self.getUser()
                     self.didCompleteLogin()
                 case .failure(let error):
@@ -74,7 +75,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             switch result {
             case.success(let user):
                 NetworkManager.shared.currentUser = user
-                print(user.pronouns)
             case.failure(let error):
                 print(error.localizedDescription)
             }

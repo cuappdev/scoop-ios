@@ -333,6 +333,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         NetworkManager.shared.getUser { result in
             switch result {
             case .success(let user):
+                NetworkManager.shared.currentUser = user
                 self.user = user
                 self.getUserPreferences()
                 guard let imageURL = user.profilePicUrl,
