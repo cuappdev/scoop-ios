@@ -336,8 +336,9 @@ class TripDetailsViewController: UIViewController {
     @objc private func requestRide() {
         guard let currentRide = currentRide else { return }
         
-        NetworkManager.shared.postRequest(approveeID: NetworkManager.shared.currentUser.id, rideID: currentRide.id) { response in
-            self.dismiss(animated: true)
+        NetworkManager.shared.postRequest(approveeID: NetworkManager.shared.currentUser.id, rideID: currentRide.id) { [weak self] response in
+            guard let strongSelf = self else { return }
+            strongSelf.dismiss(animated: true)
         }
     }
     

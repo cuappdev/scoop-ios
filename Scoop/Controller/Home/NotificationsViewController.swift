@@ -95,7 +95,6 @@ extension NotificationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: requestCellIdentifier) as! RequestTableViewCell
-        
         cell.configure(request: allRequests[indexPath.row])
         return cell
     }

@@ -38,10 +38,6 @@ class HomeViewController: UIViewController {
         setupNotificationButton()
         
         getRides()
-        // Temporarily here for testing UI
-//        activeRides = [Constants.defaultRide]
-//        pendingRides = [Constants.defaultRide]
-        
         // Commented out currently because signing out functionality is not yet implemented
         //        setupSignOutButton()
     }
@@ -192,7 +188,6 @@ class HomeViewController: UIViewController {
         
     }
 }
-
 // MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
     

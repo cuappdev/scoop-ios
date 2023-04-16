@@ -8,20 +8,16 @@
 import Foundation
 
 struct RideRequest: Codable, Equatable {
-    static func == (lhs: RideRequest, rhs: RideRequest) -> Bool {
-        if lhs.id == rhs.id {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     let id: Int
     let approvee: BaseUser
     let approver: BaseUser
     let ride: TruncRide
     var approved: Bool?
     let timestamp: String
+    
+    static func == (lhs: RideRequest, rhs: RideRequest) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 struct RequestResponse: Codable {

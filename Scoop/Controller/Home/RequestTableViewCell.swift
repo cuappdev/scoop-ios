@@ -117,8 +117,8 @@ class RequestTableViewCell: UITableViewCell {
     }
     
     private func setupViews(request: RideRequest) {
-        // Check to see if you are the approver (the one who needs to accept/deny if not yet already)
-        // Another users sends THIS user a request to join THIS user's ride. Give option to decline/accept i.e. this user is the APPROVER
+        /** Check to see if you are the approver (the one who needs to accept/deny if not yet already)
+         Another users sends THIS user a request to join THIS user's ride. Give option to decline/accept i.e. this user is the APPROVER */
         if NetworkManager.shared.currentUser.id == request.approver.id {
             setupProfilePictureView()
             setupRequestDetailLabel()
@@ -135,8 +135,8 @@ class RequestTableViewCell: UITableViewCell {
             }
             
         } else {
-            // Else, you are the approvee, so display whether or not the other party has accepted or denied your request
-            // THIS user has previously sent a request to another user, i.e. this user is the APPROVEE
+            /** Else, you are the approvee, so display whether or not the other party has accepted or denied your request
+             THIS user has previously sent a request to another user, i.e. this user is the APPROVEE */
             setupProfilePictureView()
             setupRequestDetailLabel()
             

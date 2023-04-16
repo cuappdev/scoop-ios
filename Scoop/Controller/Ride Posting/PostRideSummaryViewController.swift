@@ -70,7 +70,7 @@ class PostRideSummaryViewController: PostRideViewController {
         let screenSize = UIScreen.main.bounds
         
         stackView.axis = .vertical
-//        stackView.distribution = .fill
+        stackView.distribution = .fill
         stackView.alignment = .leading
         stackView.spacing = 25
         view.addSubview(stackView)
@@ -303,7 +303,7 @@ class PostRideSummaryViewController: PostRideViewController {
         detailsLabel.text = "DETAILS"
         stackView.addArrangedSubview(detailsLabel)
         
-//        stackView.setCustomSpacing(1, after: detailsLabel)
+        stackView.setCustomSpacing(1, after: detailsLabel)
         
         detailsTextView.text = ride.description
         detailsTextView.font = UIFont(name: "SFProDisplay-Regular", size: 16)
@@ -337,11 +337,12 @@ class PostRideSummaryViewController: PostRideViewController {
         //TODO: Networking Goes here - still needs to be debugged after backend fixes
         guard let creatorID = currentRide.driver?.id else { return }
         
-        NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime, description: currentRide.description) { response in
+        NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime, description: currentRide.description) { [weak self] response in
             switch response {
             case .success(_):
-                self.dismiss(animated: true)
-                self.containerDelegate?.navigationController?.popViewController(animated: true)
+                guard let strongSelf = self else { return }
+                strongSelf.dismiss(animated: true)
+                strongSelf.containerDelegate?.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 print("Unable to post ride: \(error)")
             }
