@@ -293,12 +293,12 @@ extension MatchesViewController: UITableViewDataSource {
 extension MatchesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.dequeueReusableCell(withIdentifier: homeCellIdenitifer, for: indexPath) as! HomeTableViewCell
-        print("CLICKED")
-        guard let ride = cell.selectedRide else { return }
-        print("Got Ride")
-        let selectedVC = TripDetailsViewController(currentRide: ride)
-        selectedVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(selectedVC, animated: true)
+        let currentRide = filteredRides[indexPath.row]
+        
+        let tripDetailView = TripDetailsViewController(currentRide: currentRide)
+        tripDetailView.hideRequestButton()
+        tripDetailView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(tripDetailView, animated: true)
     }
     
 }

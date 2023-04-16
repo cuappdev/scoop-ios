@@ -38,13 +38,14 @@ class InitialPostRideViewController: PostRideViewController {
             }
             
             guard let arrival = self.arrivalTextField.text, !arrival.isEmpty,
-                  let departure = self.departureTextField.text, !departure.isEmpty
+                  let departure = self.departureTextField.text, !departure.isEmpty,
+                  self.studentDriverButton.isSelected || self.taxiButton.isSelected
             else {
                 self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
                 return
             }
             
-            NetworkManager.shared.currentRide.type = self.studentDriverButton.isSelected ? "Student driver" : "Taxi"
+            NetworkManager.shared.currentRide.type = self.studentDriverButton.isSelected ? "Student Driver" : "Shared Taxi"
             if let arrival = self.arrivalTextField.text,
                let departure = self.departureTextField.text,
                let arrivalID = self.arrivalLocationID,
@@ -112,7 +113,7 @@ class InitialPostRideViewController: PostRideViewController {
     private func setupTaxiButton() {
         taxiButton.isSelected = false
         taxiButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
-        taxiButton.setTitle("Taxi", for: .normal)
+        taxiButton.setTitle("Shared Taxi", for: .normal)
         taxiButton.setTitleColor(.black, for: .normal)
         taxiButton.titleLabel?.font = UIFont(name: "SFPro", size: 16)
         taxiButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -127,7 +128,7 @@ class InitialPostRideViewController: PostRideViewController {
         taxiButton.snp.makeConstraints { make in
             make.top.equalTo(studentDriverButton.snp.bottom).offset(20)
             make.leading.equalTo(studentDriverButton)
-            make.width.equalTo(78)
+            make.width.equalTo(136)
         }
     }
     

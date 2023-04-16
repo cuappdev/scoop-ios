@@ -74,11 +74,11 @@ class PostRideTripDetailsViewController: PostRideViewController {
                   }
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "M/dd/yy @ h:mm a"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             
             NetworkManager.shared.currentRide.minTravelers = travelerCountLower
             NetworkManager.shared.currentRide.maxTravelers = travelerCountUpper
-            NetworkManager.shared.currentRide.departureDatetime = dateFormatter.string(from: date)
+            NetworkManager.shared.currentRide.departureDatetime = dateFormatter.string(from: self.datePicker.date)
             NetworkManager.shared.currentRide.description = self.detailsTextField.text ?? ""
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
@@ -136,6 +136,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.isHighlighted = false
         datePicker.addTarget(self, action: #selector(updateDate), for: .valueChanged)
+        dateTextField.addTarget(self, action: #selector(updateDate), for: .touchDown)
         dateTextField.inputView = datePicker
         
         dateTextField.snp.makeConstraints { make in
@@ -175,6 +176,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
         timePicker.datePickerMode = .time
         timePicker.preferredDatePickerStyle = .wheels
         timePicker.addTarget(self, action: #selector(updateTime), for: .valueChanged)
+        timeTextField.addTarget(self, action: #selector(updateTime), for: .touchDown)
         
         timeTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()

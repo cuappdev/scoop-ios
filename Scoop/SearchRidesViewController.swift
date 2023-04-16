@@ -222,6 +222,8 @@ class SearchRidesViewController: UIViewController {
     }
     
     @objc private func presentMatches() {
+        findTripsButton.isEnabled = false
+        findTripsButton.backgroundColor = .disabledGreen
         guard let departure = self.departureTextField.textField.text, !departure.isEmpty,
               let arrival = self.arrivalTextField.textField.text, !arrival.isEmpty,
               let departureID = departurePlace?.placeID,
@@ -239,6 +241,8 @@ class SearchRidesViewController: UIViewController {
                 let matchesVC = MatchesViewController(arrival: arrival, departure: departure, date: dateString, rides: response)
                 matchesVC.hidesBottomBarWhenPushed = true
                 strongSelf.navigationController?.pushViewController(matchesVC, animated: true)
+                strongSelf.findTripsButton.isEnabled = true
+                strongSelf.findTripsButton.backgroundColor = .scoopDarkGreen
             case .failure(let error):
                 print("Error in SearchRidesVC: \(error)")
             }
