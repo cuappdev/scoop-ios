@@ -193,7 +193,7 @@ class RequestTableViewCell: UITableViewCell {
                         make.top.equalTo(strongSelf.profileImageView.snp.top)
                     }
                 case .failure(let error):
-                    print("Unable to accept request: \(error)")
+                    print("Unable to accept request: \(error.localizedDescription)")
                 }
             }
         }

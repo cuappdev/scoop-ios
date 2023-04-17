@@ -70,7 +70,7 @@ class NotificationsViewController: UIViewController {
                 strongSelf.allRequests = strongSelf.pendingRequests + strongSelf.awaitingApproval
                 strongSelf.setupTableView()
             case .failure(let error):
-                print("Unable to get all requests: \(error)")
+                print("Unable to get all requests: \(error.localizedDescription)")
             }
         }
     }

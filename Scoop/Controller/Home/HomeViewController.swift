@@ -182,7 +182,7 @@ class HomeViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                print("Unable to get all rides: \(error)")
+                print("Unable to get all rides: \(error.localizedDescription)")
             }
         }
         
