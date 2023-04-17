@@ -334,8 +334,12 @@ class TripDetailsViewController: UIViewController {
     }
     
     @objc private func requestRide() {
-        //TODO: Networking Goes here
-        dismiss(animated: true)
+        guard let currentRide = currentRide else { return }
+        
+        NetworkManager.shared.postRequest(approveeID: NetworkManager.shared.currentUser.id, rideID: currentRide.id) { [weak self] response in
+            guard let strongSelf = self else { return }
+            strongSelf.dismiss(animated: true)
+        }
     }
     
     private func setUpLabelFont() {

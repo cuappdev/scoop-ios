@@ -18,8 +18,8 @@ class NotificationsViewController: UIViewController {
     private let requestCellIdentifier = "RequestCell"
     
     // MARK: Data
+    private var awaitingApproval: [RideRequest] = []
     private var pendingRequests: [RideRequest] = []
-    private var respondedRequests: [RideRequest] = []
     private var allRequests: [RideRequest] = []
     
     override func viewDidLoad() {
@@ -27,11 +27,7 @@ class NotificationsViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
         self.navigationItem.title = "Notifications"
         
-        // MARK: Still needs to be debugged after backend confirmation
         getRequests()
-        // MARK: Used for building views
-//        allRequests = [Constants.defaultTRequest, Constants.defaultFRequest]
-        setupTableView()
     }
     
     private func setupBackButton() {
@@ -52,10 +48,8 @@ class NotificationsViewController: UIViewController {
         tableView.separatorInset = .zero
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         tableView.separatorColor = .systemGray
-        tableView.separatorStyle = .singleLine
         tableView.contentInsetAdjustmentBehavior = .never
-        // Not sure about this, it makes the entire cell layout shift. Not sure how else to make the separator last the entire line though. 
-//        tableView.layoutMargins = UIEdgeInsets.zero
+        tableView.separatorStyle = .none
         tableView.register(RequestTableViewCell.self, forCellReuseIdentifier: requestCellIdentifier)
         view.addSubview(tableView)
         
@@ -71,11 +65,12 @@ class NotificationsViewController: UIViewController {
             switch response {
             case .success(let response):
                 guard let strongSelf = self else { return }
-                strongSelf.pendingRequests = response.waitingApproval
-                strongSelf.respondedRequests = response.toApprove
-                strongSelf.allRequests = strongSelf.pendingRequests + strongSelf.respondedRequests
+                strongSelf.pendingRequests = response.pendingRequests
+                strongSelf.awaitingApproval = response.awaitingApproval
+                strongSelf.allRequests = strongSelf.pendingRequests + strongSelf.awaitingApproval
+                strongSelf.setupTableView()
             case .failure(let error):
-                print("Unable to get all rides: \(error.localizedDescription)")
+                print("Unable to get all requests: \(error.localizedDescription)")
             }
         }
     }
@@ -107,9 +102,12 @@ extension NotificationsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // TODO: Make this dynamic. Works ok for now, but .automaticDimension didn't really work.
         if let approved = allRequests[indexPath.row].approved {
-            return approved ? 100 : 110
+            if NetworkManager.shared.currentUser.id == allRequests[indexPath.row].approver.id && !approved {
+                return 110
+            }
         }
         return 100
     }
     
 }
+

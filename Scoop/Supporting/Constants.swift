@@ -26,7 +26,7 @@ struct Constants {
     
     static let defaultUser = BaseUser(id: 0, netid: "netid", firstName: "Michelle", lastName: "lastName", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: [])
     
-    static let defaultPath = Path(id: 0, startLocationPlaceId: "", startLocationName: "Ithaca, NY", endLocationPlaceId: "", endLocationName: "Syracuse, NY")
+    static let defaultPath = Path(id: 0, startLocationPlaceId: "", startLocationName: "Ithaca, NY", startCoords: [], endLocationPlaceId: "", endLocationName: "Syracuse, NY", endCoords: [])
     
     struct RideDefaults {
         static let id: Int = 0
