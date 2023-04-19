@@ -47,5 +47,4 @@ struct TruncUser: Codable {
     var profilePicUrl: String?
     var grade: String?
     var pronouns: String?
-    
 }

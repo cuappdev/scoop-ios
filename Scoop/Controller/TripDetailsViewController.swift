@@ -145,7 +145,6 @@ class TripDetailsViewController: UIViewController {
         driverInfoContainerView.backgroundColor = .white
         driverInfoContainerView.addDropShadow()
         driverInfoContainerView.layer.cornerRadius = 10
-        
     }
     
     private func setUpTransportationInfo() {

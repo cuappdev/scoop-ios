@@ -224,11 +224,6 @@ extension HomeViewController: UITableViewDelegate {
             tripDetailView.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(tripDetailView, animated: true)
         }
-        
-        
-        
-        
-        
     }
     
 }
