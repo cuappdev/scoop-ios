@@ -213,7 +213,7 @@ class NetworkManager {
         }
     }
     
-    func postRide(startID: String, startName: String, endID: String, endName: String, creator: Int, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, description: String, completion: @escaping(Result<Ride, Error>) -> Void) {
+    func postRide(startID: String, startName: String, endID: String, endName: String, driver: Int, creator: Int, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, description: String, completion: @escaping(Result<Ride, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/rides/"
         let params: [String : Any] = [
             "start_location_place_id": startID,
@@ -226,7 +226,8 @@ class NetworkManager {
             "min_travelers": minTravellers,
             "type": type,
             "is_flexible": isFlexible,
-            "departure_datetime": departureTime
+            "departure_datetime": departureTime,
+            "driver": driver
         ]
         
         AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in

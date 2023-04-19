@@ -335,9 +335,9 @@ class PostRideSummaryViewController: PostRideViewController {
     
     @objc private func postRide() {
         //TODO: Networking Goes here - still needs to be debugged after backend fixes
-        let creatorID = NetworkManager.shared.currentUser.id
+        let creator = NetworkManager.shared.currentUser
         
-        NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime, description: currentRide.description) { [weak self] response in
+        NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, driver: creator.id, creator: creator.id, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime, description: currentRide.description) { [weak self] response in
             switch response {
             case .success(_):
                 guard let strongSelf = self else { return }

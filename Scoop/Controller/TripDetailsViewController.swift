@@ -95,9 +95,8 @@ class TripDetailsViewController: UIViewController {
     
     private func setUpDriverInfo() {
         guard let creator = currentRide?.creator else { return }
-        guard let imageURL = creator.profilePicUrl else {return}
         
-        creatorProfile.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
+        creatorProfile.sd_setImage(with: URL(string: creator.profilePicUrl ?? ""), placeholderImage: UIImage(named: "emptyimage"))
         creatorProfile.contentMode = .scaleAspectFill
         creatorProfile.layer.borderWidth = 1
         creatorProfile.layer.masksToBounds = false
@@ -108,7 +107,7 @@ class TripDetailsViewController: UIViewController {
         
         creatorProfile.snp.makeConstraints { make in
             make.size.equalTo(41)
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
         }
         
@@ -139,8 +138,13 @@ class TripDetailsViewController: UIViewController {
         stackView.addArrangedSubview(driverInfoContainerView)
         
         driverInfoContainerView.snp.makeConstraints { make in
-            make.height.equalTo(41)
+            make.height.equalTo(71)
+            make.leading.trailing.equalToSuperview()
         }
+        
+        driverInfoContainerView.backgroundColor = .white
+        driverInfoContainerView.addDropShadow()
+        driverInfoContainerView.layer.cornerRadius = 10
         
     }
     
@@ -338,7 +342,7 @@ class TripDetailsViewController: UIViewController {
         
         NetworkManager.shared.postRequest(approveeID: NetworkManager.shared.currentUser.id, rideID: currentRide.id) { [weak self] response in
             guard let strongSelf = self else { return }
-            strongSelf.dismiss(animated: true)
+            strongSelf.navigationController?.popViewController(animated: true)
         }
     }
     

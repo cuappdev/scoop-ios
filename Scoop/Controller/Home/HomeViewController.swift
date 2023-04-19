@@ -26,8 +26,8 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: Data
-    private var activeRides = [Ride]()
-    private var pendingRides = [Ride]()
+    private var activeRides = [HomeVCRide]()
+    private var pendingRides = [HomeVCRide]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +36,7 @@ class HomeViewController: UIViewController {
         setupTableView()
         setupPostRideButton()
         setupNotificationButton()
+        setupRefreshControl()
         
         getRides()
         // Commented out currently because signing out functionality is not yet implemented
@@ -50,6 +51,18 @@ class HomeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    private func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc private func refreshData(refreshControl: UIRefreshControl) {
+        pendingRides = []
+        getRides()
+        refreshControl.endRefreshing()
     }
     
     private func setupHeaderView() {
@@ -149,43 +162,37 @@ class HomeViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    private func updateActiveRides(rides: [HomeVCRide]) {
+        activeRides = []
+        for ride in rides {
+            var rideCopy = ride
+            
+            // Source: https://stackoverflow.com/questions/35700281/date-format-in-swift
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "MMM dd"
+            
+            if let date = dateFormatterGet.date(from: ride.departureDatetime) {
+                rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
+            }
+            
+            activeRides.append(rideCopy)
+        }
+    }
+    
     private func getRides() {
         // MARK: NEEDS TO BE UDPATED ONCE BACKEND CHANGES THE RIDE MODEL TO THE FULL ONE
-        NetworkManager.shared.getAllRides { rides in
-            switch rides {
-            case .success(let rides):
-                for ride in rides {
-                    var rideCopy = ride
-                    
-                    // Source: https://stackoverflow.com/questions/35700281/date-format-in-swift
-                    let dateFormatterGet = DateFormatter()
-                    dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                    
-                    let dateFormatterPrint = DateFormatter()
-                    dateFormatterPrint.dateFormat = "MMM dd"
-                    
-                    if let date = dateFormatterGet.date(from: ride.departureDatetime) {
-                        rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
-                    }
-                    
-                    // Separate a user's rides into those that are active and those that are pending so that they can be displayed in different sections
-                    let activeRidesIDs = NetworkManager.shared.currentUser.rides.map { $0.id }
-                    
-                    let value = activeRidesIDs.contains { rideID in
-                        rideID == rideCopy.id
-                    }
-                    
-                    value ? self.activeRides.append(ride) : self.pendingRides.append(ride)
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                
+        NetworkManager.shared.getUser { result in
+            switch result {
+            case .success(let user):
+                self.updateActiveRides(rides: user.rides)
+                self.tableView.reloadData()
             case .failure(let error):
-                print("Unable to get all rides: \(error.localizedDescription)")
+                print("Unable to get user: \(error.localizedDescription)")
             }
         }
-        
     }
 }
 // MARK: - UITableViewDelegate
@@ -203,17 +210,25 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currentRide: Ride
+        let currentRide: HomeVCRide
         if indexPath.section == 0 {
             currentRide = activeRides[indexPath.row]
         } else {
             currentRide = pendingRides[indexPath.row]
         }
         
-        let tripDetailView = TripDetailsViewController(currentRide: currentRide)
-        tripDetailView.hideRequestButton()
-        tripDetailView.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(tripDetailView, animated: true)
+        if let driver = currentRide.driver {
+            let fullRide = Ride(id: 0, creator: BaseUser(id: driver.id, netid: driver.netid, firstName: driver.firstName, lastName: driver.lastName, prompts: [], rides: []), maxTravelers: currentRide.maxTravelers, minTravelers: currentRide.minTravelers, departureDatetime: currentRide.departureDatetime, description: currentRide.description, isFlexible: true, path: currentRide.path, type: currentRide.type)
+            let tripDetailView = TripDetailsViewController(currentRide: fullRide)
+            tripDetailView.hideRequestButton()
+            tripDetailView.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(tripDetailView, animated: true)
+        }
+        
+        
+        
+        
+        
     }
     
 }
@@ -239,11 +254,18 @@ extension HomeViewController: UITableViewDataSource {
         
         switch TableSection.allCases[indexPath.section] {
         case .activeTrips:
-            cell.configure(ride: activeRides[indexPath.row])
+            let shortenedRide = activeRides[indexPath.row]
+            if let driver = shortenedRide.driver {
+                let fullRide = Ride(id: 0, creator: BaseUser(id: driver.id, netid: driver.netid, firstName: driver.firstName, lastName: driver.lastName, prompts: [], rides: []), maxTravelers: shortenedRide.maxTravelers, minTravelers: shortenedRide.minTravelers, departureDatetime: shortenedRide.departureDatetime, description: shortenedRide.description, isFlexible: true, path: shortenedRide.path, type: shortenedRide.type)
+                cell.configure(ride: fullRide)
+            }
         case .pendingTrips:
-            cell.configure(ride: pendingRides[indexPath.row])
+            let shortenedRide = pendingRides[indexPath.row]
+            if let driver = shortenedRide.driver {
+                let fullRide = Ride(id: 0, creator: BaseUser(id: driver.id, netid: driver.netid, firstName: driver.firstName, lastName: driver.lastName, prompts: [], rides: []), maxTravelers: shortenedRide.maxTravelers, minTravelers: shortenedRide.minTravelers, departureDatetime: shortenedRide.departureDatetime, description: shortenedRide.description, isFlexible: true, path: shortenedRide.path, type: shortenedRide.type)
+                cell.configure(ride: fullRide)
+            }
         }
-        
         return cell
     }
     

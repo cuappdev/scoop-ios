@@ -54,7 +54,7 @@ struct Constants {
         
     }
     
-    static let defaultTRequest = RideRequest(id: 0, approvee: defaultUser, approver: defaultUser, ride: defaultTruncRide, approved: true, timestamp: "2020-03-27T00:00:00Z")
-    static let defaultFRequest = RideRequest(id: 0, approvee: defaultUser, approver: defaultUser, ride: defaultTruncRide, approved: false, timestamp: "2020-03-27T00:00:00Z")
+//    static let defaultTRequest = RideRequest(id: 0, approvee: defaultUser, approver: defaultUser, ride: defaultTruncRide, approved: true, timestamp: "2020-03-27T00:00:00Z")
+//    static let defaultFRequest = RideRequest(id: 0, approvee: defaultUser, approver: defaultUser, ride: defaultTruncRide, approved: false, timestamp: "2020-03-27T00:00:00Z")
 
 }

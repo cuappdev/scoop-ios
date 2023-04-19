@@ -30,6 +30,17 @@ struct TruncRide: Codable {
     let type: String
 }
 
+struct HomeVCRide: Codable {
+    let id: Int
+    var departureDatetime: String
+    let path: Path
+    let type: String
+    let description: String
+    let maxTravelers: Int
+    let minTravelers: Int
+    let driver: TruncUser?
+}
+
 /// Temporary, just so hardcoded data can still load while networking is not fully implemented
 //extension Ride {
 //    init() throws {
