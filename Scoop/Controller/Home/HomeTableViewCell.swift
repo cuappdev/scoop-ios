@@ -65,7 +65,7 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     private func setupTitleLabel() {
-        titleLabel.font = UIFont(name: "SFProDisplay-Bold", size: 18)
+        titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textColor = .black
         containerView.addSubview(titleLabel)

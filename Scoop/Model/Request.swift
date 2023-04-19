@@ -7,22 +7,20 @@
 
 import Foundation
 
-struct RideRequest: Codable {
+struct RideRequest: Codable, Equatable {
     let id: Int
     let approvee: BaseUser
     let approver: BaseUser
     let ride: TruncRide
-    let approved: Bool?
+    var approved: Bool?
     let timestamp: String
+    
+    static func == (lhs: RideRequest, rhs: RideRequest) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 struct RequestResponse: Codable {
-    let toApprove: [RideRequest]
-    let waitingApproval: [RideRequest]
-    
-    /** Use of coding keys here because backend named the keys to something unconventional for converting to/from camel case */
-    enum CodingKeys: String, CodingKey {
-        case toApprove = "To Approve"
-        case waitingApproval = "Waiting for Approval"
-    }
+    let awaitingApproval: [RideRequest]
+    let pendingRequests: [RideRequest]
 }

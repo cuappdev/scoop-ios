@@ -213,7 +213,7 @@ class NetworkManager {
         }
     }
     
-    func postRide(startID: String, startName: String, endID: String, endName: String, creator: Int, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, completion: @escaping(Result<Ride, Error>) -> Void) {
+    func postRide(startID: String, startName: String, endID: String, endName: String, creator: Int, maxTravellers: Int, minTravellers: Int, type: String, isFlexible: Bool, departureTime: String, description: String, completion: @escaping(Result<Ride, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/rides/"
         let params: [String : Any] = [
             "start_location_place_id": startID,
@@ -221,6 +221,7 @@ class NetworkManager {
             "end_location_place_id": endID,
             "end_location_name": endName,
             "creator": creator,
+            "description": description,
             "max_travelers": maxTravellers,
             "min_travelers": minTravellers,
             "type": type,
@@ -275,12 +276,12 @@ class NetworkManager {
     }
     
     func handleRideRequest(requestID: Int, approved: Bool, completion: @escaping(Result<RideRequest, Error>) -> Void) {
-        let endpoint = "\(hostEndpoint)/api/requests/\(requestID)"
+        let endpoint = "\(hostEndpoint)/api/requests/\(requestID)/"
         let params = [
             "approved": approved
         ]
         
-        AF.request(endpoint, method: .post, parameters: params).validate().responseData { response in
+        AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
