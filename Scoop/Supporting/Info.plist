@@ -13,6 +13,13 @@
 			</array>
 		</dict>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SFProDisplay-Regular.OTF</string>
+		<string>SFProDisplay-Bold.OTF</string>
+		<string>Rambla-Regular.ttf</string>
+		<string>Sen-Regular.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -30,18 +37,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>This app uses the camera for uploading profile pictures.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app uses the photo library for uploading profile pictures.</string>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SFProDisplay-Regular.OTF</string>
-		<string>SFProDisplay-Bold.OTF</string>
-		<string>Rambla-Regular.ttf</string>
-		<string>Sen-Regular.ttf</string>
-	</array>
 </dict>
 </plist>

@@ -90,7 +90,7 @@ class PostRideSummaryViewController: PostRideViewController {
     }
     
     private func setupDriverInfo() {
-        let creator = currentRide.creator
+        let creator = NetworkManager.shared.currentUser
         guard let imageURL = creator.profilePicUrl else {return}
         
         creatorProfile.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
@@ -335,7 +335,7 @@ class PostRideSummaryViewController: PostRideViewController {
     
     @objc private func postRide() {
         //TODO: Networking Goes here - still needs to be debugged after backend fixes
-        guard let creatorID = currentRide.driver?.id else { return }
+        let creatorID = NetworkManager.shared.currentUser.id
         
         NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, creator: creatorID, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime, description: currentRide.description) { [weak self] response in
             switch response {
@@ -347,7 +347,8 @@ class PostRideSummaryViewController: PostRideViewController {
                 print("Unable to post ride: \(error)")
             }
         }
-       
+        
+        prevVC()
         dismiss(animated: true)
         containerDelegate?.navigationController?.popViewController(animated: true)
     }

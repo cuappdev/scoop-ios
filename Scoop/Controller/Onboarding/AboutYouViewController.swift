@@ -23,7 +23,7 @@ class AboutYouViewController: OnboardingViewController {
     private let pronounsPicker = UIPickerView()
     private let yearPicker = UIPickerView()
     
-    private let pronouns = ["He/Him", "She/Her", "They/Them"]
+    private let pronouns = ["He/Him", "She/Her", "They/Them", "Other"]
     private let years = ["Freshman", "Sophomore", "Junior", "Senior", "Grad Student"]
 
     override func viewDidLoad() {
@@ -106,6 +106,7 @@ class AboutYouViewController: OnboardingViewController {
             string: "Pronouns",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         pronounsTextField.inputView = pronounsPicker
+        pronounsTextField.addTarget(self, action: #selector(updatePronouns), for: .touchDown)
         stackView.addArrangedSubview(pronounsTextField)
         
         pronounsTextField.snp.makeConstraints { make in
@@ -135,6 +136,7 @@ class AboutYouViewController: OnboardingViewController {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         yearTextField.keyboardType = .numberPad
         yearTextField.inputView = yearPicker
+        yearTextField.addTarget(self, action: #selector(updateYear), for: .touchDown)
         stackView.addArrangedSubview(yearTextField)
         
         yearTextField.snp.makeConstraints { make in
@@ -193,6 +195,14 @@ class AboutYouViewController: OnboardingViewController {
             make.height.equalTo(16)
             make.width.equalTo(70)
         }
+    }
+    
+    @objc private func updatePronouns() {
+        pronounsTextField.text = pronouns.first
+    }
+    
+    @objc private func updateYear() {
+        yearTextField.text = years.first
     }
 
 }

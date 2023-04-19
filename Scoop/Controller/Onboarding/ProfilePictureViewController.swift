@@ -92,17 +92,20 @@ class ProfilePictureViewController: OnboardingViewController {
                 print("\(user.firstName) has been updated")
                 self.dismiss(animated: true)
                 self.containerDelegate?.dismiss(animated: true)
+                NetworkManager.shared.profileDelegate?.updateProfile()
             case .failure(let error):
                 print("Failed to Authenticate: \(error.localizedDescription)")
                 return
             }
         }
         
-        NetworkManager.shared.profileDelegate?.updateProfile()
+        DispatchQueue.main.async {
+            NetworkManager.shared.profileDelegate?.updateProfile()
+        }
     }
     
     private func convertImage (image: UIImage) -> String {
-        let base64 = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        let base64 = image.jpegData(compressionQuality: 0.5)?.base64EncodedString() ?? ""
         return "data:image/png;base64," + base64
     }
     

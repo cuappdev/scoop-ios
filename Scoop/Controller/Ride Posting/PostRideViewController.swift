@@ -78,5 +78,13 @@ class PostRideViewController: OnboardingViewController {
         self.delegate?.didTapBack(navCtrl, previousViewController: nil)
     }
     
+    func removeBackButton() {
+        containerDelegate?.navigationController?.navigationBar.subviews.forEach({ subview in
+            if let backButton = subview as? UIButton {
+                backButton.removeFromSuperview()
+            }
+        })
+    }
+    
 }
 
