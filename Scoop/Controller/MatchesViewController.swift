@@ -37,18 +37,6 @@ class MatchesViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.title = "Best Matches"
-        
-        // MARK: Dummy Data, replace once backend fixed
-//        matchedRides = [
-//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Elvis", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
-//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Richie", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
-//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Tiffany", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
-//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Aarushi", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
-//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Reade", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Student Driver"),
-//            Ride(id: 1, creator: BaseUser(id: 1, netid: "", firstName: "Vin", lastName: "", phoneNumber: "", grade: "", pronouns: "", prompts: [], rides: []), maxTravelers: 1, minTravelers: 9, departureDatetime: "", isFlexible: true, path: Constants.defaultPath, type: "Shared Taxi"),
-//        ]
-//        filteredRides = matchedRides
-        
         setupTitleLines()
         setupTripDetails()
         setupFilterButtons()
@@ -294,7 +282,6 @@ extension MatchesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.dequeueReusableCell(withIdentifier: homeCellIdenitifer, for: indexPath) as! HomeTableViewCell
         let currentRide = filteredRides[indexPath.row]
-        
         let tripDetailView = TripDetailsViewController(currentRide: currentRide)
         tripDetailView.hideRequestButton()
         tripDetailView.hidesBottomBarWhenPushed = true

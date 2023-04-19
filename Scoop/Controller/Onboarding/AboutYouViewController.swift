@@ -198,11 +198,11 @@ class AboutYouViewController: OnboardingViewController {
     }
     
     @objc private func updatePronouns() {
-        pronounsTextField.text = pronouns[0]
+        pronounsTextField.text = pronouns.first
     }
     
     @objc private func updateYear() {
-        yearTextField.text = years[0]
+        yearTextField.text = years.first
     }
 
 }

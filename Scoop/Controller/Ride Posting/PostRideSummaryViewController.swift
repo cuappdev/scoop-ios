@@ -341,7 +341,7 @@ class PostRideSummaryViewController: PostRideViewController {
             switch response {
             case .success(_):
                 self.dismiss(animated: true)
-                self.prevVC()
+                self.removeBackButton()
                 self.containerDelegate?.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 print("Unable to post ride: \(error.localizedDescription)")
