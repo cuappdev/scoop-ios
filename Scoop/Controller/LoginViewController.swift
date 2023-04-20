@@ -63,7 +63,7 @@ class LoginViewController: UIViewController {
             
             guard let email = result?.user.profile?.email else { return }
             
-            guard email.contains("@cornell.edu") else {
+            guard email.contains("@cornell.edu") || email == "cornellscoopedapp@gmail.com" else {
                 GIDSignIn.sharedInstance.signOut()
                 print("User is not a cornell student")
                 return

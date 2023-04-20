@@ -64,7 +64,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     self.getUser()
                     self.didCompleteLogin()
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self.window?.rootViewController = LoginViewController()
+                    print("Scene Delegate Auth Error: \(error.localizedDescription)")
                 }
             }
         }
@@ -76,6 +77,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             case.success(let user):
                 NetworkManager.shared.currentUser = user
             case.failure(let error):
+                self.window?.rootViewController = LoginViewController()
                 print(error.localizedDescription)
             }
         }
