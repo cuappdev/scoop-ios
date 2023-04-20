@@ -86,6 +86,7 @@
 		164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scoop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C09F7E429E07542006003AA /* SearchRidesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRidesViewController.swift; sourceTree = "<group>"; };
 		2C09F7E629E085A1006003AA /* ImageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextField.swift; sourceTree = "<group>"; };
+		2C0E135E29F0CD0C000ED04C /* Scoop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Scoop.entitlements; sourceTree = "<group>"; };
 		2C12DEB529C64D11003D6683 /* PostRideTripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideTripDetailsViewController.swift; sourceTree = "<group>"; };
 		2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sen-Regular.ttf"; sourceTree = "<group>"; };
 		2C42B520290F767600D053A3 /* Rambla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rambla-Regular.ttf"; sourceTree = "<group>"; };
@@ -280,6 +281,7 @@
 		C8A5448B27D185BD00132ACC /* Scoop */ = {
 			isa = PBXGroup;
 			children = (
+				2C0E135E29F0CD0C000ED04C /* Scoop.entitlements */,
 				C8A5448C27D185BD00132ACC /* AppDelegate.swift */,
 				C8A5448E27D185BD00132ACC /* SceneDelegate.swift */,
 				C8A544BF27D18D0E00132ACC /* Model */,
@@ -788,11 +790,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Scoop/Scoop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Scoop/Supporting/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Scooped;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera for uploading profile pictures.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This application requires location services to work.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This application requires location services to work.";
@@ -822,11 +827,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Scoop/Scoop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Scoop/Supporting/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Scooped;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera for uploading profile pictures.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This application requires location services to work.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This application requires location services to work.";
