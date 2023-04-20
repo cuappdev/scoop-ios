@@ -283,7 +283,6 @@ extension MatchesViewController: UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: homeCellIdenitifer, for: indexPath) as! HomeTableViewCell
         let currentRide = filteredRides[indexPath.row]
         let tripDetailView = TripDetailsViewController(currentRide: currentRide)
-        tripDetailView.hideRequestButton()
         tripDetailView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(tripDetailView, animated: true)
     }

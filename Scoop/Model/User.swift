@@ -36,5 +36,15 @@ struct BaseUser: Codable {
     var grade: String?
     var pronouns: String?
     var prompts: [Prompt]
-    var rides: [TruncRide]
+    var rides: [HomeVCRide]
+}
+
+struct TruncUser: Codable {
+    var id: Int
+    var netid: String
+    var firstName: String
+    var lastName: String
+    var profilePicUrl: String?
+    var grade: String?
+    var pronouns: String?
 }

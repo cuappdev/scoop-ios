@@ -117,6 +117,7 @@ class SearchRidesViewController: UIViewController {
             string: "Departure date",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         departureDateTextField.inputView = datePicker
+        departureDateTextField.addTarget(self, action: #selector(updateDate), for: .touchDown)
         stackView.addArrangedSubview(departureDateTextField)
         
         datePicker.datePickerMode = .date
@@ -149,7 +150,7 @@ class SearchRidesViewController: UIViewController {
         findTripsButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         findTripsButton.backgroundColor = .black
         findTripsButton.layer.cornerRadius = 25
-        findTripsButton.addTarget(self, action: #selector(presentMatches), for: .touchDown)
+        findTripsButton.addTarget(self, action: #selector(presentMatches), for: .touchUpInside)
         findTripsButton.backgroundColor = .disabledGreen
         findTripsButton.setTitleColor(.disabledGrey, for: .normal)
         view.addSubview(findTripsButton)

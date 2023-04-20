@@ -11,7 +11,7 @@ struct RideRequest: Codable, Equatable {
     let id: Int
     let approvee: BaseUser
     let approver: BaseUser
-    let ride: TruncRide
+    let ride: HomeVCRide
     var approved: Bool?
     let timestamp: String
     
