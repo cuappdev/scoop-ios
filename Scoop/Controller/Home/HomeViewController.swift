@@ -164,7 +164,7 @@ class HomeViewController: UIViewController {
     
     private func updateActiveRides(rides: [HomeVCRide]) {
         activeRides = []
-        for ride in rides {
+        rides.forEach({ ride in
             var rideCopy = ride
             
             // Source: https://stackoverflow.com/questions/35700281/date-format-in-swift
@@ -179,16 +179,19 @@ class HomeViewController: UIViewController {
             }
             
             activeRides.append(rideCopy)
-        }
+        })
     }
     
     private func getRides() {
         // MARK: NEEDS TO BE UDPATED ONCE BACKEND CHANGES THE RIDE MODEL TO THE FULL ONE
-        NetworkManager.shared.getUser { result in
-            switch result {
+        NetworkManager.shared.getUser { [weak self] response in
+            switch response {
             case .success(let user):
-                self.updateActiveRides(rides: user.rides)
-                self.tableView.reloadData()
+                guard let strongSelf = self else { return }
+                strongSelf.updateActiveRides(rides: user.rides)
+                DispatchQueue.main.async {
+                    strongSelf.tableView.reloadData()
+                }
             case .failure(let error):
                 print("Unable to get user: \(error.localizedDescription)")
             }
