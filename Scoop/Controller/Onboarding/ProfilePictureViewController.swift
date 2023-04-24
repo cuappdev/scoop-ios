@@ -17,6 +17,7 @@ class ProfilePictureViewController: OnboardingViewController {
     private let profileButton = UIButton()
     private let skipButton = UIButton()
     private let uploadButton = UIButton()
+    private let loadingSpinner = UIActivityIndicatorView(style: .large)
     
     init(containerDelegate: AnimationDelegate?) {
         super.init(nibName: nil, bundle: nil)
@@ -33,6 +34,7 @@ class ProfilePictureViewController: OnboardingViewController {
         setupTitle(name: "Profile")
         
         nextAction = UIAction { _ in
+            self.loadingSpinner.startAnimating()
             guard let image = self.pictureImageView.image else {
                 self.presentErrorAlert(title: "Error", message: "Please select an image.")
                 return
@@ -78,6 +80,7 @@ class ProfilePictureViewController: OnboardingViewController {
     
     private func updateAuthenticatedUser(image: UIImage) {
         let imageBase64 = convertImage(image: image)
+        uploadButton.backgroundColor = .disabledGreen
         
         NetworkManager.shared.currentUser.profilePicUrl = imageBase64
         let user = NetworkManager.shared.currentUser
@@ -92,15 +95,19 @@ class ProfilePictureViewController: OnboardingViewController {
                 print("\(user.firstName) has been updated")
                 self.dismiss(animated: true)
                 self.containerDelegate?.dismiss(animated: true)
-                NetworkManager.shared.profileDelegate?.updateProfile()
+                NetworkManager.shared.profileDelegate?.updateUserProfile()
+                self.uploadButton.backgroundColor = .scoopDarkGreen
+                self.loadingSpinner.stopAnimating()
             case .failure(let error):
                 print("Failed to Authenticate: \(error.localizedDescription)")
+                self.loadingSpinner.stopAnimating()
+                self.displayUserError()
                 return
             }
         }
         
         DispatchQueue.main.async {
-            NetworkManager.shared.profileDelegate?.updateProfile()
+            NetworkManager.shared.profileDelegate?.updateUserProfile()
         }
     }
     
@@ -154,6 +161,21 @@ class ProfilePictureViewController: OnboardingViewController {
             make.top.equalTo(uploadButton.snp.bottom).inset(-15)
             make.centerX.equalToSuperview()
         }
+        
+        loadingSpinner.backgroundColor = .black
+        loadingSpinner.layer.opacity = 0.5
+        loadingSpinner.layer.cornerRadius = 10
+        loadingSpinner.color = .white
+        view.addSubview(loadingSpinner)
+        
+        loadingSpinner.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(70)
+        }
+    }
+    
+    private func displayUserError() {
+        presentErrorAlert(title: "Unable to Create Account", message: "There was an error while creating your account. Please try again at another time.")
     }
     
     private func setupProfileButton() {

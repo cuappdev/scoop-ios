@@ -83,8 +83,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    @objc
-    private func didCompleteLogin() {
+    @objc func didCompleteLogin() {
         self.window?.rootViewController = self.createTabBarController()
     }
     
@@ -104,7 +103,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let searchNavController = UINavigationController(rootViewController: searchViewController)
         searchNavController.navigationBar.prefersLargeTitles = true
         
-        let profileViewController = ProfileViewController()
+        let profileViewController = ProfileViewController(user: NetworkManager.shared.currentUser)
         profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
         NetworkManager.shared.profileDelegate = profileViewController
         

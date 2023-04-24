@@ -15,6 +15,7 @@ class TripDetailsViewController: UIViewController {
     private let spacing = 10
     
     var currentRide: Ride?
+    weak var profileDelegate: ProfileViewDelegate?
     
     private let stackView = UIStackView()
     private let creatorLabel = UILabel()
@@ -141,6 +142,9 @@ class TripDetailsViewController: UIViewController {
             make.height.equalTo(71)
             make.leading.trailing.equalToSuperview()
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileTap))
+        driverInfoContainerView.addGestureRecognizer(tapGesture)
         
         driverInfoContainerView.backgroundColor = .white
         driverInfoContainerView.addDropShadow()
@@ -341,8 +345,28 @@ class TripDetailsViewController: UIViewController {
         
         NetworkManager.shared.postRequest(approveeID: NetworkManager.shared.currentUser.id, rideID: currentRide.id) { [weak self] response in
             guard let strongSelf = self else { return }
-            strongSelf.navigationController?.popViewController(animated: true)
+            let alertVC = UIAlertController(title: "Request Sent", message: "Reach out to \(currentRide.creator.firstName) with any questions about the trip!", preferredStyle: .alert)
+            let closeAction = UIAlertAction(title: "Close", style: .default) { UIAlertAction in
+                strongSelf.navigationController?.popViewController(animated: true)
+            }
+            let viewAction = UIAlertAction(title: "View Profile", style: .default) { UIAlertAction in
+                strongSelf.present(ProfileViewController(user: currentRide.creator), animated: true)
+                strongSelf.navigationController?.popViewController(animated: true)
+            }
+            alertVC.addAction(closeAction)
+            alertVC.addAction(viewAction)
+            alertVC.view.tintColor = .scoopDarkGreen
+            strongSelf.present(alertVC, animated: true)
         }
+    }
+
+    
+    @objc private func profileTap() {
+        guard let driver = currentRide?.creator else { return }
+        let profileVC = ProfileViewController(user: driver)
+        profileDelegate = profileVC
+        profileDelegate?.updateDriverProfile()
+        present(profileVC, animated: true)
     }
     
     private func setUpLabelFont() {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Ride: Codable {
+class Ride: Codable {
     var id: Int
     var creator: BaseUser
     var maxTravelers: Int
@@ -20,6 +20,21 @@ struct Ride: Codable {
     var estimatedCost: Int?
     var path: Path
     var type: String
+    
+    init(id: Int, creator: BaseUser, maxTravelers: Int, minTravelers: Int, departureDatetime: String, description: String, driver: BaseUser? = nil, isFlexible: Bool, riders: [BaseUser]? = nil, estimatedCost: Int? = nil, path: Path, type: String) {
+        self.id = id
+        self.creator = creator
+        self.maxTravelers = maxTravelers
+        self.minTravelers = minTravelers
+        self.departureDatetime = departureDatetime
+        self.description = description
+        self.driver = driver
+        self.isFlexible = isFlexible
+        self.riders = riders
+        self.estimatedCost = estimatedCost
+        self.path = path
+        self.type = type
+    }
 }
 
 /// This version of the Ride model is used in the approving/denying rides networking request. Is there a better way to do this? (only wanting to include certain fields of a model)

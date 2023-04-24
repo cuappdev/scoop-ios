@@ -336,6 +336,7 @@ class PostRideSummaryViewController: PostRideViewController {
     @objc private func postRide() {
         //TODO: Networking Goes here - still needs to be debugged after backend fixes
         let creator = NetworkManager.shared.currentUser
+        requestButton.backgroundColor = .disabledGreen
         
         NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, driver: creator.id, creator: creator.id, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime, description: currentRide.description) { [weak self] response in
             switch response {
@@ -343,6 +344,7 @@ class PostRideSummaryViewController: PostRideViewController {
                 guard let strongSelf = self else { return }
                 strongSelf.dismiss(animated: true)
                 strongSelf.containerDelegate?.navigationController?.popViewController(animated: true)
+                strongSelf.requestButton.backgroundColor = .scoopDarkGreen
             case .failure(let error):
                 print("Unable to post ride: \(error)")
             }
@@ -373,4 +375,17 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
+}
+
+extension PostRideSummaryViewController: PostRideDelegate {
+    
+    func updateSummary() {
+        driverType.text = currentRide.type
+        departureLocationLabel.text = currentRide.path.startLocationName
+        arrivalLocationLabel.text = currentRide.path.endLocationName
+        departureDate.text = currentRide.departureDatetime
+        numberTravelers.text = "\(currentRide.minTravelers) to \(currentRide.maxTravelers) people"
+        detailsTextView.text = currentRide.description
+    }
+
 }
