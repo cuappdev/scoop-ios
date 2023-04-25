@@ -137,7 +137,7 @@ class OnboardingViewController: UIViewController {
                 if shouldAppend {
                     NetworkManager.shared.userPromptAnswers.append(userAnswer)
                 }
-                NetworkManager.shared.userPromptAnswers.append(userAnswer)
+                
                 print("Updated: \(prompt.questionName) to \(answer)")
             case .failure(let error):
                 print(error.localizedDescription)
