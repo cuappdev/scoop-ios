@@ -45,9 +45,6 @@ class MatchesViewController: UIViewController {
         setupTitleLines()
         setupTripDetails()
         setupFilterButtons()
-//        setupTableView()
-        
-//        setupEmptyState()
     }
     
     init(arrival: String, departure: String, date: String, rides: [Ride]) {
@@ -203,8 +200,6 @@ class MatchesViewController: UIViewController {
             button.setTitleColor(.offBlack, for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
             button.backgroundColor = .disabledGreen
-//            button.layer.borderWidth = 1
-//            button.layer.borderColor = UIColor.offBlack.cgColor
             button.layer.cornerRadius = 16
         }
         
@@ -334,6 +329,7 @@ extension MatchesViewController: UITableViewDataSource {
 }
 
 extension MatchesViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.dequeueReusableCell(withIdentifier: homeCellIdenitifer, for: indexPath) as! HomeTableViewCell
         let currentRide = filteredRides[indexPath.row]

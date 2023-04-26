@@ -44,7 +44,13 @@ class HomeViewController: UIViewController {
         setupRefreshControl()
         setupPostRideButton()
         
+        // How to make the thread wait until getRides is finished calling
         getRides()
+        if activeRides.isEmpty && pendingRides.isEmpty {
+            setupEmptyState()
+        } else {
+            setupTableView()
+        }
         // Commented out currently because signing out functionality is not yet implemented
         //        setupSignOutButton()
     }
@@ -269,13 +275,8 @@ class HomeViewController: UIViewController {
             case .success(let user):
                 guard let strongSelf = self else { return }
                 strongSelf.updateActiveRides(rides: user.rides)
-                if strongSelf.activeRides.isEmpty && strongSelf.pendingRides.isEmpty {
-                    strongSelf.setupEmptyState()
-                } else {
-                    strongSelf.setupTableView()
-                    DispatchQueue.main.async {
-                        strongSelf.tableView.reloadData()
-                    }
+                DispatchQueue.main.async {
+                    strongSelf.tableView.reloadData()
                 }
             case .failure(let error):
                 print("Unable to get user: \(error.localizedDescription)")
