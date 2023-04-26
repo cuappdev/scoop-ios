@@ -117,7 +117,7 @@ class LoginViewController: UIViewController {
                 
                 if GIDSignIn.sharedInstance.hasPreviousSignIn() {
                     GIDSignIn.sharedInstance.signOut()
-                    strongSelf.presentErrorAlert(title: "Failed to Login", message: "Please make sure you have a stable internet connection and try again later")
+                    strongSelf.presentErrorAlert(title: "Failed to Login", message: "Please make sure you have a stable internet connection and try again later.")
                 } else {
                     let onboardingVC = OnboardingContainerViewController()
                     onboardingVC.modalPresentationStyle = .fullScreen

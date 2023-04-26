@@ -65,6 +65,8 @@ class PreferredContactViewController: OnboardingViewController {
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
         }))
+        
+        setNextButtonColor(disabled: false)
     }
 
     private func setupStackView() {
@@ -121,9 +123,11 @@ class PreferredContactViewController: OnboardingViewController {
                 self.numberTextField.isHidden = true
                 self.phoneLabel.isHidden = true
                 self.phoneLabel.textColor = .textFieldBorderColor
+                self.setNextButtonColor(disabled: false)
             } else {
                 self.numberTextField.isHidden = false
                 self.phoneLabel.isHidden = false
+                self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.text ?? ""))
             }
         }
         
@@ -200,6 +204,10 @@ extension PreferredContactViewController: UITextFieldDelegate {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
         phoneLabel.textColor = .textFieldBorderColor
+        
+        if textField == numberTextField {
+            self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.text ?? ""))
+        }
     }
     
 }
@@ -214,7 +222,6 @@ extension PreferredContactViewController: VerificationDelegate {
         }
         
         delegate?.didTapNext(navCtrl, nextViewController: nil)
-        print("UPDATED")
     }
     
 }

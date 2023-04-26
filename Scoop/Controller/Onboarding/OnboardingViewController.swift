@@ -17,6 +17,7 @@ class OnboardingViewController: UIViewController {
     weak var delegate: OnboardingDelegate?
     var nextAction: UIAction?
     let backButton = UIButton()
+    let nextOnboardingButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,21 +33,36 @@ class OnboardingViewController: UIViewController {
             bottomButtonMultiplier = 0
         }
         
-        let button = UIButton()
-        button.setTitle("Next", for: .normal)
-        button.backgroundColor = .secondaryGreen
-        button.layer.cornerRadius = 25
-        button.setTitleColor(.offBlack, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        button.addAction(action, for: .touchUpInside)
-        view.addSubview(button)
+        nextOnboardingButton.setTitle("Next", for: .normal)
+        nextOnboardingButton.backgroundColor = .secondaryGreen
+        nextOnboardingButton.layer.cornerRadius = 25
+        nextOnboardingButton.layer.opacity = 0.5
+        nextOnboardingButton.setTitleColor(.offBlack, for: .normal)
+        nextOnboardingButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        nextOnboardingButton.addAction(action, for: .touchUpInside)
+        view.addSubview(nextOnboardingButton)
         
-        button.snp.makeConstraints { make in
+        nextOnboardingButton.snp.makeConstraints { make in
             make.trailing.equalTo(view.safeAreaLayoutGuide).inset(32)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(screenSize.height * bottomButtonMultiplier)
             make.height.equalTo(51)
             make.width.equalTo(86)
         }
+    }
+    
+    func setNextButtonColor(disabled: Bool) {
+        nextOnboardingButton.layer.opacity = disabled ? 0.5 : 1
+    }
+    
+    func textFieldsComplete(texts: [String]) -> Bool {
+        var complete = true
+        texts.forEach { text in
+            if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                complete = false
+            }
+        }
+        
+        return complete
     }
     
     func setupBackButton() {

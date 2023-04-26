@@ -35,14 +35,10 @@ class VerifyPhoneNumberViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.navigationItem.hidesBackButton = true
+        navigationItem.hidesBackButton = true
         setupLabels()
         setupTextFields()
         setupButtons()
@@ -163,7 +159,6 @@ class VerifyPhoneNumberViewController: UIViewController {
             alertVC.addAction(okAction)
             alertVC.view.tintColor = .scoopDarkGreen
             self.present(alertVC, animated: true)
-            print("SUCCESS")
         }
     }
     

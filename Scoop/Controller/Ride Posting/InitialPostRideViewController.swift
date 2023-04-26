@@ -268,6 +268,15 @@ class InitialPostRideViewController: PostRideViewController {
         containerDelegate?.navigationController?.popViewController(animated: true)
     }
     
+    private func checkButtonStatus() {
+        var responses: [String] = []
+        [arrivalTextField, departureTextField].forEach { textField in
+            responses.append(textField.text ?? "")
+        }
+        
+        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
+    }
+    
 }
 
 extension InitialPostRideViewController: SearchInitialViewControllerDelegate {
@@ -284,6 +293,8 @@ extension InitialPostRideViewController: SearchInitialViewControllerDelegate {
             arrivalLabel.textColor = .offBlack
             arrivalLabel.isHidden = false
         }
+        
+        checkButtonStatus()
     }
     
 }

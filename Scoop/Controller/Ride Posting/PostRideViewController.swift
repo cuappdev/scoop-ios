@@ -15,16 +15,16 @@ class PostRideViewController: OnboardingViewController {
         let bottomButtonMultiplier = 0.075
         let screenSize = UIScreen.main.bounds
         
-        let button = UIButton()
-        button.setTitle("Next", for: .normal)
-        button.backgroundColor = .secondaryGreen
-        button.layer.cornerRadius = 25
-        button.setTitleColor(.offBlack, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        button.addAction(action, for: .touchUpInside)
-        view.addSubview(button)
+        nextOnboardingButton.setTitle("Next", for: .normal)
+        nextOnboardingButton.backgroundColor = .secondaryGreen
+        nextOnboardingButton.layer.opacity = 0.5
+        nextOnboardingButton.layer.cornerRadius = 25
+        nextOnboardingButton.setTitleColor(.offBlack, for: .normal)
+        nextOnboardingButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        nextOnboardingButton.addAction(action, for: .touchUpInside)
+        view.addSubview(nextOnboardingButton)
         
-        button.snp.makeConstraints { make in
+        nextOnboardingButton.snp.makeConstraints { make in
             make.trailing.equalTo(view.safeAreaLayoutGuide).inset(32)
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(screenSize.height * bottomButtonMultiplier)
             make.height.equalTo(51)
