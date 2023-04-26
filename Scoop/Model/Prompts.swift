@@ -14,7 +14,12 @@ struct Prompt: Codable {
     let answer: String?
 }
 
-struct UserAnswer: Codable {
+class UserAnswer: Codable {
     let id: Int
-    let answer: String
+    var answer: String
+    
+    init(id: Int, answer: String) {
+        self.id = id
+        self.answer = answer
+    }
 }

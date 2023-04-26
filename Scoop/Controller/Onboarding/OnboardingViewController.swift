@@ -125,8 +125,19 @@ class OnboardingViewController: UIViewController {
         NetworkManager.shared.postPrompt(name: name, placeholder: placeholder) { result in
             switch result {
             case .success(var prompt):
+                var shouldAppend = true
                 let userAnswer = UserAnswer(id: prompt.id, answer: answer)
-                NetworkManager.shared.userPromptAnswers.append(userAnswer)
+                NetworkManager.shared.userPromptAnswers.forEach { userPrompt in
+                    if userPrompt.id == userAnswer.id {
+                        userPrompt.answer = userAnswer.answer
+                        shouldAppend = false
+                    }
+                }
+                
+                if shouldAppend {
+                    NetworkManager.shared.userPromptAnswers.append(userAnswer)
+                }
+                
                 print("Updated: \(prompt.questionName) to \(answer)")
             case .failure(let error):
                 print(error.localizedDescription)
