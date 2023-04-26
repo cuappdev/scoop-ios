@@ -9,7 +9,8 @@ import SDWebImage
 import UIKit
 
 protocol ProfileViewDelegate: AnyObject {
-    func updateProfile()
+    func updateUserProfile()
+    func updateDriverProfile()
 }
 
 class ProfileViewController: UIViewController, ProfileViewDelegate {
@@ -31,7 +32,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     private let subLabel = UILabel()
     private let talkativeSlider = UISlider()
     
-    private var user = NetworkManager.shared.currentUser
+    private var user: BaseUser?
     
     private var hometown: String?
     private var talkative: Float?
@@ -39,6 +40,15 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     private var snack: String?
     private var song: String?
     private var stop: String?
+    
+    init(user: BaseUser) {
+        super.init(nibName: nil, bundle: nil)
+        self.user = user
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +60,11 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         setupEditButton()
         setupProfileImageView()
         setupProfileStackView()
-        updateProfile()
+        if !isBeingPresented {
+            updateUserProfile()
+        } else {
+            updateDriverProfile()
+        }
     }
     
     private func setupContainerView() {
@@ -310,7 +324,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     }
     
     private func getUserPreferences() {
-        NetworkManager.shared.currentUser.prompts.forEach({ prompt in
+        user?.prompts.forEach({ prompt in
             if prompt.questionName == "Hometown" {
                 hometown = prompt.answer
             } else if prompt.questionName == "Talkative" {
@@ -329,7 +343,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         })
     }
     
-    func updateProfile() {
+    func updateUserProfile() {
         NetworkManager.shared.getUser { result in
             switch result {
             case .success(let user):
@@ -354,6 +368,25 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func updateDriverProfile() {
+        getUserPreferences()
+        guard let driver = user,
+              let imageURL = driver.profilePicUrl,
+              let pronouns = driver.pronouns,
+              let grade = driver.grade,
+              let hometown = self.hometown else { return }
+    
+        profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
+        nameLabel.text = "\(driver.firstName) \(driver.lastName)"
+        subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
+        phoneLabel.text = user?.phoneNumber
+        talkativeSlider.value = self.talkative ?? 0
+        musicSlider.value = self.music ?? 0
+        songSection.label.attributedText = self.makeBoldNormalText(bold: "Song / ", normal: self.song ?? "")
+        snackSection.label.attributedText = self.makeBoldNormalText(bold: "Snack / ", normal: self.snack ?? "")
+        stopSection.label.attributedText = self.makeBoldNormalText(bold: "Stop / ", normal: self.stop ?? "")
     }
     
     func makeBoldNormalText(bold: String, normal: String) -> NSAttributedString {

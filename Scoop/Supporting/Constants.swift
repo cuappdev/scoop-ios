@@ -43,7 +43,7 @@ struct Constants {
         static let type: String = "type"
     }
     
-    static let defaultRide = Ride(id: 0, creator: defaultUser, maxTravelers: 9, minTravelers: 0, departureDatetime: "2020-03-27T00:00:00Z", driver: defaultUser, isFlexible: true, path: defaultPath, type: "rideshare")
+    static let defaultRide = Ride(id: 0, creator: defaultUser, maxTravelers: 9, minTravelers: 0, departureDatetime: "2020-03-27T00:00:00Z", description: "", driver: defaultUser, isFlexible: true, path: defaultPath, type: "rideshare")
     
     static let defaultTruncRide = TruncRide(id: 0, departureDatetime: "2020-03-27T00:00:00Z", path: defaultPath, type: "type")
     

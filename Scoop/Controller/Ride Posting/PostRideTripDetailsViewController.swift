@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol PostRideDelegate {
+    func updateSummary()
+}
+
 class PostRideTripDetailsViewController: PostRideViewController {
+    
+    var summaryDelegate: PostRideDelegate?
     
     private let textFieldHeight = 56
     private let textFieldBorderWidth = 1.0
@@ -80,6 +86,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
             NetworkManager.shared.currentRide.maxTravelers = travelerCountUpper
             NetworkManager.shared.currentRide.departureDatetime = dateFormatter.string(from: self.datePicker.date)
             NetworkManager.shared.currentRide.description = self.detailsTextField.text ?? ""
+            self.summaryDelegate?.updateSummary()
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }

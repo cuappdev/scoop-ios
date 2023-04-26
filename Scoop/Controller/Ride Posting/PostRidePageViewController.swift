@@ -43,6 +43,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
         
         let postRideSummaryVC = PostRideSummaryViewController()
         postRideSummaryVC.containerDelegate = animationDelegate
+        postRideDetailsVC.summaryDelegate = postRideSummaryVC
         
         pages = [
             postRideInitialVC,

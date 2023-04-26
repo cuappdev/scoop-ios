@@ -221,7 +221,7 @@ extension HomeViewController: UITableViewDelegate {
         }
         
         if let driver = currentRide.driver {
-            let fullRide = Ride(id: 0, creator: BaseUser(id: driver.id, netid: driver.netid, firstName: driver.firstName, lastName: driver.lastName, prompts: [], rides: []), maxTravelers: currentRide.maxTravelers, minTravelers: currentRide.minTravelers, departureDatetime: currentRide.departureDatetime, description: currentRide.description, isFlexible: true, path: currentRide.path, type: currentRide.type)
+            let fullRide = Ride(id: 0, creator: BaseUser(id: driver.id, netid: driver.netid, firstName: driver.firstName, lastName: driver.lastName, profilePicUrl: driver.profilePicUrl, grade: driver.grade, pronouns: driver.pronouns, prompts: driver.prompts, rides: []), maxTravelers: currentRide.maxTravelers, minTravelers: currentRide.minTravelers, departureDatetime: currentRide.departureDatetime, description: currentRide.description, isFlexible: true, path: currentRide.path, type: currentRide.type)
             let tripDetailView = TripDetailsViewController(currentRide: fullRide)
             tripDetailView.hideRequestButton()
             tripDetailView.hidesBottomBarWhenPushed = true

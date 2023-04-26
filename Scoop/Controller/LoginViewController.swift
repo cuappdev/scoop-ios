@@ -85,22 +85,13 @@ class LoginViewController: UIViewController {
                     NetworkManager.shared.currentUser.lastName = familyName
                     NetworkManager.userToken = user.accessToken
                     self.getUser()
+                    if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                        scene.didCompleteLogin()
+                    }
                 case .failure:
                     print("Unable to Authorize")
                 }
             }
-            
-            guard let window = UIApplication.shared.windows.first else {
-                return
-            }
-            
-            NotificationCenter.default.post(name: NSNotification.Name("didCompleteLogin"), object: nil)
-            
-            let onboardingVC = OnboardingContainerViewController()
-            onboardingVC.modalPresentationStyle = .fullScreen
-            window.rootViewController?.present(onboardingVC, animated: false)
-            
-            print("User successfully signed in with Cornell email.")
         }
     }
     
@@ -120,10 +111,22 @@ class LoginViewController: UIViewController {
             case.success(let user):
                 NetworkManager.shared.currentUser = user
             case.failure(let error):
-                print(error.localizedDescription)
+                guard let window = UIApplication.shared.windows.first else {
+                    return
+                }
+                
+                NotificationCenter.default.post(name: NSNotification.Name("didCompleteLogin"), object: nil)
+                if GIDSignIn.sharedInstance.hasPreviousSignIn() {
+                    GIDSignIn.sharedInstance.signOut()
+                    self.presentErrorAlert(title: "Failed to Login", message: "Please make sure you have a stable internet connection and try again later")
+                } else {
+                    let onboardingVC = OnboardingContainerViewController()
+                    onboardingVC.modalPresentationStyle = .fullScreen
+                    window.rootViewController?.present(onboardingVC, animated: false)
+                    print(error.localizedDescription)
+                }
             }
         }
     }
-    
     
 }
