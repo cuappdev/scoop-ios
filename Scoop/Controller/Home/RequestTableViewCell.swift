@@ -157,7 +157,7 @@ class RequestTableViewCell: UITableViewCell {
                 case .success(let request):
                     guard let strongSelf = self else { return }
                     
-                    strongSelf.requestDetailLabel.text = "You've declined \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
+                    strongSelf.requestDetailLabel.text = "You've declined \(request.approvee.firstName)'s request to join your drive to \(request.ride.path.endLocationName)"
                     strongSelf.declineButton.isHidden = true
                     strongSelf.acceptButton.isHidden = true
                     
@@ -182,7 +182,7 @@ class RequestTableViewCell: UITableViewCell {
                 case .success(let request):
                     guard let strongSelf = self else { return }
                     
-                    strongSelf.requestDetailLabel.text = "You've accepted \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
+                    strongSelf.requestDetailLabel.text = "You've accepted \(request.approvee.firstName)'s request to join your drive to \(request.ride.path.endLocationName)"
                     strongSelf.declineButton.isHidden = true
                     strongSelf.acceptButton.isHidden = true
 

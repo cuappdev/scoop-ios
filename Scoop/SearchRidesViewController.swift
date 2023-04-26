@@ -118,6 +118,7 @@ class SearchRidesViewController: UIViewController {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         departureDateTextField.inputView = datePicker
         departureDateTextField.addTarget(self, action: #selector(updateDate), for: .touchDown)
+        departureDateTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingDidEnd)
         stackView.addArrangedSubview(departureDateTextField)
         
         datePicker.datePickerMode = .date
@@ -249,6 +250,15 @@ class SearchRidesViewController: UIViewController {
             }
         }
     }
+    
+    @objc func textFieldDidChange(sender: UITextField) {
+        guard let text1 = departureTextField.textField.text, !text1.isEmpty, let text2 = arrivalTextField.textField.text, !text2.isEmpty, let text3 = departureDateTextField.text, !text3.isEmpty else {
+            findTripsButton.backgroundColor = .disabledGreen
+            return
+        }
+        findTripsButton.backgroundColor = .scoopDarkGreen
+        findTripsButton.setTitleColor(.white, for: .normal)
+    }
 
     /// Converts a Date object into String format, where this one is specifically in the YYYY-MM-dd format.
     private func formatDate(dateToConvert: Date) -> String {
@@ -266,15 +276,6 @@ extension SearchRidesViewController: UITextFieldDelegate {
         return false
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        guard let text1 = departureTextField.textField.text, !text1.isEmpty, let text2 = arrivalTextField.textField.text, !text2.isEmpty, let text3 = departureDateTextField.text, !text3.isEmpty else {
-            findTripsButton.backgroundColor = .disabledGreen
-            return
-        }
-        findTripsButton.backgroundColor = .scoopDarkGreen
-        findTripsButton.setTitleColor(.white, for: .normal)
-    }
-    
 }
 
 // MARK: - SearchInitialViewControllerDelegate
@@ -284,9 +285,11 @@ extension SearchRidesViewController: SearchInitialViewControllerDelegate {
         if viewController is DepartureSearchViewController {
             departurePlace = location
             departureTextField.textField.text = location.name
+            self.textFieldDidChange(sender: departureTextField.textField)
         } else if viewController is ArrivalSearchViewController {
             arrivalPlace = location
             arrivalTextField.textField.text = location.name
+            self.textFieldDidChange(sender: arrivalTextField.textField)
         }
     }
 

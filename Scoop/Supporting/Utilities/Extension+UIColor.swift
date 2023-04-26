@@ -30,5 +30,7 @@ extension UIColor {
     
     static let skipButtonColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
     
-    static let offBlack = UIColor(red: 0, green: 0.118, blue: 0.176, alpha: 1)
+    static let offBlack = UIColor(red: 0, green: 30/255, blue: 45/255, alpha: 1)
+    
+    static let labelGray = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1)
 }

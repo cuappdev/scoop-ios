@@ -334,7 +334,6 @@ class PostRideSummaryViewController: PostRideViewController {
     }
     
     @objc private func postRide() {
-        //TODO: Networking Goes here - still needs to be debugged after backend fixes
         let creator = NetworkManager.shared.currentUser
         requestButton.backgroundColor = .disabledGreen
         

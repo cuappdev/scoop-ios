@@ -80,15 +80,18 @@ class PostRideTripDetailsViewController: PostRideViewController {
                   }
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             
-            NetworkManager.shared.currentRide.minTravelers = travelerCountLower
-            NetworkManager.shared.currentRide.maxTravelers = travelerCountUpper
-            NetworkManager.shared.currentRide.departureDatetime = dateFormatter.string(from: self.datePicker.date)
-            NetworkManager.shared.currentRide.description = self.detailsTextField.text ?? ""
-            self.summaryDelegate?.updateSummary()
-            
-            self.delegate?.didTapNext(navCtrl, nextViewController: nil)
+            if travelerCountLower == 0 {
+                self.presentErrorAlert(title: "Error", message: "You cannot have a minimum of 0 travelers!")
+            } else {
+                NetworkManager.shared.currentRide.minTravelers = travelerCountLower
+                NetworkManager.shared.currentRide.maxTravelers = travelerCountUpper
+                NetworkManager.shared.currentRide.departureDatetime = dateFormatter.string(from: date)
+                NetworkManager.shared.currentRide.description = self.detailsTextField.text ?? ""
+                
+                self.delegate?.didTapNext(navCtrl, nextViewController: nil)
+            }
         }
         
         setupStackView()
@@ -141,6 +144,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
+        datePicker.minimumDate = Date()
         datePicker.isHighlighted = false
         datePicker.addTarget(self, action: #selector(updateDate), for: .valueChanged)
         dateTextField.addTarget(self, action: #selector(updateDate), for: .touchDown)

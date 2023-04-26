@@ -24,6 +24,11 @@ class MatchesViewController: UIViewController {
     private let tableView = UITableView()
     private let tripDetailsView = UIView()
     
+    // MARK: Empty State Views
+    private let searchIcon = UIImageView()
+    private let noMatchesLabel = UILabel()
+    private let secondLabel = UILabel()
+    
     // MARK: Identifiers
     private let homeCellIdenitifer = "HomeCell"
     
@@ -40,7 +45,9 @@ class MatchesViewController: UIViewController {
         setupTitleLines()
         setupTripDetails()
         setupFilterButtons()
-        setupTableView()
+//        setupTableView()
+        
+//        setupEmptyState()
     }
     
     init(arrival: String, departure: String, date: String, rides: [Ride]) {
@@ -50,6 +57,12 @@ class MatchesViewController: UIViewController {
         self.departureDate = date
         self.matchedRides = rides
         self.filteredRides = rides
+        
+        if matchedRides.isEmpty {
+            setupEmptyState()
+        } else {
+            setupTableView()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -189,13 +202,13 @@ class MatchesViewController: UIViewController {
         [studentDriverButton, sharedTaxiButton].forEach { button in
             button.setTitleColor(.offBlack, for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
-            button.backgroundColor = .white
-            button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor.offBlack.cgColor
+            button.backgroundColor = .disabledGreen
+//            button.layer.borderWidth = 1
+//            button.layer.borderColor = UIColor.offBlack.cgColor
             button.layer.cornerRadius = 16
         }
         
-        studentDriverButton.setTitle("Student Driver", for: .normal)
+        studentDriverButton.setTitle("Student driver", for: .normal)
         studentDriverButton.addTarget(self, action: #selector(studentDriverClicked), for: .touchUpInside)
         filterView.addSubview(studentDriverButton)
 
@@ -206,7 +219,7 @@ class MatchesViewController: UIViewController {
             make.width.equalTo(buttonWidth)
         }
         
-        sharedTaxiButton.setTitle("Shared Taxi", for: .normal)
+        sharedTaxiButton.setTitle("Shared taxi", for: .normal)
         sharedTaxiButton.addTarget(self, action: #selector(sharedTaxiClicked), for: .touchUpInside)
         filterView.addSubview(sharedTaxiButton)
         
@@ -224,6 +237,48 @@ class MatchesViewController: UIViewController {
             make.leading.trailing.equalTo(tripDetailsView)
             make.height.equalTo(32)
         }
+    }
+    
+    private func setupSearchIcon() {
+        searchIcon.image = UIImage(named: "searchIcon")
+        view.addSubview(searchIcon)
+        
+        searchIcon.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.height.equalTo(60)
+            make.top.equalTo(filterView.snp.bottom).offset(112)
+        }
+    }
+    
+    private func setupNoMatchesLabel() {
+        noMatchesLabel.text = "No matches found"
+        noMatchesLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        view.addSubview(noMatchesLabel)
+        
+        noMatchesLabel.snp.makeConstraints { make in
+            make.top.equalTo(searchIcon.snp.bottom).offset(16)
+            make.centerX.equalToSuperview()
+        }
+    }
+    
+    private func setupSecondLabel() {
+        secondLabel.text = "We're all scooped out at the moment"
+        secondLabel.font = .systemFont(ofSize: 16, weight: .regular)
+        secondLabel.textColor = .labelGray
+        secondLabel.textAlignment = .center
+        view.addSubview(secondLabel)
+        
+        secondLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(noMatchesLabel.snp.bottom).offset(16)
+            make.width.equalTo(330)
+        }
+    }
+    
+    private func setupEmptyState() {
+        setupSearchIcon()
+        setupNoMatchesLabel()
+        setupSecondLabel()
     }
     
     private func filterRides() {
@@ -249,7 +304,7 @@ class MatchesViewController: UIViewController {
     @objc private func studentDriverClicked() {
         studentDriverButton.isSelected.toggle()
         studentDriverButton.setTitleColor(studentDriverButton.isSelected ? .white : .offBlack, for: .normal)
-        studentDriverButton.backgroundColor = studentDriverButton.isSelected ? .scoopDarkGreen : .white
+        studentDriverButton.backgroundColor = studentDriverButton.isSelected ? .scoopDarkGreen : .disabledGreen
         studentDriverButton.layer.borderColor = studentDriverButton.isSelected ? UIColor.scoopDarkGreen.cgColor : UIColor.offBlack.cgColor
         filterRides()
     }
@@ -257,7 +312,7 @@ class MatchesViewController: UIViewController {
     @objc private func sharedTaxiClicked() {
         sharedTaxiButton.isSelected.toggle()
         sharedTaxiButton.setTitleColor(sharedTaxiButton.isSelected ? .white : .offBlack, for: .normal)
-        sharedTaxiButton.backgroundColor = sharedTaxiButton.isSelected ? .scoopDarkGreen : .white
+        sharedTaxiButton.backgroundColor = sharedTaxiButton.isSelected ? .scoopDarkGreen : .disabledGreen
         sharedTaxiButton.layer.borderColor = sharedTaxiButton.isSelected ? UIColor.scoopDarkGreen.cgColor : UIColor.offBlack.cgColor
         filterRides()
     }
