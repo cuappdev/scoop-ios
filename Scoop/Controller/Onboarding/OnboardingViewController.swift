@@ -140,7 +140,7 @@ class OnboardingViewController: UIViewController {
                 
                 print("Updated: \(prompt.questionName) to \(answer)")
             case .failure(let error):
-                print(error.localizedDescription)
+                print("Error in OnboardingViewController: \(error.localizedDescription)")
             }
         }
     }

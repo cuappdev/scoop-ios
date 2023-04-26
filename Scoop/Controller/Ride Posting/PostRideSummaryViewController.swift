@@ -342,6 +342,7 @@ class PostRideSummaryViewController: PostRideViewController {
             switch response {
             case .success(_):
                 guard let strongSelf = self else { return }
+                
                 strongSelf.dismiss(animated: true)
                 strongSelf.containerDelegate?.navigationController?.popViewController(animated: true)
                 strongSelf.requestButton.backgroundColor = .scoopDarkGreen

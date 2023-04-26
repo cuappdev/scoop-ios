@@ -10,6 +10,7 @@
 		2C09F7E529E07542006003AA /* SearchRidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09F7E429E07542006003AA /* SearchRidesViewController.swift */; };
 		2C09F7E729E085A1006003AA /* ImageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09F7E629E085A1006003AA /* ImageTextField.swift */; };
 		2C12DEB629C64D11003D6683 /* PostRideTripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C12DEB529C64D11003D6683 /* PostRideTripDetailsViewController.swift */; };
+		2C1D968929F89C1000065C78 /* VerifyPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1D968829F89C1000065C78 /* VerifyPhoneNumberViewController.swift */; };
 		2C42B51E290F12B400D053A3 /* Sen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */; };
 		2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C42B520290F767600D053A3 /* Rambla-Regular.ttf */; };
 		2C5672FE29CBE5EB001E37FB /* Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5672FD29CBE5EB001E37FB /* Prompts.swift */; };
@@ -88,6 +89,7 @@
 		2C09F7E629E085A1006003AA /* ImageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextField.swift; sourceTree = "<group>"; };
 		2C0E135E29F0CD0C000ED04C /* Scoop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Scoop.entitlements; sourceTree = "<group>"; };
 		2C12DEB529C64D11003D6683 /* PostRideTripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideTripDetailsViewController.swift; sourceTree = "<group>"; };
+		2C1D968829F89C1000065C78 /* VerifyPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sen-Regular.ttf"; sourceTree = "<group>"; };
 		2C42B520290F767600D053A3 /* Rambla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rambla-Regular.ttf"; sourceTree = "<group>"; };
 		2C5672FD29CBE5EB001E37FB /* Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompts.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				C8EF10C927E2CEE400642B40 /* PreferencesViewController.swift */,
 				C8EF10CB27E2CEF800642B40 /* FavoritesViewController.swift */,
 				C85E2E1C27DBFFFA0004C506 /* ProfilePictureViewController.swift */,
+				2C1D968829F89C1000065C78 /* VerifyPhoneNumberViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				C8D2805727D9670100EDD5D3 /* PostRideSummaryViewController.swift in Sources */,
 				2C12DEB629C64D11003D6683 /* PostRideTripDetailsViewController.swift in Sources */,
 				C8A544C427D18D5400132ACC /* Keys.swift in Sources */,
+				2C1D968929F89C1000065C78 /* VerifyPhoneNumberViewController.swift in Sources */,
 				2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */,
 				C83419EF27E65A4B00491306 /* User.swift in Sources */,
 				2C67E4FC29945E5E00195BB5 /* Constants.swift in Sources */,
