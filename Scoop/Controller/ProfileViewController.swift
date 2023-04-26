@@ -61,11 +61,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
 //        setupEditButton()
         setupProfileImageView()
         setupProfileStackView()
-        if !isBeingPresented {
-            updateUserProfile()
-        } else {
-            updateDriverProfile()
-        }
+        isBeingPresented ? updateDriverProfile() : updateUserProfile()
     }
     
     private func setupContainerView() {
@@ -325,7 +321,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     }
     
     private func getUserPreferences() {
-        user?.prompts.forEach({ prompt in
+        user?.prompts.forEach { prompt in
             if prompt.questionName == "Hometown" {
                 hometown = prompt.answer
             } else if prompt.questionName == "Talkative" {
@@ -341,32 +337,34 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
             } else if prompt.questionName == "Stop" {
                 stop = prompt.answer
             }
-        })
+        }
     }
     
     func updateUserProfile() {
-        NetworkManager.shared.getUser { result in
+        NetworkManager.shared.getUser { [weak self] result in
+            guard let strongSelf = self else { return }
+            
             switch result {
             case .success(let user):
                 NetworkManager.shared.currentUser = user
-                self.user = user
-                self.getUserPreferences()
+                strongSelf.user = user
+                strongSelf.getUserPreferences()
                 guard let imageURL = user.profilePicUrl,
                       let pronouns = user.pronouns,
                       let grade = user.grade,
-                      let hometown = self.hometown else { return }
+                      let hometown = strongSelf.hometown else { return }
                 
-                self.profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
-                self.nameLabel.text = "\(user.firstName) \(user.lastName)"
-                self.subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
-                self.phoneLabel.text = user.phoneNumber
-                self.talkativeSlider.value = self.talkative ?? 0
-                self.musicSlider.value = self.music ?? 0
-                self.songSection.label.attributedText = self.makeBoldNormalText(bold: "Song / ", normal: self.song ?? "")
-                self.snackSection.label.attributedText = self.makeBoldNormalText(bold: "Snack / ", normal: self.snack ?? "")
-                self.stopSection.label.attributedText = self.makeBoldNormalText(bold: "Stop / ", normal: self.stop ?? "")
+                strongSelf.profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
+                strongSelf.nameLabel.text = "\(user.firstName) \(user.lastName)"
+                strongSelf.subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
+                strongSelf.phoneLabel.text = user.phoneNumber
+                strongSelf.talkativeSlider.value = strongSelf.talkative ?? 0
+                strongSelf.musicSlider.value = strongSelf.music ?? 0
+                strongSelf.songSection.label.attributedText = strongSelf.makeBoldNormalText(bold: "Song / ", normal: strongSelf.song ?? "")
+                strongSelf.snackSection.label.attributedText = strongSelf.makeBoldNormalText(bold: "Snack / ", normal: strongSelf.snack ?? "")
+                strongSelf.stopSection.label.attributedText = strongSelf.makeBoldNormalText(bold: "Stop / ", normal: strongSelf.stop ?? "")
             case .failure(let error):
-                print(error.localizedDescription)
+                print("Error in ProfileViewController: \(error.localizedDescription)")
             }
         }
     }
@@ -383,8 +381,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         nameLabel.text = "\(driver.firstName) \(driver.lastName)"
         subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
         phoneLabel.text = user?.phoneNumber
-        talkativeSlider.value = self.talkative ?? 0
-        musicSlider.value = self.music ?? 0
+        talkativeSlider.value = self.talkative ?? 0.5
+        musicSlider.value = self.music ?? 0.5
         songSection.label.attributedText = self.makeBoldNormalText(bold: "Song / ", normal: self.song ?? "")
         snackSection.label.attributedText = self.makeBoldNormalText(bold: "Snack / ", normal: self.snack ?? "")
         stopSection.label.attributedText = self.makeBoldNormalText(bold: "Stop / ", normal: self.stop ?? "")

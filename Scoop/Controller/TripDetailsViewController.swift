@@ -349,20 +349,22 @@ class TripDetailsViewController: UIViewController {
             let closeAction = UIAlertAction(title: "Close", style: .default) { UIAlertAction in
                 strongSelf.navigationController?.popViewController(animated: true)
             }
+            
             let viewAction = UIAlertAction(title: "View Profile", style: .default) { UIAlertAction in
                 strongSelf.present(ProfileViewController(user: currentRide.creator), animated: true)
                 strongSelf.navigationController?.popViewController(animated: true)
             }
+            
             alertVC.addAction(closeAction)
             alertVC.addAction(viewAction)
             alertVC.view.tintColor = .scoopDarkGreen
             strongSelf.present(alertVC, animated: true)
         }
     }
-
     
     @objc private func profileTap() {
         guard let driver = currentRide?.creator else { return }
+        
         let profileVC = ProfileViewController(user: driver)
         profileDelegate = profileVC
         profileDelegate?.updateDriverProfile()
