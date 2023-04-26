@@ -179,6 +179,13 @@ extension FavoritesViewController: UITextFieldDelegate {
         } else {
             stopLabel.textColor = .textFieldBorderColor
         }
+        
+        var responses: [String] = []
+        [snackTextField, songTextField, stopTextField].forEach { textField in
+            responses.append(textField.text ?? "")
+        }
+        
+        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
     }
     
 }

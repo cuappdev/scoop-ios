@@ -37,6 +37,7 @@ class ProfilePictureViewController: OnboardingViewController {
             self.loadingSpinner.startAnimating()
             guard let image = self.pictureImageView.image else {
                 self.presentErrorAlert(title: "Error", message: "Please select an image.")
+                self.loadingSpinner.stopAnimating()
                 return
             }
             
@@ -134,7 +135,7 @@ class ProfilePictureViewController: OnboardingViewController {
         } else {
             uploadButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64)
         }
-        uploadButton.backgroundColor = UIColor.scoopDarkGreen
+        uploadButton.backgroundColor = UIColor.disabledGreen
         uploadButton.layer.cornerRadius = 25
         uploadButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         uploadButton.addAction(nextAction ?? UIAction(handler: { _ in
@@ -209,6 +210,8 @@ extension ProfilePictureViewController: UINavigationControllerDelegate, UIImageP
         }
         
         pictureImageView.image = image
+        uploadButton.backgroundColor = .scoopDarkGreen
+        uploadButton.setTitleColor(.white, for: .normal)
         dismiss(animated: true, completion: nil)
     }
     

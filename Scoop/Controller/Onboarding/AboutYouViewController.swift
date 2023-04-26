@@ -246,6 +246,13 @@ extension AboutYouViewController: UITextFieldDelegate {
         } else {
             yearLabel.textColor = .textFieldBorderColor
         }
+        
+        var responses: [String] = []
+        [nameTextField, pronounsTextField, hometownTextField, yearTextField].forEach { textField in
+            responses.append(textField.text ?? "")
+        }
+        
+        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
     }
     
 }

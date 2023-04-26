@@ -429,4 +429,13 @@ extension PostRideTripDetailsViewController: UITextViewDelegate {
         detailsLabel.textColor = .textFieldBorderColor
     }
     
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        var responses: [String] = []
+        [dateTextField, timeTextField, minTextField, maxTextField].forEach { textField in
+            responses.append(textField.text ?? "")
+        }
+        
+        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
+    }
+    
 }
