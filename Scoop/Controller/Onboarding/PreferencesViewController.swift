@@ -35,6 +35,8 @@ class PreferencesViewController: OnboardingViewController {
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
         }))
+        
+        setNextButtonColor(disabled: false)
     }
     
     private func setupStackView() {

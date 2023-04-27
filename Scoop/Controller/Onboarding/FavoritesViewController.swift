@@ -33,10 +33,12 @@ class FavoritesViewController: OnboardingViewController {
                       return
                   }
             
-            self.addPrompt(name: "Snack", placeholder: "Chips", answer: snack)
-            self.addPrompt(name: "Song", placeholder: "Favorite Song", answer: song)
-            self.addPrompt(name: "Stop", placeholder: "Gates Hall", answer: stop)
-            
+            let snackTrimmed = snack.trimmingCharacters(in: .whitespacesAndNewlines)
+            let songTrimmed = song.trimmingCharacters(in: .whitespacesAndNewlines)
+            let stopTrimmed = stop.trimmingCharacters(in: .whitespacesAndNewlines)
+            self.addPrompt(name: "Snack", placeholder: "Chips", answer: snackTrimmed)
+            self.addPrompt(name: "Song", placeholder: "Favorite Song", answer: songTrimmed)
+            self.addPrompt(name: "Stop", placeholder: "Gates Hall", answer: stopTrimmed)
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
@@ -177,6 +179,13 @@ extension FavoritesViewController: UITextFieldDelegate {
         } else {
             stopLabel.textColor = .textFieldBorderColor
         }
+        
+        var responses: [String] = []
+        [snackTextField, songTextField, stopTextField].forEach { textField in
+            responses.append(textField.text ?? "")
+        }
+        
+        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
     }
     
 }

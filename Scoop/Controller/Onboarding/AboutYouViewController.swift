@@ -45,7 +45,8 @@ class AboutYouViewController: OnboardingViewController {
                   }
             NetworkManager.shared.currentUser.pronouns = pronouns
             NetworkManager.shared.currentUser.grade = year
-            self.addPrompt(name: "Hometown", placeholder: "Ithaca", answer: hometown)
+            let hometownTrimmed = hometown.trimmingCharacters(in: .whitespacesAndNewlines)
+            self.addPrompt(name: "Hometown", placeholder: "Ithaca", answer: hometownTrimmed)
             
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
@@ -198,11 +199,11 @@ class AboutYouViewController: OnboardingViewController {
     }
     
     @objc private func updatePronouns() {
-        pronounsTextField.text = pronouns.first
+        pronounsTextField.text = pronouns[pronounsPicker.selectedRow(inComponent: 0)]
     }
     
     @objc private func updateYear() {
-        yearTextField.text = years.first
+        yearTextField.text = years[yearPicker.selectedRow(inComponent: 0)]
     }
 
 }
@@ -245,6 +246,13 @@ extension AboutYouViewController: UITextFieldDelegate {
         } else {
             yearLabel.textColor = .textFieldBorderColor
         }
+        
+        var responses: [String] = []
+        [nameTextField, pronounsTextField, hometownTextField, yearTextField].forEach { textField in
+            responses.append(textField.text ?? "")
+        }
+        
+        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
     }
     
 }

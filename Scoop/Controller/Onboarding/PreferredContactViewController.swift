@@ -5,6 +5,7 @@
 //  Created by Reade Plunkett on 3/16/22.
 //
 
+import FirebaseAuth
 import UIKit
 
 class PreferredContactViewController: OnboardingViewController {
@@ -15,6 +16,8 @@ class PreferredContactViewController: OnboardingViewController {
     private let phoneLabel = UILabel()
     private let numberTextField = OnboardingTextField()
     private let formatter = PhoneFormatter()
+    
+    private var isVerified = false
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -40,23 +43,30 @@ class PreferredContactViewController: OnboardingViewController {
                 return
             }
             
-            guard let navCtrl = self.navigationController else {
-                return
-            }
-            
             guard let phoneNumber = self.numberTextField.text, self.validateNumber(value: phoneNumber) else {
                 self.presentErrorAlert(title: "Error", message: "Please enter a valid phone number.")
                 return
             }
             
-            NetworkManager.shared.currentUser.phoneNumber = phoneNumber
-            self.delegate?.didTapNext(navCtrl, nextViewController: nil)
+            if self.isVerified {
+                guard let navCtrl = self.navigationController else {
+                    return
+                }
+                
+                self.delegate?.didTapNext(navCtrl, nextViewController: nil)
+            } else {
+                let verifyVC = VerifyPhoneNumberViewController(phoneNumber: phoneNumber, delegate: self)
+                verifyVC.modalPresentationStyle = .fullScreen
+                self.navigationController?.pushViewController(verifyVC, animated: true)
+            }
         }
         
         backButton.isHidden = false
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
         }))
+        
+        setNextButtonColor(disabled: false)
     }
 
     private func setupStackView() {
@@ -113,9 +123,11 @@ class PreferredContactViewController: OnboardingViewController {
                 self.numberTextField.isHidden = true
                 self.phoneLabel.isHidden = true
                 self.phoneLabel.textColor = .textFieldBorderColor
+                self.setNextButtonColor(disabled: false)
             } else {
                 self.numberTextField.isHidden = false
                 self.phoneLabel.isHidden = false
+                self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.text ?? ""))
             }
         }
         
@@ -192,6 +204,24 @@ extension PreferredContactViewController: UITextFieldDelegate {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
         phoneLabel.textColor = .textFieldBorderColor
+        
+        if textField == numberTextField {
+            self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.text ?? ""))
+        }
+    }
+    
+}
+
+extension PreferredContactViewController: VerificationDelegate {
+    
+    func verificationSuccess(phoneNumber: String) {
+        isVerified = true
+        NetworkManager.shared.currentUser.phoneNumber = phoneNumber
+        guard let navCtrl = self.navigationController else {
+            return
+        }
+        
+        delegate?.didTapNext(navCtrl, nextViewController: nil)
     }
     
 }

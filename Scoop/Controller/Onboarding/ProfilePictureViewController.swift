@@ -37,6 +37,7 @@ class ProfilePictureViewController: OnboardingViewController {
             self.loadingSpinner.startAnimating()
             guard let image = self.pictureImageView.image else {
                 self.presentErrorAlert(title: "Error", message: "Please select an image.")
+                self.loadingSpinner.stopAnimating()
                 return
             }
             
@@ -89,19 +90,21 @@ class ProfilePictureViewController: OnboardingViewController {
               let phoneNumber = user.phoneNumber,
               let pronouns = user.pronouns else { return }
 
-        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: grade, phone_number: phoneNumber, pronouns: pronouns, prof_pic: imageBase64, prompts: answers) { result in
-            switch result {
+        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: grade, phone_number: phoneNumber, pronouns: pronouns, prof_pic: imageBase64, prompts: answers) { [weak self] response in
+            guard let strongSelf = self else { return }
+            
+            switch response {
             case .success(let user):
                 print("\(user.firstName) has been updated")
-                self.dismiss(animated: true)
-                self.containerDelegate?.dismiss(animated: true)
+                strongSelf.dismiss(animated: true)
+                strongSelf.containerDelegate?.dismiss(animated: true)
                 NetworkManager.shared.profileDelegate?.updateUserProfile()
-                self.uploadButton.backgroundColor = .scoopDarkGreen
-                self.loadingSpinner.stopAnimating()
+                strongSelf.uploadButton.backgroundColor = .scoopDarkGreen
+                strongSelf.loadingSpinner.stopAnimating()
             case .failure(let error):
-                print("Failed to Authenticate: \(error.localizedDescription)")
-                self.loadingSpinner.stopAnimating()
-                self.displayUserError()
+                print("Auth Error in ProfilePictureViewController: \(error.localizedDescription)")
+                strongSelf.loadingSpinner.stopAnimating()
+                strongSelf.displayUserError()
                 return
             }
         }
@@ -132,7 +135,7 @@ class ProfilePictureViewController: OnboardingViewController {
         } else {
             uploadButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64)
         }
-        uploadButton.backgroundColor = UIColor.scoopDarkGreen
+        uploadButton.backgroundColor = UIColor.disabledGreen
         uploadButton.layer.cornerRadius = 25
         uploadButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         uploadButton.addAction(nextAction ?? UIAction(handler: { _ in
@@ -207,6 +210,8 @@ extension ProfilePictureViewController: UINavigationControllerDelegate, UIImageP
         }
         
         pictureImageView.image = image
+        uploadButton.backgroundColor = .scoopDarkGreen
+        uploadButton.setTitleColor(.white, for: .normal)
         dismiss(animated: true, completion: nil)
     }
     

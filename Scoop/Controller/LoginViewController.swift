@@ -88,8 +88,8 @@ class LoginViewController: UIViewController {
                     if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                         scene.didCompleteLogin()
                     }
-                case .failure:
-                    print("Unable to Authorize")
+                case .failure(let error):
+                    print("Auth Error in LoginViewController: \(error.localizedDescription)")
                 }
             }
         }
@@ -106,25 +106,25 @@ class LoginViewController: UIViewController {
     }
     
     private func getUser() {
-        NetworkManager.shared.getUser { result in
+        NetworkManager.shared.getUser { [weak self] result in
+            guard let strongSelf = self else { return }
             switch result {
             case.success(let user):
                 NetworkManager.shared.currentUser = user
             case.failure(let error):
-                guard let window = UIApplication.shared.windows.first else {
-                    return
-                }
-                
+                guard let window = UIApplication.shared.windows.first else { return }
                 NotificationCenter.default.post(name: NSNotification.Name("didCompleteLogin"), object: nil)
+                
                 if GIDSignIn.sharedInstance.hasPreviousSignIn() {
                     GIDSignIn.sharedInstance.signOut()
-                    self.presentErrorAlert(title: "Failed to Login", message: "Please make sure you have a stable internet connection and try again later")
+                    strongSelf.presentErrorAlert(title: "Failed to Login", message: "Please make sure you have a stable internet connection and try again later.")
                 } else {
                     let onboardingVC = OnboardingContainerViewController()
                     onboardingVC.modalPresentationStyle = .fullScreen
                     window.rootViewController?.present(onboardingVC, animated: false)
-                    print(error.localizedDescription)
                 }
+                
+                print("Error in LoginViewController: \(error.localizedDescription)")
             }
         }
     }
