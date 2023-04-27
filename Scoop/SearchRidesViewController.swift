@@ -252,7 +252,12 @@ class SearchRidesViewController: UIViewController {
     }
     
     @objc func textFieldDidChange(sender: UITextField) {
-        guard let text1 = departureTextField.textField.text, !text1.isEmpty, let text2 = arrivalTextField.textField.text, !text2.isEmpty, let text3 = departureDateTextField.text, !text3.isEmpty else {
+        guard let text1 = departureTextField.textField.text,
+              !text1.isEmpty,
+              let text2 = arrivalTextField.textField.text,
+              !text2.isEmpty,
+              let text3 = departureDateTextField.text,
+              !text3.isEmpty else {
             findTripsButton.backgroundColor = .disabledGreen
             return
         }

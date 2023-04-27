@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol PostRideSummaryDelegate: AnyObject {
+    func didPostRide()
+}
+
 class PostRideSummaryViewController: PostRideViewController {
     
     private let iconTextSpacing = 10
@@ -45,6 +49,8 @@ class PostRideSummaryViewController: PostRideViewController {
     private let dateContainerView = UIView()
     private let numberTravelersContainerView = UIView()
     private let detailsContainerView = UIView()
+    
+    weak var postDelegate: PostRideSummaryDelegate?
     
     //TODO: Not good practice, but temporary fix. Will Debug later
     override func viewDidAppear(_ animated: Bool) {
@@ -256,7 +262,7 @@ class PostRideSummaryViewController: PostRideViewController {
             make.top.equalTo(departureDateLabel.snp.bottom).inset(-spacing)
         }
         
-        departureDate.text = ride.departureDatetime
+        departureDate.text = formatDate(date: ride.departureDatetime)
         dateContainerView.addSubview(departureDate)
         
         departureDate.snp.makeConstraints { make in
@@ -345,6 +351,8 @@ class PostRideSummaryViewController: PostRideViewController {
                 strongSelf.dismiss(animated: true)
                 strongSelf.containerDelegate?.navigationController?.popViewController(animated: true)
                 strongSelf.requestButton.backgroundColor = .scoopDarkGreen
+                
+                strongSelf.postDelegate?.didPostRide()
             case .failure(let error):
                 print("Unable to post ride: \(error)")
             }
@@ -375,6 +383,19 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
+    private func formatDate(date: String) -> String {
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd"
+        
+        if let date = dateFormatterGet.date(from: date) {
+            return dateFormatterPrint.string(from: date)
+        }
+        // Return the original date string if the conversion was not successfully
+        return date
+    }
 }
 
 extension PostRideSummaryViewController: PostRideDelegate {

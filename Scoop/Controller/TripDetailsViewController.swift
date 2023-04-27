@@ -46,7 +46,6 @@ class TripDetailsViewController: UIViewController {
     private let locationsContainerView = UIView()
     private let dateContainerView = UIView()
     private let numberTravelersContainerView = UIView()
-    private let detailsContainerView = UIView()
     
     init(currentRide: Ride) {
         super.init(nibName: nil, bundle: nil)
@@ -320,8 +319,6 @@ class TripDetailsViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(70)
         }
-        
-        stackView.addArrangedSubview(detailsContainerView)
     }
     
     private func setUpButton() {

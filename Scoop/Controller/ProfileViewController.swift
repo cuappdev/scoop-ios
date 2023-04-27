@@ -57,8 +57,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         getUserPreferences()
         setupHeaderImage()
         setupContainerView()
-        // Commented out because editing functionality is not yet implemented for MVP.
-//        setupEditButton()
+        // MARK: Commented out because editing functionality is not yet implemented for MVP.
+        // setupEditButton()
         setupProfileImageView()
         setupProfileStackView()
         isBeingPresented ? updateDriverProfile() : updateUserProfile()

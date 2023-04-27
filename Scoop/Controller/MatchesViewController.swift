@@ -25,8 +25,8 @@ class MatchesViewController: UIViewController {
     private let tripDetailsView = UIView()
     
     // MARK: Empty State Views
-    private let searchIcon = UIImageView()
     private let noMatchesLabel = UILabel()
+    private let searchIcon = UIImageView()
     private let secondLabel = UILabel()
     
     // MARK: Identifiers

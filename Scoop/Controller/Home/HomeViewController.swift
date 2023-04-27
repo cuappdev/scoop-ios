@@ -19,12 +19,14 @@ class HomeViewController: UIViewController {
     
     // MARK: Empty State Views
     private let noTripsLabel = UILabel()
+    private let searchButton = UILabel()
     private let secondLabel = UILabel()
     private let widePostRideButton = UIButton()
-    private let searchButton = UILabel()
     
     // MARK: Identifers
     private let homeCellIdenitifer = "HomeCell"
+    
+    weak var postDelegate: PostRideSummaryDelegate?
     
     private enum TableSection: String, CaseIterable {
         case activeTrips = "ACTIVE TRIPS"
@@ -42,15 +44,10 @@ class HomeViewController: UIViewController {
         setupHeaderView()
         setupNotificationButton()
         setupRefreshControl()
+        setupTableView()
         setupPostRideButton()
-        
-        // How to make the thread wait until getRides is finished calling
+    
         getRides()
-        if activeRides.isEmpty && pendingRides.isEmpty {
-            setupEmptyState()
-        } else {
-            setupTableView()
-        }
         // Commented out currently because signing out functionality is not yet implemented
         //        setupSignOutButton()
     }
@@ -72,7 +69,6 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func refreshData(refreshControl: UIRefreshControl) {
-        pendingRides = []
         getRides()
         refreshControl.endRefreshing()
     }
@@ -109,6 +105,7 @@ class HomeViewController: UIViewController {
         
         let postRideAction = UIAction { _ in
             let postRideLocationVC = PostRideContainerViewController()
+            postRideLocationVC.postDelegate = self
             postRideLocationVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(postRideLocationVC, animated: true)
         }
@@ -268,15 +265,67 @@ class HomeViewController: UIViewController {
         })
     }
     
+    private func updatePendingRides(requests: [RideRequest]) {
+        pendingRides = []
+        requests.forEach { request in
+            if activeRides.contains(where: { ride in
+                ride == request.ride
+            }) {
+                return
+            } else {
+                var rideCopy = request.ride
+                
+                // Source: https://stackoverflow.com/questions/35700281/date-format-in-swift
+                let dateFormatterGet = DateFormatter()
+                dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                
+                let dateFormatterPrint = DateFormatter()
+                dateFormatterPrint.dateFormat = "MMM dd"
+                
+                if let date = dateFormatterGet.date(from: request.ride.departureDatetime) {
+                    rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
+                }
+                
+                pendingRides.append(rideCopy)
+            }
+        }
+    }
+    
     private func getRides() {
         // MARK: NEEDS TO BE UDPATED ONCE BACKEND CHANGES THE RIDE MODEL TO THE FULL ONE
         NetworkManager.shared.getUser { [weak self] response in
             switch response {
             case .success(let user):
                 guard let strongSelf = self else { return }
+                print("after guard let")
                 strongSelf.updateActiveRides(rides: user.rides)
-                DispatchQueue.main.async {
-                    strongSelf.tableView.reloadData()
+                if strongSelf.activeRides.isEmpty && strongSelf.pendingRides.isEmpty {
+                    strongSelf.tableView.isHidden = true
+                    strongSelf.setupEmptyState()
+                } else {
+                    DispatchQueue.main.async {
+                        strongSelf.tableView.isHidden = false
+                        strongSelf.tableView.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print("Unable to get user: \(error.localizedDescription)")
+            }
+        }
+        
+        NetworkManager.shared.getAllRequests { [weak self] response in
+            switch response {
+            case .success(let requests):
+                guard let strongSelf = self else { return }
+                strongSelf.updatePendingRides(requests: requests.pendingRequests)
+                if strongSelf.activeRides.isEmpty && strongSelf.pendingRides.isEmpty {
+                    strongSelf.tableView.isHidden = true
+                    strongSelf.setupEmptyState()
+                } else {
+                    DispatchQueue.main.async {
+                        strongSelf.tableView.isHidden = false
+                        strongSelf.tableView.reloadData()
+                    }
                 }
             case .failure(let error):
                 print("Unable to get user: \(error.localizedDescription)")
@@ -355,6 +404,14 @@ extension HomeViewController: UITableViewDataSource {
             }
         }
         return cell
+    }
+    
+}
+
+extension HomeViewController: PostRideSummaryDelegate {
+    
+    func didPostRide() {
+        getRides()
     }
     
 }
