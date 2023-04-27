@@ -17,10 +17,13 @@ class PostRideContainerViewController: ViewController {
     let screenRect = UIScreen.main.bounds
     var screenWidth: CGFloat!
     
+    weak var postDelegate: PostRideSummaryDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         pageViewController = PostRidePageViewController(delegate: self)
+        pageViewController.postDelegate = self.postDelegate
         screenWidth = view.frame.width - 24
         view.backgroundColor = .white
         

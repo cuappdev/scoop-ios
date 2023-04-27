@@ -45,7 +45,7 @@ struct TruncRide: Codable {
     let type: String
 }
 
-struct HomeVCRide: Codable {
+struct HomeVCRide: Codable, Equatable {
     let id: Int
     var departureDatetime: String
     let path: Path
@@ -54,6 +54,10 @@ struct HomeVCRide: Codable {
     let maxTravelers: Int
     let minTravelers: Int
     let driver: TruncUser?
+    
+    static func == (lhs: HomeVCRide, rhs: HomeVCRide) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 /// Temporary, just so hardcoded data can still load while networking is not fully implemented

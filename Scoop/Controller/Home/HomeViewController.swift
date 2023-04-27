@@ -17,8 +17,16 @@ class HomeViewController: UIViewController {
     private let notificationButton = UIButton()
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
+    // MARK: Empty State Views
+    private let noTripsLabel = UILabel()
+    private let searchButton = UILabel()
+    private let secondLabel = UILabel()
+    private let widePostRideButton = UIButton()
+    
     // MARK: Identifers
     private let homeCellIdenitifer = "HomeCell"
+    
+    weak var postDelegate: PostRideSummaryDelegate?
     
     private enum TableSection: String, CaseIterable {
         case activeTrips = "ACTIVE TRIPS"
@@ -32,12 +40,13 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+
         setupHeaderView()
-        setupTableView()
-        setupPostRideButton()
         setupNotificationButton()
         setupRefreshControl()
-        
+        setupTableView()
+        setupPostRideButton()
+    
         getRides()
         // Commented out currently because signing out functionality is not yet implemented
         //        setupSignOutButton()
@@ -60,7 +69,6 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func refreshData(refreshControl: UIRefreshControl) {
-        pendingRides = []
         getRides()
         refreshControl.endRefreshing()
     }
@@ -97,6 +105,7 @@ class HomeViewController: UIViewController {
         
         let postRideAction = UIAction { _ in
             let postRideLocationVC = PostRideContainerViewController()
+            postRideLocationVC.postDelegate = self
             postRideLocationVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(postRideLocationVC, animated: true)
         }
@@ -157,6 +166,80 @@ class HomeViewController: UIViewController {
         notificationButton.addAction(checkNotifications, for: .touchUpInside)
     }
     
+    private func setupNoTripsLabel() {
+        noTripsLabel.text = "No trips yet"
+        noTripsLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        view.addSubview(noTripsLabel)
+        
+        noTripsLabel.snp.makeConstraints { make in
+            make.top.equalTo(headerView.snp.bottom).offset(180)
+            make.centerX.equalToSuperview()
+        }
+    }
+    
+    private func setupSecondLabel() {
+        secondLabel.text = "Find other travelers by posting a trip or searching for an existing trip"
+        secondLabel.font = .systemFont(ofSize: 16, weight: .regular)
+        secondLabel.textColor = .labelGray
+        secondLabel.numberOfLines = 0
+        secondLabel.lineBreakMode = .byWordWrapping
+        secondLabel.textAlignment = .center
+        view.addSubview(secondLabel)
+        
+        secondLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(noTripsLabel.snp.bottom).offset(16)
+            make.width.equalTo(330)
+        }
+    }
+    
+    private func setupWidePostRideButton() {
+        widePostRideButton.setAttributedTitle(NSMutableAttributedString(string: "Post trip", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16)]), for: .normal)
+        widePostRideButton.setTitleColor(.white, for: .normal)
+        widePostRideButton.layer.cornerRadius = 25
+        widePostRideButton.backgroundColor = .scoopDarkGreen
+        view.addSubview(widePostRideButton)
+        
+        widePostRideButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(secondLabel.snp.bottom).offset(24)
+            make.width.equalTo(296)
+            make.height.equalTo(50)
+        }
+        
+        let postRideAction = UIAction { _ in
+            let postRideLocationVC = PostRideContainerViewController()
+            postRideLocationVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(postRideLocationVC, animated: true)
+        }
+        widePostRideButton.addAction(postRideAction, for: .touchUpInside)
+    }
+    
+    private func setupSearchButton() {
+        let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
+        searchButton.attributedText = NSAttributedString(string: "Search for trips", attributes: underlineAttribute)
+        searchButton.font = .systemFont(ofSize: 16, weight: .bold)
+        searchButton.textColor = .scoopDarkGreen
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(launchSearch))
+        searchButton.isUserInteractionEnabled = true
+        searchButton.addGestureRecognizer(tapGesture)
+        
+        view.addSubview(searchButton)
+        
+        searchButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(widePostRideButton.snp.bottom).offset(28)
+        }
+    }
+    
+    private func setupEmptyState() {
+        setupNoTripsLabel()
+        setupSecondLabel()
+        setupWidePostRideButton()
+        setupSearchButton()
+    }
+    
     private func signOut() {
         GIDSignIn.sharedInstance.signOut()
         dismiss(animated: true)
@@ -182,20 +265,76 @@ class HomeViewController: UIViewController {
         })
     }
     
+    private func updatePendingRides(requests: [RideRequest]) {
+        pendingRides = []
+        requests.forEach { request in
+            if activeRides.contains(where: { ride in
+                ride == request.ride
+            }) {
+                return
+            } else {
+                var rideCopy = request.ride
+                
+                // Source: https://stackoverflow.com/questions/35700281/date-format-in-swift
+                let dateFormatterGet = DateFormatter()
+                dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                
+                let dateFormatterPrint = DateFormatter()
+                dateFormatterPrint.dateFormat = "MMM dd"
+                
+                if let date = dateFormatterGet.date(from: request.ride.departureDatetime) {
+                    rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
+                }
+                
+                pendingRides.append(rideCopy)
+            }
+        }
+    }
+    
     private func getRides() {
         // MARK: NEEDS TO BE UDPATED ONCE BACKEND CHANGES THE RIDE MODEL TO THE FULL ONE
         NetworkManager.shared.getUser { [weak self] response in
             switch response {
             case .success(let user):
                 guard let strongSelf = self else { return }
+                print("after guard let")
                 strongSelf.updateActiveRides(rides: user.rides)
-                DispatchQueue.main.async {
-                    strongSelf.tableView.reloadData()
+                if strongSelf.activeRides.isEmpty && strongSelf.pendingRides.isEmpty {
+                    strongSelf.tableView.isHidden = true
+                    strongSelf.setupEmptyState()
+                } else {
+                    DispatchQueue.main.async {
+                        strongSelf.tableView.isHidden = false
+                        strongSelf.tableView.reloadData()
+                    }
                 }
             case .failure(let error):
                 print("Unable to get user: \(error.localizedDescription)")
             }
         }
+        
+        NetworkManager.shared.getAllRequests { [weak self] response in
+            switch response {
+            case .success(let requests):
+                guard let strongSelf = self else { return }
+                strongSelf.updatePendingRides(requests: requests.pendingRequests)
+                if strongSelf.activeRides.isEmpty && strongSelf.pendingRides.isEmpty {
+                    strongSelf.tableView.isHidden = true
+                    strongSelf.setupEmptyState()
+                } else {
+                    DispatchQueue.main.async {
+                        strongSelf.tableView.isHidden = false
+                        strongSelf.tableView.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print("Unable to get user: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    @objc private func launchSearch() {
+        tabBarController?.selectedIndex = 1
     }
 }
 // MARK: - UITableViewDelegate
@@ -265,6 +404,14 @@ extension HomeViewController: UITableViewDataSource {
             }
         }
         return cell
+    }
+    
+}
+
+extension HomeViewController: PostRideSummaryDelegate {
+    
+    func didPostRide() {
+        getRides()
     }
     
 }

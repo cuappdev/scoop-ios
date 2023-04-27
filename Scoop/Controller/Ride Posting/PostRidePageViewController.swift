@@ -11,6 +11,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
     
     private var pages = [UIViewController]()
     weak var animationDelegate: AnimationDelegate?
+    weak var postDelegate: PostRideSummaryDelegate?
     
     init(delegate: AnimationDelegate) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -43,6 +44,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
         
         let postRideSummaryVC = PostRideSummaryViewController()
         postRideSummaryVC.containerDelegate = animationDelegate
+        postRideSummaryVC.postDelegate = self.postDelegate
         postRideDetailsVC.summaryDelegate = postRideSummaryVC
         
         pages = [

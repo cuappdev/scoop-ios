@@ -46,7 +46,6 @@ class TripDetailsViewController: UIViewController {
     private let locationsContainerView = UIView()
     private let dateContainerView = UIView()
     private let numberTravelersContainerView = UIView()
-    private let detailsContainerView = UIView()
     
     init(currentRide: Ride) {
         super.init(nibName: nil, bundle: nil)
@@ -263,7 +262,7 @@ class TripDetailsViewController: UIViewController {
             make.top.equalTo(departureDateLabel.snp.bottom).inset(-spacing)
         }
         
-        departureDate.text = ride.departureDatetime
+        departureDate.text = formatDate(date: ride.departureDatetime)
         dateContainerView.addSubview(departureDate)
         
         departureDate.snp.makeConstraints { make in
@@ -320,8 +319,6 @@ class TripDetailsViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(70)
         }
-        
-        stackView.addArrangedSubview(detailsContainerView)
     }
     
     private func setUpButton() {
@@ -389,6 +386,21 @@ class TripDetailsViewController: UIViewController {
         [mailIcon, carIcon, arrivalIcon, departureIcon, calendarIcon, iconSeperator].forEach { image in
             image.contentMode = .scaleAspectFill
         }
+    }
+    
+    /// Reformats a date string to only contain the month and day , i.e. [Mar 26] from "yyyy-MM-dd'T'HH:mm:ssZ" -> "MMM dd"
+    private func formatDate(date: String) -> String {
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd"
+        
+        if let date = dateFormatterGet.date(from: date) {
+            return dateFormatterPrint.string(from: date)
+        }
+        // Return the original date string if the conversion was not successfully
+        return date
     }
     
     func hideRequestButton() {

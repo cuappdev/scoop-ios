@@ -47,12 +47,9 @@ class RequestTableViewCell: UITableViewCell {
             make.leading.equalTo(profileImageView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-15)
             if let request = request?.approved {
-                if request {
-                    make.top.equalTo(profileImageView.snp.top).offset(20)
-                } else {
-                    make.top.equalToSuperview().offset(18)
-                }
+                make.centerY.equalToSuperview()
             }
+            make.top.equalToSuperview().offset(18)
         }
     }
     
@@ -83,7 +80,7 @@ class RequestTableViewCell: UITableViewCell {
             make.leading.equalTo(requestDetailLabel.snp.leading)
             make.width.equalTo(127)
             make.height.equalTo(37)
-            make.top.equalTo(requestDetailLabel.snp.bottom).offset(10)
+            make.top.equalTo(requestDetailLabel.snp.bottom).offset(5)
         }
     }
     
@@ -119,6 +116,10 @@ class RequestTableViewCell: UITableViewCell {
     private func setupViews(request: RideRequest) {
         /** Check to see if you are the approver (the one who needs to accept/deny if not yet already)
          Another users sends THIS user a request to join THIS user's ride. Give option to decline/accept i.e. this user is the APPROVER */
+//        print(NetworkManager.shared.currentUser.id)
+//        print(request.approver.id)
+        print("Approver: \(request.approver.firstName)")
+        print("Approvee: \(request.approvee.firstName)")
         if NetworkManager.shared.currentUser.id == request.approver.id {
             setupProfilePictureView()
             setupRequestDetailLabel()
@@ -129,7 +130,7 @@ class RequestTableViewCell: UITableViewCell {
                 self.requestDetailLabel.text = "You've \(status) \(request.approvee.firstName)'s request to join drive to \(request.ride.path.endLocationName)"
             } else {
                 // approved is NULL - so need to accept/deny the request as the user
-                self.requestDetailLabel.text = "\(request.approvee.firstName) requests to join drive to \(request.ride.path.endLocationName)"
+                self.requestDetailLabel.text = "\(request.approvee.firstName) requests to join your drive to \(request.ride.path.endLocationName)"
                 setupDeclineButton()
                 setupAcceptButton()
             }
@@ -141,7 +142,7 @@ class RequestTableViewCell: UITableViewCell {
             setupRequestDetailLabel()
             
             if let approved = self.request?.approved {
-                self.requestDetailLabel.text = approved ? "\(request.approver.firstName) denied your request to join their drive to \(request.ride.path.endLocationName)" : "\(request.approver.firstName) accepted your request to join their drive to \(request.ride.path.endLocationName)"
+                self.requestDetailLabel.text = approved ? "\(request.approver.firstName) accepted your request to join their drive to \(request.ride.path.endLocationName)" : "\(request.approver.firstName) denied your request to join their drive to \(request.ride.path.endLocationName)"
             } else {
                 // Your request is still pending approval
                 self.requestDetailLabel.text = "Your request to join \(request.approver.firstName)'s ride to \(request.ride.path.endLocationName) is still pending"
@@ -157,7 +158,7 @@ class RequestTableViewCell: UITableViewCell {
                 case .success(let request):
                     guard let strongSelf = self else { return }
                     
-                    strongSelf.requestDetailLabel.text = "You've declined \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
+                    strongSelf.requestDetailLabel.text = "You've declined \(request.approvee.firstName)'s request to join your drive to \(request.ride.path.endLocationName)"
                     strongSelf.declineButton.isHidden = true
                     strongSelf.acceptButton.isHidden = true
                     
@@ -182,7 +183,7 @@ class RequestTableViewCell: UITableViewCell {
                 case .success(let request):
                     guard let strongSelf = self else { return }
                     
-                    strongSelf.requestDetailLabel.text = "You've accepted \(request.approvee.firstName)'s to join your drive to \(request.ride.path.endLocationName)"
+                    strongSelf.requestDetailLabel.text = "You've accepted \(request.approvee.firstName)'s request to join your drive to \(request.ride.path.endLocationName)"
                     strongSelf.declineButton.isHidden = true
                     strongSelf.acceptButton.isHidden = true
 
@@ -201,7 +202,7 @@ class RequestTableViewCell: UITableViewCell {
     }
     
     func configure(request: RideRequest) {
-        if let url = request.approvee.profilePicUrl {
+        if let url = request.approver.profilePicUrl {
             profileImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "emptyimage"))
         }
         self.request = request
