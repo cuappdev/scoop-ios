@@ -13,7 +13,7 @@ class PostRideContainerViewController: ViewController {
     
     var pageViewController: PostRidePageViewController!
     let carImageView = UIImageView(image: UIImage(named: "car"))
-    let dotsImageView = UIImageView(image: UIImage(named: "cardots2"))
+    let dotsImageView = UIImageView(image: UIImage(named: "Post0"))
     let screenRect = UIScreen.main.bounds
     var screenWidth: CGFloat!
     
@@ -104,6 +104,12 @@ extension PostRideContainerViewController: AnimationDelegate {
             self.carImageView.transform = self.carImageView.transform.concatenating (
                 CGAffineTransform(translationX: endX - startX, y: 0.0)
             )
+        }
+    }
+    
+    func animateTrack(name: String, frame: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            self.dotsImageView.image = UIImage(named: "\(name)\(frame)")
         }
     }
     

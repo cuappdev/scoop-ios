@@ -116,7 +116,7 @@ class HomeTableViewCell: UITableViewCell {
         dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "MMM dd"
+        dateFormatterPrint.dateFormat = "MMM d, h:mm a"
         
         if let date = dateFormatterGet.date(from: date) {
             return dateFormatterPrint.string(from: date)

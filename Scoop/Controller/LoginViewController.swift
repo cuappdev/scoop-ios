@@ -13,6 +13,7 @@ class LoginViewController: UIViewController {
     
     private let backgroundImageView = UIImageView()
     private let greenSignInButton = UIButton()
+    private let loadingSpinner = UIActivityIndicatorView(style: .large)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,20 @@ class LoginViewController: UIViewController {
         
         setupBackgroundImage()
         setupGreenSignInButton()
+        setupLoadingSpinner()
+    }
+    
+    private func setupLoadingSpinner() {
+        loadingSpinner.backgroundColor = .black
+        loadingSpinner.layer.opacity = 0.5
+        loadingSpinner.layer.cornerRadius = 10
+        loadingSpinner.color = .white
+        view.addSubview(loadingSpinner)
+        
+        loadingSpinner.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(70)
+        }
     }
     
     private func setupGreenSignInButton() {
@@ -77,6 +92,8 @@ class LoginViewController: UIViewController {
                 return
             }
             
+            self.loadingSpinner.startAnimating()
+            
             NetworkManager.shared.authenticateUser(googleID: userID, email: email, firstName: firstName, lastName: familyName, id_token: idtoken) { result in
                 switch result {
                 case .success(let user):
@@ -85,11 +102,10 @@ class LoginViewController: UIViewController {
                     NetworkManager.shared.currentUser.lastName = familyName
                     NetworkManager.userToken = user.accessToken
                     self.getUser()
-                    if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                        scene.didCompleteLogin()
-                    }
                 case .failure(let error):
                     print("Auth Error in LoginViewController: \(error.localizedDescription)")
+                    self.loadingSpinner.stopAnimating()
+                    self.presentErrorAlert(title: "Failed to Login", message: "Please make sure you have a stable internet connection and try again later.")
                 }
             }
         }
@@ -111,6 +127,7 @@ class LoginViewController: UIViewController {
             switch result {
             case.success(let user):
                 NetworkManager.shared.currentUser = user
+                strongSelf.checkUserOnboarded()
             case.failure(let error):
                 guard let window = UIApplication.shared.windows.first else { return }
                 NotificationCenter.default.post(name: NSNotification.Name("didCompleteLogin"), object: nil)
@@ -124,8 +141,28 @@ class LoginViewController: UIViewController {
                     window.rootViewController?.present(onboardingVC, animated: false)
                 }
                 
+                strongSelf.loadingSpinner.stopAnimating()
                 print("Error in LoginViewController: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    private func checkUserOnboarded() {
+        let user = NetworkManager.shared.currentUser
+        guard let grade = user.grade, !grade.isEmpty,
+              let pronouns = user.pronouns, !pronouns.isEmpty, (user.prompts.count == 6) else {
+            guard let window = UIApplication.shared.windows.first else { return }
+            
+            let onboardingVC = OnboardingContainerViewController()
+            onboardingVC.modalPresentationStyle = .fullScreen
+            window.rootViewController?.present(onboardingVC, animated: false)
+            loadingSpinner.stopAnimating()
+            return
+        }
+        
+        if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            loadingSpinner.stopAnimating()
+            scene.didCompleteLogin()
         }
     }
     

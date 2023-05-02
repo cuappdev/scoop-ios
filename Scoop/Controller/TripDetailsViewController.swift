@@ -310,9 +310,10 @@ class TripDetailsViewController: UIViewController {
         stackView.addArrangedSubview(detailsLabel)
         
         detailsTextView.text = ride.description
-        detailsTextView.font = UIFont(name: "SFPro", size: 16)
+        detailsTextView.font = .systemFont(ofSize: 16)
         detailsTextView.textColor = .black
         detailsTextView.isEditable = false
+        detailsTextView.isSelectable = false
         stackView.addArrangedSubview(detailsTextView)
 
         detailsTextView.snp.makeConstraints { make in
@@ -394,7 +395,7 @@ class TripDetailsViewController: UIViewController {
         dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "MMM dd"
+        dateFormatterPrint.dateFormat = "MMM d, h:mm a"
         
         if let date = dateFormatterGet.date(from: date) {
             return dateFormatterPrint.string(from: date)

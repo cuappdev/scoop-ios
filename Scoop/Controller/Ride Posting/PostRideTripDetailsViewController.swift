@@ -92,6 +92,8 @@ class PostRideTripDetailsViewController: PostRideViewController {
                 
                 self.delegate?.didTapNext(navCtrl, nextViewController: nil)
             }
+            
+            self.summaryDelegate?.updateSummary()
         }
         
         setupStackView()

@@ -76,6 +76,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
             if viewControllerIndex < pages.count - 1 {
                 let vc = pages[viewControllerIndex + 1]
                 animationDelegate?.animateCar(startPage: viewControllerIndex, endPage: viewControllerIndex + 1)
+                animationDelegate?.animateTrack(name: "Post", frame: viewControllerIndex + 1)
                 setViewControllers([vc], direction: .forward, animated: true, completion: nil)
             }
         }
@@ -88,6 +89,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
             if viewControllerIndex > 0 {
                 let vc = pages[viewControllerIndex - 1]
                 animationDelegate?.animateCar(startPage: viewControllerIndex, endPage: viewControllerIndex - 1)
+                animationDelegate?.animateTrack(name: "Post", frame: viewControllerIndex - 1)
                 setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
             }
         }
