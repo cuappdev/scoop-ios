@@ -55,6 +55,7 @@ class PostRideSummaryViewController: PostRideViewController {
     //TODO: Not good practice, but temporary fix. Will Debug later
     override func viewDidAppear(_ animated: Bool) {
         updateBackButton()
+        updateSummary()
     }
     
     override func viewDidLoad() {
@@ -312,9 +313,10 @@ class PostRideSummaryViewController: PostRideViewController {
         stackView.setCustomSpacing(1, after: detailsLabel)
         
         detailsTextView.text = ride.description
-        detailsTextView.font = UIFont(name: "SFProDisplay-Regular", size: 16)
+        detailsTextView.font = .systemFont(ofSize: 16)
         detailsTextView.textColor = .black
         detailsTextView.isEditable = false
+        detailsTextView.isSelectable = false
         stackView.addArrangedSubview(detailsTextView)
 
         detailsTextView.snp.makeConstraints { make in
@@ -388,7 +390,7 @@ class PostRideSummaryViewController: PostRideViewController {
         dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "MMM dd"
+        dateFormatterPrint.dateFormat = "MMM d, h:mm a"
         
         if let date = dateFormatterGet.date(from: date) {
             return dateFormatterPrint.string(from: date)
@@ -404,7 +406,7 @@ extension PostRideSummaryViewController: PostRideDelegate {
         driverType.text = currentRide.type
         departureLocationLabel.text = currentRide.path.startLocationName
         arrivalLocationLabel.text = currentRide.path.endLocationName
-        departureDate.text = currentRide.departureDatetime
+        departureDate.text = formatDate(date: currentRide.departureDatetime)
         numberTravelers.text = "\(currentRide.minTravelers) to \(currentRide.maxTravelers) people"
         detailsTextView.text = currentRide.description
     }

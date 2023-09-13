@@ -52,6 +52,7 @@ class OnboardingContainerViewController: ViewController {
 }
 
 extension OnboardingContainerViewController: AnimationDelegate {
+    
     func animateCar(startPage: Int, endPage: Int) {
         let pageCount : Double = 5
         let startX = screenWidth * screenMultiplier * CGFloat(startPage) / pageCount
@@ -60,6 +61,12 @@ extension OnboardingContainerViewController: AnimationDelegate {
             self.carImageView.transform = self.carImageView.transform.concatenating (
                 CGAffineTransform(translationX: endX - startX, y: 0.0)
             )
+        }
+    }
+    
+    func animateTrack(name: String, frame: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            self.dotsImageView.image = UIImage(named: "\(name)\(frame)")
         }
     }
     

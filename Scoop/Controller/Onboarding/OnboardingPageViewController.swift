@@ -64,6 +64,7 @@ class OnboardingPageViewController: UIPageViewController {
             if viewControllerIndex < pages.count - 1 {
                 let vc = pages[viewControllerIndex + 1]
                 animationDelegate?.animateCar(startPage: viewControllerIndex, endPage: viewControllerIndex + 1)
+                animationDelegate?.animateTrack(name: "Onboarding", frame: viewControllerIndex + 1)
                 self.setViewControllers([vc], direction: .forward, animated: true, completion: nil)
             }
         }
@@ -76,6 +77,7 @@ class OnboardingPageViewController: UIPageViewController {
             if viewControllerIndex > 0 {
                 let vc = pages[viewControllerIndex - 1]
                 animationDelegate?.animateCar(startPage: viewControllerIndex, endPage: viewControllerIndex - 1)
+                animationDelegate?.animateTrack(name: "Onboarding", frame: viewControllerIndex - 1)
                 self.setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
             }
         }
@@ -142,4 +144,5 @@ extension OnboardingPageViewController: OnboardingDelegate {
 
 protocol AnimationDelegate: UIViewController {
     func animateCar(startPage: Int, endPage: Int)
+    func animateTrack(name: String, frame: Int)
 }

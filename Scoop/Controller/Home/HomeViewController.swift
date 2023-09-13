@@ -207,12 +207,14 @@ class HomeViewController: UIViewController {
             make.height.equalTo(50)
         }
         
-        let postRideAction = UIAction { _ in
-            let postRideLocationVC = PostRideContainerViewController()
-            postRideLocationVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(postRideLocationVC, animated: true)
-        }
-        widePostRideButton.addAction(postRideAction, for: .touchUpInside)
+        widePostRideButton.addTarget(self, action: #selector(postRideAction), for: .touchUpInside)
+    }
+    
+    @objc private func postRideAction() {
+        let postRideLocationVC = PostRideContainerViewController()
+        postRideLocationVC.postDelegate = self
+        postRideLocationVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(postRideLocationVC, animated: true)
     }
     
     private func setupSearchButton() {
@@ -255,7 +257,7 @@ class HomeViewController: UIViewController {
             dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             
             let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "MMM dd"
+            dateFormatterPrint.dateFormat = "MMM d"
             
             if let date = dateFormatterGet.date(from: ride.departureDatetime) {
                 rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
@@ -280,7 +282,7 @@ class HomeViewController: UIViewController {
                 dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                 
                 let dateFormatterPrint = DateFormatter()
-                dateFormatterPrint.dateFormat = "MMM dd"
+                dateFormatterPrint.dateFormat = "MMM d"
                 
                 if let date = dateFormatterGet.date(from: request.ride.departureDatetime) {
                     rideCopy.departureDatetime = dateFormatterPrint.string(from: date)
@@ -304,6 +306,7 @@ class HomeViewController: UIViewController {
                     strongSelf.setupEmptyState()
                 } else {
                     DispatchQueue.main.async {
+                        strongSelf.removeEmptyState()
                         strongSelf.tableView.isHidden = false
                         strongSelf.tableView.reloadData()
                     }
@@ -323,6 +326,7 @@ class HomeViewController: UIViewController {
                     strongSelf.setupEmptyState()
                 } else {
                     DispatchQueue.main.async {
+                        strongSelf.removeEmptyState()
                         strongSelf.tableView.isHidden = false
                         strongSelf.tableView.reloadData()
                     }
@@ -331,6 +335,13 @@ class HomeViewController: UIViewController {
                 print("Unable to get user: \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func removeEmptyState() {
+        noTripsLabel.isHidden = true
+        searchButton.isHidden = true
+        secondLabel.isHidden = true
+        widePostRideButton.isHidden = true
     }
     
     @objc private func launchSearch() {

@@ -62,9 +62,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     NetworkManager.userToken = user.accessToken
                     print("token: \(user.accessToken)")
                     self.getUser()
-                    self.didCompleteLogin()
                 case .failure(let error):
-                    self.window?.rootViewController = LoginViewController()
+                    let loginVC = LoginViewController()
+                    self.window?.rootViewController = loginVC
+                    loginVC.presentErrorAlert(title: "Failed to Restore Login", message: "Please make sure you have a stable internet connection and try again later.")
                     print("Scene Delegate Auth Error: \(error.localizedDescription)")
                 }
             }
@@ -72,12 +73,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func getUser() {
-        NetworkManager.shared.getUser { result in
+        NetworkManager.shared.getUser { [weak self] result in
+            guard let strongSelf = self else { return }
+            
             switch result {
             case.success(let user):
                 NetworkManager.shared.currentUser = user
+                strongSelf.checkUserOnboarded()
             case.failure(let error):
-                self.window?.rootViewController = LoginViewController()
+                strongSelf.window?.rootViewController = LoginViewController()
                 print(error.localizedDescription)
             }
         }
@@ -133,6 +137,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let index = email.index(strIndex, offsetBy: -1)
         let netID = String(email[...index])
         NetworkManager.shared.currentUser.netid = netID
+    }
+    
+    private func checkUserOnboarded() {
+        let user = NetworkManager.shared.currentUser
+        guard let grade = user.grade, !grade.isEmpty,
+              let pronouns = user.pronouns, !pronouns.isEmpty, (user.prompts.count == 6) else {
+            let loginVC = LoginViewController()
+            self.window?.rootViewController = loginVC
+            return
+        }
+        
+        didCompleteLogin()
     }
     
 }

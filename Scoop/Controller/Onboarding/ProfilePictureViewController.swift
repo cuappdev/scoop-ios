@@ -101,6 +101,9 @@ class ProfilePictureViewController: OnboardingViewController {
                 NetworkManager.shared.profileDelegate?.updateUserProfile()
                 strongSelf.uploadButton.backgroundColor = .scoopDarkGreen
                 strongSelf.loadingSpinner.stopAnimating()
+                if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                    scene.didCompleteLogin()
+                }
             case .failure(let error):
                 print("Auth Error in ProfilePictureViewController: \(error.localizedDescription)")
                 strongSelf.loadingSpinner.stopAnimating()
