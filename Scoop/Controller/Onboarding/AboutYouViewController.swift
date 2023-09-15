@@ -9,6 +9,8 @@ import UIKit
 
 class AboutYouViewController: OnboardingViewController {
     
+    // MARK: - Views
+    
     private let stackView = UIStackView()
     private let nameTextField = OnboardingTextField()
     private let pronounsTextField = OnboardingTextField()
@@ -26,6 +28,8 @@ class AboutYouViewController: OnboardingViewController {
     private let pronouns = ["He/Him", "She/Her", "They/Them", "Other"]
     private let years = ["Freshman", "Sophomore", "Junior", "Senior", "Grad Student"]
 
+    // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -61,10 +65,11 @@ class AboutYouViewController: OnboardingViewController {
         
     }
     
+    // MARK: - Setup View Functions
+    
     private func setupStackView() {
         var stackViewMultiplier = 0.20
         let leadingTrailingInset = 32
-        let spacing = 12.0
         let screenSize = UIScreen.main.bounds
         let textFieldBorderWidth = 1.0
         let textFieldCornerRadius = 4.0
@@ -197,6 +202,8 @@ class AboutYouViewController: OnboardingViewController {
             make.width.equalTo(70)
         }
     }
+    
+    // MARK: - Helper Functions
     
     @objc private func updatePronouns() {
         pronounsTextField.text = pronouns[pronounsPicker.selectedRow(inComponent: 0)]

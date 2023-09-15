@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Template View Controller class that contains shared functions needed for the Post Ride Flow
 class PostRideViewController: OnboardingViewController {
     
     weak var containerDelegate: AnimationDelegate?

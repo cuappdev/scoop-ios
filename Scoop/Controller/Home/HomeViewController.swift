@@ -10,20 +10,23 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    // MARK: Views
+    // MARK: - Views
+    
     private var headerView = UIImageView()
     private let postRideButton = UIButton()
     private let signOutButton = UIButton()
     private let notificationButton = UIButton()
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
-    // MARK: Empty State Views
+    // MARK: - Empty State Views
+    
     private let noTripsLabel = UILabel()
     private let searchButton = UILabel()
     private let secondLabel = UILabel()
     private let widePostRideButton = UIButton()
     
-    // MARK: Identifers
+    // MARK: - Identifers
+    
     private let homeCellIdenitifer = "HomeCell"
     
     weak var postDelegate: PostRideSummaryDelegate?
@@ -33,9 +36,12 @@ class HomeViewController: UIViewController {
         case pendingTrips = "PENDING TRIPS"
     }
     
-    // MARK: Data
+    // MARK: - Data
+    
     private var activeRides = [HomeVCRide]()
     private var pendingRides = [HomeVCRide]()
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +67,8 @@ class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupRefreshControl() {
         let refreshControl = UIRefreshControl()
@@ -210,13 +218,6 @@ class HomeViewController: UIViewController {
         widePostRideButton.addTarget(self, action: #selector(postRideAction), for: .touchUpInside)
     }
     
-    @objc private func postRideAction() {
-        let postRideLocationVC = PostRideContainerViewController()
-        postRideLocationVC.postDelegate = self
-        postRideLocationVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(postRideLocationVC, animated: true)
-    }
-    
     private func setupSearchButton() {
         let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
         searchButton.attributedText = NSAttributedString(string: "Search for trips", attributes: underlineAttribute)
@@ -240,6 +241,15 @@ class HomeViewController: UIViewController {
         setupSecondLabel()
         setupWidePostRideButton()
         setupSearchButton()
+    }
+    
+    // MARK: - Helper Functions
+    
+    @objc private func postRideAction() {
+        let postRideLocationVC = PostRideContainerViewController()
+        postRideLocationVC.postDelegate = self
+        postRideLocationVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(postRideLocationVC, animated: true)
     }
     
     private func signOut() {

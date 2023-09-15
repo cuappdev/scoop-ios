@@ -11,6 +11,8 @@ class ProfilePictureViewController: OnboardingViewController {
     
     weak var containerDelegate: AnimationDelegate?
     
+    // MARK: - Views
+    
     private let imagePicker = UIImagePickerController()
     private let titleLabel = UILabel()
     private let pictureImageView = UIImageView()
@@ -18,6 +20,8 @@ class ProfilePictureViewController: OnboardingViewController {
     private let skipButton = UIButton()
     private let uploadButton = UIButton()
     private let loadingSpinner = UIActivityIndicatorView(style: .large)
+    
+    // MARK: - Initializers
     
     init(containerDelegate: AnimationDelegate?) {
         super.init(nibName: nil, bundle: nil)
@@ -27,6 +31,8 @@ class ProfilePictureViewController: OnboardingViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +59,8 @@ class ProfilePictureViewController: OnboardingViewController {
         setupButtons()
     }
     
+    // MARK: - Setup View Functions
+    
     private func setupImagePicker() {
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -77,49 +85,6 @@ class ProfilePictureViewController: OnboardingViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(uploadProfilePicture))
         pictureImageView.addGestureRecognizer(tapGesture)
-    }
-    
-    private func updateAuthenticatedUser(image: UIImage) {
-        let imageBase64 = convertImage(image: image)
-        uploadButton.backgroundColor = .disabledGreen
-        
-        NetworkManager.shared.currentUser.profilePicUrl = imageBase64
-        let user = NetworkManager.shared.currentUser
-        let answers = NetworkManager.shared.userPromptAnswers
-        guard let grade = user.grade,
-              let phoneNumber = user.phoneNumber,
-              let pronouns = user.pronouns else { return }
-
-        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: grade, phone_number: phoneNumber, pronouns: pronouns, prof_pic: imageBase64, prompts: answers) { [weak self] response in
-            guard let strongSelf = self else { return }
-            
-            switch response {
-            case .success(let user):
-                print("\(user.firstName) has been updated")
-                strongSelf.dismiss(animated: true)
-                strongSelf.containerDelegate?.dismiss(animated: true)
-                NetworkManager.shared.profileDelegate?.updateUserProfile()
-                strongSelf.uploadButton.backgroundColor = .scoopDarkGreen
-                strongSelf.loadingSpinner.stopAnimating()
-                if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                    scene.didCompleteLogin()
-                }
-            case .failure(let error):
-                print("Auth Error in ProfilePictureViewController: \(error.localizedDescription)")
-                strongSelf.loadingSpinner.stopAnimating()
-                strongSelf.displayUserError()
-                return
-            }
-        }
-        
-        DispatchQueue.main.async {
-            NetworkManager.shared.profileDelegate?.updateUserProfile()
-        }
-    }
-    
-    private func convertImage (image: UIImage) -> String {
-        let base64 = image.jpegData(compressionQuality: 0.5)?.base64EncodedString() ?? ""
-        return "data:image/png;base64," + base64
     }
     
     private func setupButtons() {
@@ -180,10 +145,6 @@ class ProfilePictureViewController: OnboardingViewController {
         }
     }
     
-    private func displayUserError() {
-        presentErrorAlert(title: "Unable to Create Account", message: "There was an error while creating your account. Please try again at another time.")
-    }
-    
     private func setupProfileButton() {
         profileButton.setImage(UIImage(named: "profilebutton"), for: .normal)
         profileButton.clipsToBounds = true
@@ -197,12 +158,61 @@ class ProfilePictureViewController: OnboardingViewController {
         }
     }
     
+    // MARK: - Helper Functions
+    
+    private func updateAuthenticatedUser(image: UIImage) {
+        let imageBase64 = convertImage(image: image)
+        uploadButton.backgroundColor = .disabledGreen
+        
+        NetworkManager.shared.currentUser.profilePicUrl = imageBase64
+        let user = NetworkManager.shared.currentUser
+        let answers = NetworkManager.shared.userPromptAnswers
+        guard let grade = user.grade,
+              let phoneNumber = user.phoneNumber,
+              let pronouns = user.pronouns else { return }
+
+        NetworkManager.shared.updateAuthenticatedUser(netid: user.netid, first_name: user.firstName, last_name: user.lastName, grade: grade, phone_number: phoneNumber, pronouns: pronouns, prof_pic: imageBase64, prompts: answers) { [weak self] response in
+            guard let strongSelf = self else { return }
+            
+            switch response {
+            case .success(let user):
+                print("\(user.firstName) has been updated")
+                strongSelf.dismiss(animated: true)
+                strongSelf.containerDelegate?.dismiss(animated: true)
+                NetworkManager.shared.profileDelegate?.updateUserProfile()
+                strongSelf.uploadButton.backgroundColor = .scoopDarkGreen
+                strongSelf.loadingSpinner.stopAnimating()
+                if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                    scene.didCompleteLogin()
+                }
+            case .failure(let error):
+                print("Auth Error in ProfilePictureViewController: \(error.localizedDescription)")
+                strongSelf.loadingSpinner.stopAnimating()
+                strongSelf.displayUserError()
+                return
+            }
+        }
+        
+        DispatchQueue.main.async {
+            NetworkManager.shared.profileDelegate?.updateUserProfile()
+        }
+    }
+    
+    private func convertImage (image: UIImage) -> String {
+        let base64 = image.jpegData(compressionQuality: 0.5)?.base64EncodedString() ?? ""
+        return "data:image/png;base64," + base64
+    }
+    
+    private func displayUserError() {
+        presentErrorAlert(title: "Unable to Create Account", message: "There was an error while creating your account. Please try again at another time.")
+    }
+    
     @objc private func uploadProfilePicture(_ sender: UITapGestureRecognizer) {
         present(imagePicker, animated: true)
     }
 }
 
-// MARK: UIImagePickerControllerDelegate
+// MARK: - UIImagePickerControllerDelegate
 extension ProfilePictureViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

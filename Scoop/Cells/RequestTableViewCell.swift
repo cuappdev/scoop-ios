@@ -10,7 +10,8 @@ import UIKit
 
 class RequestTableViewCell: UITableViewCell {
     
-    // MARK: Views
+    // MARK: - Views
+    
     private let profileImageView = UIImageView()
     private let requestDetailLabel = UILabel()
     private let acceptButton = UIButton()
@@ -18,10 +19,14 @@ class RequestTableViewCell: UITableViewCell {
     
     private var request: RideRequest?
     
+    // MARK: - Initializers
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupProfilePictureView() {
         profileImageView.contentMode = .scaleAspectFill
@@ -113,11 +118,11 @@ class RequestTableViewCell: UITableViewCell {
         }
     }
     
+    // MARK: - Helper Functions
+    
     private func setupViews(request: RideRequest) {
         /** Check to see if you are the approver (the one who needs to accept/deny if not yet already)
          Another users sends THIS user a request to join THIS user's ride. Give option to decline/accept i.e. this user is the APPROVER */
-//        print(NetworkManager.shared.currentUser.id)
-//        print(request.approver.id)
         print("Approver: \(request.approver.firstName)")
         print("Approvee: \(request.approvee.firstName)")
         if NetworkManager.shared.currentUser.id == request.approver.id {

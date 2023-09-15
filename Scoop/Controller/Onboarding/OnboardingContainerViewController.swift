@@ -11,11 +11,14 @@ class OnboardingContainerViewController: ViewController {
     
     let screenMultiplier = 335.0/375.0
     
+    // MARK: - Views
     var pageViewController: OnboardingPageViewController!
     let carImageView = UIImageView(image: UIImage(named: "car"))
     let dotsImageView = UIImageView(image: UIImage(named: "cardots"))
     let screenRect = UIScreen.main.bounds
     var screenWidth: CGFloat!
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +54,7 @@ class OnboardingContainerViewController: ViewController {
     
 }
 
+// MARK: - AnimationDelegate
 extension OnboardingContainerViewController: AnimationDelegate {
     
     func animateCar(startPage: Int, endPage: Int) {

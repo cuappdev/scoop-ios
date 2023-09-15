@@ -10,6 +10,8 @@ import UIKit
 
 class PreferredContactViewController: OnboardingViewController {
     
+    // MARK: - Views
+    
     private let stackView = UIStackView()
     private let emailButton = UIButton()
     private let phoneButton = UIButton()
@@ -18,6 +20,8 @@ class PreferredContactViewController: OnboardingViewController {
     private let formatter = PhoneFormatter()
     
     private var isVerified = false
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -68,6 +72,8 @@ class PreferredContactViewController: OnboardingViewController {
         
         setNextButtonColor(disabled: false)
     }
+    
+    // MARK: - Setup View Functions
 
     private func setupStackView() {
         let textFieldBorderWidth = 1.0
@@ -174,6 +180,8 @@ class PreferredContactViewController: OnboardingViewController {
         }
     }
     
+    // MARK: - Helper Functions
+    
     private func validateNumber(value: String) -> Bool {
         let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
@@ -183,6 +191,7 @@ class PreferredContactViewController: OnboardingViewController {
     
 }
 
+// MARK: - UITextFieldDelegate
 extension PreferredContactViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

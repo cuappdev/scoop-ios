@@ -13,6 +13,8 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
     weak var animationDelegate: AnimationDelegate?
     weak var postDelegate: PostRideSummaryDelegate?
     
+    // MARK: - Initializers
+    
     init(delegate: AnimationDelegate) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         animationDelegate = delegate
@@ -21,6 +23,8 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         view.backgroundColor = .white
@@ -34,6 +38,8 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
         setupPages()
         disableSwiping()
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupPages() {
         let postRideInitialVC = InitialPostRideViewController()
@@ -71,6 +77,8 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
         }
     }
     
+    // MARK: - Page Control Functions
+    
     private func presentNextVC(_ viewController: UIViewController) {
         if let viewControllerIndex = pages.firstIndex(of: viewController) {
             if viewControllerIndex < pages.count - 1 {
@@ -96,6 +104,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
     
 }
 
+// MARK: - UIPageViewControllerDataSource
 extension PostRidePageViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -126,6 +135,7 @@ extension PostRidePageViewController: UIPageViewControllerDataSource {
     
 }
 
+// MARK: - OnboardingDelegate
 extension PostRidePageViewController: OnboardingDelegate {
     
     func didTapBack(_ viewController: UIViewController, previousViewController: UIViewController?) {

@@ -29,6 +29,8 @@ class NetworkManager {
         return headers
         }
     
+    // MARK: - User Functions
+    
     func authenticateUser(googleID: String, email: String, firstName: String, lastName: String, id_token: String, completion: @escaping (Result<UserSession, Error>) -> Void) {
         let parameters: [String : String] = [
             "sub": googleID,
@@ -119,7 +121,6 @@ class NetworkManager {
         }
     }
     
-    //MARK: Debugging User Developer Requests
     func getAllUsers(completion: @escaping (Result<[BaseUser], Error>) -> Void ) {
         AF.request("\(hostEndpoint)/api/dev/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
@@ -139,7 +140,87 @@ class NetworkManager {
         }
     }
     
-    // MARK: Backend currently changing up this endpoint to incorporate Google Places
+    // MARK: - Prompt Functions
+    
+    func postPrompt(name: String, placeholder: String, completion: @escaping(Result<Prompt, Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/prompts/"
+        let params = [
+            "question_name": name,
+            "question_placeholder": placeholder
+        ]
+        
+        AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let prompt = try jsonDecoder.decode(Prompt.self, from: data)
+                    completion(.success(prompt))
+                } catch {
+                    completion(.failure(error))
+                    print("Failed to decode postPrompt")
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print("Request postPrompt Failed: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func updatePrompt(id: Int, name: String, placeholder: String, completion: @escaping(Result<Prompt, Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/prompts/\(id)/"
+        let params = [
+            "question_name": name,
+            "question_placeholder": placeholder
+        ]
+        
+        AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let prompt = try jsonDecoder.decode(Prompt.self, from: data)
+                    completion(.success(prompt))
+                } catch {
+                    completion(.failure(error))
+                    print(error.localizedDescription)
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print("Request updatePrompt Failed: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func getAllPrompts(completion: @escaping(Result<[Prompt], Error>) -> Void) {
+        let endpoint = "\(hostEndpoint)/api/prompts/"
+        
+        AF.request(endpoint, method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let prompts = try jsonDecoder.decode([Prompt].self, from: data)
+                    completion(.success(prompts))
+                } catch {
+                    completion(.failure(error))
+                    print("Failed to decode getAllPrompts")
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print("Request getAllPrompts Failed: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // MARK: - Location Search Functions
+    
     func searchLocation(depatureDate: String, startLocation: String, endLocation: String, completion: @escaping (Result<[Ride], Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/search/"
         let parameters : [String: Any] = [
@@ -168,6 +249,8 @@ class NetworkManager {
             }
         }
     }
+    
+    // MARK: - Ride Functions
     
     func getAllRides(completion: @escaping(Result<[Ride], Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/rides/"
@@ -276,6 +359,8 @@ class NetworkManager {
         }
     }
     
+    // MARK: - Ride Request Functions
+    
     func handleRideRequest(requestID: Int, approved: Bool, completion: @escaping(Result<RideRequest, Error>) -> Void) {
         let endpoint = "\(hostEndpoint)/api/requests/\(requestID)/"
         let params = [
@@ -297,83 +382,6 @@ class NetworkManager {
             case .failure(let error):
                 completion(.failure(error))
                 print("Request handleRideRequest Failed: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func postPrompt(name: String, placeholder: String, completion: @escaping(Result<Prompt, Error>) -> Void) {
-        let endpoint = "\(hostEndpoint)/api/prompts/"
-        let params = [
-            "question_name": name,
-            "question_placeholder": placeholder
-        ]
-        
-        AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
-            switch response.result {
-            case .success(let data):
-                let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                
-                do {
-                    let prompt = try jsonDecoder.decode(Prompt.self, from: data)
-                    completion(.success(prompt))
-                } catch {
-                    completion(.failure(error))
-                    print("Failed to decode postPrompt")
-                }
-            case .failure(let error):
-                completion(.failure(error))
-                print("Request postPrompt Failed: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func updatePrompt(id: Int, name: String, placeholder: String, completion: @escaping(Result<Prompt, Error>) -> Void) {
-        let endpoint = "\(hostEndpoint)/api/prompts/\(id)/"
-        let params = [
-            "question_name": name,
-            "question_placeholder": placeholder
-        ]
-        
-        AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
-            switch response.result {
-            case .success(let data):
-                let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                
-                do {
-                    let prompt = try jsonDecoder.decode(Prompt.self, from: data)
-                    completion(.success(prompt))
-                } catch {
-                    completion(.failure(error))
-                    print(error.localizedDescription)
-                }
-            case .failure(let error):
-                completion(.failure(error))
-                print("Request updatePrompt Failed: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func getAllPrompts(completion: @escaping(Result<[Prompt], Error>) -> Void) {
-        let endpoint = "\(hostEndpoint)/api/prompts/"
-        
-        AF.request(endpoint, method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
-            switch response.result {
-            case .success(let data):
-                let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                
-                do {
-                    let prompts = try jsonDecoder.decode([Prompt].self, from: data)
-                    completion(.success(prompts))
-                } catch {
-                    completion(.failure(error))
-                    print("Failed to decode getAllPrompts")
-                }
-            case .failure(let error):
-                completion(.failure(error))
-                print("Request getAllPrompts Failed: \(error.localizedDescription)")
             }
         }
     }

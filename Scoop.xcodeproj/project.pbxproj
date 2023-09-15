@@ -11,8 +11,7 @@
 		2C09F7E729E085A1006003AA /* ImageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09F7E629E085A1006003AA /* ImageTextField.swift */; };
 		2C12DEB629C64D11003D6683 /* PostRideTripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C12DEB529C64D11003D6683 /* PostRideTripDetailsViewController.swift */; };
 		2C1D968929F89C1000065C78 /* VerifyPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1D968829F89C1000065C78 /* VerifyPhoneNumberViewController.swift */; };
-		2C1D969029FA1DB600065C78 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C1D968E29FA1DB600065C78 /* GoogleService-Info.plist */; };
-		2C1D969129FA1DB600065C78 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C1D968F29FA1DB600065C78 /* Keys.plist */; };
+		2C2015DF2AB4CFAB0065C436 /* ShiftedRightTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2015DE2AB4CFAB0065C436 /* ShiftedRightTextField.swift */; };
 		2C42B51E290F12B400D053A3 /* Sen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */; };
 		2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C42B520290F767600D053A3 /* Rambla-Regular.ttf */; };
 		2C5672FE29CBE5EB001E37FB /* Prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5672FD29CBE5EB001E37FB /* Prompts.swift */; };
@@ -29,6 +28,9 @@
 		2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */; };
 		2C991EBE28E0B2E7006301D9 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB628E0B2E7006301D9 /* LocationViewController.swift */; };
 		2C991EBF28E0B2E7006301D9 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */; };
+		2CAB93CD2AB26183009554E7 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CAB93CB2AB26183009554E7 /* Keys.plist */; };
+		2CAB93CE2AB26183009554E7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CAB93CC2AB26183009554E7 /* GoogleService-Info.plist */; };
+		2CAB93D02AB262DF009554E7 /* OnboardingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB93CF2AB262DF009554E7 /* OnboardingTextField.swift */; };
 		2CD7304429C35F6F00F4CF5A /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7304329C35F6E00F4CF5A /* OnboardingContainerViewController.swift */; };
 		2CE749E129DBC065009EF309 /* PostRideContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE749E029DBC065009EF309 /* PostRideContainerViewController.swift */; };
 		2CE749E329DBD147009EF309 /* PostRideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE749E229DBD147009EF309 /* PostRideViewController.swift */; };
@@ -90,8 +92,7 @@
 		2C0E135E29F0CD0C000ED04C /* Scoop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Scoop.entitlements; sourceTree = "<group>"; };
 		2C12DEB529C64D11003D6683 /* PostRideTripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideTripDetailsViewController.swift; sourceTree = "<group>"; };
 		2C1D968829F89C1000065C78 /* VerifyPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPhoneNumberViewController.swift; sourceTree = "<group>"; };
-		2C1D968E29FA1DB600065C78 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
-		2C1D968F29FA1DB600065C78 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Keys.plist; path = ../../../../../Keys.plist; sourceTree = "<group>"; };
+		2C2015DE2AB4CFAB0065C436 /* ShiftedRightTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftedRightTextField.swift; sourceTree = "<group>"; };
 		2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sen-Regular.ttf"; sourceTree = "<group>"; };
 		2C42B520290F767600D053A3 /* Rambla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rambla-Regular.ttf"; sourceTree = "<group>"; };
 		2C5672FD29CBE5EB001E37FB /* Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompts.swift; sourceTree = "<group>"; };
@@ -112,6 +113,9 @@
 		2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		2C991EB628E0B2E7006301D9 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
+		2CAB93CB2AB26183009554E7 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		2CAB93CC2AB26183009554E7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2CAB93CF2AB262DF009554E7 /* OnboardingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTextField.swift; sourceTree = "<group>"; };
 		2CD7304329C35F6E00F4CF5A /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		2CE749E029DBC065009EF309 /* PostRideContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideContainerViewController.swift; sourceTree = "<group>"; };
 		2CE749E229DBD147009EF309 /* PostRideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +195,16 @@
 				2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */,
 			);
 			path = fonts;
+			sourceTree = "<group>";
+		};
+		2CAB93D12AB269EF009554E7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */,
+				412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */,
+				C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		4166F54529C26E450022C8D4 /* Recovered References */ = {
@@ -291,6 +305,7 @@
 				C8A5448E27D185BD00132ACC /* SceneDelegate.swift */,
 				C8A544BF27D18D0E00132ACC /* Model */,
 				C8A544C027D18D1300132ACC /* View */,
+				2CAB93D12AB269EF009554E7 /* Cells */,
 				C8A544BE27D18D0800132ACC /* Controller */,
 				2C881C7D29945C3400E6DEDE /* NetworkManager.swift */,
 				2C09F7E429E07542006003AA /* SearchRidesViewController.swift */,
@@ -321,7 +336,6 @@
 			children = (
 				2C991EB028E0B2E7006301D9 /* ArrivalSearchViewController.swift */,
 				2C991EB428E0B2E7006301D9 /* DepartureSearchViewController.swift */,
-				2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */,
 				2C991EB628E0B2E7006301D9 /* LocationViewController.swift */,
 				2C991EB728E0B2E7006301D9 /* MatchesViewController.swift */,
 				2C991EB328E0B2E7006301D9 /* SearchInitialViewController.swift */,
@@ -355,6 +369,8 @@
 				C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */,
 				C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */,
 				2C09F7E629E085A1006003AA /* ImageTextField.swift */,
+				2CAB93CF2AB262DF009554E7 /* OnboardingTextField.swift */,
+				2C2015DE2AB4CFAB0065C436 /* ShiftedRightTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -362,8 +378,8 @@
 		C8A544C127D18D1B00132ACC /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
-				2C1D968E29FA1DB600065C78 /* GoogleService-Info.plist */,
-				2C1D968F29FA1DB600065C78 /* Keys.plist */,
+				2CAB93CC2AB26183009554E7 /* GoogleService-Info.plist */,
+				2CAB93CB2AB26183009554E7 /* Keys.plist */,
 				2C42B51F290F765B00D053A3 /* fonts */,
 				C845953727ED01A400D2C7F0 /* Utilities */,
 				C8A544C227D18D5400132ACC /* Keys.swift */,
@@ -380,8 +396,6 @@
 			children = (
 				C8A544BC27D18D0200132ACC /* HomeViewController.swift */,
 				410D78BF29B8166D0007E434 /* NotificationsViewController.swift */,
-				412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */,
-				C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -493,12 +507,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C1D969129FA1DB600065C78 /* Keys.plist in Resources */,
+				2CAB93CE2AB26183009554E7 /* GoogleService-Info.plist in Resources */,
 				2C42B51E290F12B400D053A3 /* Sen-Regular.ttf in Resources */,
 				2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */,
 				C8A5449927D185BF00132ACC /* LaunchScreen.storyboard in Resources */,
+				2CAB93CD2AB26183009554E7 /* Keys.plist in Resources */,
 				C8A5449627D185BF00132ACC /* Assets.xcassets in Resources */,
-				2C1D969029FA1DB600065C78 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +596,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CAB93D02AB262DF009554E7 /* OnboardingTextField.swift in Sources */,
 				2C881C7E29945C3400E6DEDE /* NetworkManager.swift in Sources */,
 				2C991EBA28E0B2E7006301D9 /* ViewController.swift in Sources */,
 				2C991EBB28E0B2E7006301D9 /* SearchInitialViewController.swift in Sources */,
@@ -629,6 +644,7 @@
 				2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */,
 				C83419EF27E65A4B00491306 /* User.swift in Sources */,
 				2C67E4FC29945E5E00195BB5 /* Constants.swift in Sources */,
+				2C2015DF2AB4CFAB0065C436 /* ShiftedRightTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
