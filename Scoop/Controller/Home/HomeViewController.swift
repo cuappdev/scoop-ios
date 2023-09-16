@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
     private let secondLabel = UILabel()
     private let widePostRideButton = UIButton()
     
-    // MARK: - Identifers
+    // MARK: - Identifiers
     
     private let homeCellIdenitifer = "HomeCell"
     
