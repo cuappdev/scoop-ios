@@ -72,6 +72,7 @@ class LocationViewController: UIViewController {
 }
 
 // MARK: - GMSAutocompleteTableDataSourceDelegate
+
 extension LocationViewController: GMSAutocompleteTableDataSourceDelegate {
     func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
         DispatchQueue.main.async {

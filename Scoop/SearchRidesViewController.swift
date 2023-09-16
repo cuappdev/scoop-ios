@@ -24,11 +24,13 @@ class SearchRidesViewController: UIViewController {
     private let stackView = UIStackView()
     
     // MARK: - Data
+    
     private var arrivalPlace: GMSPlace?
     private var departurePlace: GMSPlace?
     private var tripDate: String = ""
     
     // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -281,6 +283,7 @@ class SearchRidesViewController: UIViewController {
 }
 
 // MARK: - UITextFieldDelegate
+
 extension SearchRidesViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -290,6 +293,7 @@ extension SearchRidesViewController: UITextFieldDelegate {
 }
 
 // MARK: - SearchInitialViewControllerDelegate
+
 extension SearchRidesViewController: SearchInitialViewControllerDelegate {
 
     func didSelectLocation(viewController: UIViewController, location: GMSPlace) {

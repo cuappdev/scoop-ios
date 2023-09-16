@@ -194,6 +194,7 @@ class VerifyPhoneNumberViewController: UIViewController {
 }
 
 // MARK: - UITextFieldDelegate
+
 extension VerifyPhoneNumberViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let numOnly = CharacterSet.decimalDigits

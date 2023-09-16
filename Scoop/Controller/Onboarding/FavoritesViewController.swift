@@ -158,6 +158,7 @@ class FavoritesViewController: OnboardingViewController {
 }
 
 // MARK: - UITextFieldDelegate
+
 extension FavoritesViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

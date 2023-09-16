@@ -369,6 +369,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
 }
 
 // MARK: - UITextFieldDelegate
+
 extension PostRideTripDetailsViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -422,6 +423,7 @@ extension PostRideTripDetailsViewController: UITextFieldDelegate {
 }
 
 // MARK: - UITextViewDelegate
+
 extension PostRideTripDetailsViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {

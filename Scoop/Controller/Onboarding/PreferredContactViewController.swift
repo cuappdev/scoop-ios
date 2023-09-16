@@ -192,6 +192,7 @@ class PreferredContactViewController: OnboardingViewController {
 }
 
 // MARK: - UITextFieldDelegate
+
 extension PreferredContactViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -220,6 +221,8 @@ extension PreferredContactViewController: UITextFieldDelegate {
     }
     
 }
+
+// MARK: - VerificationDelegate
 
 extension PreferredContactViewController: VerificationDelegate {
     

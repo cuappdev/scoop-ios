@@ -93,11 +93,13 @@ class OnboardingPageViewController: UIPageViewController {
 }
 
 // MARK: - UIPageViewControllerDelegate
+
 extension OnboardingPageViewController: UIPageViewControllerDelegate {
     
 }
 
 // MARK: - UIPageViewControllerDataSource
+
 extension OnboardingPageViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -129,6 +131,7 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
 }
 
 // MARK: - OnboardingDelegate
+
 extension OnboardingPageViewController: OnboardingDelegate {
     
     func didTapBack(_ viewController: UIViewController, previousViewController: UIViewController?) {

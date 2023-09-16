@@ -408,6 +408,7 @@ class PostRideSummaryViewController: PostRideViewController {
 }
 
 // MARK: - PostRideDelegate
+
 extension PostRideSummaryViewController: PostRideDelegate {
     
     func updateSummary() {

@@ -288,6 +288,7 @@ class InitialPostRideViewController: PostRideViewController {
 }
 
 // MARK: - SearchInitialViewControllerDelegate
+
 extension InitialPostRideViewController: SearchInitialViewControllerDelegate {
     
     func didSelectLocation(viewController: UIViewController, location: GMSPlace) {

@@ -216,6 +216,7 @@ class AboutYouViewController: OnboardingViewController {
 }
 
 // MARK: - UITextFielDelegate
+
 extension AboutYouViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -265,6 +266,7 @@ extension AboutYouViewController: UITextFieldDelegate {
 }
 
 // MARK: - UIPickerViewDelegate
+
 extension AboutYouViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -287,6 +289,7 @@ extension AboutYouViewController: UIPickerViewDelegate {
 }
 
 // MARK: - UIPickerViewDataSource
+
 extension AboutYouViewController: UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

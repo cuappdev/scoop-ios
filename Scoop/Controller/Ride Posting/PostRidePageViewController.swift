@@ -105,6 +105,7 @@ class PostRidePageViewController: UIPageViewController, UIPageViewControllerDele
 }
 
 // MARK: - UIPageViewControllerDataSource
+
 extension PostRidePageViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -136,6 +137,7 @@ extension PostRidePageViewController: UIPageViewControllerDataSource {
 }
 
 // MARK: - OnboardingDelegate
+
 extension PostRidePageViewController: OnboardingDelegate {
     
     func didTapBack(_ viewController: UIViewController, previousViewController: UIViewController?) {

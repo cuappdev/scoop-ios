@@ -52,6 +52,7 @@ class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UI
 }
 
 // MARK: - LocationViewControllerDelegate
+
 extension SearchInitialViewController: LocationViewControllerDelegate {
     
     func didSelectLocation(location: GMSPlace) {

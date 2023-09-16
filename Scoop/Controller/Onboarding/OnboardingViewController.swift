@@ -17,11 +17,13 @@ class OnboardingViewController: UIViewController {
     weak var delegate: OnboardingDelegate?
     
     // MARK: - Views
+    
     var nextAction: UIAction?
     let backButton = UIButton()
     let nextOnboardingButton = UIButton()
     
     // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackButton()

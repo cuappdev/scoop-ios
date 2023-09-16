@@ -91,11 +91,13 @@ class NotificationsViewController: UIViewController {
 }
 
 // MARK: - UITableViewDelegate
+
 extension NotificationsViewController: UITableViewDelegate {
     // Will be used later for updating what the cell looks like when a user hits accept/decline
 }
 
 // MARK: - UITableViewDataSource
+
 extension NotificationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

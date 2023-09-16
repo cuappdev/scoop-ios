@@ -213,6 +213,7 @@ class ProfilePictureViewController: OnboardingViewController {
 }
 
 // MARK: - UIImagePickerControllerDelegate
+
 extension ProfilePictureViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

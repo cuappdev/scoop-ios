@@ -358,7 +358,9 @@ class HomeViewController: UIViewController {
         tabBarController?.selectedIndex = 1
     }
 }
+
 // MARK: - UITableViewDelegate
+
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -392,6 +394,7 @@ extension HomeViewController: UITableViewDelegate {
 }
 
 // MARK: - UITableViewDataSource
+
 extension HomeViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -428,6 +431,8 @@ extension HomeViewController: UITableViewDataSource {
     }
     
 }
+
+// MARK: - PostRideSummaryDelegate
 
 extension HomeViewController: PostRideSummaryDelegate {
     

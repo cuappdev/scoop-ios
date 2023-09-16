@@ -101,6 +101,7 @@ class PostRideContainerViewController: ViewController {
 }
 
 // MARK: - AnimationDelegate
+
 extension PostRideContainerViewController: AnimationDelegate {
     
     func animateCar(startPage: Int, endPage: Int) {

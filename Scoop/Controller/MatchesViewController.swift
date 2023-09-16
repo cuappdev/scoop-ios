@@ -326,6 +326,7 @@ class MatchesViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
+
 extension MatchesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -341,6 +342,7 @@ extension MatchesViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
+
 extension MatchesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
