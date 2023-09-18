@@ -14,6 +14,7 @@ protocol LocationViewControllerDelegate: AnyObject {
 
 class LocationViewController: UIViewController {
     
+    // MARK: - Views
     private let tableView = UITableView()
     private var tableDataSource = GMSAutocompleteTableDataSource()
     
@@ -24,11 +25,7 @@ class LocationViewController: UIViewController {
     
     private var searchController: SearchInitialViewController!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableDataSource.delegate = self
-        setupTableView()
-    }
+    // MARK: - Initializers
     
     init(searchController: SearchInitialViewController, delegate: LocationViewControllerDelegate) {
         self.searchController = searchController
@@ -39,6 +36,16 @@ class LocationViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle Functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableDataSource.delegate = self
+        setupTableView()
+    }
+    
+    // MARK: - Setup View Functions
     
     func setupTableView() {
         let filter = GMSAutocompleteFilter()
@@ -57,10 +64,14 @@ class LocationViewController: UIViewController {
         }
     }
     
+    // MARK: - Helper Functions
+    
     func filterText(searchText: String) {
         tableDataSource.sourceTextHasChanged(searchText)
     }
 }
+
+// MARK: - GMSAutocompleteTableDataSourceDelegate
 
 extension LocationViewController: GMSAutocompleteTableDataSourceDelegate {
     func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {

@@ -11,7 +11,8 @@ import UIKit
 /// Conformed to OnboardingViewController because a lot of functionality and page design is carried over/very smiliar. 
 class InitialPostRideViewController: PostRideViewController {
     
-    // MARK: Views
+    // MARK: - Views
+    
     private let arrivalLabel = UILabel()
     private let arrivalTextField = ShiftedRightTextField()
     private let departureLabel = UILabel()
@@ -22,9 +23,12 @@ class InitialPostRideViewController: PostRideViewController {
     private let taxiButton = UIButton()
     private let titleLabel = UILabel()
     
-    // MARK: Data
+    // MARK: - Data
+    
     private var departureLocationID: String?
     private var arrivalLocationID: String?
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         view.backgroundColor = .white
@@ -73,6 +77,8 @@ class InitialPostRideViewController: PostRideViewController {
         setupBackButton()
         backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupTitleLabel () {
         titleLabel.font = UIFont(name: "Rambla-Regular", size: 16)
@@ -237,7 +243,9 @@ class InitialPostRideViewController: PostRideViewController {
             make.width.equalTo(40)
         }
     }
-
+    
+    // MARK: - Helper Functions
+    
     @objc private func studentDriverButtonToggle() {
         if taxiButton.isSelected {
             taxiButton.isSelected.toggle()
@@ -279,6 +287,8 @@ class InitialPostRideViewController: PostRideViewController {
     
 }
 
+// MARK: - SearchInitialViewControllerDelegate
+
 extension InitialPostRideViewController: SearchInitialViewControllerDelegate {
     
     func didSelectLocation(viewController: UIViewController, location: GMSPlace) {
@@ -295,24 +305,6 @@ extension InitialPostRideViewController: SearchInitialViewControllerDelegate {
         }
         
         checkButtonStatus()
-    }
-    
-}
-
-class ShiftedRightTextField: UITextField {
-    
-    let padding = UIEdgeInsets(top: 12, left: 38, bottom: 12, right: 60)
-    
-    override open func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-
-    override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
     }
     
 }

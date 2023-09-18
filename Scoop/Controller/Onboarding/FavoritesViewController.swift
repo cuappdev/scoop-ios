@@ -9,6 +9,8 @@ import UIKit
 
 class FavoritesViewController: OnboardingViewController {
     
+    // MARK: - Views
+    
     private let stackView = UIStackView()
     private let snackTextField = OnboardingTextField()
     private let songTextField = OnboardingTextField()
@@ -17,6 +19,8 @@ class FavoritesViewController: OnboardingViewController {
     private let songLabel = UILabel()
     private let stopLabel = UILabel()
 
+    // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -49,6 +53,8 @@ class FavoritesViewController: OnboardingViewController {
             return
         }))
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupStackView() {
         let textFieldBorderWidth = 1.0
@@ -150,6 +156,8 @@ class FavoritesViewController: OnboardingViewController {
     }
     
 }
+
+// MARK: - UITextFieldDelegate
 
 extension FavoritesViewController: UITextFieldDelegate {
     

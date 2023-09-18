@@ -15,6 +15,8 @@ protocol ProfileViewDelegate: AnyObject {
 
 class ProfileViewController: UIViewController, ProfileViewDelegate {
     
+    // MARK: - Views
+    
     private let containerView = UIView()
     private let headerImageView = UIImageView()
     private let profileImageView = UIImageView()
@@ -32,6 +34,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     private let subLabel = UILabel()
     private let talkativeSlider = UISlider()
     
+    // MARK: - User Data
+    
     private var user: BaseUser?
     
     private var hometown: String?
@@ -40,6 +44,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     private var snack: String?
     private var song: String?
     private var stop: String?
+    
+    // MARK: - Initializers
     
     init(user: BaseUser) {
         super.init(nibName: nil, bundle: nil)
@@ -50,6 +56,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
@@ -57,12 +65,14 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         getUserPreferences()
         setupHeaderImage()
         setupContainerView()
-        // MARK: Commented out because editing functionality is not yet implemented for MVP.
+        // TODO: Commented out because editing functionality is not yet implemented for MVP.
         // setupEditButton()
         setupProfileImageView()
         setupProfileStackView()
         isBeingPresented ? updateDriverProfile() : updateUserProfile()
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupContainerView() {
         containerView.backgroundColor = .white
@@ -319,6 +329,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         stopSection.imageView.image = UIImage(systemName: "location.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
         favoritesStackView.addArrangedSubview(stopSection)
     }
+    
+    // MARK: - Helper Functions
     
     private func getUserPreferences() {
         user?.prompts.forEach { prompt in

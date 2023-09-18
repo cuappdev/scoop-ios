@@ -19,6 +19,8 @@ class PostRideSummaryViewController: PostRideViewController {
     
     var currentRide = NetworkManager.shared.currentRide
     
+    // MARK: - Views
+    
     private let stackView = UIStackView()
     private let creatorLabel = UILabel()
     private let creatorProfile = UIImageView()
@@ -52,7 +54,8 @@ class PostRideSummaryViewController: PostRideViewController {
     
     weak var postDelegate: PostRideSummaryDelegate?
     
-    //TODO: Not good practice, but temporary fix. Will Debug later
+    // MARK: - Lifecycle Functions
+    
     override func viewDidAppear(_ animated: Bool) {
         updateBackButton()
         updateSummary()
@@ -70,6 +73,8 @@ class PostRideSummaryViewController: PostRideViewController {
         setupIcons()
         updateBackButton()
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupStackView() {
         let stackViewMultiplier = 0.0
@@ -385,6 +390,8 @@ class PostRideSummaryViewController: PostRideViewController {
         }
     }
     
+    // MARK: - Helper Functions
+    
     private func formatDate(date: String) -> String {
         let dateFormatterGet = DateFormatter()
         dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -399,6 +406,8 @@ class PostRideSummaryViewController: PostRideViewController {
         return date
     }
 }
+
+// MARK: - PostRideDelegate
 
 extension PostRideSummaryViewController: PostRideDelegate {
     

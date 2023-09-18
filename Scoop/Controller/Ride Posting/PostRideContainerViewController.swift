@@ -11,6 +11,8 @@ class PostRideContainerViewController: ViewController {
     
     let screenMultiplier = 335.0/375.0
     
+    // MARK: - Views
+    
     var pageViewController: PostRidePageViewController!
     let carImageView = UIImageView(image: UIImage(named: "car"))
     let dotsImageView = UIImageView(image: UIImage(named: "Post0"))
@@ -18,6 +20,8 @@ class PostRideContainerViewController: ViewController {
     var screenWidth: CGFloat!
     
     weak var postDelegate: PostRideSummaryDelegate?
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,8 @@ class PostRideContainerViewController: ViewController {
         setupTitle(name: "Trip details")
         self.navigationItem.hidesBackButton = true
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupAnimation() {
         view.addSubview(pageViewController.view)
@@ -93,6 +99,8 @@ class PostRideContainerViewController: ViewController {
     }
     
 }
+
+// MARK: - AnimationDelegate
 
 extension PostRideContainerViewController: AnimationDelegate {
     

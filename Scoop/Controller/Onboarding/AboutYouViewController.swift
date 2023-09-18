@@ -9,6 +9,8 @@ import UIKit
 
 class AboutYouViewController: OnboardingViewController {
     
+    // MARK: - Views
+    
     private let stackView = UIStackView()
     private let nameTextField = OnboardingTextField()
     private let pronounsTextField = OnboardingTextField()
@@ -26,6 +28,8 @@ class AboutYouViewController: OnboardingViewController {
     private let pronouns = ["He/Him", "She/Her", "They/Them", "Other"]
     private let years = ["Freshman", "Sophomore", "Junior", "Senior", "Grad Student"]
 
+    // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -61,10 +65,11 @@ class AboutYouViewController: OnboardingViewController {
         
     }
     
+    // MARK: - Setup View Functions
+    
     private func setupStackView() {
         var stackViewMultiplier = 0.20
         let leadingTrailingInset = 32
-        let spacing = 12.0
         let screenSize = UIScreen.main.bounds
         let textFieldBorderWidth = 1.0
         let textFieldCornerRadius = 4.0
@@ -198,6 +203,8 @@ class AboutYouViewController: OnboardingViewController {
         }
     }
     
+    // MARK: - Helper Functions
+    
     @objc private func updatePronouns() {
         pronounsTextField.text = pronouns[pronounsPicker.selectedRow(inComponent: 0)]
     }
@@ -209,6 +216,7 @@ class AboutYouViewController: OnboardingViewController {
 }
 
 // MARK: - UITextFielDelegate
+
 extension AboutYouViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -258,6 +266,7 @@ extension AboutYouViewController: UITextFieldDelegate {
 }
 
 // MARK: - UIPickerViewDelegate
+
 extension AboutYouViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -280,6 +289,7 @@ extension AboutYouViewController: UIPickerViewDelegate {
 }
 
 // MARK: - UIPickerViewDataSource
+
 extension AboutYouViewController: UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

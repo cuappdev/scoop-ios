@@ -12,6 +12,8 @@ class OnboardingPageViewController: UIPageViewController {
     private var pages = [UIViewController]()
     weak var animationDelegate: AnimationDelegate?
     
+    // MARK: - Initializers
+    
     init(delegate: AnimationDelegate) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         animationDelegate = delegate
@@ -20,6 +22,8 @@ class OnboardingPageViewController: UIPageViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +34,8 @@ class OnboardingPageViewController: UIPageViewController {
         setupPages()
         disableSwiping()
     }
+    
+    // MARK: - Helper Functions
     
     private func setupPages() {
         pages = [
@@ -59,6 +65,8 @@ class OnboardingPageViewController: UIPageViewController {
         }
     }
     
+    // MARK: - Page Control Functions
+    
     private func presentNextVC(_ viewController: UIViewController) {
         if let viewControllerIndex = pages.firstIndex(of: viewController) {
             if viewControllerIndex < pages.count - 1 {
@@ -85,11 +93,13 @@ class OnboardingPageViewController: UIPageViewController {
 }
 
 // MARK: - UIPageViewControllerDelegate
+
 extension OnboardingPageViewController: UIPageViewControllerDelegate {
     
 }
 
 // MARK: - UIPageViewControllerDataSource
+
 extension OnboardingPageViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -121,6 +131,7 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
 }
 
 // MARK: - OnboardingDelegate
+
 extension OnboardingPageViewController: OnboardingDelegate {
     
     func didTapBack(_ viewController: UIViewController, previousViewController: UIViewController?) {
