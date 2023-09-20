@@ -9,6 +9,8 @@ import UIKit
 
 class ArrivalSearchViewController: SearchInitialViewController {
     
+    // MARK: - Lifecycle Functions
+    
     override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.main.async {
             self.navigationItem.searchController?.searchBar.becomeFirstResponder()

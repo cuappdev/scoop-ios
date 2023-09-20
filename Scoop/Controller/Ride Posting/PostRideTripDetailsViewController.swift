@@ -22,6 +22,8 @@ class PostRideTripDetailsViewController: PostRideViewController {
     private let iconSize = 24
     private let iconSpacing = 12
     
+    // MARK: - Views
+    
     private let stackView = UIStackView()
     
     private let dateTextField = OnboardingTextField()
@@ -49,6 +51,8 @@ class PostRideTripDetailsViewController: PostRideViewController {
     
     private var ride: Ride!
     
+    // MARK: - Initializers
+    
     init(ride: Ride) {
         super.init(nibName: nil, bundle: nil)
         self.ride = ride
@@ -57,6 +61,8 @@ class PostRideTripDetailsViewController: PostRideViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,6 +113,8 @@ class PostRideTripDetailsViewController: PostRideViewController {
             return
         }))
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupStackView() {
         let stackViewMultiplier = 0.1
@@ -275,22 +283,6 @@ class PostRideTripDetailsViewController: PostRideViewController {
         }
     }
     
-    private func getTravelDate() -> Date? {
-        let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
-        
-        let timeComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: timePicker.date)
-        
-        var mergedComponents = DateComponents()
-        mergedComponents.year = dateComponents.year
-        mergedComponents.month = dateComponents.month
-        mergedComponents.day = dateComponents.day
-        mergedComponents.hour = timeComponents.hour
-        mergedComponents.minute = timeComponents.minute
-        mergedComponents.second = timeComponents.second
-        
-        return Calendar.current.date(from: mergedComponents)
-    }
-    
     private func setupLabels() {
         let labelLeading = 10
         let labelTop = 8
@@ -344,6 +336,24 @@ class PostRideTripDetailsViewController: PostRideViewController {
         }
     }
     
+    // MARK: - Helper Functions
+    
+    private func getTravelDate() -> Date? {
+        let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
+        
+        let timeComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: timePicker.date)
+        
+        var mergedComponents = DateComponents()
+        mergedComponents.year = dateComponents.year
+        mergedComponents.month = dateComponents.month
+        mergedComponents.day = dateComponents.day
+        mergedComponents.hour = timeComponents.hour
+        mergedComponents.minute = timeComponents.minute
+        mergedComponents.second = timeComponents.second
+        
+        return Calendar.current.date(from: mergedComponents)
+    }
+    
     @objc private func updateDate() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -357,6 +367,8 @@ class PostRideTripDetailsViewController: PostRideViewController {
     }
     
 }
+
+// MARK: - UITextFieldDelegate
 
 extension PostRideTripDetailsViewController: UITextFieldDelegate {
     
@@ -409,6 +421,8 @@ extension PostRideTripDetailsViewController: UITextFieldDelegate {
     }
     
 }
+
+// MARK: - UITextViewDelegate
 
 extension PostRideTripDetailsViewController: UITextViewDelegate {
     

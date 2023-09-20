@@ -11,9 +11,13 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    // MARK: - Views
+    
     private let backgroundImageView = UIImageView()
     private let greenSignInButton = UIButton()
     private let loadingSpinner = UIActivityIndicatorView(style: .large)
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +27,8 @@ class LoginViewController: UIViewController {
         setupGreenSignInButton()
         setupLoadingSpinner()
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupLoadingSpinner() {
         loadingSpinner.backgroundColor = .black
@@ -67,6 +73,8 @@ class LoginViewController: UIViewController {
             make.leading.trailing.top.bottom.equalToSuperview()
         }
     }
+    
+    // MARK: - Helper Functions
     
     private func signIn() {
         let signInConfig = GIDConfiguration.init(clientID: Keys.googleClientID)

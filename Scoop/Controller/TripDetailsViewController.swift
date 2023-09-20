@@ -17,6 +17,8 @@ class TripDetailsViewController: UIViewController {
     var currentRide: Ride?
     weak var profileDelegate: ProfileViewDelegate?
     
+    // MARK: - Views
+    
     private let stackView = UIStackView()
     private let creatorLabel = UILabel()
     private let creatorProfile = UIImageView()
@@ -47,6 +49,8 @@ class TripDetailsViewController: UIViewController {
     private let dateContainerView = UIView()
     private let numberTravelersContainerView = UIView()
     
+    // MARK: - Initializers
+    
     init(currentRide: Ride) {
         super.init(nibName: nil, bundle: nil)
         self.currentRide = currentRide
@@ -55,6 +59,8 @@ class TripDetailsViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +73,8 @@ class TripDetailsViewController: UIViewController {
         setUpTextFont()
         setUpIcons()
     }
+    
+    // MARK: - Setup View Functions
     
     private func setUpStackView() {
         let stackViewMultiplier = 0.05
@@ -337,6 +345,8 @@ class TripDetailsViewController: UIViewController {
             make.width.equalTo(296)
         }
     }
+    
+    // MARK: - Helper Functions
     
     @objc private func requestRide() {
         guard let currentRide = currentRide else { return }

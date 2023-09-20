@@ -10,17 +10,22 @@ import UIKit
 
 class NotificationsViewController: UIViewController {
     
-    // MARK: Views
+    // MARK: - Views
+    
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     private let backButton = UIButton()
     
-    // MARK: Identifiers
+    // MARK: - Identifiers
+    
     private let requestCellIdentifier = "RequestCell"
     
-    // MARK: Data
+    // MARK: - Data
+    
     private var awaitingApproval: [RideRequest] = []
     private var pendingRequests: [RideRequest] = []
     private var allRequests: [RideRequest] = []
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         view.backgroundColor = .white
@@ -29,6 +34,8 @@ class NotificationsViewController: UIViewController {
         
         getRequests()
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupBackButton() {
         backButton.setImage(UIImage(named: "BackArrow"), for: .normal)
@@ -60,6 +67,8 @@ class NotificationsViewController: UIViewController {
         }
     }
     
+    // MARK: - Helper Functions
+    
     private func getRequests() {
         NetworkManager.shared.getAllRequests { [weak self] response in
             switch response {
@@ -81,12 +90,14 @@ class NotificationsViewController: UIViewController {
     
 }
 
-// MARK: UITableViewDelegate
+// MARK: - UITableViewDelegate
+
 extension NotificationsViewController: UITableViewDelegate {
     // Will be used later for updating what the cell looks like when a user hits accept/decline
 }
 
-// MARK: UITableViewDataSource
+// MARK: - UITableViewDataSource
+
 extension NotificationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -24,12 +24,16 @@ class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UI
         locationController.filterText(searchText: searchText)
     }
     
+    // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         locationController = LocationViewController(searchController: self, delegate: self)
         setupSearchController()
     }
+    
+    // MARK: - Setup Search Controller
     
     func setupSearchController() {
         searchController = UISearchController(searchResultsController: locationController)
@@ -48,6 +52,7 @@ class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UI
 }
 
 // MARK: - LocationViewControllerDelegate
+
 extension SearchInitialViewController: LocationViewControllerDelegate {
     
     func didSelectLocation(location: GMSPlace) {

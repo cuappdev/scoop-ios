@@ -19,11 +19,15 @@ class VerifyPhoneNumberViewController: UIViewController {
     private var phoneNumber: String?
     private var verificationID: String?
     
+    // MARK: - Views
+    
     private let authLabel = UILabel()
     private let codeTextField = UITextField()
     private let messageLabel = UITextView()
     private let noCodeButton = UIButton()
     private let verifyButton = UIButton()
+    
+    // MARK: - Initializers
     
     init(phoneNumber: String, delegate: VerificationDelegate) {
         super.init(nibName: nil, bundle: nil)
@@ -35,6 +39,8 @@ class VerifyPhoneNumberViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -44,6 +50,8 @@ class VerifyPhoneNumberViewController: UIViewController {
         setupButtons()
         sendVerification()
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupLabels() {
         guard let phoneNumber = phoneNumber else { return }
@@ -104,6 +112,27 @@ class VerifyPhoneNumberViewController: UIViewController {
         }
     }
     
+    private func setupTextFields() {
+        codeTextField.layer.cornerRadius = 4
+        codeTextField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+        codeTextField.layer.borderWidth = 1
+        codeTextField.delegate = self
+        codeTextField.textAlignment = .center
+        codeTextField.textContentType = .oneTimeCode
+        codeTextField.placeholder = "000000"
+        codeTextField.font = .systemFont(ofSize: 24)
+        codeTextField.keyboardType = .numberPad
+        view.addSubview(codeTextField)
+        
+        codeTextField.snp.makeConstraints { make in
+            make.width.equalTo(120)
+            make.height.equalTo(56)
+            make.center.equalToSuperview()
+        }
+    }
+    
+    // MARK: - Helper Functions
+    
     private func sendVerification() {
         guard let phoneNumber = phoneNumber else { return }
         
@@ -162,26 +191,9 @@ class VerifyPhoneNumberViewController: UIViewController {
         }
     }
     
-    private func setupTextFields() {
-        codeTextField.layer.cornerRadius = 4
-        codeTextField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
-        codeTextField.layer.borderWidth = 1
-        codeTextField.delegate = self
-        codeTextField.textAlignment = .center
-        codeTextField.textContentType = .oneTimeCode
-        codeTextField.placeholder = "000000"
-        codeTextField.font = .systemFont(ofSize: 24)
-        codeTextField.keyboardType = .numberPad
-        view.addSubview(codeTextField)
-        
-        codeTextField.snp.makeConstraints { make in
-            make.width.equalTo(120)
-            make.height.equalTo(56)
-            make.center.equalToSuperview()
-        }
-    }
-    
 }
+
+// MARK: - UITextFieldDelegate
 
 extension VerifyPhoneNumberViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -15,15 +15,22 @@ protocol OnboardingDelegate: AnyObject {
 class OnboardingViewController: UIViewController {
     
     weak var delegate: OnboardingDelegate?
+    
+    // MARK: - Views
+    
     var nextAction: UIAction?
     let backButton = UIButton()
     let nextOnboardingButton = UIButton()
-
+    
+    // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackButton()
         view.backgroundColor = .white
     }
+    
+    // MARK: - Setup View Functions
     
     func setupNextButton(action: UIAction) {
         var bottomButtonMultiplier = 0.1
@@ -137,6 +144,8 @@ class OnboardingViewController: UIViewController {
 
     }
     
+    // MARK: - Helper Functions
+    
     func addPrompt(name: String, placeholder: String, answer: String) {
         NetworkManager.shared.postPrompt(name: name, placeholder: placeholder) { result in
             switch result {
@@ -168,22 +177,4 @@ class OnboardingViewController: UIViewController {
         self.delegate?.didTapBack(navCtrl, previousViewController: nil)
 
     }
-}
-
-class OnboardingTextField: UITextField {
-    
-    let padding = UIEdgeInsets(top: 18.5, left: 16, bottom: 18.5, right: 16)
-
-    override open func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-
-    override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-    
 }

@@ -9,7 +9,8 @@ import UIKit
 
 class MatchesViewController: UIViewController {
     
-    // MARK: Views
+    // MARK: - Views
+    
     private let arrivalIconImageView = UIImageView(image: UIImage(named: "destinationIcon"))
     private let arrivalLocationLabel = UILabel()
     private let calendarIconImageView = UIImageView(image: UIImage(named: "calendarIcon"))
@@ -24,12 +25,14 @@ class MatchesViewController: UIViewController {
     private let tableView = UITableView()
     private let tripDetailsView = UIView()
     
-    // MARK: Empty State Views
+    // MARK: - Empty State Views
+    
     private let noMatchesLabel = UILabel()
     private let searchIcon = UIImageView()
     private let secondLabel = UILabel()
     
-    // MARK: Identifiers
+    // MARK: - Identifiers
+    
     private let homeCellIdenitifer = "HomeCell"
     
     var arrivalName: String = "Arrival"
@@ -37,15 +40,8 @@ class MatchesViewController: UIViewController {
     var departureName: String = "Date"
     var filteredRides: [Ride] = []
     var matchedRides: [Ride] = []
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        navigationItem.title = "Best Matches"
-        setupTitleLines()
-        setupTripDetails()
-        setupFilterButtons()
-    }
+    
+    // MARK: - Initializers
     
     init(arrival: String, departure: String, date: String, rides: [Ride]) {
         super.init(nibName: nil, bundle: nil)
@@ -65,6 +61,19 @@ class MatchesViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle Functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        navigationItem.title = "Best Matches"
+        setupTitleLines()
+        setupTripDetails()
+        setupFilterButtons()
+    }
+    
+    // MARK: - Setup View Functions
     
     func setupTableView() {
         tableView.dataSource = self
@@ -276,6 +285,8 @@ class MatchesViewController: UIViewController {
         setupSecondLabel()
     }
     
+    // MARK: - Helper Functions
+    
     private func filterRides() {
         if studentDriverButton.isSelected && sharedTaxiButton.isSelected {
             filteredRides = matchedRides
@@ -314,6 +325,8 @@ class MatchesViewController: UIViewController {
 
 }
 
+// MARK: - UITableViewDataSource
+
 extension MatchesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -327,6 +340,8 @@ extension MatchesViewController: UITableViewDataSource {
     }
     
 }
+
+// MARK: - UITableViewDelegate
 
 extension MatchesViewController: UITableViewDelegate {
     

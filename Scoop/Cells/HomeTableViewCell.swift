@@ -11,13 +11,16 @@ class HomeTableViewCell: UITableViewCell {
     
     var selectedRide: Ride?
     
-    // MARK: Views
+    // MARK: - Views
+    
     private let containerView = UIView()
     private let titleLabel = UILabel()
     private let depatureLabel = ImageLabelView()
     private let arrivalLabel = ImageLabelView()
     private let dateLabel = ImageLabelView()
     private let dotsImageView = UIImageView()
+    
+    // MARK: - Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,14 +34,14 @@ class HomeTableViewCell: UITableViewCell {
         setupArrivalLabel()
     }
     
+    // MARK: - Setup View Functions
+    
     private func setupContainerView() {
         containerView.clipsToBounds = true
         containerView.layer.masksToBounds = false
         containerView.layer.cornerRadius = 10
         containerView.backgroundColor = .white
         containerView.layer.borderColor = UIColor.white.cgColor
-        
-        // MARK: Shadow setup
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.2
         containerView.layer.shadowRadius = 5

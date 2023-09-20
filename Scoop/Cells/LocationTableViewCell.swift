@@ -11,12 +11,18 @@ class LocationTableViewCell: UITableViewCell {
 
     private var locationLabel = UILabel()
     static let reuseIdentifier = "locationCellReuse"
-
+    
+    // MARK: - Initializers
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         locationLabel.font = .systemFont(ofSize: 14)
         contentView.addSubview(locationLabel)
         setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func configure(location: String) {
@@ -33,7 +39,4 @@ class LocationTableViewCell: UITableViewCell {
         }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

@@ -10,7 +10,8 @@ import UIKit
 
 class SearchRidesViewController: UIViewController {
     
-    // MARK: Views
+    // MARK: - Views
+    
     private let arrivalLabel = UILabel()
     private let arrivalTextField = ImageTextField()
     private let calendarIconImageView = UIImageView()
@@ -22,10 +23,13 @@ class SearchRidesViewController: UIViewController {
     private let findTripsButton = UIButton()
     private let stackView = UIStackView()
     
-    // MARK: Data
+    // MARK: - Data
+    
     private var arrivalPlace: GMSPlace?
     private var departurePlace: GMSPlace?
     private var tripDate: String = ""
+    
+    // MARK: - Lifecycle Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +42,8 @@ class SearchRidesViewController: UIViewController {
         setupButton()
         setupLabels()
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupHeader() {
         let dottedLineMultiplier = 0.52
@@ -202,6 +208,8 @@ class SearchRidesViewController: UIViewController {
         }
     }
     
+    // MARK: - Helper Functions
+    
     @objc private func presentDepartureSearch() {
         let depatureVC = DepartureSearchViewController()
         depatureVC.delegate = self
@@ -275,6 +283,7 @@ class SearchRidesViewController: UIViewController {
 }
 
 // MARK: - UITextFieldDelegate
+
 extension SearchRidesViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -284,6 +293,7 @@ extension SearchRidesViewController: UITextFieldDelegate {
 }
 
 // MARK: - SearchInitialViewControllerDelegate
+
 extension SearchRidesViewController: SearchInitialViewControllerDelegate {
 
     func didSelectLocation(viewController: UIViewController, location: GMSPlace) {

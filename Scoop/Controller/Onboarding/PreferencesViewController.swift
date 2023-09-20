@@ -8,11 +8,14 @@
 import UIKit
 
 class PreferencesViewController: OnboardingViewController {
-
+    
+    // MARK: - Views
     private let stackView = UIStackView()
     private let talkativeSlider = UISlider()
     private let musicSlider = UISlider()
-
+    
+    // MARK: - Lifecycle Functions
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -23,7 +26,6 @@ class PreferencesViewController: OnboardingViewController {
                 return
             }
             
-            //TODO: Not working: Backend still debugging
             self.addPrompt(name: "Talkative", placeholder: "0", answer: String(self.talkativeSlider.value))
             self.addPrompt(name: "Music", placeholder: "0", answer: String(self.musicSlider.value))
             self.delegate?.didTapNext(navCtrl, nextViewController: nil)
@@ -38,6 +40,8 @@ class PreferencesViewController: OnboardingViewController {
         
         setNextButtonColor(disabled: false)
     }
+    
+    // MARK: - Setup View Functions
     
     private func setupStackView() {
         stackView.axis = .vertical
@@ -192,4 +196,5 @@ class PreferencesViewController: OnboardingViewController {
             make.centerY.equalToSuperview()
         }
     }
+    
 }
