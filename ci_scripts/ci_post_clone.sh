@@ -13,6 +13,9 @@ brew install cocoapods
 # Install dependencies you manage with CocoaPods.
 pod install
 
-echo "Getting Secrets..."
+# Use wget to download directly from env variable
 brew install wget
+
+wget -O ../Scoop/Supporting/GoogleService-Info.plist "$GOOGLE_SERVICE_INFO_LIST"
+wget -O ../Scoop/Supporting/Secrets.plist "$KEYS_PLIST"
 
