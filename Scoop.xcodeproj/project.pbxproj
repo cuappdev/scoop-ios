@@ -38,6 +38,7 @@
 		410D78C029B8166D0007E434 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D78BF29B8166D0007E434 /* NotificationsViewController.swift */; };
 		412EDB9029B950D300C1C265 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */; };
 		4176A1E9299D2F01008B2BC3 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4176A1E8299D2F01008B2BC3 /* Path.swift */; };
+		8941635C2AC4D69900B0CAE9 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */; };
 		8E4464A344C5B1529768FAF3 /* Pods_Scoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */; };
 		C83419EF27E65A4B00491306 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83419EE27E65A4B00491306 /* User.swift */; };
 		C83CD58A27F3B27200EDA255 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83CD58927F3B27200EDA255 /* Extension+UIViewController.swift */; };
@@ -123,8 +124,7 @@
 		410D78BF29B8166D0007E434 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		4176A1E8299D2F01008B2BC3 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
-		4183686E29B948DA00F0CE55 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "/Downloads/GoogleService-Info.plist"; sourceTree = "<absolute>"; };
-		4183686F29B948DA00F0CE55 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; name = Keys.plist; path = /Downloads/Keys.plist; sourceTree = "<absolute>"; };
+		8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9430FC737D049567581E79B9 /* Pods-Scoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.debug.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.debug.xcconfig"; sourceTree = "<group>"; };
 		BD63C2092AD72CD946F81950 /* Pods-Scoop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.release.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.release.xcconfig"; sourceTree = "<group>"; };
 		C83419EE27E65A4B00491306 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -210,8 +210,6 @@
 		4166F54529C26E450022C8D4 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				4183686F29B948DA00F0CE55 /* Keys.plist */,
-				4183686E29B948DA00F0CE55 /* GoogleService-Info.plist */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -371,6 +369,7 @@
 				2C09F7E629E085A1006003AA /* ImageTextField.swift */,
 				2CAB93CF2AB262DF009554E7 /* OnboardingTextField.swift */,
 				2C2015DE2AB4CFAB0065C436 /* ShiftedRightTextField.swift */,
+				8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -644,6 +643,7 @@
 				2C991EBD28E0B2E7006301D9 /* LocationTableViewCell.swift in Sources */,
 				C83419EF27E65A4B00491306 /* User.swift in Sources */,
 				2C67E4FC29945E5E00195BB5 /* Constants.swift in Sources */,
+				8941635C2AC4D69900B0CAE9 /* EditProfileViewController.swift in Sources */,
 				2C2015DF2AB4CFAB0065C436 /* ShiftedRightTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

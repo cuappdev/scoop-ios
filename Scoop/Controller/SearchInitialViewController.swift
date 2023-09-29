@@ -37,7 +37,6 @@ class SearchInitialViewController: UIViewController, UISearchResultsUpdating, UI
     
     func setupSearchController() {
         searchController = UISearchController(searchResultsController: locationController)
-        navigationItem.searchController = searchController
         searchController.loadViewIfNeeded()
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false

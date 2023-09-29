@@ -65,8 +65,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         getUserPreferences()
         setupHeaderImage()
         setupContainerView()
-        // TODO: Commented out because editing functionality is not yet implemented for MVP.
-        // setupEditButton()
+        setupEditButton()
         setupProfileImageView()
         setupProfileStackView()
         isBeingPresented ? updateDriverProfile() : updateUserProfile()
@@ -102,6 +101,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         editButton.tintColor = .black
         editButton.imageView?.contentMode = .scaleAspectFit
         containerView.addSubview(editButton)
+        
+        editButton.addTarget(self, action: #selector(pushEditProfileVC), for: .touchUpInside)
         
         editButton.snp.makeConstraints { make in
             make.size.equalTo(30)
@@ -331,6 +332,10 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     }
     
     // MARK: - Helper Functions
+    
+    @objc private func pushEditProfileVC() {
+        navigationController?.pushViewController(EditProfileViewController(), animated: true)
+    }
     
     private func getUserPreferences() {
         user?.prompts.forEach { prompt in
