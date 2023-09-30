@@ -19,6 +19,9 @@ class EditProfileViewController: UIViewController {
     private let pronounsTextField = UITextField()
     private let hometownTextField = UITextField()
     private let classTextField = UITextField()
+    
+    private var user: BaseUser?
+    private var hometown: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,24 @@ class EditProfileViewController: UIViewController {
         setupProfileImageView()
         setupUploadPhotoButton()
         setupStackView()
+    }
+    
+    init(user: BaseUser, hometown: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.user = user
+        if let profilePicUrl = user.profilePicUrl {
+            profileImageView.sd_setImage(with: URL(string: profilePicUrl))
+        } else {
+            profileImageView.image = UIImage(named: "emptyimage")
+        }
+        nameTextField.text = "\(user.firstName) \(user.lastName)"
+        pronounsTextField.text = user.pronouns
+        hometownTextField.text = hometown
+        classTextField.text = user.grade
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Setup View Functions
@@ -66,7 +87,7 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupProfileImageView() {
-        profileImageView.image = UIImage(named: "emptyimage")
+//        profileImageView.image = UIImage(named: "emptyimage")
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
         profileImageView.layer.cornerRadius = 60
@@ -112,7 +133,7 @@ class EditProfileViewController: UIViewController {
             make.top.equalTo(profileImageView.snp.bottom).offset(25)
         }
         
-        nameTextField.text = "Name"
+//        nameTextField.text = "Name"
         nameTextField.textColor = UIColor.black
         nameTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(nameTextField)
@@ -122,7 +143,7 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        pronounsTextField.text = "Pronouns"
+//        pronounsTextField.text = "Pronouns"
         pronounsTextField.textColor = UIColor.black
         pronounsTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(pronounsTextField)
@@ -132,7 +153,7 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        hometownTextField.text = "Hometown"
+//        hometownTextField.text = "Hometown"
         hometownTextField.textColor = UIColor.black
         hometownTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(hometownTextField)
@@ -142,7 +163,7 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        classTextField.text = "Class"
+//        classTextField.text = "Class"
         classTextField.textColor = UIColor.black
         classTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(classTextField)
