@@ -15,8 +15,7 @@ class PreferredContactViewController: OnboardingViewController {
     private let stackView = UIStackView()
     private let emailButton = UIButton()
     private let phoneButton = UIButton()
-    private let phoneLabel = UILabel()
-    private let numberTextField = OnboardingTextField()
+    private let numberTextField = LabeledTextField()
     private let formatter = PhoneFormatter()
     
     private var isVerified = false
@@ -34,7 +33,6 @@ class PreferredContactViewController: OnboardingViewController {
         setupTitle(name: "About you")
         setupTitleLines()
         setupStackView()
-        setupLabels()
         
         nextAction = UIAction { _ in
             guard let navCtrl = self.navigationController else {
@@ -47,7 +45,7 @@ class PreferredContactViewController: OnboardingViewController {
                 return
             }
             
-            guard let phoneNumber = self.numberTextField.text, self.validateNumber(value: phoneNumber) else {
+            guard let phoneNumber = self.numberTextField.textField.text, self.validateNumber(value: phoneNumber) else {
                 self.presentErrorAlert(title: "Error", message: "Please enter a valid phone number.")
                 return
             }
@@ -127,13 +125,10 @@ class PreferredContactViewController: OnboardingViewController {
             self.phoneButton.isSelected.toggle()
             if self.emailButton.isSelected {
                 self.numberTextField.isHidden = true
-                self.phoneLabel.isHidden = true
-                self.phoneLabel.textColor = .textFieldBorderColor
                 self.setNextButtonColor(disabled: false)
             } else {
                 self.numberTextField.isHidden = false
-                self.phoneLabel.isHidden = false
-                self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.text ?? ""))
+                self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.textField.text ?? ""))
             }
         }
         
@@ -142,15 +137,8 @@ class PreferredContactViewController: OnboardingViewController {
         
         numberTextField.isHidden = true
         numberTextField.delegate = self
-        numberTextField.font = .systemFont(ofSize: 22)
-        numberTextField.textColor = .offBlack
-        numberTextField.placeholder = "000-000-0000"
-        numberTextField.layer.borderWidth = 1
-        numberTextField.layer.borderWidth = textFieldBorderWidth
-        numberTextField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
-        numberTextField.layer.cornerRadius = textFieldCornerRadius
-        numberTextField.font = UIFont(name: "SFPro", size: 16)
-        numberTextField.keyboardType = .phonePad
+        numberTextField.setup(title: "Phone", placeholder: "000-000-0000")
+        numberTextField.textField.keyboardType = .phonePad
         view.addSubview(numberTextField)
         
         numberTextField.snp.makeConstraints { make in
@@ -158,25 +146,6 @@ class PreferredContactViewController: OnboardingViewController {
             make.trailing.equalToSuperview().inset(36)
             make.leading.equalTo(phoneButton).inset(34)
             make.height.equalTo(textFieldHeight)
-        }
-    }
-    
-    private func setupLabels() {
-        let labelLeading = 10
-        let labelTop = 8
-        phoneLabel.font = .systemFont(ofSize: 12)
-        phoneLabel.textColor = .scoopDarkGreen
-        phoneLabel.backgroundColor = .white
-        phoneLabel.textAlignment = .center
-        phoneLabel.isHidden = true
-        view.addSubview(phoneLabel)
-        
-        phoneLabel.text = "Phone"
-        phoneLabel.snp.makeConstraints { make in
-            make.top.equalTo(numberTextField).inset(-labelTop)
-            make.leading.equalTo(numberTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(44)
         }
     }
     
@@ -202,22 +171,34 @@ extension PreferredContactViewController: UITextFieldDelegate {
         return formatted.isEmpty
     }
     
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField == numberTextField.textField {
+            self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.textField.text ?? ""))
+        }
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 2
-        textField.layer.borderColor = UIColor.scoopDarkGreen.cgColor
-        textField.placeholder = ""
-        phoneLabel.textColor = .scoopDarkGreen
-        phoneLabel.isHidden = false
+        if let onboardingTextField = textField as? OnboardingTextField {
+            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+                associatedView.labeledTextField(isSelected: true)
+                associatedView.hidesLabel(isHidden: false)
+            }
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
-        phoneLabel.textColor = .textFieldBorderColor
-        
-        if textField == numberTextField {
-            self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.text ?? ""))
+        if let onboardingTextField = textField as? OnboardingTextField {
+            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+                associatedView.labeledTextField(isSelected: false)
+                if textField.text?.isEmpty ?? true {
+                    associatedView.hidesLabel(isHidden: true)
+                }
+            }
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
     }
     
 }
