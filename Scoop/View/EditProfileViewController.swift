@@ -5,6 +5,7 @@
 //  Created by Caitlyn Jin on 9/27/23.
 //
 
+import SDWebImage
 import UIKit
 
 class EditProfileViewController: UIViewController {
@@ -20,8 +21,20 @@ class EditProfileViewController: UIViewController {
     private let hometownTextField = UITextField()
     private let classTextField = UITextField()
     
+    weak var delegate: ProfileViewDelegate?
+    
+    // MARK: - User Data
+    
     private var user: BaseUser?
+    
     private var hometown: String?
+    private var talkative: Float?
+    private var music: Float?
+    private var snack: String?
+    private var song: String?
+    private var stop: String?
+    
+    // MARK: - Lifecycle Functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +45,16 @@ class EditProfileViewController: UIViewController {
         setupUploadPhotoButton()
         setupStackView()
     }
+    
+    /// Temporary while save button is not implemented
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        getUserPreferences()
+        updateUser()
+    }
+    
+    // MARK: - Initializers
     
     init(user: BaseUser, hometown: String) {
         super.init(nibName: nil, bundle: nil)
@@ -87,7 +110,6 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupProfileImageView() {
-//        profileImageView.image = UIImage(named: "emptyimage")
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
         profileImageView.layer.cornerRadius = 60
@@ -133,7 +155,6 @@ class EditProfileViewController: UIViewController {
             make.top.equalTo(profileImageView.snp.bottom).offset(25)
         }
         
-//        nameTextField.text = "Name"
         nameTextField.textColor = UIColor.black
         nameTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(nameTextField)
@@ -143,7 +164,6 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-//        pronounsTextField.text = "Pronouns"
         pronounsTextField.textColor = UIColor.black
         pronounsTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(pronounsTextField)
@@ -153,7 +173,6 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-//        hometownTextField.text = "Hometown"
         hometownTextField.textColor = UIColor.black
         hometownTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(hometownTextField)
@@ -163,7 +182,6 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-//        classTextField.text = "Class"
         classTextField.textColor = UIColor.black
         classTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(classTextField)
@@ -171,6 +189,67 @@ class EditProfileViewController: UIViewController {
         classTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)
+        }
+    }
+    
+    // MARK: - Helper Functions
+    
+    private func updateUser() {
+        let name = nameTextField.text?.split(separator: " ")
+        let firstName = String(name?[0] ?? "")
+        let lastName = String(name?[1...].joined(separator: " ") ?? "")
+        let grade = classTextField.text
+        let pronouns = pronounsTextField.text
+        
+        hometown = hometownTextField.text
+        
+        var userAnswers: [UserAnswer] = []
+                
+        user?.prompts.forEach { prompt in
+            if prompt.questionName == "Hometown" {
+                userAnswers.append(UserAnswer(id: prompt.id, answer: hometown ?? ""))
+            } else if prompt.questionName == "Talkative" {
+                userAnswers.append(UserAnswer(id: prompt.id, answer: String(talkative ?? 0)))
+            } else if prompt.questionName == "Music" {
+                userAnswers.append(UserAnswer(id: prompt.id, answer: String(music ?? 0)))
+            } else if prompt.questionName == "Snack" {
+                userAnswers.append(UserAnswer(id: prompt.id, answer: snack ?? ""))
+            } else if prompt.questionName == "Song" {
+                userAnswers.append(UserAnswer(id: prompt.id, answer: song ?? ""))
+            } else if prompt.questionName == "Stop" {
+                userAnswers.append(UserAnswer(id: prompt.id, answer: stop ?? ""))
+            }
+        }
+        
+        NetworkManager.shared.updateAuthenticatedUser(netid: user?.netid ?? "", first_name: firstName, last_name: lastName, grade: grade ?? "", phone_number: user?.phoneNumber ?? "", pronouns: pronouns ?? "", prof_pic: user?.profilePicUrl ?? "", prompts: userAnswers) { result in
+            switch result {
+            case .success(let user):
+                NetworkManager.shared.currentUser = user
+                self.delegate?.updateUserProfile()
+            case .failure(let error):
+                print("Error in EditProfileViewController: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    /// Temporary while not all input fields are implemented
+    private func getUserPreferences() {
+        user?.prompts.forEach { prompt in
+            if prompt.questionName == "Hometown" {
+                hometown = prompt.answer
+            } else if prompt.questionName == "Talkative" {
+                guard let talkativeFloat = Float(prompt.answer ?? "0") else { return }
+                talkative = talkativeFloat
+            } else if prompt.questionName == "Music" {
+                guard let musicFloat = Float(prompt.answer ?? "0") else { return }
+                music = musicFloat
+            } else if prompt.questionName == "Snack" {
+                snack = prompt.answer
+            } else if prompt.questionName == "Song" {
+                song = prompt.answer
+            } else if prompt.questionName == "Stop" {
+                stop = prompt.answer
+            }
         }
     }
     

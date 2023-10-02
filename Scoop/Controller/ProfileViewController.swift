@@ -334,7 +334,10 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     // MARK: - Helper Functions
     
     @objc private func pushEditProfileVC() {
-        navigationController?.pushViewController(EditProfileViewController(user: user!, hometown: hometown ?? ""), animated: true)
+        guard let user = user else { return }
+        let editProfileVC = EditProfileViewController(user: user, hometown: hometown ?? "")
+        editProfileVC.delegate = self
+        navigationController?.pushViewController(editProfileVC, animated: true)
     }
     
     private func getUserPreferences() {
