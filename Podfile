@@ -15,3 +15,4 @@ target 'Scoop' do
   pod 'GooglePlaces'
   pod 'SDWebImage'
 end
+

@@ -12,12 +12,9 @@ class FavoritesViewController: OnboardingViewController {
     // MARK: - Views
     
     private let stackView = UIStackView()
-    private let snackTextField = OnboardingTextField()
-    private let songTextField = OnboardingTextField()
-    private let stopTextField = OnboardingTextField()
-    private let snackLabel = UILabel()
-    private let songLabel = UILabel()
-    private let stopLabel = UILabel()
+    private let snackTextField = LabeledTextField()
+    private let songTextField = LabeledTextField()
+    private let stopTextField = LabeledTextField()
 
     // MARK: - Lifecycle Functions
     
@@ -29,9 +26,9 @@ class FavoritesViewController: OnboardingViewController {
         nextAction = UIAction { _ in
             guard let navCtrl = self.navigationController else { return }
     
-            guard let snack = self.snackTextField.text, !snack.isEmpty,
-                  let song = self.songTextField.text, !song.isEmpty,
-                  let stop = self.stopTextField.text, !stop.isEmpty else {
+            guard let snack = self.snackTextField.textField.text, !snack.isEmpty,
+                  let song = self.songTextField.textField.text, !song.isEmpty,
+                  let stop = self.stopTextField.textField.text, !stop.isEmpty else {
                       self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
                       
                       return
@@ -48,7 +45,6 @@ class FavoritesViewController: OnboardingViewController {
         
         setupTitleLines()
         setupStackView()
-        setupLabels()
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
         }))
@@ -74,11 +70,8 @@ class FavoritesViewController: OnboardingViewController {
             make.centerY.equalToSuperview()
         }
         
-        snackTextField.textColor = .offBlack
         snackTextField.delegate = self
-        snackTextField.attributedPlaceholder = NSAttributedString(
-            string: "Roadtrip snack",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+        snackTextField.setup(title: "Roadtrip snack")
         stackView.addArrangedSubview(snackTextField)
         
         snackTextField.snp.makeConstraints { make in
@@ -86,11 +79,8 @@ class FavoritesViewController: OnboardingViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        songTextField.textColor = .offBlack
         songTextField.delegate = self
-        songTextField.attributedPlaceholder = NSAttributedString(
-            string: "Roadtrip song",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+        songTextField.setup(title: "Roadtrip song")
         stackView.addArrangedSubview(songTextField)
         
         songTextField.snp.makeConstraints { make in
@@ -98,60 +88,13 @@ class FavoritesViewController: OnboardingViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        stopTextField.textColor = .offBlack
         stopTextField.delegate = self
-        stopTextField.attributedPlaceholder = NSAttributedString(
-            string: "Roadtrip stop",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+        stopTextField.setup(title: "Roadtrip stop")
         stackView.addArrangedSubview(stopTextField)
         
         stopTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)
-        }
-        
-        [songTextField, snackTextField, stopTextField].forEach { text in
-            text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = UIColor.textFieldBorderColor.cgColor
-            text.layer.cornerRadius = textFieldCornerRadius
-            text.font = textFieldFont
-        }
-    }
-    
-    private func setupLabels() {
-        let labelLeading = 10
-        let labelTop = 8
-        [songLabel, snackLabel, stopLabel].forEach { label in
-            label.font = .systemFont(ofSize: 12)
-            label.textColor = .scoopDarkGreen
-            label.backgroundColor = .white
-            label.textAlignment = .center
-            label.isHidden = true
-            view.addSubview(label)
-        }
-        
-        songLabel.text = "Roadtrip song"
-        songLabel.snp.makeConstraints { make in
-            make.top.equalTo(songTextField).inset(-labelTop)
-            make.leading.equalTo(songTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(98)
-        }
-        
-        snackLabel.text = "Roadtrip snack"
-        snackLabel.snp.makeConstraints { make in
-            make.top.equalTo(snackTextField).inset(-labelTop)
-            make.leading.equalTo(snackTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(92)
-        }
-        
-        stopLabel.text = "Roadtrip stop"
-        stopLabel.snp.makeConstraints { make in
-            make.top.equalTo(stopTextField).inset(-labelTop)
-            make.leading.equalTo(stopTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(90)
         }
     }
     
@@ -162,38 +105,34 @@ class FavoritesViewController: OnboardingViewController {
 extension FavoritesViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 2
-        textField.layer.borderColor = UIColor.scoopDarkGreen.cgColor
-        textField.placeholder = ""
-        if textField == snackTextField {
-            snackLabel.textColor = .scoopDarkGreen
-            snackLabel.isHidden = false
-        } else if textField == songTextField {
-            songLabel.textColor = .scoopDarkGreen
-            songLabel.isHidden = false
-        } else {
-            stopLabel.textColor = .scoopDarkGreen
-            stopLabel.isHidden = false
+        if let onboardingTextField = textField as? OnboardingTextField {
+            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+                associatedView.labeledTextField(isSelected: true)
+                associatedView.hidesLabel(isHidden: false)
+            }
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
-        if textField == snackTextField {
-            snackLabel.textColor = .textFieldBorderColor
-        } else if textField == songTextField {
-            songLabel.textColor = .textFieldBorderColor
-        } else {
-            stopLabel.textColor = .textFieldBorderColor
+        if let onboardingTextField = textField as? OnboardingTextField {
+            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+                associatedView.labeledTextField(isSelected: false)
+                if textField.text?.isEmpty ?? true {
+                    associatedView.hidesLabel(isHidden: true)
+                }
+            }
         }
         
         var responses: [String] = []
         [snackTextField, songTextField, stopTextField].forEach { textField in
-            responses.append(textField.text ?? "")
+            responses.append(textField.textField.text ?? "")
         }
         
         setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
     }
     
 }

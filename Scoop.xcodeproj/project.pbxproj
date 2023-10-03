@@ -34,6 +34,7 @@
 		2CD7304429C35F6F00F4CF5A /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7304329C35F6E00F4CF5A /* OnboardingContainerViewController.swift */; };
 		2CE749E129DBC065009EF309 /* PostRideContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE749E029DBC065009EF309 /* PostRideContainerViewController.swift */; };
 		2CE749E329DBD147009EF309 /* PostRideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE749E229DBD147009EF309 /* PostRideViewController.swift */; };
+		2CECCDC32AC4D705009CC4A0 /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CECCDC22AC4D705009CC4A0 /* LabeledTextField.swift */; };
 		2CFA071629A67C710085A0B8 /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFA071529A67C710085A0B8 /* TripDetailsViewController.swift */; };
 		410D78C029B8166D0007E434 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D78BF29B8166D0007E434 /* NotificationsViewController.swift */; };
 		412EDB9029B950D300C1C265 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */; };
@@ -119,6 +120,7 @@
 		2CD7304329C35F6E00F4CF5A /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		2CE749E029DBC065009EF309 /* PostRideContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideContainerViewController.swift; sourceTree = "<group>"; };
 		2CE749E229DBD147009EF309 /* PostRideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRideViewController.swift; sourceTree = "<group>"; };
+		2CECCDC22AC4D705009CC4A0 /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		2CFA071529A67C710085A0B8 /* TripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
 		410D78BF29B8166D0007E434 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */,
 				2C09F7E629E085A1006003AA /* ImageTextField.swift */,
 				2CAB93CF2AB262DF009554E7 /* OnboardingTextField.swift */,
+				2CECCDC22AC4D705009CC4A0 /* LabeledTextField.swift */,
 				2C2015DE2AB4CFAB0065C436 /* ShiftedRightTextField.swift */,
 			);
 			path = View;
@@ -615,6 +618,7 @@
 				410D78C029B8166D0007E434 /* NotificationsViewController.swift in Sources */,
 				C8D2806227D9992600EDD5D3 /* Ride.swift in Sources */,
 				C8CB5E892811CC4C007FB8A8 /* Extension+UIColor.swift in Sources */,
+				2CECCDC32AC4D705009CC4A0 /* LabeledTextField.swift in Sources */,
 				C8EF10C827E2CCB800642B40 /* OnboardingPageViewController.swift in Sources */,
 				C8EF10CC27E2CEF800642B40 /* FavoritesViewController.swift in Sources */,
 				C8D2805F27D985FA00EDD5D3 /* ImageLabelView.swift in Sources */,
