@@ -11,8 +11,12 @@ class LabeledTextField: UIView {
     
     weak var delegate: UITextFieldDelegate?
     
+    // MARK: - Views
+    
     private let nameLabel = UILabel()
     let textField = OnboardingTextField()
+    
+    // MARK: - Setup Views
     
     func setup(title: String, placeholder: String? = nil) {
         var text = title
@@ -20,9 +24,14 @@ class LabeledTextField: UIView {
             text = placeholder
         }
         
+        setupTextField(placeholder: text)
+        setupLabel(title: title)
+    }
+    
+    private func setupTextField(placeholder: String) {
         textField.attributedPlaceholder = NSAttributedString(
-            string: text,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+            string: placeholder,
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
         
         textField.font = .systemFont(ofSize: 16)
         textField.textColor = .black
@@ -39,7 +48,9 @@ class LabeledTextField: UIView {
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(56)
         }
-        
+    }
+    
+    private func setupLabel(title: String) {
         nameLabel.text = " \(title) "
         nameLabel.font = .systemFont(ofSize: 12)
         nameLabel.textColor = .black
@@ -52,6 +63,8 @@ class LabeledTextField: UIView {
             make.centerY.equalTo(textField.snp.top)
         }
     }
+    
+    // MARK: - Helper Functions
     
     func labeledTextField(isSelected: Bool) {
         if isSelected {
@@ -68,6 +81,5 @@ class LabeledTextField: UIView {
     func hidesLabel(isHidden: Bool) {
         nameLabel.isHidden = isHidden
     }
-    
     
 }
