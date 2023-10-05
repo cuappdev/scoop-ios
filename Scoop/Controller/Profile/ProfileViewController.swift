@@ -11,6 +11,7 @@ import UIKit
 protocol ProfileViewDelegate: AnyObject {
     func updateUserProfile()
     func updateDriverProfile()
+    func updateProfileText(user: BaseUser)
 }
 
 class ProfileViewController: UIViewController, ProfileViewDelegate {
@@ -74,7 +75,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     // MARK: - Setup View Functions
     
     private func setupContainerView() {
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = UIColor.white
         containerView.layer.cornerRadius = 24
         view.addSubview(containerView)
         
@@ -98,7 +99,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     private func setupEditButton() {
         let editButton = UIButton()
         editButton.setImage(UIImage(systemName: "square.and.pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36, weight: .semibold)), for: .normal)
-        editButton.tintColor = .black
+        editButton.tintColor = UIColor.black
         editButton.imageView?.contentMode = .scaleAspectFit
         containerView.addSubview(editButton)
         
@@ -180,7 +181,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         detailsStackView.addArrangedSubview(travelingLabel)
         
         let travelingContainerView = UIView()
-        travelingContainerView.backgroundColor = .white
+        travelingContainerView.backgroundColor = UIColor.white
         travelingContainerView.addDropShadow()
         travelingContainerView.layer.cornerRadius = 10
         detailsStackView.addArrangedSubview(travelingContainerView)
@@ -235,8 +236,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         }
         
         talkativeSlider.isUserInteractionEnabled = false
-        talkativeSlider.minimumTrackTintColor = .black
-        talkativeSlider.maximumTrackTintColor = .black
+        talkativeSlider.minimumTrackTintColor = UIColor.black
+        talkativeSlider.maximumTrackTintColor = UIColor.black
         talkativeSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
         talkativeSlider.setMaximumTrackImage(UIImage(named: "track"), for: .normal)
         talkativeSlider.setMinimumTrackImage(UIImage(named: "track"), for: .normal)
@@ -277,8 +278,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         }
         
         musicSlider.isUserInteractionEnabled = false
-        musicSlider.minimumTrackTintColor = .black
-        musicSlider.maximumTrackTintColor = .black
+        musicSlider.minimumTrackTintColor = UIColor.black
+        musicSlider.maximumTrackTintColor = UIColor.black
         musicSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
         musicSlider.setMaximumTrackImage(UIImage(named: "track"), for: .normal)
         musicSlider.setMinimumTrackImage(UIImage(named: "track"), for: .normal)
@@ -296,7 +297,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         detailsStackView.addArrangedSubview(favoritesLabel)
         
         let favoritesContainerView = UIView()
-        favoritesContainerView.backgroundColor = .white
+        favoritesContainerView.backgroundColor = UIColor.white
         favoritesContainerView.addDropShadow()
         favoritesContainerView.layer.cornerRadius = 10
         detailsStackView.addArrangedSubview(favoritesContainerView)
@@ -335,6 +336,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     @objc private func pushEditProfileVC() {
         guard let user = user else { return }
+        
         let editProfileVC = EditProfileViewController(user: user, hometown: hometown ?? "")
         editProfileVC.delegate = self
         navigationController?.pushViewController(editProfileVC, animated: true)
@@ -342,22 +344,43 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     private func getUserPreferences() {
         user?.prompts.forEach { prompt in
-            if prompt.questionName == "Hometown" {
+            switch prompt.questionName {
+            case .hometown:
                 hometown = prompt.answer
-            } else if prompt.questionName == "Talkative" {
-                guard let talkativeFloat = Float(prompt.answer ?? "0") else { return }
-                talkative = talkativeFloat
-            } else if prompt.questionName == "Music" {
+            case .music:
                 guard let musicFloat = Float(prompt.answer ?? "0") else { return }
                 music = musicFloat
-            } else if prompt.questionName == "Snack" {
-                snack = prompt.answer
-            } else if prompt.questionName == "Song" {
+            case .song:
                 song = prompt.answer
-            } else if prompt.questionName == "Stop" {
+            case .snack:
+                snack = prompt.answer
+            case .stop:
                 stop = prompt.answer
+            case .talkative:
+                guard let talkativeFloat = Float(prompt.answer ?? "0") else { return }
+                talkative = talkativeFloat
             }
         }
+    }
+    
+    func updateProfileText(user: BaseUser) {
+        self.user = user
+        getUserPreferences()
+        
+        guard let imageURL = user.profilePicUrl,
+              let pronouns = user.pronouns,
+              let grade = user.grade,
+              let hometown = self.hometown else {return}
+        
+        profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.emptyImage)
+        nameLabel.text = "\(user.firstName) \(user.lastName)"
+        subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
+        phoneLabel.text = user.phoneNumber
+        talkativeSlider.value = talkative ?? 0
+        musicSlider.value = music ?? 0
+        songSection.label.attributedText = makeBoldNormalText(bold: "Song / ", normal: song ?? "")
+        snackSection.label.attributedText = makeBoldNormalText(bold: "Snack / ", normal: snack ?? "")
+        stopSection.label.attributedText = makeBoldNormalText(bold: "Stop / ", normal: stop ?? "")
     }
     
     func updateUserProfile() {
@@ -374,7 +397,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
                       let grade = user.grade,
                       let hometown = strongSelf.hometown else { return }
                 
-                strongSelf.profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
+                strongSelf.profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.emptyImage)
                 strongSelf.nameLabel.text = "\(user.firstName) \(user.lastName)"
                 strongSelf.subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
                 strongSelf.phoneLabel.text = user.phoneNumber
@@ -397,7 +420,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
               let grade = driver.grade,
               let hometown = self.hometown else { return }
     
-        profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "emptyimage"))
+        profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.emptyImage)
         nameLabel.text = "\(driver.firstName) \(driver.lastName)"
         subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
         phoneLabel.text = user?.phoneNumber

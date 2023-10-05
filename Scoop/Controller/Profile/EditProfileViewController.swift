@@ -12,14 +12,13 @@ class EditProfileViewController: UIViewController {
     
     // MARK: - Views
     
-    private let profileImageView = UIImageView()
-    private let uploadPhotoButton = UIButton()
-    
-    private let stackView = UIStackView()
-    private let nameTextField = UITextField()
-    private let pronounsTextField = UITextField()
-    private let hometownTextField = UITextField()
     private let classTextField = UITextField()
+    private let hometownTextField = UITextField()
+    private let nameTextField = UITextField()
+    private let profileImageView = UIImageView()
+    private let pronounsTextField = UITextField()
+    private let stackView = UIStackView()
+    private let uploadPhotoButton = UIButton()
     
     weak var delegate: ProfileViewDelegate?
     
@@ -28,11 +27,11 @@ class EditProfileViewController: UIViewController {
     private var user: BaseUser?
     
     private var hometown: String?
-    private var talkative: Float?
     private var music: Float?
     private var snack: String?
     private var song: String?
     private var stop: String?
+    private var talkative: Float?
     
     // MARK: - Lifecycle Functions
 
@@ -46,9 +45,16 @@ class EditProfileViewController: UIViewController {
         setupStackView()
     }
     
-    /// Temporary while save button is not implemented
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        uploadPhotoButton.layer.cornerRadius = uploadPhotoButton.frame.size.width / 2
+    }
+    
+    // TODO: Temporary while save button is not implemented
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
         getUserPreferences()
         updateUser()
@@ -59,11 +65,13 @@ class EditProfileViewController: UIViewController {
     init(user: BaseUser, hometown: String) {
         super.init(nibName: nil, bundle: nil)
         self.user = user
+        
         if let profilePicUrl = user.profilePicUrl {
             profileImageView.sd_setImage(with: URL(string: profilePicUrl))
         } else {
-            profileImageView.image = UIImage(named: "emptyimage")
+            profileImageView.image = UIImage.emptyImage
         }
+        
         nameTextField.text = "\(user.firstName) \(user.lastName)"
         pronounsTextField.text = user.pronouns
         hometownTextField.text = hometown
@@ -81,7 +89,7 @@ class EditProfileViewController: UIViewController {
         let solidLineVerticalInset = -12.75
         let solidLineMultiplier = 0.32
         let screenSize = UIScreen.main.bounds
-        let dottedline = UIImageView(image: UIImage(named: "dottedline"))
+        let dottedline = UIImageView(image: UIImage.dottedLine)
         let solidline = UIView()
         
         dottedline.contentMode = .scaleAspectFit
@@ -89,30 +97,29 @@ class EditProfileViewController: UIViewController {
         
         dottedline.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.width.equalTo(screenSize.width*dottedLineMultiplier)
+            make.width.equalTo(screenSize.width * dottedLineMultiplier)
             make.trailing.equalToSuperview().inset(10)
             make.top.equalTo(view.safeAreaLayoutGuide)
         }
         
-        solidline.backgroundColor = .black
+        solidline.backgroundColor = UIColor.black
         view.addSubview(solidline)
         
         solidline.snp.makeConstraints { make in
             make.height.equalTo(1)
-            make.width.equalTo(screenSize.width*solidLineMultiplier)
+            make.width.equalTo(screenSize.width * solidLineMultiplier)
             make.trailing.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide).inset(solidLineVerticalInset)
         }
         
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.title = "Edit Profile"
-        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)]
+        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.flowHeader]
     }
     
     private func setupProfileImageView() {
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
-        profileImageView.layer.cornerRadius = 60
         profileImageView.layer.borderColor = UIColor.scoopGreen.cgColor
         profileImageView.layer.borderWidth = 3
         view.addSubview(profileImageView)
@@ -122,14 +129,14 @@ class EditProfileViewController: UIViewController {
             make.size.equalTo(120)
             make.centerX.equalToSuperview()
         }
+
     }
     
     private func setupUploadPhotoButton() {
-        uploadPhotoButton.setImage(UIImage(named: "profilebutton"), for: .normal)
-        uploadPhotoButton.backgroundColor = .red
+        uploadPhotoButton.setImage(UIImage.profileButton, for: .normal)
+        uploadPhotoButton.backgroundColor = UIColor.gray
         uploadPhotoButton.contentMode = .scaleAspectFill
         uploadPhotoButton.clipsToBounds = true
-        uploadPhotoButton.layer.cornerRadius = 13
         view.addSubview(uploadPhotoButton)
         
         uploadPhotoButton.snp.makeConstraints { make in
@@ -155,6 +162,10 @@ class EditProfileViewController: UIViewController {
             make.top.equalTo(profileImageView.snp.bottom).offset(25)
         }
         
+        nameTextField.attributedPlaceholder = NSAttributedString(
+            string: "Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
+        nameTextField.font = UIFont.textField
         nameTextField.textColor = UIColor.black
         nameTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(nameTextField)
@@ -164,6 +175,10 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
+        pronounsTextField.attributedPlaceholder = NSAttributedString(
+            string: "Pronouns",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
+        pronounsTextField.font = UIFont.textField
         pronounsTextField.textColor = UIColor.black
         pronounsTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(pronounsTextField)
@@ -173,6 +188,10 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
+        hometownTextField.attributedPlaceholder = NSAttributedString(
+            string: "Hometown",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
+        hometownTextField.font = UIFont.textField
         hometownTextField.textColor = UIColor.black
         hometownTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(hometownTextField)
@@ -182,6 +201,10 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
+        classTextField.attributedPlaceholder = NSAttributedString(
+            string: "Class Year",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
+        classTextField.font = UIFont.textField
         classTextField.textColor = UIColor.black
         classTextField.borderStyle = .roundedRect
         stackView.addArrangedSubview(classTextField)
@@ -206,49 +229,64 @@ class EditProfileViewController: UIViewController {
         var userAnswers: [UserAnswer] = []
                 
         user?.prompts.forEach { prompt in
-            if prompt.questionName == "Hometown" {
+            switch prompt.questionName {
+            case .hometown:
                 userAnswers.append(UserAnswer(id: prompt.id, answer: hometown ?? ""))
-            } else if prompt.questionName == "Talkative" {
-                userAnswers.append(UserAnswer(id: prompt.id, answer: String(talkative ?? 0)))
-            } else if prompt.questionName == "Music" {
+            case .music:
                 userAnswers.append(UserAnswer(id: prompt.id, answer: String(music ?? 0)))
-            } else if prompt.questionName == "Snack" {
-                userAnswers.append(UserAnswer(id: prompt.id, answer: snack ?? ""))
-            } else if prompt.questionName == "Song" {
+            case .song:
                 userAnswers.append(UserAnswer(id: prompt.id, answer: song ?? ""))
-            } else if prompt.questionName == "Stop" {
+            case .snack:
+                userAnswers.append(UserAnswer(id: prompt.id, answer: snack ?? ""))
+            case .stop:
                 userAnswers.append(UserAnswer(id: prompt.id, answer: stop ?? ""))
+            case .talkative:
+                userAnswers.append(UserAnswer(id: prompt.id, answer: String(talkative ?? 0)))
             }
         }
         
-        NetworkManager.shared.updateAuthenticatedUser(netid: user?.netid ?? "", first_name: firstName, last_name: lastName, grade: grade ?? "", phone_number: user?.phoneNumber ?? "", pronouns: pronouns ?? "", prof_pic: user?.profilePicUrl ?? "", prompts: userAnswers) { result in
+        // MARK: - Requests
+        
+        NetworkManager.shared.updateAuthenticatedUser(
+            netid: user?.netid ?? "",
+            first_name: firstName,
+            last_name: lastName,
+            grade: grade ?? "",
+            phone_number: user?.phoneNumber ?? "",
+            pronouns: pronouns ?? "",
+            prof_pic: user?.profilePicUrl ?? "",
+            prompts: userAnswers
+        ) { [weak self] result in
+            guard let self = self else { return }
+
             switch result {
             case .success(let user):
                 NetworkManager.shared.currentUser = user
-                self.delegate?.updateUserProfile()
+                self.delegate?.updateProfileText(user: user)
             case .failure(let error):
                 print("Error in EditProfileViewController: \(error.localizedDescription)")
             }
         }
     }
     
-    /// Temporary while not all input fields are implemented
+    // TODO: Temporary while not all input fields are implemented
     private func getUserPreferences() {
         user?.prompts.forEach { prompt in
-            if prompt.questionName == "Hometown" {
+            switch prompt.questionName {
+            case .hometown:
                 hometown = prompt.answer
-            } else if prompt.questionName == "Talkative" {
-                guard let talkativeFloat = Float(prompt.answer ?? "0") else { return }
-                talkative = talkativeFloat
-            } else if prompt.questionName == "Music" {
+            case .music:
                 guard let musicFloat = Float(prompt.answer ?? "0") else { return }
                 music = musicFloat
-            } else if prompt.questionName == "Snack" {
-                snack = prompt.answer
-            } else if prompt.questionName == "Song" {
+            case .song:
                 song = prompt.answer
-            } else if prompt.questionName == "Stop" {
+            case .snack:
+                snack = prompt.answer
+            case .stop:
                 stop = prompt.answer
+            case .talkative:
+                guard let talkativeFloat = Float(prompt.answer ?? "0") else { return }
+                talkative = talkativeFloat
             }
         }
     }
