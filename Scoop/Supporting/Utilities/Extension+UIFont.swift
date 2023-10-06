@@ -11,7 +11,6 @@ import UIKit
 extension UIFont {
     
     static let flowHeader = UIFont(name: "Sen-Regular", size: 24)
-    
     static let textField = UIFont(name: "SFPro", size: 16)
     
 }

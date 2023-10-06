@@ -11,9 +11,7 @@ import UIKit
 extension UIImage {
     
     static let dottedLine = UIImage(named: "dottedline")
-    
     static let emptyImage = UIImage(named: "emptyimage")
-    
     static let profileButton = UIImage(named: "profilebutton")
     
 }
