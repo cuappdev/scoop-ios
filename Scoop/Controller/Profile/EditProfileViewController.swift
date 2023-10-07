@@ -129,7 +129,6 @@ class EditProfileViewController: UIViewController {
             make.size.equalTo(120)
             make.centerX.equalToSuperview()
         }
-
     }
     
     private func setupUploadPhotoButton() {

@@ -370,7 +370,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         guard let imageURL = user.profilePicUrl,
               let pronouns = user.pronouns,
               let grade = user.grade,
-              let hometown = self.hometown else {return}
+              let hometown = self.hometown else { return }
         
         profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.emptyImage)
         nameLabel.text = "\(user.firstName) \(user.lastName)"
