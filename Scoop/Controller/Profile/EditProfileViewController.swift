@@ -16,6 +16,7 @@ class EditProfileViewController: UIViewController {
     private let classPickerView = UIPickerView()
     private let emailButton = UIButton()
     private let hometownTextField = UITextField()
+    private let imageView = UIView()
     private let musicSlider = UISlider()
     private let musicTicks = UIButton()
     private let musicView = UIView()
@@ -33,7 +34,7 @@ class EditProfileViewController: UIViewController {
     private let uploadPhotoButton = UIButton()
     
     private let scrollView = UIScrollView()
-    private let contentView = UIView()
+    private let mainStackView = UIStackView()
     private let aboutYouStackView = UIStackView()
     private let preferredContactStackView = UIStackView()
     private let preferencesStackView = UIStackView()
@@ -65,9 +66,8 @@ class EditProfileViewController: UIViewController {
         
         setupHeader()
         setupScrollView()
-        setupContentView()
-        setupProfileImageView()
-        setupUploadPhotoButton()
+        setupMainStackView()
+        setupImageView()
         setupAboutYouStackView()
         setupPreferredContactStackView()
         setupPreferencesStackView()
@@ -85,7 +85,6 @@ class EditProfileViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        getUserPreferences()
         updateUser()
     }
     
@@ -153,50 +152,56 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupScrollView() {
-        scrollView.contentSize = CGSizeMake(contentView.frame.width, contentView.frame.height * 2)
+        scrollView.contentSize = CGSizeMake(mainStackView.frame.width, mainStackView.frame.height)
         scrollView.isScrollEnabled = true
-        print("\(contentView.bounds.height) and \(contentView.bounds.width)")
-        print("\(scrollView.bounds.height) and \(scrollView.bounds.width)")
         view.addSubview(scrollView)
         
         scrollView.snp.makeConstraints{ make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(35)
-            make.bottom.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(14)
         }
     }
     
-    private func setupContentView() {
-        let contentViewHeight = 1500   // TODO: What should this be?
+    private func setupMainStackView() {
+        mainStackView.axis = .vertical
+        mainStackView.spacing = 50
+        mainStackView.alignment = .leading
+        mainStackView.distribution = .fill
+        scrollView.addSubview(mainStackView)
         
-        scrollView.addSubview(contentView)
-        
-        contentView.snp.makeConstraints { make in
+        mainStackView.snp.makeConstraints { make in
             make.top.bottom.leading.trailing.equalToSuperview()
             make.width.equalTo(scrollView.snp.width)
-            make.height.equalTo(contentViewHeight)
         }
     }
     
-    private func setupProfileImageView() {
+    private func setupImageView() {
+        mainStackView.addArrangedSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.size.equalTo(120)
+            make.centerX.equalToSuperview()
+        }
+        
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderColor = UIColor.scoopGreen.cgColor
         profileImageView.layer.borderWidth = 3
-        contentView.addSubview(profileImageView)
+        imageView.addSubview(profileImageView)
         
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide)
+            make.top.equalToSuperview()
             make.size.equalTo(120)
             make.centerX.equalToSuperview()
         }
-    }
-    
-    private func setupUploadPhotoButton() {
+        
         uploadPhotoButton.setImage(UIImage.profileButton, for: .normal)
         uploadPhotoButton.backgroundColor = UIColor.gray
         uploadPhotoButton.contentMode = .scaleAspectFill
         uploadPhotoButton.clipsToBounds = true
-        contentView.addSubview(uploadPhotoButton)
+        imageView.addSubview(uploadPhotoButton)
         
         uploadPhotoButton.snp.makeConstraints { make in
             make.top.equalTo(profileImageView).offset(96)
@@ -211,11 +216,11 @@ class EditProfileViewController: UIViewController {
         aboutYouStackView.distribution = .fill
         aboutYouStackView.alignment = .leading
         aboutYouStackView.spacing = 24
-        contentView.addSubview(aboutYouStackView)
+        mainStackView.addArrangedSubview(aboutYouStackView)
         
         aboutYouStackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
-            make.top.equalTo(profileImageView.snp.bottom).offset(25)
+            make.top.equalTo(imageView.snp.bottom).offset(25)
         }
         
         nameTextField.attributedPlaceholder = NSAttributedString(
@@ -276,12 +281,10 @@ class EditProfileViewController: UIViewController {
         preferredContactStackView.distribution = .fill
         preferredContactStackView.alignment = .leading
         preferredContactStackView.spacing = 20
-
-        contentView.addSubview(preferredContactStackView)
+        mainStackView.addArrangedSubview(preferredContactStackView)
         
         preferredContactStackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
-            make.top.equalTo(aboutYouStackView.snp.bottom).offset(50)
         }
 
         let titleLabel = UILabel()
@@ -312,7 +315,7 @@ class EditProfileViewController: UIViewController {
             make.leading.equalToSuperview().inset(8)
         }
         
-        phoneButton.setTitle("Phone", for: .normal)
+        phoneButton.setTitle("Phone number", for: .normal)
         phoneButton.setTitleColor(UIColor.black, for: .normal)
         phoneButton.titleLabel?.font = UIFont.bodyNormal
         phoneButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -352,12 +355,11 @@ class EditProfileViewController: UIViewController {
         phoneNumTextField.borderStyle = .roundedRect
         phoneNumTextField.font = UIFont.bodyNormal
         phoneNumTextField.keyboardType = .phonePad
-        contentView.addSubview(phoneNumTextField)
+        preferredContactStackView.addArrangedSubview(phoneNumTextField)
 
         phoneNumTextField.snp.makeConstraints { make in
-            make.top.equalTo(phoneButton.snp.bottom).inset(-18)
-            make.trailing.equalToSuperview().inset(36)
-            make.leading.equalTo(phoneButton).inset(34)
+            make.leading.equalToSuperview().inset(18)
+            make.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)
         }
     }
@@ -367,11 +369,10 @@ class EditProfileViewController: UIViewController {
         preferencesStackView.distribution = .fill
         preferencesStackView.alignment = .leading
         preferencesStackView.spacing = 12
-        contentView.addSubview(preferencesStackView)
+        mainStackView.addArrangedSubview(preferencesStackView)
         
         preferencesStackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
-            make.top.equalTo(preferredContactStackView.snp.bottom).offset(50)
         }
         
         let talkativeTitleLabel = UILabel()
@@ -515,11 +516,10 @@ class EditProfileViewController: UIViewController {
         favoritesStackView.distribution = .fill
         favoritesStackView.alignment = .leading
         favoritesStackView.spacing = 24
-        contentView.addSubview(favoritesStackView)
+        mainStackView.addArrangedSubview(favoritesStackView)
         
         favoritesStackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
-            make.top.equalTo(preferencesStackView.snp.bottom).offset(50)
         }
         
         snackTextField.attributedPlaceholder = NSAttributedString(
@@ -618,28 +618,6 @@ class EditProfileViewController: UIViewController {
                 self.delegate?.updateProfileText(user: user)
             case .failure(let error):
                 print("Error in EditProfileViewController: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    // TODO: Temporary while not all input fields are implemented
-    private func getUserPreferences() {
-        user?.prompts.forEach { prompt in
-            switch prompt.questionName {
-            case .hometown:
-                hometown = prompt.answer
-            case .music:
-                guard let musicFloat = Float(prompt.answer ?? "0.5") else { return }
-                music = musicFloat
-            case .song:
-                song = prompt.answer
-            case .snack:
-                snack = prompt.answer
-            case .stop:
-                stop = prompt.answer
-            case .talkative:
-                guard let talkativeFloat = Float(prompt.answer ?? "0.5") else { return }
-                talkative = talkativeFloat
             }
         }
     }
