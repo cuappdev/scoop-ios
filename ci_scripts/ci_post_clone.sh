@@ -12,4 +12,4 @@ pod install
 
 brew install wget
 wget -O ../Scoop/Supporting/GoogleService-Info.plist "$GOOGLE_SERVICE_PLIST"
-wget -O ../Scoop/Supporting/Secrets.plist "$KEYS_PLIST"
+wget -O ../Scoop/Supporting/Keys.plist "$KEYS_PLIST"
