@@ -12,15 +12,10 @@ class AboutYouViewController: OnboardingViewController {
     // MARK: - Views
     
     private let stackView = UIStackView()
-    private let nameTextField = OnboardingTextField()
-    private let pronounsTextField = OnboardingTextField()
-    private let hometownTextField = OnboardingTextField()
-    private let yearTextField = OnboardingTextField()
-    
-    private let nameLabel = UILabel()
-    private let pronounsLabel = UILabel()
-    private let hometownLabel = UILabel()
-    private let yearLabel = UILabel()
+    private let nameTextField = LabeledTextField()
+    private let pronounsTextField = LabeledTextField()
+    private let hometownTextField = LabeledTextField()
+    private let yearTextField = LabeledTextField()
     
     private let pronounsPicker = UIPickerView()
     private let yearPicker = UIPickerView()
@@ -40,10 +35,10 @@ class AboutYouViewController: OnboardingViewController {
                 return
             }
             
-            guard let name = self.nameTextField.text, !name.isEmpty,
-                  let pronouns = self.pronounsTextField.text, !pronouns.isEmpty,
-                  let hometown = self.hometownTextField.text, !hometown.isEmpty,
-                  let year = self.yearTextField.text, !year.isEmpty else {
+            guard let name = self.nameTextField.textField.text, !name.isEmpty,
+                  let pronouns = self.pronounsTextField.textField.text, !pronouns.isEmpty,
+                  let hometown = self.hometownTextField.textField.text, !hometown.isEmpty,
+                  let year = self.yearTextField.textField.text, !year.isEmpty else {
                       self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
                       return
                   }
@@ -57,7 +52,6 @@ class AboutYouViewController: OnboardingViewController {
         
         setupTitleLines()
         setupStackView()
-        setupLabels()
         backButton.isHidden = true
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
@@ -91,11 +85,9 @@ class AboutYouViewController: OnboardingViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).inset(stackViewMultiplier * screenSize.height)
         }
         
-        nameTextField.textColor = .offBlack
         nameTextField.delegate = self
-        nameTextField.attributedPlaceholder = NSAttributedString(
-            string: "Name",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+        nameTextField.setup(title: "Name")
+        
         stackView.addArrangedSubview(nameTextField)
         
         nameTextField.snp.makeConstraints { make in
@@ -107,12 +99,8 @@ class AboutYouViewController: OnboardingViewController {
         pronounsPicker.dataSource = self
         
         pronounsTextField.delegate = self
-        pronounsTextField.textColor = .offBlack
-        pronounsTextField.attributedPlaceholder = NSAttributedString(
-            string: "Pronouns",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
-        pronounsTextField.inputView = pronounsPicker
-        pronounsTextField.addTarget(self, action: #selector(updatePronouns), for: .touchDown)
+        pronounsTextField.setup(title: "Pronouns")
+        pronounsTextField.textField.addTarget(self, action: #selector(updatePronouns), for: .touchDown)
         stackView.addArrangedSubview(pronounsTextField)
         
         pronounsTextField.snp.makeConstraints { make in
@@ -120,11 +108,8 @@ class AboutYouViewController: OnboardingViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        hometownTextField.textColor = .offBlack
         hometownTextField.delegate = self
-        hometownTextField.attributedPlaceholder = NSAttributedString(
-            string: "Hometown",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+        hometownTextField.setup(title: "Hometown")
         stackView.addArrangedSubview(hometownTextField)
         
         hometownTextField.snp.makeConstraints { make in
@@ -136,81 +121,26 @@ class AboutYouViewController: OnboardingViewController {
         yearPicker.dataSource = self
         
         yearTextField.delegate = self
-        yearTextField.textColor = .offBlack
-        yearTextField.attributedPlaceholder = NSAttributedString(
-            string: "Class Year",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
-        yearTextField.keyboardType = .numberPad
-        yearTextField.inputView = yearPicker
-        yearTextField.addTarget(self, action: #selector(updateYear), for: .touchDown)
+        yearTextField.setup(title: "Class Year")
+        yearTextField.textField.keyboardType = .numberPad
+        yearTextField.textField.inputView = yearPicker
+        yearTextField.textField.addTarget(self, action: #selector(updateYear), for: .touchDown)
         stackView.addArrangedSubview(yearTextField)
         
         yearTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)
         }
-        
-        [nameTextField, pronounsTextField, hometownTextField, yearTextField].forEach { text in
-            text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = UIColor.textFieldBorderColor.cgColor
-            text.layer.cornerRadius = textFieldCornerRadius
-            text.font = textFieldFont
-        }
-    }
-    
-    private func setupLabels() {
-        let labelLeading = 10
-        let labelTop = 8
-        [nameLabel, pronounsLabel, hometownLabel, yearLabel].forEach { label in
-            label.font = .systemFont(ofSize: 12)
-            label.textColor = .scoopDarkGreen
-            label.backgroundColor = .white
-            label.textAlignment = .center
-            label.isHidden = true
-            view.addSubview(label)
-        }
-        
-        nameLabel.text = "Name"
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameTextField).inset(-labelTop)
-            make.leading.equalTo(nameTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(43)
-        }
-        
-        pronounsLabel.text = "Pronouns"
-        pronounsLabel.snp.makeConstraints { make in
-            make.top.equalTo(pronounsTextField).inset(-labelTop)
-            make.leading.equalTo(pronounsTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(65)
-        }
-        
-        hometownLabel.text = "Hometown"
-        hometownLabel.snp.makeConstraints { make in
-            make.top.equalTo(hometownTextField).inset(-labelTop)
-            make.leading.equalTo(hometownTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(72)
-        }
-        
-        yearLabel.text = "Class Year"
-        yearLabel.snp.makeConstraints { make in
-            make.top.equalTo(yearTextField).inset(-labelTop)
-            make.leading.equalTo(yearTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(70)
-        }
     }
     
     // MARK: - Helper Functions
     
     @objc private func updatePronouns() {
-        pronounsTextField.text = pronouns[pronounsPicker.selectedRow(inComponent: 0)]
+        pronounsTextField.textField.text = pronouns[pronounsPicker.selectedRow(inComponent: 0)]
     }
     
     @objc private func updateYear() {
-        yearTextField.text = years[yearPicker.selectedRow(inComponent: 0)]
+        yearTextField.textField.text = years[yearPicker.selectedRow(inComponent: 0)]
     }
 
 }
@@ -224,43 +154,34 @@ extension AboutYouViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 2
-        textField.layer.borderColor = UIColor.scoopDarkGreen.cgColor
-        textField.placeholder = ""
-        if textField == nameTextField {
-            nameLabel.textColor = .scoopDarkGreen
-            nameLabel.isHidden = false
-        } else if textField == pronounsTextField {
-            pronounsLabel.textColor = .scoopDarkGreen
-            pronounsLabel.isHidden = false
-        } else if textField == hometownTextField {
-            hometownLabel.textColor = .scoopDarkGreen
-            hometownLabel.isHidden = false
-        } else {
-            yearLabel.textColor = .scoopDarkGreen
-            yearLabel.isHidden = false
+        if let onboardingTextField = textField as? OnboardingTextField {
+            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+                associatedView.labeledTextField(isSelected: true)
+                associatedView.hidesLabel(isHidden: false)
+            }
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
-        if textField == nameTextField {
-            nameLabel.textColor = .textFieldBorderColor
-        } else if textField == pronounsTextField {
-            pronounsLabel.textColor = .textFieldBorderColor
-        } else if textField == hometownTextField {
-            hometownLabel.textColor = .textFieldBorderColor
-        } else {
-            yearLabel.textColor = .textFieldBorderColor
+        if let onboardingTextField = textField as? OnboardingTextField {
+            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+                associatedView.labeledTextField(isSelected: false)
+                if textField.text?.isEmpty ?? true {
+                    associatedView.hidesLabel(isHidden: true)
+                }
+            }
         }
         
         var responses: [String] = []
         [nameTextField, pronounsTextField, hometownTextField, yearTextField].forEach { textField in
-            responses.append(textField.text ?? "")
+            responses.append(textField.textField.text ?? "")
         }
         
         setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
     }
     
 }
@@ -281,9 +202,9 @@ extension AboutYouViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == pronounsPicker {
-            pronounsTextField.text = pronouns[row]
+            pronounsTextField.textField.text = pronouns[row]
         } else if pickerView == yearPicker {
-            yearTextField.text = years[row]
+            yearTextField.textField.text = years[row]
         }
     }
 }
