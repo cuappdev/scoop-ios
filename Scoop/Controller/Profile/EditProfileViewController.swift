@@ -12,22 +12,24 @@ class EditProfileViewController: UIViewController {
     
     // MARK: - Views
     
-    private let classTextField = UITextField()
-    private let classPickerView = UIPickerView()
+    private let classTextField = LabeledTextField()
+    private let classPicker = UIPickerView()
     private let emailButton = UIButton()
-    private let hometownTextField = UITextField()
+    private let hometownTextField = LabeledTextField()
+    private let imagePicker = UIImagePickerController()
     private let imageView = UIView()
     private let musicSlider = UISlider()
     private let musicTicks = UIButton()
     private let musicView = UIView()
-    private let nameTextField = UITextField()
+    private let nameTextField = LabeledTextField()
     private let phoneButton = UIButton()
-    private let phoneNumTextField = UITextField()
+    private let phoneNumTextField = LabeledTextField()
     private let profileImageView = UIImageView()
-    private let pronounsTextField = UITextField()
-    private let snackTextField = UITextField()
-    private let songTextField = UITextField()
-    private let stopTextField = UITextField()
+    private let pronounsPicker = UIPickerView()
+    private let pronounsTextField = LabeledTextField()
+    private let snackTextField = LabeledTextField()
+    private let songTextField = LabeledTextField()
+    private let stopTextField = LabeledTextField()
     private let talkativeSlider = UISlider()
     private let talkativeView = UIView()
     private let talkativeTicks = UIButton()
@@ -58,6 +60,9 @@ class EditProfileViewController: UIViewController {
     private let leadingTrailingInset = 32
     private let textFieldHeight = 56
     
+    private let pronouns = PickerOptions.pronouns
+    private let years = PickerOptions.years
+    
     // MARK: - Lifecycle Functions
 
     override func viewDidLoad() {
@@ -67,11 +72,13 @@ class EditProfileViewController: UIViewController {
         setupHeader()
         setupScrollView()
         setupMainStackView()
+        setupImagePicker()
         setupImageView()
         setupAboutYouStackView()
         setupPreferredContactStackView()
         setupPreferencesStackView()
         setupFavoritesStackView()
+        setupTextFields()
     }
     
     override func viewDidLayoutSubviews() {
@@ -100,16 +107,16 @@ class EditProfileViewController: UIViewController {
             profileImageView.image = UIImage.emptyImage
         }
         
-        nameTextField.text = "\(user.firstName) \(user.lastName)"
-        pronounsTextField.text = user.pronouns
-        hometownTextField.text = hometown
-        classTextField.text = user.grade
-        phoneNumTextField.text = user.phoneNumber
+        nameTextField.setText(str: "\(user.firstName) \(user.lastName)")
+        pronounsTextField.setText(str: user.pronouns)
+        hometownTextField.setText(str: hometown)
+        classTextField.setText(str: user.grade)
+        phoneNumTextField.setText(str: user.phoneNumber)
         talkativeSlider.setValue(talkative, animated: false)
         musicSlider.setValue(music, animated: false)
-        snackTextField.text = snack
-        songTextField.text = song
-        stopTextField.text = stop
+        snackTextField.setText(str: snack)
+        songTextField.setText(str: song)
+        stopTextField.setText(str: stop)
     }
     
     required init?(coder: NSCoder) {
@@ -201,6 +208,7 @@ class EditProfileViewController: UIViewController {
         uploadPhotoButton.backgroundColor = UIColor.gray
         uploadPhotoButton.contentMode = .scaleAspectFill
         uploadPhotoButton.clipsToBounds = true
+        uploadPhotoButton.addTarget(self, action: #selector(updateProfileImage), for: .touchUpInside)
         imageView.addSubview(uploadPhotoButton)
         
         uploadPhotoButton.snp.makeConstraints { make in
@@ -209,6 +217,9 @@ class EditProfileViewController: UIViewController {
             make.leading.equalTo(profileImageView).offset(85)
             make.trailing.equalTo(profileImageView).offset(-9)
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(updateProfileImage))
+        imageView.addGestureRecognizer(tapGesture)
     }
 
     private func setupAboutYouStackView() {
@@ -223,12 +234,7 @@ class EditProfileViewController: UIViewController {
             make.top.equalTo(imageView.snp.bottom).offset(25)
         }
         
-        nameTextField.attributedPlaceholder = NSAttributedString(
-            string: "Name",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
-        nameTextField.font = UIFont.bodyNormal
-        nameTextField.textColor = UIColor.black
-        nameTextField.borderStyle = .roundedRect
+        nameTextField.setup(title: "Name")
         aboutYouStackView.addArrangedSubview(nameTextField)
         
         nameTextField.snp.makeConstraints { make in
@@ -236,12 +242,11 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        pronounsTextField.attributedPlaceholder = NSAttributedString(
-            string: "Pronouns",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
-        pronounsTextField.font = UIFont.bodyNormal
-        pronounsTextField.textColor = UIColor.black
-        pronounsTextField.borderStyle = .roundedRect
+        pronounsPicker.delegate = self
+        pronounsPicker.dataSource = self
+        
+        pronounsTextField.setup(title: "Pronouns")
+        pronounsTextField.textField.inputView = pronounsPicker
         aboutYouStackView.addArrangedSubview(pronounsTextField)
         
         pronounsTextField.snp.makeConstraints { make in
@@ -249,12 +254,7 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        hometownTextField.attributedPlaceholder = NSAttributedString(
-            string: "Hometown",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
-        hometownTextField.font = UIFont.bodyNormal
-        hometownTextField.textColor = UIColor.black
-        hometownTextField.borderStyle = .roundedRect
+        hometownTextField.setup(title: "Hometown")
         aboutYouStackView.addArrangedSubview(hometownTextField)
         
         hometownTextField.snp.makeConstraints { make in
@@ -262,12 +262,11 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        classTextField.attributedPlaceholder = NSAttributedString(
-            string: "Class Year",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
-        classTextField.font = UIFont.bodyNormal
-        classTextField.textColor = UIColor.black
-        classTextField.borderStyle = .roundedRect
+        classPicker.delegate = self
+        classPicker.dataSource = self
+        
+        classTextField.setup(title: "Class")
+        classTextField.textField.inputView = classPicker
         aboutYouStackView.addArrangedSubview(classTextField)
         
         classTextField.snp.makeConstraints { make in
@@ -338,23 +337,15 @@ class EditProfileViewController: UIViewController {
             emailButton.isSelected.toggle()
             phoneButton.isSelected.toggle()
 
-            if emailButton.isSelected {
-                phoneNumTextField.isHidden = true
-            } else {
-                phoneNumTextField.isHidden = false
-            }
+            phoneNumTextField.isHidden = emailButton.isSelected
         }
 
         emailButton.addAction(selectContactAction, for: .touchUpInside)
         phoneButton.addAction(selectContactAction, for: .touchUpInside)
         
+        phoneNumTextField.setup(title: "Phone", placeholder: "000-000-0000")
         phoneNumTextField.isHidden = true
-        phoneNumTextField.font = UIFont.bodyNormal
-        phoneNumTextField.textColor = UIColor.offBlack
-        phoneNumTextField.placeholder = "000-000-0000"
-        phoneNumTextField.borderStyle = .roundedRect
-        phoneNumTextField.font = UIFont.bodyNormal
-        phoneNumTextField.keyboardType = .phonePad
+        phoneNumTextField.textField.keyboardType = .phonePad
         preferredContactStackView.addArrangedSubview(phoneNumTextField)
 
         phoneNumTextField.snp.makeConstraints { make in
@@ -522,12 +513,7 @@ class EditProfileViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
         }
         
-        snackTextField.attributedPlaceholder = NSAttributedString(
-            string: "Roadtrip snack",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
-        snackTextField.font = UIFont.bodyNormal
-        snackTextField.textColor = UIColor.black
-        snackTextField.borderStyle = .roundedRect
+        snackTextField.setup(title: "Roadtrip snack")
         favoritesStackView.addArrangedSubview(snackTextField)
         
         snackTextField.snp.makeConstraints { make in
@@ -535,12 +521,7 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        songTextField.attributedPlaceholder = NSAttributedString(
-            string: "Roadtrip song",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
-        songTextField.font = UIFont.bodyNormal
-        songTextField.textColor = UIColor.black
-        songTextField.borderStyle = .roundedRect
+        songTextField.setup(title: "Roadtrip song")
         favoritesStackView.addArrangedSubview(songTextField)
         
         songTextField.snp.makeConstraints { make in
@@ -548,12 +529,7 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
         
-        stopTextField.attributedPlaceholder = NSAttributedString(
-            string: "Roadtrip stop",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.mutedGrey])
-        stopTextField.font = UIFont.bodyNormal
-        stopTextField.textColor = UIColor.black
-        stopTextField.borderStyle = .roundedRect
+        stopTextField.setup(title: "Roadtrip stop")
         favoritesStackView.addArrangedSubview(stopTextField)
         
         stopTextField.snp.makeConstraints { make in
@@ -562,22 +538,47 @@ class EditProfileViewController: UIViewController {
         }
     }
     
+    private func setupTextFields() {
+        [nameTextField, pronounsTextField, hometownTextField, classTextField, phoneNumTextField, snackTextField, songTextField, stopTextField].forEach { textField in
+            textField.textField.delegate = self
+            textField.hidesLabel(isHidden: false)
+        }
+    }
+    
+    private func setupImagePicker() {
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        imagePicker.mediaTypes = ["public.image"]
+        imagePicker.sourceType = .photoLibrary
+    }
+    
+    
+    
     // MARK: - Helper Functions
     
+    @objc private func updateProfileImage(_ sender: UITapGestureRecognizer) {
+        present(imagePicker, animated: true)
+    }
+    
+    private func convertImage (image: UIImage) -> String {
+        let base64 = image.jpegData(compressionQuality: 0.5)?.base64EncodedString() ?? ""
+        return "data:image/png;base64," + base64
+    }
+    
     private func updateUser() {
-        let name = nameTextField.text?.split(separator: " ")
+        let name = nameTextField.getText()?.split(separator: " ")
         let firstName = String(name?[0] ?? "")
         let lastName = String(name?[1...].joined(separator: " ") ?? "")
-        let grade = classTextField.text
-        let pronouns = pronounsTextField.text
-        let phoneNumber = phoneNumTextField.text
+        let grade = classTextField.getText()
+        let pronouns = pronounsTextField.getText()
+        let phoneNumber = phoneNumTextField.getText()
         
-        hometown = hometownTextField.text
+        hometown = hometownTextField.getText()
         talkative = talkativeSlider.value
         music = musicSlider.value
-        snack = snackTextField.text
-        song = songTextField.text
-        stop = stopTextField.text
+        snack = snackTextField.getText()
+        song = songTextField.getText()
+        stop = stopTextField.getText()
         
         var userAnswers: [UserAnswer] = []
                 
@@ -623,3 +624,98 @@ class EditProfileViewController: UIViewController {
     }
     
 }
+
+// MARK: - UITextFieldDelegate
+
+extension EditProfileViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return !(textField == classTextField || textField == pronounsTextField)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField {
+            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+                associatedView.labeledTextField(isSelected: true)
+                associatedView.hidesLabel(isHidden: false)
+            }
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField {
+            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+                associatedView.labeledTextField(isSelected: false)
+                if textField.text?.isEmpty ?? true {
+                    associatedView.hidesLabel(isHidden: true)
+                }
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+    }
+}
+
+// MARK: - UIPickerViewDelegate
+
+extension EditProfileViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == pronounsPicker {
+            return pronouns[row]
+        } else if pickerView == classPicker {
+            return years[row]
+        }
+        
+        return nil
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == pronounsPicker {
+            pronounsTextField.textField.text = pronouns[row]
+        } else if pickerView == classPicker {
+            classTextField.textField.text = years[row]
+        }
+    }
+}
+
+// MARK: - UIPickerViewDataSource
+
+extension EditProfileViewController: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == pronounsPicker {
+            return pronouns.count
+        } else if pickerView == classPicker {
+            return years.count
+        }
+        return 0
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate
+
+extension EditProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let image = info[.editedImage] as? UIImage else {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        profileImageView.image = image
+
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
