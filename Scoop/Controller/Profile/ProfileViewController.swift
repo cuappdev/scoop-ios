@@ -337,7 +337,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     @objc private func pushEditProfileVC() {
         guard let user = user else { return }
         
-        let editProfileVC = EditProfileViewController(user: user, hometown: hometown ?? "")
+        let editProfileVC = EditProfileViewController(user: user, hometown: hometown ?? "", talkative: talkative ?? 0.5, music: music ?? 0.5, snack: snack ?? "", song: song ?? "", stop: stop ?? "")
         editProfileVC.delegate = self
         navigationController?.pushViewController(editProfileVC, animated: true)
     }
