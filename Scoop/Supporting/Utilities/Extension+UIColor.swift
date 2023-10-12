@@ -10,6 +10,7 @@ import UIKit
 
 extension UIColor {
     
+    static let darkerGreen = UIColor(red: 0, green: 0.42, blue: 0.33, alpha: 1)
     static let scoopGreen = UIColor(red: 96/255, green: 191/255, blue: 160/255, alpha: 1)
     static let scoopDarkGreen = UIColor(red: 58/255, green: 146/255, blue: 117/255, alpha: 1)
     static let secondaryGreen = UIColor(red: 206/255, green: 233/255, blue: 220/255, alpha: 1)
@@ -22,5 +23,6 @@ extension UIColor {
     static let skipButtonColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
     static let offBlack = UIColor(red: 0, green: 30/255, blue: 45/255, alpha: 1)
     static let labelGray = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1)
+    static let linearGradient = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     
 }

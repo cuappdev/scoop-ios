@@ -12,10 +12,13 @@ class EditProfileViewController: UIViewController {
     
     // MARK: - Views
     
+    private let cancelButton = UIButton()
     private let classTextField = UITextField()
     private let classPickerView = UIPickerView()
     private let emailButton = UIButton()
+    private let gradientLayer = CAGradientLayer()
     private let hometownTextField = UITextField()
+    private let gradientView = UIView()
     private let imageView = UIView()
     private let musicSlider = UISlider()
     private let musicTicks = UIButton()
@@ -26,6 +29,7 @@ class EditProfileViewController: UIViewController {
     private let profileImageView = UIImageView()
     private let pronounsTextField = UITextField()
     private let snackTextField = UITextField()
+    private let saveButton = UIButton()
     private let songTextField = UITextField()
     private let stopTextField = UITextField()
     private let talkativeSlider = UISlider()
@@ -72,13 +76,20 @@ class EditProfileViewController: UIViewController {
         setupPreferredContactStackView()
         setupPreferencesStackView()
         setupFavoritesStackView()
+        setupGradientView()
+        setupCancelButton()
+        setupSaveButton()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        let hoverViewTransparentOffset = CGFloat(30)
+        
+        scrollView.contentSize = CGSizeMake(mainStackView.frame.width, mainStackView.frame.height + gradientView.bounds.height - hoverViewTransparentOffset)
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         uploadPhotoButton.layer.cornerRadius = uploadPhotoButton.frame.size.width / 2
+        gradientLayer.frame = gradientView.bounds
     }
     
     // TODO: Temporary while save button is not implemented
@@ -152,7 +163,6 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupScrollView() {
-        scrollView.contentSize = CGSizeMake(mainStackView.frame.width, mainStackView.frame.height)
         scrollView.isScrollEnabled = true
         view.addSubview(scrollView)
         
@@ -404,7 +414,6 @@ class EditProfileViewController: UIViewController {
         }
         
         setupMusicSliderView()
-        
     }
     
     private func setupTalkativeSliderView() {
@@ -559,6 +568,52 @@ class EditProfileViewController: UIViewController {
         stopTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)
+        }
+    }
+    
+    func setupGradientView() {
+        gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.withAlphaComponent(0.5).cgColor, UIColor.white.withAlphaComponent(0.93).cgColor, UIColor.white.withAlphaComponent(0.94).cgColor, UIColor.white.withAlphaComponent(0.95).cgColor, UIColor.white.withAlphaComponent(0.96).cgColor, UIColor.white.withAlphaComponent(0.97).cgColor, UIColor.white.withAlphaComponent(0.98).cgColor, UIColor.white.withAlphaComponent(0.99).cgColor, UIColor.white.cgColor]
+        gradientView.isUserInteractionEnabled = false
+        gradientView.layer.insertSublayer(gradientLayer, at: 1)
+        view.addSubview(gradientView)
+        
+        gradientView.snp.makeConstraints { make in
+            make.bottom.width.equalToSuperview()
+            make.height.equalTo(201)
+        }
+    }
+    
+    func setupCancelButton() {
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitleColor(UIColor.darkerGreen, for: .normal)
+        cancelButton.titleLabel?.font = UIFont.bodySemibold
+        cancelButton.backgroundColor = UIColor.white
+        cancelButton.layer.borderColor = UIColor.systemGray2.cgColor
+        cancelButton.layer.borderWidth = 1
+        cancelButton.layer.cornerRadius = 24
+        view.addSubview(cancelButton)
+        
+        cancelButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().inset(39)
+            make.width.equalTo(102)
+            make.height.equalTo(51)
+        }
+    }
+    
+    func setupSaveButton() {
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(UIColor.offBlack, for: .normal)
+        saveButton.titleLabel?.font = UIFont.bodyBold
+        saveButton.backgroundColor = UIColor.secondaryGreen
+        saveButton.layer.cornerRadius = 24
+        view.addSubview(saveButton)
+        
+        saveButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().inset(39)
+            make.width.equalTo(102)
+            make.height.equalTo(51)
         }
     }
     
