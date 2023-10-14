@@ -16,4 +16,9 @@ extension UIImage {
     static let sliderThumb = UIImage(named: "SliderThumb")
     static let sliderTicks = UIImage(named: "SliderTicks")
     
+    func imageToB64(compression: CGFloat) -> String {
+        let base64 = self.jpegData(compressionQuality: compression)?.base64EncodedString() ?? ""
+        return "data:image/png;base64," + base64
+    }
+    
 }
