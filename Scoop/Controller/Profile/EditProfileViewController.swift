@@ -72,8 +72,8 @@ class EditProfileViewController: UIViewController {
         static let textFieldHeight = 56
     }
     
-    private let pronouns = PickerOptions.pronouns
-    private let years = PickerOptions.years
+    private let pronouns = PickerOptions.scooped.pronouns
+    private let years = PickerOptions.scooped.years
     
     // MARK: - Lifecycle Functions
 
@@ -634,8 +634,6 @@ class EditProfileViewController: UIViewController {
         imagePicker.sourceType = .photoLibrary
     }
     
-    
-    
     // MARK: - Helper Functions
 
     @objc private func cancelEdit() {
@@ -659,11 +657,6 @@ class EditProfileViewController: UIViewController {
     
     @objc private func updateProfileImage(_ sender: UITapGestureRecognizer) {
         present(imagePicker, animated: true)
-    }
-    
-    private func convertImage (image: UIImage) -> String {
-        let base64 = image.jpegData(compressionQuality: 0.5)?.base64EncodedString() ?? ""
-        return "data:image/png;base64," + base64
     }
     
     private func updateUser() {
@@ -740,26 +733,25 @@ class EditProfileViewController: UIViewController {
 // MARK: - UITextFieldDelegate
 
 extension EditProfileViewController: UITextFieldDelegate {
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return !(textField == classTextField || textField == pronounsTextField)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if let onboardingTextField = textField as? OnboardingTextField {
-            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
-                associatedView.labeledTextField(isSelected: true)
-                associatedView.hidesLabel(isHidden: false)
-            }
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+            associatedView.hidesLabel(isHidden: false)
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let onboardingTextField = textField as? OnboardingTextField {
-            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
-                associatedView.labeledTextField(isSelected: false)
-                if textField.text?.isEmpty ?? true {
-                    associatedView.hidesLabel(isHidden: true)
-                }
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: false)
+            if textField.text?.isEmpty ?? true {
+                associatedView.hidesLabel(isHidden: true)
             }
         }
     }
@@ -767,6 +759,7 @@ extension EditProfileViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
     }
+    
 }
 
 // MARK: - UIPickerViewDelegate
@@ -790,6 +783,7 @@ extension EditProfileViewController: UIPickerViewDelegate {
             classTextField.textField.text = years[row]
         }
     }
+    
 }
 
 // MARK: - UIPickerViewDataSource
@@ -806,8 +800,10 @@ extension EditProfileViewController: UIPickerViewDataSource {
         } else if pickerView == classPicker {
             return years.count
         }
+        
         return 0
     }
+    
 }
 
 // MARK: - UIImagePickerControllerDelegate
@@ -829,5 +825,6 @@ extension EditProfileViewController: UINavigationControllerDelegate, UIImagePick
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
+    
 }
 

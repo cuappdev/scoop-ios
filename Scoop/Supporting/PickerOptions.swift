@@ -9,7 +9,9 @@ import Foundation
 
 class PickerOptions {
     
-    static let pronouns = ["He/Him", "She/Her", "They/Them", "Other"]
-    static let years = ["Freshman", "Sophomore", "Junior", "Senior", "Grad Student"]
+    static let scooped = PickerOptions()
+    
+    let pronouns = ["He/Him", "She/Her", "They/Them", "Other"]
+    let years = ["Freshman", "Sophomore", "Junior", "Senior", "Grad Student"]
     
 }
