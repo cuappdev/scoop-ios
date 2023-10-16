@@ -15,6 +15,7 @@ class EditProfileViewController: UIViewController {
     private let cancelButton = UIButton()
     private let classTextField = UITextField()
     private let classPickerView = UIPickerView()
+    private let deleteButton = UIButton()
     private let emailButton = UIButton()
     private let gradientLayer = CAGradientLayer()
     private let hometownTextField = UITextField()
@@ -76,6 +77,7 @@ class EditProfileViewController: UIViewController {
         setupPreferredContactStackView()
         setupPreferencesStackView()
         setupFavoritesStackView()
+        setupDeleteButton()
         setupGradientView()
         setupCancelButton()
         setupSaveButton()
@@ -90,13 +92,6 @@ class EditProfileViewController: UIViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         uploadPhotoButton.layer.cornerRadius = uploadPhotoButton.frame.size.width / 2
         gradientLayer.frame = gradientView.bounds
-    }
-    
-    // TODO: Temporary while save button is not implemented
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        updateUser()
     }
     
     // MARK: - Initializers
@@ -570,8 +565,22 @@ class EditProfileViewController: UIViewController {
             make.height.equalTo(textFieldHeight)
         }
     }
+
+    func setupDeleteButton() {
+        deleteButton.setTitle("Delete account", for: .normal)
+        deleteButton.setTitleColor(UIColor.white, for: .normal)
+        deleteButton.titleLabel?.font = UIFont.bodyBold
+        deleteButton.backgroundColor = UIColor.notification
+        deleteButton.layer.cornerRadius = 25
+        mainStackView.addArrangedSubview(deleteButton)
+
+        deleteButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(40)
+            make.height.equalTo(51)
+        }
+    }
     
-    func setupGradientView() {
+    private func setupGradientView() {
         gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.withAlphaComponent(0.5).cgColor, UIColor.white.withAlphaComponent(0.93).cgColor, UIColor.white.withAlphaComponent(0.94).cgColor, UIColor.white.withAlphaComponent(0.95).cgColor, UIColor.white.withAlphaComponent(0.96).cgColor, UIColor.white.withAlphaComponent(0.97).cgColor, UIColor.white.withAlphaComponent(0.98).cgColor, UIColor.white.withAlphaComponent(0.99).cgColor, UIColor.white.cgColor]
         gradientView.isUserInteractionEnabled = false
         gradientView.layer.insertSublayer(gradientLayer, at: 1)
@@ -583,7 +592,7 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-    func setupCancelButton() {
+    private func setupCancelButton() {
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.setTitleColor(UIColor.darkerGreen, for: .normal)
         cancelButton.titleLabel?.font = UIFont.bodySemibold
@@ -592,6 +601,8 @@ class EditProfileViewController: UIViewController {
         cancelButton.layer.borderWidth = 1
         cancelButton.layer.cornerRadius = 24
         view.addSubview(cancelButton)
+
+        cancelButton.addTarget(self, action: #selector(cancelEdit), for: .touchUpInside)
         
         cancelButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
@@ -601,13 +612,15 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-    func setupSaveButton() {
+    private func setupSaveButton() {
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(UIColor.offBlack, for: .normal)
         saveButton.titleLabel?.font = UIFont.bodyBold
         saveButton.backgroundColor = UIColor.secondaryGreen
         saveButton.layer.cornerRadius = 24
         view.addSubview(saveButton)
+
+        saveButton.addTarget(self, action: #selector(saveEdit), for: .touchUpInside)
         
         saveButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(24)
@@ -618,6 +631,15 @@ class EditProfileViewController: UIViewController {
     }
     
     // MARK: - Helper Functions
+
+    @objc func cancelEdit() {
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    @objc func saveEdit() {
+        updateUser()
+        self.navigationController?.popViewController(animated: true)
+    }
     
     private func updateUser() {
         let name = nameTextField.text?.split(separator: " ")
