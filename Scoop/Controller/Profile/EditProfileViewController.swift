@@ -581,7 +581,7 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupGradientView() {
-        gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.withAlphaComponent(0.5).cgColor, UIColor.white.withAlphaComponent(0.93).cgColor, UIColor.white.withAlphaComponent(0.94).cgColor, UIColor.white.withAlphaComponent(0.95).cgColor, UIColor.white.withAlphaComponent(0.96).cgColor, UIColor.white.withAlphaComponent(0.97).cgColor, UIColor.white.withAlphaComponent(0.98).cgColor, UIColor.white.withAlphaComponent(0.99).cgColor, UIColor.white.cgColor]
+        gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.withAlphaComponent(0.4).cgColor, UIColor.white.withAlphaComponent(0.7).cgColor, UIColor.white.withAlphaComponent(0.93).cgColor, UIColor.white.withAlphaComponent(0.95).cgColor, UIColor.white.withAlphaComponent(0.96).cgColor, UIColor.white.withAlphaComponent(0.97).cgColor, UIColor.white.withAlphaComponent(0.98).cgColor, UIColor.white.withAlphaComponent(0.99).cgColor, UIColor.white.cgColor]
         gradientView.isUserInteractionEnabled = false
         gradientView.layer.insertSublayer(gradientLayer, at: 1)
         view.addSubview(gradientView)
@@ -606,7 +606,7 @@ class EditProfileViewController: UIViewController {
         
         cancelButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
-            make.bottom.equalToSuperview().inset(39)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(39)
             make.width.equalTo(102)
             make.height.equalTo(51)
         }
@@ -624,7 +624,7 @@ class EditProfileViewController: UIViewController {
         
         saveButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(24)
-            make.bottom.equalToSuperview().inset(39)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(39)
             make.width.equalTo(102)
             make.height.equalTo(51)
         }
