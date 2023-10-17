@@ -345,8 +345,10 @@ class EditProfileViewController: UIViewController {
 
             if emailButton.isSelected {
                 phoneNumTextField.isHidden = true
+                view.layoutIfNeeded()
             } else {
                 phoneNumTextField.isHidden = false
+                view.layoutIfNeeded()
             }
         }
 
