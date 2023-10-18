@@ -14,5 +14,6 @@ target 'Scoop' do
   pod 'Alamofire'
   pod 'GooglePlaces'
   pod 'SDWebImage'
+  pod 'SwiftLint'
 end
 
