@@ -39,6 +39,9 @@
 		410D78C029B8166D0007E434 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D78BF29B8166D0007E434 /* NotificationsViewController.swift */; };
 		412EDB9029B950D300C1C265 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */; };
 		4176A1E9299D2F01008B2BC3 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4176A1E8299D2F01008B2BC3 /* Path.swift */; };
+		8939AD8E2AE016670038B20D /* SFProDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C85C53329E5B6F000A0C387 /* SFProDisplay-Bold.otf */; };
+		8939AD8F2AE0166A0038B20D /* SFProDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8939AD8D2ADFAAED0038B20D /* SFProDisplay-Semibold.otf */; };
+		8939AD902AE0166C0038B20D /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C85C53229E5B6F000A0C387 /* SFProDisplay-Regular.otf */; };
 		8941635C2AC4D69900B0CAE9 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */; };
 		89C410F82ACE0DCC005BB8FC /* Extension+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C410F72ACE0DCC005BB8FC /* Extension+UIImage.swift */; };
 		89C410FA2ACF0B6F005BB8FC /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C410F92ACF0B6F005BB8FC /* Extension+UIFont.swift */; };
@@ -527,10 +530,13 @@
 			files = (
 				2CAB93CE2AB26183009554E7 /* GoogleService-Info.plist in Resources */,
 				2C42B51E290F12B400D053A3 /* Sen-Regular.ttf in Resources */,
+				8939AD902AE0166C0038B20D /* SFProDisplay-Regular.otf in Resources */,
 				2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */,
 				C8A5449927D185BF00132ACC /* LaunchScreen.storyboard in Resources */,
+				8939AD8F2AE0166A0038B20D /* SFProDisplay-Semibold.otf in Resources */,
 				2CAB93CD2AB26183009554E7 /* Keys.plist in Resources */,
 				C8A5449627D185BF00132ACC /* Assets.xcassets in Resources */,
+				8939AD8E2AE016670038B20D /* SFProDisplay-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
