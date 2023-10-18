@@ -340,6 +340,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         let editProfileVC = EditProfileViewController(user: user, hometown: hometown ?? "", talkative: talkative ?? 0.5, music: music ?? 0.5, snack: snack ?? "", song: song ?? "", stop: stop ?? "")
         editProfileVC.delegate = self
         editProfileVC.hidesBottomBarWhenPushed = true
+        editProfileVC.navigationItem.hidesBackButton = true
         navigationController?.pushViewController(editProfileVC, animated: true)
     }
     
