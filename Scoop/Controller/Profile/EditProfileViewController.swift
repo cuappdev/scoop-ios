@@ -345,11 +345,11 @@ class EditProfileViewController: UIViewController {
 
             if emailButton.isSelected {
                 phoneNumTextField.isHidden = true
-                view.layoutIfNeeded()
             } else {
                 phoneNumTextField.isHidden = false
-                view.layoutIfNeeded()
             }
+
+            view.layoutIfNeeded()
         }
 
         emailButton.addAction(selectContactAction, for: .touchUpInside)
@@ -583,7 +583,21 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupGradientView() {
-        gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.withAlphaComponent(0.3).cgColor, UIColor.white.withAlphaComponent(0.6).cgColor, UIColor.white.withAlphaComponent(0.9).cgColor, UIColor.white.cgColor, UIColor.white.cgColor, UIColor.white.cgColor, UIColor.white.cgColor, UIColor.white.cgColor, UIColor.white.cgColor, UIColor.white.cgColor, UIColor.white.cgColor]
+        gradientLayer.colors = [
+            UIColor.white.withAlphaComponent(0).cgColor,
+            UIColor.white.withAlphaComponent(0.3).cgColor,
+            UIColor.white.withAlphaComponent(0.6).cgColor,
+            UIColor.white.withAlphaComponent(0.9).cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor
+        ]
+
         gradientView.isUserInteractionEnabled = false
         gradientView.layer.insertSublayer(gradientLayer, at: 1)
         view.addSubview(gradientView)
@@ -634,11 +648,11 @@ class EditProfileViewController: UIViewController {
     
     // MARK: - Helper Functions
 
-    @objc func cancelEdit() {
+    @objc private func cancelEdit() {
         self.navigationController?.popViewController(animated: true)
     }
 
-    @objc func saveEdit() {
+    @objc private func saveEdit() {
         updateUser()
         self.navigationController?.popViewController(animated: true)
     }
