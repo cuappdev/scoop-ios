@@ -110,6 +110,7 @@ PODS:
     - SDWebImage/Core (= 5.18.2)
   - SDWebImage/Core (5.18.2)
   - SnapKit (5.6.0)
+  - SwiftLint (0.53.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -120,6 +121,7 @@ DEPENDENCIES:
   - IQKeyboardManager
   - SDWebImage
   - SnapKit
+  - SwiftLint
 
 SPEC REPOS:
   trunk:
@@ -144,6 +146,7 @@ SPEC REPOS:
     - RecaptchaInterop
     - SDWebImage
     - SnapKit
+    - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
@@ -167,7 +170,8 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftLint: 5ce4d6a8ff83f1b5fd5ad5dbf30965d35af65e44
 
-PODFILE CHECKSUM: 167b5a8a2e50deeac37a3071ea1f6687841e959e
+PODFILE CHECKSUM: f7b653399e529ffc0965c6b3099159d3a725ab15
 
 COCOAPODS: 1.12.1
