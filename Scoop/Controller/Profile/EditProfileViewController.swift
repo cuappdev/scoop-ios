@@ -162,7 +162,7 @@ class EditProfileViewController: UIViewController {
         view.addSubview(scrollView)
         
         scrollView.snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(35)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(36)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(14)
         }
@@ -211,8 +211,8 @@ class EditProfileViewController: UIViewController {
         uploadPhotoButton.snp.makeConstraints { make in
             make.top.equalTo(profileImageView).offset(96)
             make.size.equalTo(26)
-            make.leading.equalTo(profileImageView).offset(85)
-            make.trailing.equalTo(profileImageView).offset(-9)
+            make.leading.equalTo(profileImageView).offset(84)
+            make.trailing.equalTo(profileImageView).offset(-8)
         }
     }
 
@@ -225,7 +225,7 @@ class EditProfileViewController: UIViewController {
         
         aboutYouStackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(leadingTrailingInset)
-            make.top.equalTo(imageView.snp.bottom).offset(25)
+            make.top.equalTo(imageView.snp.bottom).offset(24)
         }
         
         nameTextField.attributedPlaceholder = NSAttributedString(
@@ -417,7 +417,7 @@ class EditProfileViewController: UIViewController {
         preferencesStackView.addArrangedSubview(talkativeView)
         
         talkativeView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(27)
+            make.leading.equalToSuperview().inset(28)
             make.trailing.equalToSuperview()
         }
         
@@ -451,7 +451,7 @@ class EditProfileViewController: UIViewController {
         preferencesStackView.addArrangedSubview(talkativeSlider)
         
         talkativeSlider.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(27)
+            make.leading.equalToSuperview().inset(28)
         }
         
         talkativeTicks.setImage(UIImage.sliderTicks, for: .normal)
@@ -469,7 +469,7 @@ class EditProfileViewController: UIViewController {
         preferencesStackView.addArrangedSubview(musicView)
         
         musicView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(27)
+            make.leading.equalToSuperview().inset(28)
             make.trailing.equalToSuperview()
         }
         
@@ -503,7 +503,7 @@ class EditProfileViewController: UIViewController {
         preferencesStackView.addArrangedSubview(musicSlider)
         
         musicSlider.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(27)
+            make.leading.equalToSuperview().inset(28)
         }
         
         musicTicks.setImage(UIImage.sliderTicks, for: .normal)
@@ -578,33 +578,19 @@ class EditProfileViewController: UIViewController {
 
         deleteButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(40)
-            make.height.equalTo(51)
+            make.height.equalTo(50)
         }
     }
     
     private func setupGradientView() {
-        gradientLayer.colors = [
-            UIColor.white.withAlphaComponent(0).cgColor,
-            UIColor.white.withAlphaComponent(0.3).cgColor,
-            UIColor.white.withAlphaComponent(0.6).cgColor,
-            UIColor.white.withAlphaComponent(0.9).cgColor,
-            UIColor.white.cgColor,
-            UIColor.white.cgColor,
-            UIColor.white.cgColor,
-            UIColor.white.cgColor,
-            UIColor.white.cgColor,
-            UIColor.white.cgColor,
-            UIColor.white.cgColor,
-            UIColor.white.cgColor
-        ]
-
+        gradientLayer.colors = UIColor.whiteGradientColors
         gradientView.isUserInteractionEnabled = false
         gradientView.layer.insertSublayer(gradientLayer, at: 1)
         view.addSubview(gradientView)
         
         gradientView.snp.makeConstraints { make in
             make.bottom.width.equalToSuperview()
-            make.height.equalTo(201)
+            make.height.equalTo(200)
         }
     }
     
@@ -615,16 +601,16 @@ class EditProfileViewController: UIViewController {
         cancelButton.backgroundColor = UIColor.white
         cancelButton.layer.borderColor = UIColor.systemGray2.cgColor
         cancelButton.layer.borderWidth = 1
-        cancelButton.layer.cornerRadius = 24
+        cancelButton.layer.cornerRadius = 25
         view.addSubview(cancelButton)
 
         cancelButton.addTarget(self, action: #selector(cancelEdit), for: .touchUpInside)
         
         cancelButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(39)
-            make.width.equalTo(102)
-            make.height.equalTo(51)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(40)
+            make.width.equalTo(104)
+            make.height.equalTo(50)
         }
     }
     
@@ -633,16 +619,16 @@ class EditProfileViewController: UIViewController {
         saveButton.setTitleColor(UIColor.offBlack, for: .normal)
         saveButton.titleLabel?.font = UIFont.bodyBold
         saveButton.backgroundColor = UIColor.secondaryGreen
-        saveButton.layer.cornerRadius = 24
+        saveButton.layer.cornerRadius = 25
         view.addSubview(saveButton)
 
         saveButton.addTarget(self, action: #selector(saveEdit), for: .touchUpInside)
         
         saveButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(24)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(39)
-            make.width.equalTo(102)
-            make.height.equalTo(51)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(40)
+            make.width.equalTo(104)
+            make.height.equalTo(50)
         }
     }
     

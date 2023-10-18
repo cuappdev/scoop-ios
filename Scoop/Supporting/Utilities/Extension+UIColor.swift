@@ -25,5 +25,19 @@ extension UIColor {
     static let secondaryGreen = UIColor(red: 206/255, green: 233/255, blue: 220/255, alpha: 1)
     static let skipButtonColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
     static let textFieldBorderColor = UIColor(red: 106/255, green: 115/255, blue: 125/255, alpha: 1)
-    
+
+    static let whiteGradientColors = [
+        UIColor.white.withAlphaComponent(0).cgColor,
+        UIColor.white.withAlphaComponent(0.3).cgColor,
+        UIColor.white.withAlphaComponent(0.6).cgColor,
+        UIColor.white.withAlphaComponent(0.9).cgColor,
+        UIColor.white.cgColor,
+        UIColor.white.cgColor,
+        UIColor.white.cgColor,
+        UIColor.white.cgColor,
+        UIColor.white.cgColor,
+        UIColor.white.cgColor,
+        UIColor.white.cgColor,
+        UIColor.white.cgColor
+    ]
 }
