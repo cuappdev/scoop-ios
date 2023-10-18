@@ -128,6 +128,7 @@
 		410D78BF29B8166D0007E434 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		4176A1E8299D2F01008B2BC3 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		8939AD8D2ADFAAED0038B20D /* SFProDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Semibold.otf"; sourceTree = "<group>"; };
 		8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		89C410F72ACE0DCC005BB8FC /* Extension+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImage.swift"; sourceTree = "<group>"; };
 		89C410F92ACF0B6F005BB8FC /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
@@ -197,6 +198,7 @@
 			children = (
 				2C42B520290F767600D053A3 /* Rambla-Regular.ttf */,
 				2C85C53329E5B6F000A0C387 /* SFProDisplay-Bold.otf */,
+				8939AD8D2ADFAAED0038B20D /* SFProDisplay-Semibold.otf */,
 				2C85C53229E5B6F000A0C387 /* SFProDisplay-Regular.otf */,
 				2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */,
 			);
