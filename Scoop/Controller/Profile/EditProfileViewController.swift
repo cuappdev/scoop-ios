@@ -74,8 +74,6 @@ class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
 
-        scrollViewWillBeginDragging(scrollView)
-        dismissKeyboardFromTap()
         dismissKeyboardFromPan()
 
         setupHeader()
@@ -97,7 +95,6 @@ class EditProfileViewController: UIViewController {
         
         let hoverViewTransparentOffset = CGFloat(30)
 
-        scrollView.delegate = self
         scrollView.contentSize = CGSizeMake(mainStackView.frame.width, mainStackView.frame.height + gradientView.bounds.height - hoverViewTransparentOffset)
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         uploadPhotoButton.layer.cornerRadius = uploadPhotoButton.frame.size.width / 2
@@ -661,12 +658,6 @@ class EditProfileViewController: UIViewController {
         view.endEditing(true)
     }
 
-    func dismissKeyboardFromTap() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-
     func dismissKeyboardFromPan() {
         let pan: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
         pan.cancelsTouchesInView = false
@@ -731,12 +722,4 @@ class EditProfileViewController: UIViewController {
         }
     }
     
-}
-
-extension EditProfileViewController: UIScrollViewDelegate {
-
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        view.endEditing(true)
-    }
-
 }
