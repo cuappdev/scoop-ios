@@ -658,7 +658,7 @@ class EditProfileViewController: UIViewController {
         view.endEditing(true)
     }
 
-    func dismissKeyboardFromPan() {
+    private func dismissKeyboardFromPan() {
         let pan: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
         pan.cancelsTouchesInView = false
         view.addGestureRecognizer(pan)
@@ -697,9 +697,20 @@ class EditProfileViewController: UIViewController {
                 userAnswers.append(UserAnswer(id: prompt.id, answer: String(talkative ?? 0.5)))
             }
         }
-        
-        // MARK: - Requests
-        
+
+        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: userAnswers)
+    }
+
+    // MARK: - Requests
+
+    private func updateAuthenticatedUserRequest(
+        firstName: String,
+        lastName: String,
+        grade: String?,
+        phoneNumber: String?,
+        pronouns: String?,
+        prompts: [UserAnswer]
+    ) {
         NetworkManager.shared.updateAuthenticatedUser(
             netid: user?.netid ?? "",
             first_name: firstName,
@@ -708,7 +719,7 @@ class EditProfileViewController: UIViewController {
             phone_number: phoneNumber ?? "",
             pronouns: pronouns ?? "",
             prof_pic: user?.profilePicUrl ?? "",
-            prompts: userAnswers
+            prompts: prompts
         ) { [weak self] result in
             guard let self = self else { return }
 
