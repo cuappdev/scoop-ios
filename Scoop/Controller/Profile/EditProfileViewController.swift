@@ -738,5 +738,5 @@ extension EditProfileViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         view.endEditing(true)
     }
-    
+
 }
