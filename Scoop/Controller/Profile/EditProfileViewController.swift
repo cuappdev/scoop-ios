@@ -59,7 +59,12 @@ class EditProfileViewController: UIViewController {
     private var talkative: Float?
     
     // MARK: - Constants
-    
+
+    private let bottomInset = 36
+    private let buttonCornerRadius = CGFloat(25)
+    private let buttonHeight = 50
+    private let buttonLeadingTrailingInset = 24
+    private let buttonWidth = 104
     private let leadingTrailingInset = 32
     private let textFieldHeight = 56
     
@@ -68,7 +73,11 @@ class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        
+
+        scrollViewWillBeginDragging(scrollView)
+        dismissKeyboardFromTap()
+        dismissKeyboardFromPan()
+
         setupHeader()
         setupScrollView()
         setupMainStackView()
@@ -87,7 +96,8 @@ class EditProfileViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         let hoverViewTransparentOffset = CGFloat(30)
-        
+
+        scrollView.delegate = self
         scrollView.contentSize = CGSizeMake(mainStackView.frame.width, mainStackView.frame.height + gradientView.bounds.height - hoverViewTransparentOffset)
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         uploadPhotoButton.layer.cornerRadius = uploadPhotoButton.frame.size.width / 2
@@ -414,10 +424,12 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupTalkativeSliderView() {
+        let leadingInset = 28
+
         preferencesStackView.addArrangedSubview(talkativeView)
         
         talkativeView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(28)
+            make.leading.equalToSuperview().inset(leadingInset)
             make.trailing.equalToSuperview()
         }
         
@@ -449,9 +461,9 @@ class EditProfileViewController: UIViewController {
         talkativeSlider.maximumTrackTintColor = UIColor.black
         talkativeSlider.setThumbImage(UIImage.sliderThumb, for: .normal)
         preferencesStackView.addArrangedSubview(talkativeSlider)
-        
+
         talkativeSlider.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(28)
+            make.leading.equalToSuperview().inset(leadingInset)
         }
         
         talkativeTicks.setImage(UIImage.sliderTicks, for: .normal)
@@ -466,10 +478,12 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupMusicSliderView() {
+        let leadingInset = 28
+
         preferencesStackView.addArrangedSubview(musicView)
         
         musicView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(28)
+            make.leading.equalToSuperview().inset(leadingInset)
             make.trailing.equalToSuperview()
         }
         
@@ -503,7 +517,7 @@ class EditProfileViewController: UIViewController {
         preferencesStackView.addArrangedSubview(musicSlider)
         
         musicSlider.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(28)
+            make.leading.equalToSuperview().inset(leadingInset)
         }
         
         musicTicks.setImage(UIImage.sliderTicks, for: .normal)
@@ -573,7 +587,7 @@ class EditProfileViewController: UIViewController {
         deleteButton.setTitleColor(UIColor.white, for: .normal)
         deleteButton.titleLabel?.font = UIFont.bodyBold
         deleteButton.backgroundColor = UIColor.notification
-        deleteButton.layer.cornerRadius = 25
+        deleteButton.layer.cornerRadius = buttonCornerRadius
         mainStackView.addArrangedSubview(deleteButton)
 
         deleteButton.snp.makeConstraints { make in
@@ -601,16 +615,16 @@ class EditProfileViewController: UIViewController {
         cancelButton.backgroundColor = UIColor.white
         cancelButton.layer.borderColor = UIColor.systemGray2.cgColor
         cancelButton.layer.borderWidth = 1
-        cancelButton.layer.cornerRadius = 25
+        cancelButton.layer.cornerRadius = buttonCornerRadius
         view.addSubview(cancelButton)
 
         cancelButton.addTarget(self, action: #selector(cancelEdit), for: .touchUpInside)
         
         cancelButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(24)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(40)
-            make.width.equalTo(104)
-            make.height.equalTo(50)
+            make.leading.equalToSuperview().inset(buttonLeadingTrailingInset)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(bottomInset)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(buttonHeight)
         }
     }
     
@@ -619,16 +633,16 @@ class EditProfileViewController: UIViewController {
         saveButton.setTitleColor(UIColor.offBlack, for: .normal)
         saveButton.titleLabel?.font = UIFont.bodyBold
         saveButton.backgroundColor = UIColor.secondaryGreen
-        saveButton.layer.cornerRadius = 25
+        saveButton.layer.cornerRadius = buttonCornerRadius
         view.addSubview(saveButton)
 
         saveButton.addTarget(self, action: #selector(saveEdit), for: .touchUpInside)
         
         saveButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(24)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(40)
-            make.width.equalTo(104)
-            make.height.equalTo(50)
+            make.trailing.equalToSuperview().inset(buttonLeadingTrailingInset)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(bottomInset)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(buttonHeight)
         }
     }
     
@@ -641,6 +655,22 @@ class EditProfileViewController: UIViewController {
     @objc private func saveEdit() {
         updateUser()
         self.navigationController?.popViewController(animated: true)
+    }
+
+    @objc private func dismissKeyboardTouchOutside() {
+        view.endEditing(true)
+    }
+
+    func dismissKeyboardFromTap() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    func dismissKeyboardFromPan() {
+        let pan: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
+        pan.cancelsTouchesInView = false
+        view.addGestureRecognizer(pan)
     }
     
     private func updateUser() {
@@ -699,6 +729,14 @@ class EditProfileViewController: UIViewController {
                 print("Error in EditProfileViewController: \(error.localizedDescription)")
             }
         }
+    }
+    
+}
+
+extension EditProfileViewController: UIScrollViewDelegate {
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        view.endEditing(true)
     }
     
 }
