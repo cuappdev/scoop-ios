@@ -102,12 +102,6 @@ class NetworkManager {
         }
 
     func deleteUser(netid: String, first_name: String, last_name: String, grade: String, phone_number: String, pronouns: String, prof_pic: String, prompts: [UserAnswer], completion: @escaping (Result<BaseUser, Error>) -> Void) {
-        print(prompts.map({ prompt -> [String: Any] in
-            return [
-                "id": prompt.id,
-                "answer": prompt.answer
-            ]
-    }))
         let parameters: [String: Any] = [
             "netid": netid,
             "first_name": first_name,
@@ -125,7 +119,17 @@ class NetworkManager {
         ]
         AF.request("\(hostEndpoint)/api/me/", method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
-            case .success(_):
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+
+                do {
+                    let user = try jsonDecoder.decode(BaseUser.self, from: data)
+                    completion(.success(user))
+                } catch {
+                    completion(.failure(error))
+                    print("Failed to decode deleteUser")
+                }
                 print("Request deleteUser Success")
             case .failure(let error):
                 completion(.failure(error))
@@ -140,6 +144,7 @@ class NetworkManager {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+
                 do {
                     let user = try jsonDecoder.decode(BaseUser.self, from: data)
                     completion(.success(user))

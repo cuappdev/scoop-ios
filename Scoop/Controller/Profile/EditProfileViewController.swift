@@ -722,7 +722,7 @@ class EditProfileViewController: UIViewController {
             pronouns: user?.pronouns,
             prompts: getUserAnswers()
         )
-        
+
         let loginVC = LoginViewController()
         loginVC.navigationItem.hidesBackButton = true
         navigationController?.pushViewController(loginVC, animated: true)
