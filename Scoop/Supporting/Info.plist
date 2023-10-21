@@ -15,9 +15,9 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string>SFProDisplay-Regular.OTF</string>
-		<string>SFProDisplay-Bold.OTF</string>
 		<string>Rambla-Regular.ttf</string>
+		<string>SFProDisplay-Bold.otf</string>
+		<string>SFProDisplay-Regular.otf</string>
 		<string>Sen-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
