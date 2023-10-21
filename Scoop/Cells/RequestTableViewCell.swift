@@ -44,8 +44,8 @@ class RequestTableViewCell: UITableViewCell {
     
     private func setupRequestDetailLabel() {
         requestDetailLabel.font = .systemFont(ofSize: 16)
-        requestDetailLabel.lineBreakMode = .byWordWrapping
-        requestDetailLabel.numberOfLines = 0
+        requestDetailLabel.lineBreakMode = .byTruncatingTail
+        requestDetailLabel.numberOfLines = 2
         contentView.addSubview(requestDetailLabel)
         
         requestDetailLabel.snp.makeConstraints { make in
