@@ -589,6 +589,8 @@ class EditProfileViewController: UIViewController {
         deleteButton.layer.cornerRadius = Constants.buttonCornerRadius
         mainStackView.addArrangedSubview(deleteButton)
 
+        deleteButton.addTarget(self, action: #selector(deleteAccount), for: .touchUpInside)
+
         deleteButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(40)
             make.height.equalTo(50)
@@ -647,6 +649,10 @@ class EditProfileViewController: UIViewController {
     
     // MARK: - Helper Functions
 
+    @objc private func deleteAccount() {
+        deleteUser()
+    }
+
     @objc private func cancelEdit() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -665,24 +671,10 @@ class EditProfileViewController: UIViewController {
         pan.cancelsTouchesInView = false
         view.addGestureRecognizer(pan)
     }
-    
-    private func updateUser() {
-        let name = nameTextField.text?.split(separator: " ")
-        let firstName = String(name?[0] ?? "")
-        let lastName = String(name?[1...].joined(separator: " ") ?? "")
-        let grade = classTextField.text
-        let pronouns = pronounsTextField.text
-        let phoneNumber = phoneNumTextField.text
-        
-        hometown = hometownTextField.text
-        talkative = talkativeSlider.value
-        music = musicSlider.value
-        snack = snackTextField.text
-        song = songTextField.text
-        stop = stopTextField.text
-        
+
+    private func getUserAnswers() -> [UserAnswer] {
         var userAnswers: [UserAnswer] = []
-                
+
         user?.prompts.forEach { prompt in
             switch prompt.questionName {
             case .hometown:
@@ -700,7 +692,40 @@ class EditProfileViewController: UIViewController {
             }
         }
 
-        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: userAnswers)
+        return userAnswers
+    }
+    
+    private func updateUser() {
+        let name = nameTextField.text?.split(separator: " ")
+        let firstName = String(name?[0] ?? "")
+        let lastName = String(name?[1...].joined(separator: " ") ?? "")
+        let grade = classTextField.text
+        let pronouns = pronounsTextField.text
+        let phoneNumber = phoneNumTextField.text
+        
+        hometown = hometownTextField.text
+        talkative = talkativeSlider.value
+        music = musicSlider.value
+        snack = snackTextField.text
+        song = songTextField.text
+        stop = stopTextField.text
+
+        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: getUserAnswers())
+    }
+
+    private func deleteUser() {
+        deleteUserRequest(
+            firstName: user?.firstName ?? "",
+            lastName: user?.lastName ?? "",
+            grade: user?.grade,
+            phoneNumber: user?.phoneNumber,
+            pronouns: user?.pronouns,
+            prompts: getUserAnswers()
+        )
+        
+        let loginVC = LoginViewController()
+        loginVC.navigationItem.hidesBackButton = true
+        navigationController?.pushViewController(loginVC, animated: true)
     }
 
     // MARK: - Requests
@@ -729,6 +754,35 @@ class EditProfileViewController: UIViewController {
             case .success(let user):
                 NetworkManager.shared.currentUser = user
                 self.delegate?.updateProfileText(user: user)
+            case .failure(let error):
+                print("Error in EditProfileViewController: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func deleteUserRequest(
+        firstName: String,
+        lastName: String,
+        grade: String?,
+        phoneNumber: String?,
+        pronouns: String?,
+        prompts: [UserAnswer]
+    ) {
+        NetworkManager.shared.deleteUser(
+            netid: user?.netid ?? "",
+            first_name: firstName,
+            last_name: lastName,
+            grade: grade ?? "",
+            phone_number: phoneNumber ?? "",
+            pronouns: pronouns ?? "",
+            prof_pic: user?.profilePicUrl ?? "",
+            prompts: prompts
+        ) { [weak self] result in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let user):
+                print("Deleted user \(user.firstName) \(user.lastName)")
             case .failure(let error):
                 print("Error in EditProfileViewController: \(error.localizedDescription)")
             }

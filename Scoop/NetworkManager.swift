@@ -100,6 +100,39 @@ class NetworkManager {
                 }
             }
         }
+
+    func deleteUser(netid: String, first_name: String, last_name: String, grade: String, phone_number: String, pronouns: String, prof_pic: String, prompts: [UserAnswer], completion: @escaping (Result<BaseUser, Error>) -> Void) {
+        print(prompts.map({ prompt -> [String: Any] in
+            return [
+                "id": prompt.id,
+                "answer": prompt.answer
+            ]
+    }))
+        let parameters: [String: Any] = [
+            "netid": netid,
+            "first_name": first_name,
+            "last_name": last_name,
+            "grade": grade,
+            "phone_number": phone_number,
+            "pronouns": pronouns,
+            "profile_pic_base64": prof_pic,
+            "prompts": prompts.map({ prompt -> [String: Any] in
+                    return [
+                        "id": prompt.id,
+                        "answer": prompt.answer
+                    ]
+            })
+        ]
+        AF.request("\(hostEndpoint)/api/me/", method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(_):
+                print("Request deleteUser Success")
+            case .failure(let error):
+                completion(.failure(error))
+                print("Request deleteUser Failed: \(error.localizedDescription)")
+            }
+        }
+    }
     
     func getUser(completion: @escaping (Result<BaseUser, Error>) -> Void) {
         AF.request("\(hostEndpoint)/api/me/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
