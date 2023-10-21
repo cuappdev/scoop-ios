@@ -58,10 +58,7 @@ class LoginViewController: UIViewController {
         }
         
         let signInAction = UIAction { action in
-//            self.signIn()
-            if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                scene.didCompleteLogin()
-            }
+            self.signIn()
         }
         
         greenSignInButton.addAction(signInAction, for: .touchUpInside)
