@@ -23,11 +23,11 @@ class BlockUserViewController: ModalViewController {
     private let cancelImageView = UIImageView(image: .cancelIcon)
     private let settingsImageView = UIImageView(image: .setttingsIcon)
 
-    // MARK: User Data
+    // MARK: - User Data
 
     let user: BaseUser
 
-    // MARK: Initializers
+    // MARK: - Initializers
 
     init(user: BaseUser, height: CGFloat) {
         self.user = user
