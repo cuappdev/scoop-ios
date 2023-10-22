@@ -82,9 +82,9 @@ class PostRideSummaryViewController: PostRideViewController {
         let screenSize = UIScreen.main.bounds
         
         stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .leading
-        stackView.spacing = 25
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .top
+        stackView.spacing = 24
         view.addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
@@ -310,23 +310,32 @@ class PostRideSummaryViewController: PostRideViewController {
     }
     
     private func setupDetailsInfo() {
+        let containerView = UIView()
         let ride = currentRide
         
         detailsLabel.text = "DETAILS"
-        stackView.addArrangedSubview(detailsLabel)
+        containerView.addSubview(detailsLabel)
         
-        stackView.setCustomSpacing(1, after: detailsLabel)
+        detailsLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview()
+        }
         
         detailsTextView.text = ride.description
         detailsTextView.font = .systemFont(ofSize: 16)
         detailsTextView.textColor = .black
         detailsTextView.isEditable = false
         detailsTextView.isSelectable = false
-        stackView.addArrangedSubview(detailsTextView)
+        containerView.addSubview(detailsTextView)
 
         detailsTextView.snp.makeConstraints { make in
+            make.top.equalTo(detailsLabel.snp.bottom).offset(6)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        stackView.addArrangedSubview(containerView)
+        
+        containerView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(60)
         }
     }
     

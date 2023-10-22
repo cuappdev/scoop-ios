@@ -9,7 +9,7 @@ import Foundation
 
 struct Prompt: Codable {
     let id: Int
-    let questionName: String
+    let questionName: PromptQuestion
     let questionPlaceholder: String
     let answer: String?
 }
@@ -22,4 +22,13 @@ class UserAnswer: Codable {
         self.id = id
         self.answer = answer
     }
+}
+
+enum PromptQuestion: String, Codable {
+    case hometown = "Hometown"
+    case music = "Music"
+    case song = "Song"
+    case snack = "Snack"
+    case stop = "Stop"
+    case talkative = "Talkative"
 }

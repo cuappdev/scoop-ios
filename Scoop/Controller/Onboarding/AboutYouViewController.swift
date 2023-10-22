@@ -20,8 +20,8 @@ class AboutYouViewController: OnboardingViewController {
     private let pronounsPicker = UIPickerView()
     private let yearPicker = UIPickerView()
     
-    private let pronouns = ["He/Him", "She/Her", "They/Them", "Other"]
-    private let years = ["Freshman", "Sophomore", "Junior", "Senior", "Grad Student"]
+    private let pronouns = PickerOptions.scooped.pronouns
+    private let years = PickerOptions.scooped.years
 
     // MARK: - Lifecycle Functions
     
