@@ -53,7 +53,7 @@ class LabeledTextField: UIView {
     private func setupLabel(title: String) {
         nameLabel.text = " \(title) "
         nameLabel.font = .systemFont(ofSize: 12)
-        nameLabel.textColor = .black
+        nameLabel.textColor = .mutedGrey
         nameLabel.backgroundColor = .white
         nameLabel.isHidden = true
         addSubview(nameLabel)
@@ -72,7 +72,7 @@ class LabeledTextField: UIView {
             textField.layer.borderWidth = 2
             textField.layer.borderColor = UIColor.scoopDarkGreen.cgColor
         } else {
-            nameLabel.textColor = .black
+            nameLabel.textColor = .mutedGrey
             textField.layer.borderWidth = 1
             textField.layer.borderColor = UIColor.black.cgColor
         }
@@ -80,6 +80,14 @@ class LabeledTextField: UIView {
     
     func hidesLabel(isHidden: Bool) {
         nameLabel.isHidden = isHidden
+    }
+    
+    func setText(str: String?) {
+        textField.text = str
+    }
+    
+    func getText() -> String? {
+        return textField.text
     }
     
 }
