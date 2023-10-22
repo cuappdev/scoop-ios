@@ -236,14 +236,14 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
+
 		4198A7DB2AC4DBC800FCA38D /* ci_scripts */ = {
 			isa = PBXGroup;
 			children = (
 				4198A7DC2AC4DC1800FCA38D /* ci_post_clone.sh */,
 			);
 			path = ci_scripts;
-=======
+
 		89C410FB2ACF38E3005BB8FC /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,7 +253,7 @@
 				2CCE49DA2AE04F750099EAF0 /* ReportUserViewController.swift */,
 			);
 			path = Profile;
->>>>>>> 9ddfd8f7f1fa6e63ad4b78d77a3bc432b24287c2
+
 			sourceTree = "<group>";
 		};
 		8FBFA8714955D4038DDF0D52 /* Pods */ = {
