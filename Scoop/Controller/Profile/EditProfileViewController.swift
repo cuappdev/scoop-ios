@@ -75,6 +75,9 @@ class EditProfileViewController: UIViewController {
     private let pronouns = PickerOptions.scooped.pronouns
     private let years = PickerOptions.scooped.years
     
+    private let pronouns = PickerOptions.scooped.pronouns
+    private let years = PickerOptions.scooped.years
+    
     // MARK: - Lifecycle Functions
 
     override func viewDidLoad() {
@@ -653,6 +656,10 @@ class EditProfileViewController: UIViewController {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(dismissKeyboardTouchOutside))
         pan.cancelsTouchesInView = false
         view.addGestureRecognizer(pan)
+    }
+    
+    @objc private func updateProfileImage(_ sender: UITapGestureRecognizer) {
+        present(imagePicker, animated: true)
     }
     
     @objc private func updateProfileImage(_ sender: UITapGestureRecognizer) {
