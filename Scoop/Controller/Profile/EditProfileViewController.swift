@@ -14,7 +14,7 @@ class EditProfileViewController: UIViewController {
     
     private let cancelButton = UIButton()
     private let classTextField = LabeledTextField()
-    private let classPickerView = UIPickerView()
+    private let classPicker = UIPickerView()
     private let deleteButton = UIButton()
     private let emailButton = UIButton()
     private let gradientLayer = CAGradientLayer()
