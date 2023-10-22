@@ -725,7 +725,7 @@ class EditProfileViewController: UIViewController {
 
         let loginVC = LoginViewController()
         loginVC.navigationItem.hidesBackButton = true
-        navigationController?.pushViewController(loginVC, animated: true)
+        navigationController?.pushViewController(loginVC, animated: false)
     }
 
     // MARK: - Requests

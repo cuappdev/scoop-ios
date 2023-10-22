@@ -119,17 +119,7 @@ class NetworkManager {
         ]
         AF.request("\(hostEndpoint)/api/me/", method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
-            case .success(let data):
-                let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-
-                do {
-                    let user = try jsonDecoder.decode(BaseUser.self, from: data)
-                    completion(.success(user))
-                } catch {
-                    completion(.failure(error))
-                    print("Failed to decode deleteUser")
-                }
+            case .success:
                 print("Request deleteUser Success")
             case .failure(let error):
                 completion(.failure(error))
