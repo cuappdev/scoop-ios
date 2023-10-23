@@ -639,7 +639,18 @@ class EditProfileViewController: UIViewController {
     // MARK: - Helper Functions
 
     @objc private func deleteAccount() {
-        deleteUser()
+        deleteUserRequest(
+            firstName: user?.firstName ?? "",
+            lastName: user?.lastName ?? "",
+            grade: user?.grade,
+            phoneNumber: user?.phoneNumber,
+            pronouns: user?.pronouns,
+            prompts: getUserAnswers()
+        )
+
+        let loginVC = LoginViewController()
+        loginVC.navigationItem.hidesBackButton = true
+        navigationController?.pushViewController(loginVC, animated: false)
     }
 
     @objc private func cancelEdit() {
@@ -647,7 +658,22 @@ class EditProfileViewController: UIViewController {
     }
 
     @objc private func saveEdit() {
-        updateUser()
+        let name = nameTextField.getText()?.split(separator: " ")
+        let firstName = String(name?[0] ?? "")
+        let lastName = String(name?[1...].joined(separator: " ") ?? "")
+        let grade = classTextField.getText()
+        let pronouns = pronounsTextField.getText()
+        let phoneNumber = phoneNumTextField.getText()
+
+        hometown = hometownTextField.getText()
+        talkative = talkativeSlider.value
+        music = musicSlider.value
+        snack = snackTextField.getText()
+        song = songTextField.getText()
+        stop = stopTextField.getText()
+
+        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: getUserAnswers())
+
         self.navigationController?.popViewController(animated: true)
     }
 
@@ -686,39 +712,6 @@ class EditProfileViewController: UIViewController {
         }
 
         return userAnswers
-    }
-
-    private func updateUser() {
-        let name = nameTextField.getText()?.split(separator: " ")
-        let firstName = String(name?[0] ?? "")
-        let lastName = String(name?[1...].joined(separator: " ") ?? "")
-        let grade = classTextField.getText()
-        let pronouns = pronounsTextField.getText()
-        let phoneNumber = phoneNumTextField.getText()
-
-        hometown = hometownTextField.getText()
-        talkative = talkativeSlider.value
-        music = musicSlider.value
-        snack = snackTextField.getText()
-        song = songTextField.getText()
-        stop = stopTextField.getText()
-
-        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: getUserAnswers())
-    }
-
-    private func deleteUser() {
-        deleteUserRequest(
-            firstName: user?.firstName ?? "",
-            lastName: user?.lastName ?? "",
-            grade: user?.grade,
-            phoneNumber: user?.phoneNumber,
-            pronouns: user?.pronouns,
-            prompts: getUserAnswers()
-        )
-
-        let loginVC = LoginViewController()
-        loginVC.navigationItem.hidesBackButton = true
-        navigationController?.pushViewController(loginVC, animated: false)
     }
 
     // MARK: - Requests
