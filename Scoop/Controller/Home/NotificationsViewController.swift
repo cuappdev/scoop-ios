@@ -11,9 +11,10 @@ import UIKit
 class NotificationsViewController: UIViewController {
     
     // MARK: - Views
-    
-    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
+
     private let backButton = UIButton()
+    private let emptyStateView = UIView()
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     // MARK: - Identifiers
     
@@ -31,8 +32,13 @@ class NotificationsViewController: UIViewController {
         view.backgroundColor = .white
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
         self.navigationItem.title = "Notifications"
-        
+
+        setupEmptyStateView()
         getRequests()
+    }
+
+    override func viewDidLayoutSubviews() {
+        tableView.isHidden = allRequests.isEmpty
     }
     
     // MARK: - Setup View Functions
@@ -64,6 +70,48 @@ class NotificationsViewController: UIViewController {
             make.top.equalToSuperview().inset(50)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+
+    private func setupEmptyStateView() {
+        view.addSubview(emptyStateView)
+
+        emptyStateView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
+        }
+
+        let notifBellImageView = UIImageView()
+        notifBellImageView.image = UIImage.notifIcon
+        notifBellImageView.contentMode = .scaleAspectFit
+        notifBellImageView.layer.masksToBounds = true
+        emptyStateView.addSubview(notifBellImageView)
+
+        notifBellImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(340)
+            make.width.height.equalTo(50)
+        }
+
+        let noNewLabel = UILabel()
+        noNewLabel.text = "No new notifications"
+        noNewLabel.font = UIFont.bodySemibold
+        noNewLabel.textColor = UIColor.black
+        emptyStateView.addSubview(noNewLabel)
+
+        noNewLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(notifBellImageView.snp.bottom).offset(24)
+        }
+
+        let subLabel = UILabel()
+        subLabel.text = "You’re all caught up at the moment!"
+        subLabel.font = UIFont.bodyNormal
+        subLabel.textColor = UIColor.secondaryLabel
+        emptyStateView.addSubview(subLabel)
+
+        subLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(noNewLabel.snp.bottom).offset(16)
         }
     }
     
