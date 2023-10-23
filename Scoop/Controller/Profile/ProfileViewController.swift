@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     // MARK: - Views
     
+    private let actionsButton = UIButton()
     private let containerView = UIView()
     private let headerImageView = UIImageView()
     private let profileImageView = UIImageView()
@@ -37,7 +38,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     // MARK: - User Data
     
-    private var user: BaseUser?
+    private var user: BaseUser
     
     private var hometown: String?
     private var talkative: Float?
@@ -49,8 +50,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     // MARK: - Initializers
     
     init(user: BaseUser) {
-        super.init(nibName: nil, bundle: nil)
         self.user = user
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -66,10 +67,10 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         getUserPreferences()
         setupHeaderImage()
         setupContainerView()
-        setupEditButton()
         setupProfileImageView()
         setupProfileStackView()
         isBeingPresented ? updateDriverProfile() : updateUserProfile()
+        isBeingPresented ? setupActionsButton() : setupEditButton()
     }
     
     // MARK: - Setup View Functions
@@ -93,6 +94,18 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         headerImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(140)
+        }
+    }
+    
+    private func setupActionsButton() {
+        actionsButton.setImage(UIImage(systemName: "ellipsis", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .semibold)), for: .normal)
+        actionsButton.tintColor = .black
+        actionsButton.addTarget(self, action: #selector(presentActionOptions), for: .touchUpInside)
+        containerView.addSubview(actionsButton)
+        
+        actionsButton.snp.makeConstraints { make in
+            make.size.equalTo(30)
+            make.top.trailing.equalToSuperview().inset(20)
         }
     }
     
@@ -334,9 +347,26 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     // MARK: - Helper Functions
     
-    @objc private func pushEditProfileVC() {
-        guard let user = user else { return }
+    @objc private func presentActionOptions() {
+        let alert = UIAlertController(title: "Actions", message: nil, preferredStyle: .actionSheet)
+        alert.view.tintColor = .scoopDarkGreen
+
+        alert.addAction(UIAlertAction(title: "Report user", style: .default, handler: { [self] _ in
+            let reportVC = ReportUserViewController(user: user, height: view.frame.height * 7 / 8)
+            present(reportVC, animated: true)
+        }))
         
+        alert.addAction(UIAlertAction(title: "Block user", style: .default, handler: { [self] _ in
+            let blockVC = BlockUserViewController(user: user, height: view.frame.height / 2)
+            present(blockVC, animated: true)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true)
+    }
+    
+    @objc private func pushEditProfileVC() {
         let editProfileVC = EditProfileViewController(user: user, hometown: hometown ?? "", talkative: talkative ?? 0.5, music: music ?? 0.5, snack: snack ?? "", song: song ?? "", stop: stop ?? "")
         editProfileVC.delegate = self
         editProfileVC.hidesBottomBarWhenPushed = true
@@ -345,7 +375,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     }
     
     private func getUserPreferences() {
-        user?.prompts.forEach { prompt in
+        user.prompts.forEach { prompt in
             switch prompt.questionName {
             case .hometown:
                 hometown = prompt.answer
@@ -416,16 +446,15 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     func updateDriverProfile() {
         getUserPreferences()
-        guard let driver = user,
-              let imageURL = driver.profilePicUrl,
-              let pronouns = driver.pronouns,
-              let grade = driver.grade,
+        guard let imageURL = user.profilePicUrl,
+              let pronouns = user.pronouns,
+              let grade = user.grade,
               let hometown = self.hometown else { return }
     
         profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.emptyImage)
-        nameLabel.text = "\(driver.firstName) \(driver.lastName)"
+        nameLabel.text = "\(user.firstName) \(user.lastName)"
         subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
-        phoneLabel.text = user?.phoneNumber
+        phoneLabel.text = user.phoneNumber
         talkativeSlider.value = self.talkative ?? 0.5
         musicSlider.value = self.music ?? 0.5
         songSection.label.attributedText = self.makeBoldNormalText(bold: "Song / ", normal: self.song ?? "")
