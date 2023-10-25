@@ -658,19 +658,32 @@ class EditProfileViewController: UIViewController {
     }
 
     @objc private func saveEdit() {
-        let name = nameTextField.getText()?.split(separator: " ")
-        let firstName = String(name?[0] ?? "")
-        let lastName = String(name?[1...].joined(separator: " ") ?? "")
-        let grade = classTextField.getText()
-        let pronouns = pronounsTextField.getText()
-        let phoneNumber = phoneNumTextField.getText()
+        guard let name = nameTextField.getText(), !name.isEmpty,
+              let grade = classTextField.getText(), !grade.isEmpty,
+              let pronouns = pronounsTextField.getText(), !pronouns.isEmpty,
+              let hometown = hometownTextField.getText(), !hometown.isEmpty,
+              let snack = snackTextField.getText(), !snack.isEmpty,
+              let song = songTextField.getText(), !song.isEmpty,
+              let stop = stopTextField.getText(), !stop.isEmpty else {
+                  print("Error: Please complete all fields")
+                  return
+              }
 
-        hometown = hometownTextField.getText()
+        let phoneNumber = phoneNumTextField.getText()
         talkative = talkativeSlider.value
         music = musicSlider.value
-        snack = snackTextField.getText()
-        song = songTextField.getText()
-        stop = stopTextField.getText()
+        self.hometown = hometown
+        self.snack = snack
+        self.song = song
+        self.stop = stop
+
+        guard let nameArray = nameTextField.getText()?.split(separator: " "), nameArray.count == 2 else {
+            print("Error: Name field does not contain first and last name")
+            return
+        }
+
+        let firstName = String(nameArray[0])
+        let lastName = String(nameArray[1])
 
         updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: getUserAnswers())
 
