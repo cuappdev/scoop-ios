@@ -110,13 +110,9 @@ class NetworkManager {
             "phone_number": phone_number,
             "pronouns": pronouns,
             "profile_pic_base64": prof_pic,
-            "prompts": prompts.map({ prompt -> [String: Any] in
-                    return [
-                        "id": prompt.id,
-                        "answer": prompt.answer
-                    ]
-            })
+            "prompts": prompts.map({ return ["id": $0.id, "answer": $0.answer] as [String : Any] })
         ]
+
         AF.request("\(hostEndpoint)/api/me/", method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
             case .success:

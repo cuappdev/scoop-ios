@@ -763,9 +763,7 @@ class EditProfileViewController: UIViewController {
             pronouns: pronouns ?? "",
             prof_pic: user?.profilePicUrl ?? "",
             prompts: prompts
-        ) { [weak self] result in
-            guard let self = self else { return }
-
+        ) { result in
             switch result {
             case .success(let user):
                 print("Deleted user \(user.firstName) \(user.lastName)")
