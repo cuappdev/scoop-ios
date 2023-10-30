@@ -74,13 +74,15 @@ class NotificationsViewController: UIViewController {
     }
 
     private func setupEmptyStateView() {
-        emptyStateView.setup(image: UIImage.notifIcon!,
-                             title: "No new notifications",
-                             subtitle: "You’re all caught up at the moment!")
+        emptyStateView.setup(
+            image: UIImage.notifIcon!,
+            title: "No new notifications",
+            subtitle: "You’re all caught up at the moment!"
+        )
         view.addSubview(emptyStateView)
 
         emptyStateView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     
