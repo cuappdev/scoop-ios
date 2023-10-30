@@ -12,6 +12,7 @@ class EmptyStateView: UIView {
 
     // MARK: - Views
 
+    private let mainView = UIView()
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
     private let subLabel = UILabel()
@@ -23,19 +24,29 @@ class EmptyStateView: UIView {
         titleLabel.text = title
         subLabel.text = subtitle
 
+        setupMainView()
         setupImageView()
         setupTitleLabel()
         setupSubLabel()
     }
 
+    private func setupMainView() {
+        addSubview(mainView)
+
+        mainView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-64)
+        }
+    }
+
     private func setupImageView() {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
-        addSubview(imageView)
+        mainView.addSubview(imageView)
 
         imageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(340)
+            make.top.equalToSuperview()
             make.width.height.equalTo(50)
         }
     }
@@ -43,7 +54,7 @@ class EmptyStateView: UIView {
     private func setupTitleLabel() {
         titleLabel.font = UIFont.bodySemibold
         titleLabel.textColor = UIColor.black
-        addSubview(titleLabel)
+        mainView.addSubview(titleLabel)
 
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -54,7 +65,7 @@ class EmptyStateView: UIView {
     private func setupSubLabel() {
         subLabel.font = UIFont.bodyNormal
         subLabel.textColor = UIColor.secondaryLabel
-        addSubview(subLabel)
+        mainView.addSubview(subLabel)
 
         subLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
