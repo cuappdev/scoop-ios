@@ -100,6 +100,39 @@ class NetworkManager {
                 }
             }
         }
+
+    func deleteUser(
+        netid: String,
+        first_name: String,
+        last_name: String,
+        grade: String,
+        phone_number: String,
+        pronouns: String,
+        prof_pic: String,
+        prompts: [UserAnswer],
+        completion: @escaping (Result<BaseUser, Error>) -> Void
+    ) {
+        let parameters: [String: Any] = [
+            "netid": netid,
+            "first_name": first_name,
+            "last_name": last_name,
+            "grade": grade,
+            "phone_number": phone_number,
+            "pronouns": pronouns,
+            "profile_pic_base64": prof_pic,
+            "prompts": prompts.map({ return ["id": $0.id, "answer": $0.answer] as [String : Any] })
+        ]
+
+        AF.request("\(hostEndpoint)/api/me/", method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success:
+                print("Request deleteUser Success")
+            case .failure(let error):
+                completion(.failure(error))
+                print("Request deleteUser Failed: \(error.localizedDescription)")
+            }
+        }
+    }
     
     func getUser(completion: @escaping (Result<BaseUser, Error>) -> Void) {
         AF.request("\(hostEndpoint)/api/me/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
@@ -107,6 +140,7 @@ class NetworkManager {
             case .success(let data):
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+
                 do {
                     let user = try jsonDecoder.decode(BaseUser.self, from: data)
                     completion(.success(user))

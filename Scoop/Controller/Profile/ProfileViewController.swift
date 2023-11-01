@@ -70,7 +70,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         setupProfileImageView()
         setupProfileStackView()
         isBeingPresented ? updateDriverProfile() : updateUserProfile()
-        !isBeingPresented ? setupActionsButton() : setupEditButton()
+        isBeingPresented ? setupActionsButton() : setupEditButton()
     }
     
     // MARK: - Setup View Functions

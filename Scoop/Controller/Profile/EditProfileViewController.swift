@@ -323,7 +323,7 @@ class EditProfileViewController: UIViewController {
         emailButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         emailButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         preferredContactStackView.addArrangedSubview(emailButton)
-                
+
         emailButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(8)
         }
@@ -338,7 +338,7 @@ class EditProfileViewController: UIViewController {
         phoneButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         phoneButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         preferredContactStackView.addArrangedSubview(phoneButton)
-                
+
         phoneButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(8)
         }
@@ -564,6 +564,8 @@ class EditProfileViewController: UIViewController {
         deleteButton.layer.cornerRadius = Constants.buttonCornerRadius
         mainStackView.addArrangedSubview(deleteButton)
 
+        deleteButton.addTarget(self, action: #selector(deleteAccount), for: .touchUpInside)
+
         deleteButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(40)
             make.height.equalTo(50)
@@ -636,12 +638,42 @@ class EditProfileViewController: UIViewController {
     
     // MARK: - Helper Functions
 
+    @objc private func deleteAccount() {
+        deleteUserRequest(
+            firstName: user?.firstName ?? "",
+            lastName: user?.lastName ?? "",
+            grade: user?.grade,
+            phoneNumber: user?.phoneNumber,
+            pronouns: user?.pronouns,
+            prompts: getUserAnswers()
+        )
+
+        let loginVC = LoginViewController()
+        loginVC.navigationItem.hidesBackButton = true
+        navigationController?.pushViewController(loginVC, animated: false)
+    }
+
     @objc private func cancelEdit() {
         self.navigationController?.popViewController(animated: true)
     }
 
     @objc private func saveEdit() {
-        updateUser()
+        let name = nameTextField.getText()?.split(separator: " ")
+        let firstName = String(name?[0] ?? "")
+        let lastName = String(name?[1...].joined(separator: " ") ?? "")
+        let grade = classTextField.getText()
+        let pronouns = pronounsTextField.getText()
+        let phoneNumber = phoneNumTextField.getText()
+
+        hometown = hometownTextField.getText()
+        talkative = talkativeSlider.value
+        music = musicSlider.value
+        snack = snackTextField.getText()
+        song = songTextField.getText()
+        stop = stopTextField.getText()
+
+        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: getUserAnswers())
+
         self.navigationController?.popViewController(animated: true)
     }
 
@@ -654,28 +686,14 @@ class EditProfileViewController: UIViewController {
         pan.cancelsTouchesInView = false
         view.addGestureRecognizer(pan)
     }
-    
+
     @objc private func updateProfileImage(_ sender: UITapGestureRecognizer) {
         present(imagePicker, animated: true)
     }
-    
-    private func updateUser() {
-        let name = nameTextField.getText()?.split(separator: " ")
-        let firstName = String(name?[0] ?? "")
-        let lastName = String(name?[1...].joined(separator: " ") ?? "")
-        let grade = classTextField.getText()
-        let pronouns = pronounsTextField.getText()
-        let phoneNumber = phoneNumTextField.getText()
-        
-        hometown = hometownTextField.getText()
-        talkative = talkativeSlider.value
-        music = musicSlider.value
-        snack = snackTextField.getText()
-        song = songTextField.getText()
-        stop = stopTextField.getText()
-        
+
+    private func getUserAnswers() -> [UserAnswer] {
         var userAnswers: [UserAnswer] = []
-                
+
         user?.prompts.forEach { prompt in
             switch prompt.questionName {
             case .hometown:
@@ -693,7 +711,7 @@ class EditProfileViewController: UIViewController {
             }
         }
 
-        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: userAnswers)
+        return userAnswers
     }
 
     // MARK: - Requests
@@ -727,17 +745,45 @@ class EditProfileViewController: UIViewController {
             }
         }
     }
-    
+
+    private func deleteUserRequest(
+        firstName: String,
+        lastName: String,
+        grade: String?,
+        phoneNumber: String?,
+        pronouns: String?,
+        prompts: [UserAnswer]
+    ) {
+        NetworkManager.shared.deleteUser(
+            netid: user?.netid ?? "",
+            first_name: firstName,
+            last_name: lastName,
+            grade: grade ?? "",
+            phone_number: phoneNumber ?? "",
+            pronouns: pronouns ?? "",
+            prof_pic: user?.profilePicUrl ?? "",
+            prompts: prompts
+        ) { result in
+            switch result {
+            case .success(let user):
+                print("Deleted user \(user.firstName) \(user.lastName)")
+            case .failure(let error):
+                print("Error in EditProfileViewController: \(error.localizedDescription)")
+            }
+        }
+    }
+
 }
+
 
 // MARK: - UITextFieldDelegate
 
 extension EditProfileViewController: UITextFieldDelegate {
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return !(textField == classTextField || textField == pronounsTextField)
     }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if let onboardingTextField = textField as? OnboardingTextField,
            let associatedView = onboardingTextField.associatedView as? LabeledTextField {
@@ -745,7 +791,7 @@ extension EditProfileViewController: UITextFieldDelegate {
             associatedView.hidesLabel(isHidden: false)
         }
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let onboardingTextField = textField as? OnboardingTextField,
            let associatedView = onboardingTextField.associatedView as? LabeledTextField {
@@ -755,27 +801,27 @@ extension EditProfileViewController: UITextFieldDelegate {
             }
         }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
     }
-    
+
 }
 
 // MARK: - UIPickerViewDelegate
 
 extension EditProfileViewController: UIPickerViewDelegate {
-    
+
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == pronounsPicker {
             return pronouns[row]
         } else if pickerView == classPicker {
             return years[row]
         }
-        
+
         return nil
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == pronounsPicker {
             pronounsTextField.textField.text = pronouns[row]
@@ -783,27 +829,27 @@ extension EditProfileViewController: UIPickerViewDelegate {
             classTextField.textField.text = years[row]
         }
     }
-    
+
 }
 
 // MARK: - UIPickerViewDataSource
 
 extension EditProfileViewController: UIPickerViewDataSource {
-    
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView == pronounsPicker {
             return pronouns.count
         } else if pickerView == classPicker {
             return years.count
         }
-        
+
         return 0
     }
-    
+
 }
 
 // MARK: - UIImagePickerControllerDelegate

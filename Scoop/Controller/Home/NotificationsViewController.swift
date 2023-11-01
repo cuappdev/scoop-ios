@@ -11,9 +11,10 @@ import UIKit
 class NotificationsViewController: UIViewController {
     
     // MARK: - Views
-    
-    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
+
     private let backButton = UIButton()
+    private let emptyStateView = EmptyStateView()
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     // MARK: - Identifiers
     
@@ -31,8 +32,13 @@ class NotificationsViewController: UIViewController {
         view.backgroundColor = .white
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Sen-Regular", size: 24)!]
         self.navigationItem.title = "Notifications"
-        
+
+        setupEmptyStateView()
         getRequests()
+    }
+
+    override func viewDidLayoutSubviews() {
+        tableView.isHidden = allRequests.isEmpty
     }
     
     // MARK: - Setup View Functions
@@ -64,6 +70,19 @@ class NotificationsViewController: UIViewController {
             make.top.equalToSuperview().inset(50)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+
+    private func setupEmptyStateView() {
+        emptyStateView.setup(
+            image: UIImage.notifIcon!,
+            title: "No new notifications",
+            subtitle: "You’re all caught up at the moment!"
+        )
+        view.addSubview(emptyStateView)
+
+        emptyStateView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     

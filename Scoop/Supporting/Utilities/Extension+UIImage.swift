@@ -14,6 +14,7 @@ extension UIImage {
     static let cancelIcon = UIImage(named: "cancelIcon")
     static let dottedLine = UIImage(named: "dottedline")
     static let emptyImage = UIImage(named: "emptyimage")
+    static let notifIcon = UIImage(named: "notifIcon")
     static let profileButton = UIImage(named: "profilebutton")
     static let setttingsIcon = UIImage(named: "settingsIcon")
     static let sliderThumb = UIImage(named: "SliderThumb")
