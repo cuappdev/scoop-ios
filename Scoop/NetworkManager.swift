@@ -101,7 +101,17 @@ class NetworkManager {
             }
         }
 
-    func deleteUser(netid: String, first_name: String, last_name: String, grade: String, phone_number: String, pronouns: String, prof_pic: String, prompts: [UserAnswer], completion: @escaping (Result<BaseUser, Error>) -> Void) {
+    func deleteUser(
+        netid: String,
+        first_name: String,
+        last_name: String,
+        grade: String,
+        phone_number: String,
+        pronouns: String,
+        prof_pic: String,
+        prompts: [UserAnswer],
+        completion: @escaping (Result<BaseUser, Error>) -> Void
+    ) {
         let parameters: [String: Any] = [
             "netid": netid,
             "first_name": first_name,
