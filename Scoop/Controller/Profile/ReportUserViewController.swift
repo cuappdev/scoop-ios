@@ -17,11 +17,11 @@ class ReportUserViewController: ModalViewController {
     private let responseTextView = LabeledTextView()
     private let titleLabel = UILabel()
 
-    // MARK: User Data
+    // MARK: - User Data
 
     let user: BaseUser
 
-    // MARK: Initializers
+    // MARK: - Initializers
 
     init(user: BaseUser, height: CGFloat) {
         self.user = user
