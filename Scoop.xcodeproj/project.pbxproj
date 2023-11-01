@@ -47,6 +47,7 @@
 		4176A1E9299D2F01008B2BC3 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4176A1E8299D2F01008B2BC3 /* Path.swift */; };
 		8939AD8E2AE016670038B20D /* SFProDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C85C53329E5B6F000A0C387 /* SFProDisplay-Bold.otf */; };
 		8939AD902AE0166C0038B20D /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C85C53229E5B6F000A0C387 /* SFProDisplay-Regular.otf */; };
+		8940F1E72AEDB83A0025D579 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940F1E62AEDB83A0025D579 /* EmptyStateView.swift */; };
 		8941635C2AC4D69900B0CAE9 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */; };
 		89C410F82ACE0DCC005BB8FC /* Extension+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C410F72ACE0DCC005BB8FC /* Extension+UIImage.swift */; };
 		89C410FA2ACF0B6F005BB8FC /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C410F92ACF0B6F005BB8FC /* Extension+UIFont.swift */; };
@@ -142,6 +143,7 @@
 		410D78BF29B8166D0007E434 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		4176A1E8299D2F01008B2BC3 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		8940F1E62AEDB83A0025D579 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyStateView.swift; path = Scoop/View/EmptyStateView.swift; sourceTree = SOURCE_ROOT; };
 		8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		89C410F72ACE0DCC005BB8FC /* Extension+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImage.swift"; sourceTree = "<group>"; };
 		89C410F92ACF0B6F005BB8FC /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 			children = (
 				C8A544BC27D18D0200132ACC /* HomeViewController.swift */,
 				410D78BF29B8166D0007E434 /* NotificationsViewController.swift */,
+				8940F1E62AEDB83A0025D579 /* EmptyStateView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				2C85C53929E5B85300A0C387 /* Request.swift in Sources */,
 				2C3294842AD7351800F6B1B4 /* PickerOptions.swift in Sources */,
 				C8EF10CE27E50BFA00642B40 /* OnboardingViewController.swift in Sources */,
+				8940F1E72AEDB83A0025D579 /* EmptyStateView.swift in Sources */,
 				2C991EBC28E0B2E7006301D9 /* DepartureSearchViewController.swift in Sources */,
 				C8CB5E8E28182CC3007FB8A8 /* HomeTableViewHeader.swift in Sources */,
 				C8EF10CA27E2CEE400642B40 /* PreferencesViewController.swift in Sources */,
