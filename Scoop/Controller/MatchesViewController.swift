@@ -206,9 +206,9 @@ class MatchesViewController: UIViewController {
         let buttonWidth = 130
         
         [studentDriverButton, sharedTaxiButton].forEach { button in
-            button.setTitleColor(.offBlack, for: .normal)
+            button.setTitleColor(UIColor.scooped.offBlack, for: .normal)
             button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
-            button.backgroundColor = .disabledGreen
+            button.backgroundColor = UIColor.scooped.disabledGreen
             button.layer.cornerRadius = 16
         }
         
@@ -268,7 +268,7 @@ class MatchesViewController: UIViewController {
     private func setupSecondLabel() {
         secondLabel.text = "We're all scooped out at the moment"
         secondLabel.font = .systemFont(ofSize: 16, weight: .regular)
-        secondLabel.textColor = .labelGray
+        secondLabel.textColor = UIColor.scooped.labelGray
         secondLabel.textAlignment = .center
         view.addSubview(secondLabel)
         
@@ -309,17 +309,17 @@ class MatchesViewController: UIViewController {
     
     @objc private func studentDriverClicked() {
         studentDriverButton.isSelected.toggle()
-        studentDriverButton.setTitleColor(studentDriverButton.isSelected ? .white : .offBlack, for: .normal)
-        studentDriverButton.backgroundColor = studentDriverButton.isSelected ? .scoopDarkGreen : .disabledGreen
-        studentDriverButton.layer.borderColor = studentDriverButton.isSelected ? UIColor.scoopDarkGreen.cgColor : UIColor.offBlack.cgColor
+        studentDriverButton.setTitleColor(studentDriverButton.isSelected ? .white : UIColor.scooped.offBlack, for: .normal)
+        studentDriverButton.backgroundColor = studentDriverButton.isSelected ? UIColor.scooped.scoopDarkGreen : UIColor.scooped.disabledGreen
+        studentDriverButton.layer.borderColor = studentDriverButton.isSelected ? UIColor.scooped.scoopDarkGreen.cgColor : UIColor.scooped.offBlack.cgColor
         filterRides()
     }
     
     @objc private func sharedTaxiClicked() {
         sharedTaxiButton.isSelected.toggle()
-        sharedTaxiButton.setTitleColor(sharedTaxiButton.isSelected ? .white : .offBlack, for: .normal)
-        sharedTaxiButton.backgroundColor = sharedTaxiButton.isSelected ? .scoopDarkGreen : .disabledGreen
-        sharedTaxiButton.layer.borderColor = sharedTaxiButton.isSelected ? UIColor.scoopDarkGreen.cgColor : UIColor.offBlack.cgColor
+        sharedTaxiButton.setTitleColor(sharedTaxiButton.isSelected ? .white : UIColor.scooped.offBlack, for: .normal)
+        sharedTaxiButton.backgroundColor = sharedTaxiButton.isSelected ? UIColor.scooped.scoopDarkGreen : UIColor.scooped.disabledGreen
+        sharedTaxiButton.layer.borderColor = sharedTaxiButton.isSelected ? UIColor.scooped.scoopDarkGreen.cgColor : UIColor.scooped.offBlack.cgColor
         filterRides()
     }
 

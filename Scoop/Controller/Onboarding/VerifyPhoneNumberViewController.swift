@@ -81,7 +81,7 @@ class VerifyPhoneNumberViewController: UIViewController {
     
     private func setupButtons() {
         noCodeButton.setTitle("Didn't recieve a code?", for: .normal)
-        noCodeButton.setTitleColor(.scoopDarkGreen, for: .normal)
+        noCodeButton.setTitleColor(UIColor.scooped.scoopDarkGreen, for: .normal)
         noCodeButton.addTarget(self, action: #selector(resendOptions), for: .touchUpInside)
         view.addSubview(noCodeButton)
         
@@ -92,7 +92,7 @@ class VerifyPhoneNumberViewController: UIViewController {
         
         verifyButton.setTitle("Verify", for: .normal)
         verifyButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        verifyButton.backgroundColor = .scoopDarkGreen
+        verifyButton.backgroundColor = UIColor.scooped.scoopDarkGreen
         verifyButton.setTitleColor(.white, for: .normal)
         verifyButton.layer.cornerRadius = 28
         verifyButton.addTarget(self, action: #selector(verifyWithCode), for: .touchUpInside)
@@ -114,7 +114,7 @@ class VerifyPhoneNumberViewController: UIViewController {
     
     private func setupTextFields() {
         codeTextField.layer.cornerRadius = 4
-        codeTextField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+        codeTextField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
         codeTextField.layer.borderWidth = 1
         codeTextField.delegate = self
         codeTextField.textAlignment = .center
@@ -160,7 +160,7 @@ class VerifyPhoneNumberViewController: UIViewController {
         
         alertVC.addAction(closeAction)
         alertVC.addAction(resendAction)
-        alertVC.view.tintColor = .scoopDarkGreen
+        alertVC.view.tintColor = UIColor.scooped.scoopDarkGreen
         self.present(alertVC, animated: true)
     }
     
@@ -186,7 +186,7 @@ class VerifyPhoneNumberViewController: UIViewController {
             }
             
             alertVC.addAction(okAction)
-            alertVC.view.tintColor = .scoopDarkGreen
+            alertVC.view.tintColor = UIColor.scooped.scoopDarkGreen
             self.present(alertVC, animated: true)
         }
     }

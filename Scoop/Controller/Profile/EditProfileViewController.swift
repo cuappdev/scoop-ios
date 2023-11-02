@@ -208,7 +208,7 @@ class EditProfileViewController: UIViewController {
         
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
-        profileImageView.layer.borderColor = UIColor.scoopGreen.cgColor
+        profileImageView.layer.borderColor = UIColor.scooped.scoopGreen.cgColor
         profileImageView.layer.borderWidth = 3
         imageView.addSubview(profileImageView)
         
@@ -560,7 +560,7 @@ class EditProfileViewController: UIViewController {
         deleteButton.setTitle("Delete account", for: .normal)
         deleteButton.setTitleColor(UIColor.white, for: .normal)
         deleteButton.titleLabel?.font = UIFont.bodyBold
-        deleteButton.backgroundColor = UIColor.notification
+        deleteButton.backgroundColor = UIColor.scooped.notification
         deleteButton.layer.cornerRadius = Constants.buttonCornerRadius
         mainStackView.addArrangedSubview(deleteButton)
 
@@ -573,7 +573,7 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupGradientView() {
-        gradientLayer.colors = UIColor.whiteGradientColors
+        gradientLayer.colors = UIColor.scooped.whiteGradientColors
         gradientView.isUserInteractionEnabled = false
         gradientView.layer.insertSublayer(gradientLayer, at: 1)
         view.addSubview(gradientView)
@@ -586,7 +586,7 @@ class EditProfileViewController: UIViewController {
     
     private func setupCancelButton() {
         cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.setTitleColor(UIColor.darkerGreen, for: .normal)
+        cancelButton.setTitleColor(UIColor.scooped.darkerGreen, for: .normal)
         cancelButton.titleLabel?.font = UIFont.bodySemibold
         cancelButton.backgroundColor = UIColor.white
         cancelButton.layer.borderColor = UIColor.systemGray2.cgColor
@@ -606,9 +606,9 @@ class EditProfileViewController: UIViewController {
     
     private func setupSaveButton() {
         saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(UIColor.offBlack, for: .normal)
+        saveButton.setTitleColor(UIColor.scooped.offBlack, for: .normal)
         saveButton.titleLabel?.font = UIFont.bodyBold
-        saveButton.backgroundColor = UIColor.secondaryGreen
+        saveButton.backgroundColor = UIColor.scooped.secondaryGreen
         saveButton.layer.cornerRadius = Constants.buttonCornerRadius
         view.addSubview(saveButton)
 

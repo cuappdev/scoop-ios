@@ -345,7 +345,7 @@ class TripDetailsViewController: UIViewController {
     private func setUpButton() {
         requestButton.setTitle("Request to Join", for: .normal)
         requestButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        requestButton.backgroundColor = UIColor.scoopGreen
+        requestButton.backgroundColor = UIColor.scooped.scoopGreen
         requestButton.layer.cornerRadius = 25
         requestButton.addTarget(self, action: #selector(requestRide), for: .touchUpInside)
         view.addSubview(requestButton)
@@ -377,7 +377,7 @@ class TripDetailsViewController: UIViewController {
             
             alertVC.addAction(closeAction)
             alertVC.addAction(viewAction)
-            alertVC.view.tintColor = .scoopDarkGreen
+            alertVC.view.tintColor = UIColor.scooped.scoopDarkGreen
             strongSelf.present(alertVC, animated: true)
         }
     }

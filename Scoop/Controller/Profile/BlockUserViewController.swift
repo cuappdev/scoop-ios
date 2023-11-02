@@ -183,7 +183,7 @@ class BlockUserViewController: ModalViewController {
         }
 
         blockButton.setTitle("Block", for: .normal)
-        blockButton.backgroundColor = .secondaryGreen
+        blockButton.backgroundColor = UIColor.scooped.secondaryGreen
         blockButton.addTarget(self, action: #selector(blockUser), for: .touchUpInside)
 
         blockButton.snp.makeConstraints { make in

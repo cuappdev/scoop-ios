@@ -46,7 +46,7 @@ class LoginViewController: UIViewController {
     private func setupGreenSignInButton() {
         greenSignInButton.setTitle("Login with NetID", for: .normal)
         greenSignInButton.setTitleColor(.white, for: .normal)
-        greenSignInButton.backgroundColor = .scoopDarkGreen
+        greenSignInButton.backgroundColor = UIColor.scooped.scoopDarkGreen
         greenSignInButton.layer.cornerRadius = 25
         greenSignInButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
         view.addSubview(greenSignInButton)

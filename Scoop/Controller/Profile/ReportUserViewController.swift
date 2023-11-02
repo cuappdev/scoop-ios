@@ -109,7 +109,7 @@ class ReportUserViewController: ModalViewController {
         }
 
         reportButton.setTitle("Report", for: .normal)
-        reportButton.backgroundColor = .secondaryGreen
+        reportButton.backgroundColor = UIColor.scooped.secondaryGreen
         reportButton.addTarget(self, action: #selector(reportUser), for: .touchUpInside)
 
         reportButton.snp.makeConstraints { make in

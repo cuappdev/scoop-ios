@@ -147,11 +147,11 @@ class PostRideTripDetailsViewController: PostRideViewController {
     
     private func setupDateView() {
         dateTextField.delegate = self
-        dateTextField.textColor = .offBlack
+        dateTextField.textColor = UIColor.scooped.offBlack
         dateTextField.backgroundColor = .white
         dateTextField.attributedPlaceholder = NSAttributedString(
             string: "Departure date",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.minimumDate = Date()
@@ -178,7 +178,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
         
         requiredLabel.text = "*required"
         requiredLabel.font = UIFont(name: "Roboto", size: 12)
-        requiredLabel.textColor = .offBlack
+        requiredLabel.textColor = UIColor.scooped.offBlack
         view.addSubview(requiredLabel)
         
         requiredLabel.snp.makeConstraints { make in
@@ -189,10 +189,10 @@ class PostRideTripDetailsViewController: PostRideViewController {
     
     private func setupTimeView() {
         timeTextField.delegate = self
-        timeTextField.textColor = .offBlack
+        timeTextField.textColor = UIColor.scooped.offBlack
         timeTextField.attributedPlaceholder = NSAttributedString(
             string: "Departure time",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         timeTextField.inputView = timePicker
         timePicker.datePickerMode = .time
         timePicker.preferredDatePickerStyle = .wheels
@@ -218,10 +218,10 @@ class PostRideTripDetailsViewController: PostRideViewController {
         }
         
         minTextField.delegate = self
-        minTextField.textColor = .offBlack
+        minTextField.textColor = UIColor.scooped.offBlack
         minTextField.attributedPlaceholder = NSAttributedString(
             string: "Minimum",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         minTextField.keyboardType = .numberPad
         travelersContainerView.addSubview(minTextField)
         
@@ -233,10 +233,10 @@ class PostRideTripDetailsViewController: PostRideViewController {
         }
         
         maxTextField.delegate = self
-        maxTextField.textColor = .offBlack
+        maxTextField.textColor = UIColor.scooped.offBlack
         maxTextField.attributedPlaceholder = NSAttributedString(
             string: "Maximum",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         maxTextField.keyboardType = .numberPad
         travelersContainerView.addSubview(maxTextField)
         
@@ -254,7 +254,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
         detailsTextField.textContainerInset = UIEdgeInsets(top: 18.5, left: 16, bottom: 18.5, right: 16)
         detailsTextField.textColor = .black
         detailsTextField.layer.borderWidth = textFieldBorderWidth
-        detailsTextField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+        detailsTextField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
         detailsTextField.layer.cornerRadius = textFieldCornerRadius
         detailsTextField.font = .systemFont(ofSize: 16)
         
@@ -265,7 +265,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
         
         detailsExample.text = "ie. splitting gas, departure time, etc."
         detailsExample.font = UIFont(name: "Roboto", size: 12)
-        detailsExample.textColor = .offBlack
+        detailsExample.textColor = UIColor.scooped.offBlack
         view.addSubview(detailsExample)
         
         detailsExample.snp.makeConstraints { make in
@@ -277,7 +277,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
     private func configTextFields() {
         [dateTextField, timeTextField, minTextField, maxTextField].forEach { text in
             text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+            text.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
             text.layer.cornerRadius = textFieldCornerRadius
             text.font = textFieldFont
         }
@@ -288,7 +288,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
         let labelTop = 8
         [dateLabel, timeLabel, minLabel, maxLabel, detailsLabel].forEach { label in
             label.font = .systemFont(ofSize: 12)
-            label.textColor = .scoopDarkGreen
+            label.textColor = UIColor.scooped.scoopDarkGreen
             label.backgroundColor = .white
             label.textAlignment = .center
             label.isHidden = true
@@ -389,34 +389,34 @@ extension PostRideTripDetailsViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 2
-        textField.layer.borderColor = UIColor.scoopDarkGreen.cgColor
+        textField.layer.borderColor = UIColor.scooped.scoopDarkGreen.cgColor
         textField.placeholder = ""
         if textField == dateTextField {
-            dateLabel.textColor = .scoopDarkGreen
+            dateLabel.textColor = UIColor.scooped.scoopDarkGreen
             dateLabel.isHidden = false
         } else if textField == timeTextField {
-            timeLabel.textColor = .scoopDarkGreen
+            timeLabel.textColor = UIColor.scooped.scoopDarkGreen
             timeLabel.isHidden = false
         } else if textField == maxTextField {
-            maxLabel.textColor = .scoopDarkGreen
+            maxLabel.textColor = UIColor.scooped.scoopDarkGreen
             maxLabel.isHidden = false
         } else {
-            minLabel.textColor = .scoopDarkGreen
+            minLabel.textColor = UIColor.scooped.scoopDarkGreen
             minLabel.isHidden = false
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+        textField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
         if textField == dateTextField {
-            dateLabel.textColor = .textFieldBorderColor
+            dateLabel.textColor = UIColor.scooped.textFieldBorderColor
         } else if textField == timeTextField {
-            timeLabel.textColor = .textFieldBorderColor
+            timeLabel.textColor = UIColor.scooped.textFieldBorderColor
         } else if textField == maxTextField {
-            maxLabel.textColor = .textFieldBorderColor
+            maxLabel.textColor = UIColor.scooped.textFieldBorderColor
         } else {
-            minLabel.textColor = .textFieldBorderColor
+            minLabel.textColor = UIColor.scooped.textFieldBorderColor
         }
     }
     
@@ -429,11 +429,11 @@ extension PostRideTripDetailsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.black {
                 textView.text = nil
-                textView.textColor = UIColor.offBlack
+                textView.textColor = UIColor.scooped.offBlack
             }
         textView.layer.borderWidth = 2
-        textView.layer.borderColor = UIColor.scoopDarkGreen.cgColor
-        detailsLabel.textColor = .scoopDarkGreen
+        textView.layer.borderColor = UIColor.scooped.scoopDarkGreen.cgColor
+        detailsLabel.textColor = UIColor.scooped.scoopDarkGreen
         detailsLabel.isHidden = false
         
         textView.snp.removeConstraints()
@@ -445,8 +445,8 @@ extension PostRideTripDetailsViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.textFieldBorderColor.cgColor
-        detailsLabel.textColor = .textFieldBorderColor
+        textView.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
+        detailsLabel.textColor = UIColor.scooped.textFieldBorderColor
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {

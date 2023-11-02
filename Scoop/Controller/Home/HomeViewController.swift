@@ -188,7 +188,7 @@ class HomeViewController: UIViewController {
     private func setupSecondLabel() {
         secondLabel.text = "Find other travelers by posting a trip or searching for an existing trip"
         secondLabel.font = .systemFont(ofSize: 16, weight: .regular)
-        secondLabel.textColor = .labelGray
+        secondLabel.textColor = UIColor.scooped.labelGray
         secondLabel.numberOfLines = 0
         secondLabel.lineBreakMode = .byWordWrapping
         secondLabel.textAlignment = .center
@@ -205,7 +205,7 @@ class HomeViewController: UIViewController {
         widePostRideButton.setAttributedTitle(NSMutableAttributedString(string: "Post trip", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16)]), for: .normal)
         widePostRideButton.setTitleColor(.white, for: .normal)
         widePostRideButton.layer.cornerRadius = 25
-        widePostRideButton.backgroundColor = .scoopDarkGreen
+        widePostRideButton.backgroundColor = UIColor.scooped.scoopDarkGreen
         view.addSubview(widePostRideButton)
         
         widePostRideButton.snp.makeConstraints { make in
@@ -222,7 +222,7 @@ class HomeViewController: UIViewController {
         let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
         searchButton.attributedText = NSAttributedString(string: "Search for trips", attributes: underlineAttribute)
         searchButton.font = .systemFont(ofSize: 16, weight: .bold)
-        searchButton.textColor = .scoopDarkGreen
+        searchButton.textColor = UIColor.scooped.scoopDarkGreen
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(launchSearch))
         searchButton.isUserInteractionEnabled = true

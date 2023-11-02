@@ -129,7 +129,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         profileImageView.layer.cornerRadius = 60
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
-        profileImageView.layer.borderColor = UIColor.scoopGreen.cgColor
+        profileImageView.layer.borderColor = UIColor.scooped.scoopGreen.cgColor
         profileImageView.layer.borderWidth = 3
         view.addSubview(profileImageView)
         
@@ -159,7 +159,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         profileStackView.setCustomSpacing(10, after: nameLabel)
         
         subLabel.font = .systemFont(ofSize: 14)
-        subLabel.textColor = .primaryGrey
+        subLabel.textColor = UIColor.scooped.primaryGrey
         subLabel.textAlignment = .center
         subLabel.adjustsFontSizeToFitWidth = true
         profileStackView.addArrangedSubview(subLabel)
@@ -349,7 +349,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     @objc private func presentActionOptions() {
         let alert = UIAlertController(title: "Actions", message: nil, preferredStyle: .actionSheet)
-        alert.view.tintColor = .scoopDarkGreen
+        alert.view.tintColor = UIColor.scooped.scoopDarkGreen
 
         alert.addAction(UIAlertAction(title: "Report user", style: .default, handler: { [self] _ in
             let reportVC = ReportUserViewController(user: user, height: view.frame.height * 7 / 8)

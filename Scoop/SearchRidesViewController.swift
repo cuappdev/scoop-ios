@@ -99,29 +99,29 @@ class SearchRidesViewController: UIViewController {
         let textFieldCornerRadius = 4.0
         let textFieldHeight = 56
         
-        departureTextField.textField.textColor = .offBlack
+        departureTextField.textField.textColor = UIColor.scooped.offBlack
         departureTextField.textField.delegate = self
         departureTextField.textField.attributedPlaceholder = NSAttributedString(
             string: "Departure location",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         departureTextField.textField.addTarget(self, action: #selector(presentDepartureSearch), for: .touchDown)
         departureTextField.imageView.image = UIImage(named: "locationIcon")
         stackView.addArrangedSubview(departureTextField)
         
-        arrivalTextField.textField.textColor = .offBlack
+        arrivalTextField.textField.textColor = UIColor.scooped.offBlack
         arrivalTextField.textField.delegate = self
         arrivalTextField.textField.attributedPlaceholder = NSAttributedString(
             string: "Arrival location",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         arrivalTextField.textField.addTarget(self, action: #selector(presentArrivalSearch), for: .touchDown)
         arrivalTextField.imageView.image = UIImage(named: "destinationIcon")
         stackView.addArrangedSubview(arrivalTextField)
         
-        departureDateTextField.textColor = .offBlack
+        departureDateTextField.textColor = UIColor.scooped.offBlack
         departureDateTextField.delegate = self
         departureDateTextField.attributedPlaceholder = NSAttributedString(
             string: "Departure date",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         departureDateTextField.inputView = datePicker
         departureDateTextField.addTarget(self, action: #selector(updateDate), for: .touchDown)
         departureDateTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingDidEnd)
@@ -143,7 +143,7 @@ class SearchRidesViewController: UIViewController {
         
         [departureTextField, arrivalTextField, departureDateTextField].forEach { text in
             text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+            text.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
             text.layer.cornerRadius = textFieldCornerRadius
             text.snp.makeConstraints { make in
                 make.leading.trailing.equalToSuperview()
@@ -158,8 +158,8 @@ class SearchRidesViewController: UIViewController {
         findTripsButton.backgroundColor = .black
         findTripsButton.layer.cornerRadius = 25
         findTripsButton.addTarget(self, action: #selector(presentMatches), for: .touchUpInside)
-        findTripsButton.backgroundColor = .disabledGreen
-        findTripsButton.setTitleColor(.disabledGrey, for: .normal)
+        findTripsButton.backgroundColor = UIColor.scooped.disabledGreen
+        findTripsButton.setTitleColor(UIColor.scooped.disabledGrey, for: .normal)
         view.addSubview(findTripsButton)
                 
         findTripsButton.snp.makeConstraints { make in
@@ -176,7 +176,7 @@ class SearchRidesViewController: UIViewController {
         
         [departureLabel, arrivalLabel, departureDateLabel].forEach { label in
             label.font = .systemFont(ofSize: 12)
-            label.textColor = .textFieldBorderColor
+            label.textColor = UIColor.scooped.textFieldBorderColor
             label.backgroundColor = .white
             label.textAlignment = .center
             label.isHidden = true
@@ -233,7 +233,7 @@ class SearchRidesViewController: UIViewController {
     
     @objc private func presentMatches() {
         findTripsButton.isEnabled = false
-        findTripsButton.backgroundColor = .disabledGreen
+        findTripsButton.backgroundColor = UIColor.scooped.disabledGreen
         guard let departure = self.departureTextField.textField.text, !departure.isEmpty,
               let arrival = self.arrivalTextField.textField.text, !arrival.isEmpty,
               let departureID = departurePlace?.placeID,
@@ -252,7 +252,7 @@ class SearchRidesViewController: UIViewController {
                 matchesVC.hidesBottomBarWhenPushed = true
                 strongSelf.navigationController?.pushViewController(matchesVC, animated: true)
                 strongSelf.findTripsButton.isEnabled = true
-                strongSelf.findTripsButton.backgroundColor = .scoopDarkGreen
+                strongSelf.findTripsButton.backgroundColor = UIColor.scooped.scoopDarkGreen
             case .failure(let error):
                 print("Error in SearchRidesVC: \(error)")
             }
@@ -266,10 +266,10 @@ class SearchRidesViewController: UIViewController {
               !text2.isEmpty,
               let text3 = departureDateTextField.text,
               !text3.isEmpty else {
-            findTripsButton.backgroundColor = .disabledGreen
+            findTripsButton.backgroundColor = UIColor.scooped.disabledGreen
             return
         }
-        findTripsButton.backgroundColor = .scoopDarkGreen
+        findTripsButton.backgroundColor = UIColor.scooped.scoopDarkGreen
         findTripsButton.setTitleColor(.white, for: .normal)
     }
 
