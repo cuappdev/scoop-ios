@@ -13,7 +13,6 @@ extension UIColor {
     static let scooped = Scooped()
 
     struct Scooped {
-
         let borderColor = UIColor(red: 148/255, green: 148/255, blue: 148/255, alpha: 1)
         let darkerGreen = UIColor(red: 0, green: 0.42, blue: 0.33, alpha: 1)
         let disabledGreen = UIColor(red: 219/255, green: 229/255, blue: 223/255, alpha: 1)

@@ -52,7 +52,7 @@ class EmptyStateView: UIView {
     }
 
     private func setupTitleLabel() {
-        titleLabel.font = UIFont.bodySemibold
+        titleLabel.font = UIFont.scooped.bodySemibold
         titleLabel.textColor = UIColor.black
         mainView.addSubview(titleLabel)
 
@@ -63,7 +63,7 @@ class EmptyStateView: UIView {
     }
 
     private func setupSubLabel() {
-        subLabel.font = UIFont.bodyNormal
+        subLabel.font = UIFont.scooped.bodyNormal
         subLabel.textColor = UIColor.secondaryLabel
         mainView.addSubview(subLabel)
 
