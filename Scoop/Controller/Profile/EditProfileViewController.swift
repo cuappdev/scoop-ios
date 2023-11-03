@@ -119,7 +119,7 @@ class EditProfileViewController: UIViewController {
         if let profilePicUrl = user.profilePicUrl {
             profileImageView.sd_setImage(with: URL(string: profilePicUrl))
         } else {
-            profileImageView.image = UIImage.emptyImage
+            profileImageView.image = UIImage.scooped.emptyImage
         }
         
         nameTextField.setText(str: "\(user.firstName) \(user.lastName)")
@@ -145,7 +145,7 @@ class EditProfileViewController: UIViewController {
         let solidLineVerticalInset = -12.75
         let solidLineMultiplier = 0.32
         let screenSize = UIScreen.main.bounds
-        let dottedline = UIImageView(image: UIImage.dottedLine)
+        let dottedline = UIImageView(image: UIImage.scooped.dottedLine)
         let solidline = UIView()
         
         dottedline.contentMode = .scaleAspectFit
@@ -218,7 +218,7 @@ class EditProfileViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
-        uploadPhotoButton.setImage(UIImage.profileButton, for: .normal)
+        uploadPhotoButton.setImage(UIImage.scooped.profileButton, for: .normal)
         uploadPhotoButton.backgroundColor = UIColor.gray
         uploadPhotoButton.contentMode = .scaleAspectFill
         uploadPhotoButton.clipsToBounds = true
@@ -448,14 +448,14 @@ class EditProfileViewController: UIViewController {
         
         talkativeSlider.minimumTrackTintColor = UIColor.black
         talkativeSlider.maximumTrackTintColor = UIColor.black
-        talkativeSlider.setThumbImage(UIImage.sliderThumb, for: .normal)
+        talkativeSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
         preferencesStackView.addArrangedSubview(talkativeSlider)
 
         talkativeSlider.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(leadingInset)
         }
         
-        talkativeTicks.setImage(UIImage.sliderTicks, for: .normal)
+        talkativeTicks.setImage(UIImage.scooped.sliderTicks, for: .normal)
         talkativeSlider.addSubview(talkativeTicks)
         talkativeSlider.sendSubviewToBack(talkativeTicks)
         
@@ -502,14 +502,14 @@ class EditProfileViewController: UIViewController {
         
         musicSlider.minimumTrackTintColor = UIColor.black
         musicSlider.maximumTrackTintColor = UIColor.black
-        musicSlider.setThumbImage(UIImage.sliderThumb, for: .normal)
+        musicSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
         preferencesStackView.addArrangedSubview(musicSlider)
         
         musicSlider.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(leadingInset)
         }
         
-        musicTicks.setImage(UIImage.sliderTicks, for: .normal)
+        musicTicks.setImage(UIImage.scooped.sliderTicks, for: .normal)
         musicSlider.addSubview(musicTicks)
         musicSlider.sendSubviewToBack(musicTicks)
         

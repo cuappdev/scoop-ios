@@ -19,9 +19,9 @@ class BlockUserViewController: ModalViewController {
     private let titleLabel = UILabel()
     private let unblockLabel = UILabel()
 
-    private let blockCallImageView = UIImageView(image: .blockCallIcon)
-    private let cancelImageView = UIImageView(image: .cancelIcon)
-    private let settingsImageView = UIImageView(image: .setttingsIcon)
+    private let blockCallImageView = UIImageView(image: UIImage.scooped.blockCallIcon)
+    private let cancelImageView = UIImageView(image: UIImage.scooped.cancelIcon)
+    private let settingsImageView = UIImageView(image: UIImage.scooped.setttingsIcon)
 
     // MARK: - User Data
 

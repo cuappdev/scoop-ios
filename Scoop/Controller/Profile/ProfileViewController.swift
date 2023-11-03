@@ -404,7 +404,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
               let grade = user.grade,
               let hometown = self.hometown else { return }
         
-        profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.emptyImage)
+        profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.scooped.emptyImage)
         nameLabel.text = "\(user.firstName) \(user.lastName)"
         subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
         phoneLabel.text = user.phoneNumber
@@ -429,7 +429,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
                       let grade = user.grade,
                       let hometown = strongSelf.hometown else { return }
                 
-                strongSelf.profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.emptyImage)
+                strongSelf.profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.scooped.emptyImage)
                 strongSelf.nameLabel.text = "\(user.firstName) \(user.lastName)"
                 strongSelf.subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
                 strongSelf.phoneLabel.text = user.phoneNumber
@@ -451,7 +451,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
               let grade = user.grade,
               let hometown = self.hometown else { return }
     
-        profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.emptyImage)
+        profileImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage.scooped.emptyImage)
         nameLabel.text = "\(user.firstName) \(user.lastName)"
         subLabel.text = "\(pronouns) • \(grade) • \(hometown)"
         phoneLabel.text = user.phoneNumber
