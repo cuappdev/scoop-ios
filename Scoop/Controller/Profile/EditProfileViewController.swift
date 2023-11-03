@@ -837,11 +837,6 @@ extension EditProfileViewController: UITextFieldDelegate {
             }
         }
 
-        var fields: [String] = []
-        [classTextField, hometownTextField, nameTextField, phoneNumTextField, pronounsTextField, snackTextField, songTextField, stopTextField].forEach { textField in
-            fields.append(textField.textField.text ?? "")
-        }
-
         setSaveButtonColor(disabled: !textFieldsComplete())
     }
 
