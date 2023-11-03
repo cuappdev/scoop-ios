@@ -11,7 +11,7 @@ import UIKit
 class EditProfileViewController: UIViewController {
     
     // MARK: - Views
-    
+
     private let cancelButton = UIButton()
     private let classTextField = LabeledTextField()
     private let classPicker = UIPickerView()
@@ -704,6 +704,27 @@ class EditProfileViewController: UIViewController {
         present(imagePicker, animated: true)
     }
 
+    private func setSaveButtonColor(disabled: Bool) {
+        saveButton.layer.opacity = disabled ? 0.5 : 1
+    }
+
+    private func textFieldsComplete() -> Bool {
+        var complete = true
+
+        [nameTextField, classTextField, pronounsTextField, hometownTextField, snackTextField, songTextField, stopTextField].forEach { textField in
+            guard let field = textField.getText()?.trimmingCharacters(in: .whitespacesAndNewlines), !field.isEmpty else {
+                complete = false
+                return
+            }
+        }
+
+        guard let name = nameTextField.getText()?.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: " "), name.count == 2 else {
+            return false
+        }
+
+        return complete
+    }
+
     private func getUserAnswers() -> [UserAnswer] {
         var userAnswers: [UserAnswer] = []
 
@@ -806,6 +827,8 @@ extension EditProfileViewController: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+
         if let onboardingTextField = textField as? OnboardingTextField,
            let associatedView = onboardingTextField.associatedView as? LabeledTextField {
             associatedView.labeledTextField(isSelected: false)
@@ -813,6 +836,13 @@ extension EditProfileViewController: UITextFieldDelegate {
                 associatedView.hidesLabel(isHidden: true)
             }
         }
+
+        var fields: [String] = []
+        [classTextField, hometownTextField, nameTextField, phoneNumTextField, pronounsTextField, snackTextField, songTextField, stopTextField].forEach { textField in
+            fields.append(textField.textField.text ?? "")
+        }
+
+        setSaveButtonColor(disabled: !textFieldsComplete())
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
