@@ -13,10 +13,10 @@ extension UIFont {
     static let scooped = Scooped()
 
     struct Scooped {
-        let flowHeader = UIFont(name: "Sen-Regular", size: 24)
         let bodyBold = UIFont.systemFont(ofSize: 16, weight: .bold)
         let bodyNormal = UIFont.systemFont(ofSize: 16)
         let bodySemibold = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        let flowHeader = UIFont(name: "Sen-Regular", size: 24)
         let subheader = UIFont(name: "Rambla-Regular", size: 16)
     }
 
