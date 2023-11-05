@@ -148,14 +148,14 @@ class InitialPostRideViewController: PostRideViewController {
         departureLabel.text = "Departure"
         departureLabel.font = labelFont
         departureLabel.accessibilityLabel = "name"
-        departureLabel.textColor = .offBlack
+        departureLabel.textColor = UIColor.scooped.offBlack
         
         departureTextField.layer.borderWidth = textFieldBorderWidth
-        departureTextField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+        departureTextField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
         departureTextField.layer.cornerRadius = textFieldCornerRadius
         departureTextField.font = textFieldFont
         departureTextField.textColor = .darkGray
-        departureTextField.attributedPlaceholder = NSAttributedString(string:"Departure location", attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+        departureTextField.attributedPlaceholder = NSAttributedString(string:"Departure location", attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         departureTextField.addTarget(self, action: #selector(presentDepartureSearch), for: .touchDown)
         
         // Sets up the icon inside the text field.
@@ -187,14 +187,14 @@ class InitialPostRideViewController: PostRideViewController {
         arrivalLabel.text = "Departure"
         arrivalLabel.font = labelFont
         arrivalLabel.accessibilityLabel = "name"
-        arrivalLabel.textColor = .offBlack
+        arrivalLabel.textColor = UIColor.scooped.offBlack
         
         arrivalTextField.textColor = .darkGray
         arrivalTextField.layer.borderWidth = textFieldBorderWidth
-        arrivalTextField.layer.borderColor = UIColor.textFieldBorderColor.cgColor
+        arrivalTextField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
         arrivalTextField.layer.cornerRadius = textFieldCornerRadius
         arrivalTextField.font = textFieldFont
-        arrivalTextField.attributedPlaceholder = NSAttributedString(string:"Arrival location", attributes: [NSAttributedString.Key.foregroundColor: UIColor.offBlack])
+        arrivalTextField.attributedPlaceholder = NSAttributedString(string:"Arrival location", attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
         // Sets up the icon inside the text field.
         let iconContainer = UIView(frame: CGRect(x: 0, y: 0, width: 25, height: 15))
         let arrivalIcon = UIImageView(frame: CGRect(x: 10, y: -2.5, width: 20, height: 20))
@@ -219,7 +219,7 @@ class InitialPostRideViewController: PostRideViewController {
         let labelTop = 8
         [departureLabel, arrivalLabel].forEach { label in
             label.font = .systemFont(ofSize: 12)
-            label.textColor = .scoopDarkGreen
+            label.textColor = UIColor.scooped.scoopDarkGreen
             label.backgroundColor = .white
             label.textAlignment = .center
             label.isHidden = true
@@ -295,12 +295,12 @@ extension InitialPostRideViewController: SearchInitialViewControllerDelegate {
         if viewController is DepartureSearchViewController {
             departureTextField.text = location.name
             departureLocationID = location.placeID
-            departureLabel.textColor = .offBlack
+            departureLabel.textColor = UIColor.scooped.offBlack
             departureLabel.isHidden = false
         } else if viewController is ArrivalSearchViewController {
             arrivalTextField.text = location.name
             arrivalLocationID = location.placeID
-            arrivalLabel.textColor = .offBlack
+            arrivalLabel.textColor = UIColor.scooped.offBlack
             arrivalLabel.isHidden = false
         }
         

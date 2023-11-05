@@ -342,7 +342,7 @@ class PostRideSummaryViewController: PostRideViewController {
     private func setupButton() {
         requestButton.setTitle("Post trip", for: .normal)
         requestButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        requestButton.backgroundColor = UIColor.scoopGreen
+        requestButton.backgroundColor = UIColor.scooped.scoopGreen
         requestButton.layer.cornerRadius = 25
         requestButton.addTarget(self, action: #selector(postRide), for: .touchUpInside)
         view.addSubview(requestButton)
@@ -357,7 +357,7 @@ class PostRideSummaryViewController: PostRideViewController {
     
     @objc private func postRide() {
         let creator = NetworkManager.shared.currentUser
-        requestButton.backgroundColor = .disabledGreen
+        requestButton.backgroundColor = UIColor.scooped.disabledGreen
         
         NetworkManager.shared.postRide(startID: currentRide.path.startLocationPlaceId, startName: currentRide.path.startLocationName, endID: currentRide.path.endLocationPlaceId, endName: currentRide.path.endLocationName, driver: creator.id, creator: creator.id, maxTravellers: currentRide.maxTravelers, minTravellers: currentRide.minTravelers, type: currentRide.type, isFlexible: currentRide.isFlexible, departureTime: currentRide.departureDatetime, description: currentRide.description) { [weak self] response in
             switch response {
@@ -366,7 +366,7 @@ class PostRideSummaryViewController: PostRideViewController {
                 
                 strongSelf.dismiss(animated: true)
                 strongSelf.containerDelegate?.navigationController?.popViewController(animated: true)
-                strongSelf.requestButton.backgroundColor = .scoopDarkGreen
+                strongSelf.requestButton.backgroundColor = UIColor.scooped.scoopDarkGreen
                 
                 strongSelf.postDelegate?.didPostRide()
             case .failure(let error):

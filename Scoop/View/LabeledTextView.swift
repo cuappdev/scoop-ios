@@ -50,7 +50,7 @@ class LabeledTextView: UIView {
     private func setupLabel(title: String) {
         nameLabel.text = " \(title) "
         nameLabel.font = .systemFont(ofSize: 12)
-        nameLabel.textColor = .mutedGrey
+        nameLabel.textColor = UIColor.scooped.mutedGrey
         nameLabel.backgroundColor = .white
         nameLabel.isHidden = true
         addSubview(nameLabel)
@@ -65,11 +65,11 @@ class LabeledTextView: UIView {
 
     func labeledTextView(isSelected: Bool) {
         if isSelected {
-            nameLabel.textColor = .scoopDarkGreen
+            nameLabel.textColor = UIColor.scooped.scoopDarkGreen
             textView.layer.borderWidth = 2
-            textView.layer.borderColor = UIColor.scoopDarkGreen.cgColor
+            textView.layer.borderColor = UIColor.scooped.scoopDarkGreen.cgColor
         } else {
-            nameLabel.textColor = .mutedGrey
+            nameLabel.textColor = UIColor.scooped.mutedGrey
             textView.layer.borderWidth = 1
             textView.layer.borderColor = UIColor.black.cgColor
         }

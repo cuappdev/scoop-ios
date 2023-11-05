@@ -74,7 +74,7 @@ class ProfilePictureViewController: OnboardingViewController {
         pictureImageView.isUserInteractionEnabled = true
         pictureImageView.clipsToBounds = true
         pictureImageView.layer.cornerRadius = 100
-        pictureImageView.layer.borderColor = UIColor.scoopGreen.cgColor
+        pictureImageView.layer.borderColor = UIColor.scooped.scoopGreen.cgColor
         pictureImageView.layer.borderWidth = 3
         view.addSubview(pictureImageView)
         
@@ -103,7 +103,7 @@ class ProfilePictureViewController: OnboardingViewController {
         } else {
             uploadButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64)
         }
-        uploadButton.backgroundColor = UIColor.disabledGreen
+        uploadButton.backgroundColor = UIColor.scooped.disabledGreen
         uploadButton.layer.cornerRadius = 25
         uploadButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         uploadButton.addAction(nextAction ?? UIAction(handler: { _ in
@@ -121,7 +121,7 @@ class ProfilePictureViewController: OnboardingViewController {
         let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
         let underlineAddLaterString = NSAttributedString(string: "Add later", attributes: underlineAttribute)
         skipButton.setAttributedTitle(underlineAddLaterString, for: .normal)
-        skipButton.setTitleColor(.scoopDarkGreen, for: .normal)
+        skipButton.setTitleColor(UIColor.scooped.scoopDarkGreen, for: .normal)
         skipButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         skipButton.addAction(skipAction, for: .touchUpInside)
         view.addSubview(skipButton)
@@ -162,7 +162,7 @@ class ProfilePictureViewController: OnboardingViewController {
     
     private func updateAuthenticatedUser(image: UIImage) {
         let imageBase64 = convertImage(image: image)
-        uploadButton.backgroundColor = .disabledGreen
+        uploadButton.backgroundColor = UIColor.scooped.disabledGreen
         
         NetworkManager.shared.currentUser.profilePicUrl = imageBase64
         let user = NetworkManager.shared.currentUser
@@ -180,7 +180,7 @@ class ProfilePictureViewController: OnboardingViewController {
                 strongSelf.dismiss(animated: true)
                 strongSelf.containerDelegate?.dismiss(animated: true)
                 NetworkManager.shared.profileDelegate?.updateUserProfile()
-                strongSelf.uploadButton.backgroundColor = .scoopDarkGreen
+                strongSelf.uploadButton.backgroundColor = UIColor.scooped.scoopDarkGreen
                 strongSelf.loadingSpinner.stopAnimating()
                 if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                     scene.didCompleteLogin()
@@ -224,7 +224,7 @@ extension ProfilePictureViewController: UINavigationControllerDelegate, UIImageP
         }
         
         pictureImageView.image = image
-        uploadButton.backgroundColor = .scoopDarkGreen
+        uploadButton.backgroundColor = UIColor.scooped.scoopDarkGreen
         uploadButton.setTitleColor(.white, for: .normal)
         dismiss(animated: true, completion: nil)
     }

@@ -41,10 +41,10 @@ class OnboardingViewController: UIViewController {
         }
         
         nextOnboardingButton.setTitle("Next", for: .normal)
-        nextOnboardingButton.backgroundColor = .secondaryGreen
+        nextOnboardingButton.backgroundColor = UIColor.scooped.secondaryGreen
         nextOnboardingButton.layer.cornerRadius = 25
         nextOnboardingButton.layer.opacity = 0.5
-        nextOnboardingButton.setTitleColor(.offBlack, for: .normal)
+        nextOnboardingButton.setTitleColor(UIColor.scooped.offBlack, for: .normal)
         nextOnboardingButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         nextOnboardingButton.addAction(action, for: .touchUpInside)
         view.addSubview(nextOnboardingButton)
@@ -81,11 +81,11 @@ class OnboardingViewController: UIViewController {
         }
         
         backButton.setTitle("Back", for: .normal)
-        backButton.layer.borderColor = UIColor.offBlack.cgColor
+        backButton.layer.borderColor = UIColor.scooped.offBlack.cgColor
         backButton.layer.borderWidth = 1
         backButton.backgroundColor = .white
         backButton.layer.cornerRadius = 25
-        backButton.setTitleColor(.scoopDarkGreen, for: .normal)
+        backButton.setTitleColor(UIColor.scooped.scoopDarkGreen, for: .normal)
         backButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         backButton.addTarget(self, action: #selector(prevVC), for: .touchUpInside)
         view.addSubview(backButton)

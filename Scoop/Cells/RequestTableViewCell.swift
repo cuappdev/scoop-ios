@@ -63,9 +63,9 @@ class RequestTableViewCell: UITableViewCell {
         // This button setup code with configurations can definitely be refactored in a future PR
         if #available(iOS 15.0, *) {
             var configuration = UIButton.Configuration.bordered()
-            configuration.baseForegroundColor = UIColor.primaryGrey
+            configuration.baseForegroundColor = UIColor.scooped.primaryGrey
             configuration.baseBackgroundColor = UIColor.white
-            configuration.background.strokeColor = UIColor.mutedGrey
+            configuration.background.strokeColor = UIColor.scooped.mutedGrey
             configuration.title = "Decline"
             configuration.titleAlignment = .center
             configuration.background.cornerRadius = 100
@@ -74,7 +74,7 @@ class RequestTableViewCell: UITableViewCell {
             // Fallback on earlier versions
             declineButton.backgroundColor = UIColor.white
             declineButton.setTitle("Decline", for: .normal)
-            declineButton.setTitleColor(UIColor.scoopGreen, for: .normal)
+            declineButton.setTitleColor(UIColor.scooped.scoopGreen, for: .normal)
             declineButton.layer.cornerRadius = 100
             declineButton.contentHorizontalAlignment = .center
         }
@@ -94,7 +94,7 @@ class RequestTableViewCell: UITableViewCell {
         if #available(iOS 15.0, *) {
             var configuration = UIButton.Configuration.filled()
             configuration.baseForegroundColor = UIColor.white
-            configuration.baseBackgroundColor = UIColor.scoopDarkGreen
+            configuration.baseBackgroundColor = UIColor.scooped.scoopDarkGreen
             configuration.title = "Accept"
             configuration.titleAlignment = .center
             configuration.background.cornerRadius = 100
@@ -104,7 +104,7 @@ class RequestTableViewCell: UITableViewCell {
             acceptButton.setTitle("Accept", for: .normal)
             acceptButton.setTitleColor(.white, for: .normal)
             acceptButton.layer.cornerRadius = 10
-            acceptButton.backgroundColor = UIColor.scoopDarkGreen
+            acceptButton.backgroundColor = UIColor.scooped.scoopDarkGreen
         }
         
         acceptButton.addTarget(self, action: #selector(acceptRequest), for: .touchUpInside)

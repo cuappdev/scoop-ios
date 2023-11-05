@@ -119,7 +119,7 @@ class EditProfileViewController: UIViewController {
         if let profilePicUrl = user.profilePicUrl {
             profileImageView.sd_setImage(with: URL(string: profilePicUrl))
         } else {
-            profileImageView.image = UIImage.emptyImage
+            profileImageView.image = UIImage.scooped.emptyImage
         }
         
         nameTextField.setText(str: "\(user.firstName) \(user.lastName)")
@@ -145,7 +145,7 @@ class EditProfileViewController: UIViewController {
         let solidLineVerticalInset = -12.75
         let solidLineMultiplier = 0.32
         let screenSize = UIScreen.main.bounds
-        let dottedline = UIImageView(image: UIImage.dottedLine)
+        let dottedline = UIImageView(image: UIImage.scooped.dottedLine)
         let solidline = UIView()
         
         dottedline.contentMode = .scaleAspectFit
@@ -170,7 +170,7 @@ class EditProfileViewController: UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.title = "Edit Profile"
-        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.flowHeader]
+        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.scooped.flowHeader]
     }
     
     private func setupScrollView() {
@@ -208,7 +208,7 @@ class EditProfileViewController: UIViewController {
         
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.clipsToBounds = true
-        profileImageView.layer.borderColor = UIColor.scoopGreen.cgColor
+        profileImageView.layer.borderColor = UIColor.scooped.scoopGreen.cgColor
         profileImageView.layer.borderWidth = 3
         imageView.addSubview(profileImageView)
         
@@ -218,7 +218,7 @@ class EditProfileViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
-        uploadPhotoButton.setImage(UIImage.profileButton, for: .normal)
+        uploadPhotoButton.setImage(UIImage.scooped.profileButton, for: .normal)
         uploadPhotoButton.backgroundColor = UIColor.gray
         uploadPhotoButton.contentMode = .scaleAspectFill
         uploadPhotoButton.clipsToBounds = true
@@ -301,7 +301,7 @@ class EditProfileViewController: UIViewController {
         }
 
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.subheader
+        titleLabel.font = UIFont.scooped.subheader
         titleLabel.text = "PREFERRED CONTACT METHOD"
         titleLabel.accessibilityLabel = "preferred contact method"
         titleLabel.numberOfLines = 2
@@ -315,7 +315,7 @@ class EditProfileViewController: UIViewController {
         emailButton.isSelected = true
         emailButton.setTitle("Cornell email", for: .normal)
         emailButton.setTitleColor(UIColor.black, for: .normal)
-        emailButton.titleLabel?.font = UIFont.bodyNormal
+        emailButton.titleLabel?.font = UIFont.scooped.bodyNormal
         emailButton.titleLabel?.adjustsFontSizeToFitWidth = true
         emailButton.setImage(UIImage(systemName: "circle"), for: .normal)
         emailButton.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
@@ -330,7 +330,7 @@ class EditProfileViewController: UIViewController {
         
         phoneButton.setTitle("Phone number", for: .normal)
         phoneButton.setTitleColor(UIColor.black, for: .normal)
-        phoneButton.titleLabel?.font = UIFont.bodyNormal
+        phoneButton.titleLabel?.font = UIFont.scooped.bodyNormal
         phoneButton.titleLabel?.adjustsFontSizeToFitWidth = true
         phoneButton.setImage(UIImage(systemName: "circle"), for: .normal)
         phoneButton.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
@@ -382,7 +382,7 @@ class EditProfileViewController: UIViewController {
         }
         
         let talkativeTitleLabel = UILabel()
-        talkativeTitleLabel.font = UIFont.subheader
+        talkativeTitleLabel.font = UIFont.scooped.subheader
         talkativeTitleLabel.text = "HOW TALKATIVE ARE YOU?"
         talkativeTitleLabel.accessibilityLabel = "how talkative are you?"
         talkativeTitleLabel.numberOfLines = 2
@@ -398,7 +398,7 @@ class EditProfileViewController: UIViewController {
         preferencesStackView.setCustomSpacing(50, after: talkativeSlider)
         
         let musicTitleLabel = UILabel()
-        musicTitleLabel.font = UIFont.subheader
+        musicTitleLabel.font = UIFont.scooped.subheader
         musicTitleLabel.text = "DO YOU LIKE LISTENING TO MUSIC?"
         musicTitleLabel.accessibilityLabel = "do you like listening to music"
         musicTitleLabel.numberOfLines = 2
@@ -425,7 +425,7 @@ class EditProfileViewController: UIViewController {
         let quietLabel = UILabel()
         quietLabel.text = "Quiet"
         quietLabel.textColor = UIColor.black
-        quietLabel.font = UIFont.bodyNormal
+        quietLabel.font = UIFont.scooped.bodyNormal
         quietLabel.textAlignment = .left
         quietLabel.adjustsFontSizeToFitWidth = true
         talkativeView.addSubview(quietLabel)
@@ -437,7 +437,7 @@ class EditProfileViewController: UIViewController {
         let talkativeLabel = UILabel()
         talkativeLabel.text = "Talkative"
         talkativeLabel.textColor = UIColor.black
-        talkativeLabel.font = UIFont.bodyNormal
+        talkativeLabel.font = UIFont.scooped.bodyNormal
         talkativeLabel.textAlignment = .right
         talkativeLabel.adjustsFontSizeToFitWidth = true
         talkativeView.addSubview(talkativeLabel)
@@ -448,14 +448,14 @@ class EditProfileViewController: UIViewController {
         
         talkativeSlider.minimumTrackTintColor = UIColor.black
         talkativeSlider.maximumTrackTintColor = UIColor.black
-        talkativeSlider.setThumbImage(UIImage.sliderThumb, for: .normal)
+        talkativeSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
         preferencesStackView.addArrangedSubview(talkativeSlider)
 
         talkativeSlider.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(leadingInset)
         }
         
-        talkativeTicks.setImage(UIImage.sliderTicks, for: .normal)
+        talkativeTicks.setImage(UIImage.scooped.sliderTicks, for: .normal)
         talkativeSlider.addSubview(talkativeTicks)
         talkativeSlider.sendSubviewToBack(talkativeTicks)
         
@@ -479,7 +479,7 @@ class EditProfileViewController: UIViewController {
         let noMusicLabel = UILabel()
         noMusicLabel.text = "No music"
         noMusicLabel.textColor = UIColor.black
-        noMusicLabel.font = UIFont.bodyNormal
+        noMusicLabel.font = UIFont.scooped.bodyNormal
         noMusicLabel.textAlignment = .left
         noMusicLabel.adjustsFontSizeToFitWidth = true
         musicView.addSubview(noMusicLabel)
@@ -491,7 +491,7 @@ class EditProfileViewController: UIViewController {
         let musicLabel = UILabel()
         musicLabel.text = "Music"
         musicLabel.textColor = UIColor.black
-        musicLabel.font = UIFont.bodyNormal
+        musicLabel.font = UIFont.scooped.bodyNormal
         musicLabel.textAlignment = .right
         musicLabel.adjustsFontSizeToFitWidth = true
         musicView.addSubview(musicLabel)
@@ -502,14 +502,14 @@ class EditProfileViewController: UIViewController {
         
         musicSlider.minimumTrackTintColor = UIColor.black
         musicSlider.maximumTrackTintColor = UIColor.black
-        musicSlider.setThumbImage(UIImage.sliderThumb, for: .normal)
+        musicSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
         preferencesStackView.addArrangedSubview(musicSlider)
         
         musicSlider.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(leadingInset)
         }
         
-        musicTicks.setImage(UIImage.sliderTicks, for: .normal)
+        musicTicks.setImage(UIImage.scooped.sliderTicks, for: .normal)
         musicSlider.addSubview(musicTicks)
         musicSlider.sendSubviewToBack(musicTicks)
         
@@ -559,8 +559,8 @@ class EditProfileViewController: UIViewController {
     func setupDeleteButton() {
         deleteButton.setTitle("Delete account", for: .normal)
         deleteButton.setTitleColor(UIColor.white, for: .normal)
-        deleteButton.titleLabel?.font = UIFont.bodyBold
-        deleteButton.backgroundColor = UIColor.notification
+        deleteButton.titleLabel?.font = UIFont.scooped.bodyBold
+        deleteButton.backgroundColor = UIColor.scooped.notification
         deleteButton.layer.cornerRadius = Constants.buttonCornerRadius
         mainStackView.addArrangedSubview(deleteButton)
 
@@ -573,7 +573,7 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupGradientView() {
-        gradientLayer.colors = UIColor.whiteGradientColors
+        gradientLayer.colors = UIColor.scooped.whiteGradientColors
         gradientView.isUserInteractionEnabled = false
         gradientView.layer.insertSublayer(gradientLayer, at: 1)
         view.addSubview(gradientView)
@@ -586,8 +586,8 @@ class EditProfileViewController: UIViewController {
     
     private func setupCancelButton() {
         cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.setTitleColor(UIColor.darkerGreen, for: .normal)
-        cancelButton.titleLabel?.font = UIFont.bodySemibold
+        cancelButton.setTitleColor(UIColor.scooped.darkerGreen, for: .normal)
+        cancelButton.titleLabel?.font = UIFont.scooped.bodySemibold
         cancelButton.backgroundColor = UIColor.white
         cancelButton.layer.borderColor = UIColor.systemGray2.cgColor
         cancelButton.layer.borderWidth = 1
@@ -606,9 +606,9 @@ class EditProfileViewController: UIViewController {
     
     private func setupSaveButton() {
         saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(UIColor.offBlack, for: .normal)
-        saveButton.titleLabel?.font = UIFont.bodyBold
-        saveButton.backgroundColor = UIColor.secondaryGreen
+        saveButton.setTitleColor(UIColor.scooped.offBlack, for: .normal)
+        saveButton.titleLabel?.font = UIFont.scooped.bodyBold
+        saveButton.backgroundColor = UIColor.scooped.secondaryGreen
         saveButton.layer.cornerRadius = Constants.buttonCornerRadius
         view.addSubview(saveButton)
 

@@ -75,7 +75,7 @@ class NotificationsViewController: UIViewController {
 
     private func setupEmptyStateView() {
         emptyStateView.setup(
-            image: UIImage.notifIcon!,
+            image: UIImage.scooped.notifIcon!,
             title: "No new notifications",
             subtitle: "You’re all caught up at the moment!"
         )

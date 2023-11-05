@@ -19,9 +19,9 @@ class BlockUserViewController: ModalViewController {
     private let titleLabel = UILabel()
     private let unblockLabel = UILabel()
 
-    private let blockCallImageView = UIImageView(image: .blockCallIcon)
-    private let cancelImageView = UIImageView(image: .cancelIcon)
-    private let settingsImageView = UIImageView(image: .setttingsIcon)
+    private let blockCallImageView = UIImageView(image: UIImage.scooped.blockCallIcon)
+    private let cancelImageView = UIImageView(image: UIImage.scooped.cancelIcon)
+    private let settingsImageView = UIImageView(image: UIImage.scooped.setttingsIcon)
 
     // MARK: - User Data
 
@@ -183,7 +183,7 @@ class BlockUserViewController: ModalViewController {
         }
 
         blockButton.setTitle("Block", for: .normal)
-        blockButton.backgroundColor = .secondaryGreen
+        blockButton.backgroundColor = UIColor.scooped.secondaryGreen
         blockButton.addTarget(self, action: #selector(blockUser), for: .touchUpInside)
 
         blockButton.snp.makeConstraints { make in
