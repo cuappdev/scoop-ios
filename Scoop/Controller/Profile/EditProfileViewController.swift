@@ -11,7 +11,7 @@ import UIKit
 class EditProfileViewController: UIViewController {
     
     // MARK: - Views
-    
+
     private let cancelButton = UIButton()
     private let classTextField = LabeledTextField()
     private let classPicker = UIPickerView()
@@ -658,19 +658,32 @@ class EditProfileViewController: UIViewController {
     }
 
     @objc private func saveEdit() {
-        let name = nameTextField.getText()?.split(separator: " ")
-        let firstName = String(name?[0] ?? "")
-        let lastName = String(name?[1...].joined(separator: " ") ?? "")
-        let grade = classTextField.getText()
-        let pronouns = pronounsTextField.getText()
-        let phoneNumber = phoneNumTextField.getText()
+        guard let name = nameTextField.getText(), !name.isEmpty,
+              let grade = classTextField.getText(), !grade.isEmpty,
+              let pronouns = pronounsTextField.getText(), !pronouns.isEmpty,
+              let hometown = hometownTextField.getText(), !hometown.isEmpty,
+              let snack = snackTextField.getText(), !snack.isEmpty,
+              let song = songTextField.getText(), !song.isEmpty,
+              let stop = stopTextField.getText(), !stop.isEmpty else {
+                  print("Error: Please complete all fields")
+                  return
+              }
 
-        hometown = hometownTextField.getText()
+        let phoneNumber = phoneNumTextField.getText()
         talkative = talkativeSlider.value
         music = musicSlider.value
-        snack = snackTextField.getText()
-        song = songTextField.getText()
-        stop = stopTextField.getText()
+        self.hometown = hometown
+        self.snack = snack
+        self.song = song
+        self.stop = stop
+
+        guard let nameArray = nameTextField.getText()?.split(separator: " "), nameArray.count == 2 else {
+            print("Error: Name field does not contain first and last name")
+            return
+        }
+
+        let firstName = String(nameArray[0])
+        let lastName = String(nameArray[1])
 
         updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: getUserAnswers())
 
@@ -689,6 +702,27 @@ class EditProfileViewController: UIViewController {
 
     @objc private func updateProfileImage(_ sender: UITapGestureRecognizer) {
         present(imagePicker, animated: true)
+    }
+
+    private func setSaveButtonColor(disabled: Bool) {
+        saveButton.layer.opacity = disabled ? 0.5 : 1
+    }
+
+    private func textFieldsComplete() -> Bool {
+        var complete = true
+
+        [nameTextField, classTextField, pronounsTextField, hometownTextField, snackTextField, songTextField, stopTextField].forEach { textField in
+            guard let field = textField.getText()?.trimmingCharacters(in: .whitespacesAndNewlines), !field.isEmpty else {
+                complete = false
+                return
+            }
+        }
+
+        guard let name = nameTextField.getText()?.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: " "), name.count == 2 else {
+            return false
+        }
+
+        return complete
     }
 
     private func getUserAnswers() -> [UserAnswer] {
@@ -793,6 +827,8 @@ extension EditProfileViewController: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+
         if let onboardingTextField = textField as? OnboardingTextField,
            let associatedView = onboardingTextField.associatedView as? LabeledTextField {
             associatedView.labeledTextField(isSelected: false)
@@ -800,6 +836,8 @@ extension EditProfileViewController: UITextFieldDelegate {
                 associatedView.hidesLabel(isHidden: true)
             }
         }
+
+        setSaveButtonColor(disabled: !textFieldsComplete())
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
