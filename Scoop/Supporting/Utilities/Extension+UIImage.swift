@@ -18,6 +18,7 @@ extension UIImage {
         let dottedLine = UIImage(named: "dottedline")
         let emptyImage = UIImage(named: "emptyimage")
         let notifIcon = UIImage(named: "notifIcon")
+        let profileBackground = UIImage(named: "profileBackground")
         let profileButton = UIImage(named: "profilebutton")
         let setttingsIcon = UIImage(named: "settingsIcon")
         let sliderThumb = UIImage(named: "SliderThumb")

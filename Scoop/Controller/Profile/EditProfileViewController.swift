@@ -573,7 +573,7 @@ class EditProfileViewController: UIViewController {
     }
     
     private func setupGradientView() {
-        gradientLayer.colors = UIColor.scooped.whiteGradientColors
+        gradientLayer.colors = UIColor.scooped.hoverGradientColors
         gradientView.isUserInteractionEnabled = false
         gradientView.layer.insertSublayer(gradientLayer, at: 1)
         view.addSubview(gradientView)

@@ -20,6 +20,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     private let actionsButton = UIButton()
     private let containerView = UIView()
+    private let editButton = UIButton()
+    private let gradientLayer = CAGradientLayer()
+    private let gradientView = UIView()
     private let headerImageView = UIImageView()
     private let profileImageView = UIImageView()
     private let profileStackView = UIStackView()
@@ -62,21 +65,25 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray5
+        view.backgroundColor = UIColor.systemGray5
         
         getUserPreferences()
-        setupHeaderImage()
+        setupBackground()
         setupContainerView()
         setupProfileImageView()
         setupProfileStackView()
         isBeingPresented ? updateDriverProfile() : updateUserProfile()
         isBeingPresented ? setupActionsButton() : setupEditButton()
     }
+
+    override func viewDidLayoutSubviews() {
+        gradientLayer.frame = gradientView.bounds
+    }
     
     // MARK: - Setup View Functions
     
     private func setupContainerView() {
-        containerView.backgroundColor = UIColor.white
+        containerView.backgroundColor = UIColor.white.withAlphaComponent(0)
         containerView.layer.cornerRadius = 24
         view.addSubview(containerView)
         
@@ -86,14 +93,22 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         }
     }
     
-    private func setupHeaderImage() {
+    private func setupBackground() {
         headerImageView.contentMode = .scaleAspectFill
-        headerImageView.image = UIImage(named: "ProfileHeader")
+        headerImageView.image = UIImage.scooped.profileBackground
         view.addSubview(headerImageView)
         
         headerImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(140)
+        }
+
+        gradientLayer.colors = UIColor.scooped.backgroundGradientColors
+        gradientView.isUserInteractionEnabled = false
+        gradientView.layer.insertSublayer(gradientLayer, at: 0)
+        view.addSubview(gradientView)
+
+        gradientView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     
@@ -110,17 +125,17 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     }
     
     private func setupEditButton() {
-        let editButton = UIButton()
         editButton.setImage(UIImage(systemName: "square.and.pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36, weight: .semibold)), for: .normal)
         editButton.tintColor = UIColor.black
         editButton.imageView?.contentMode = .scaleAspectFit
-        containerView.addSubview(editButton)
+        view.addSubview(editButton)
         
         editButton.addTarget(self, action: #selector(pushEditProfileVC), for: .touchUpInside)
         
         editButton.snp.makeConstraints { make in
             make.size.equalTo(30)
-            make.top.trailing.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(40)
+            make.trailing.equalToSuperview().inset(58)
         }
     }
     
@@ -178,7 +193,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         view.addSubview(detailsStackView)
         
         detailsStackView.snp.makeConstraints { make in
-            make.top.equalTo(profileStackView.snp.bottom).offset(40)
+            make.top.equalTo(profileStackView.snp.bottom).offset(44)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.lessThanOrEqualToSuperview().inset(40)
         }
