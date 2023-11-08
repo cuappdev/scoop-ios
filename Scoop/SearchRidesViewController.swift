@@ -194,7 +194,6 @@ class SearchRidesViewController: UIViewController {
     }
     
     @objc private func presentMatches() {
-        findTripsButton.isEnabled = false
 
         [departureTextField, arrivalTextField, departureDateTextField].forEach { textField in
             if (textField.textField.text ?? "").isEmpty {
@@ -208,6 +207,8 @@ class SearchRidesViewController: UIViewController {
               let departureID = departurePlace?.placeID,
               let dateString = departureDateTextField.textField.text, !dateString.isEmpty,
               let arrivalID = arrivalPlace?.placeID else { return }
+
+        findTripsButton.isEnabled = false
         
         tripDate = formatDate(dateToConvert: self.datePicker.date)
         NetworkManager.shared.searchLocation(depatureDate: tripDate, startLocation: departureID, endLocation: arrivalID) { [weak self] response in
