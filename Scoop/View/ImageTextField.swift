@@ -8,7 +8,7 @@
 import UIKit
 
 class ImageTextField: UIView {
-    
+
     let textField = ShiftedRightTextField()
     let imageView = UIImageView()
     
@@ -30,10 +30,10 @@ class ImageTextField: UIView {
             make.size.equalTo(20)
         }
     }
-    
+
     private func setupInfoLabel() {
         addSubview(textField)
-        
+
         textField.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(5)
             make.trailing.equalToSuperview()
@@ -41,10 +41,10 @@ class ImageTextField: UIView {
             make.height.equalTo(56)
         }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }
 

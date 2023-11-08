@@ -46,7 +46,7 @@ class PreferredContactViewController: OnboardingViewController {
             }
             
             guard let phoneNumber = self.numberTextField.textField.text, self.validateNumber(value: phoneNumber) else {
-                self.presentErrorAlert(title: "Error", message: "Please enter a valid phone number.")
+                self.numberTextField.displayError()
                 return
             }
             
@@ -137,7 +137,7 @@ class PreferredContactViewController: OnboardingViewController {
         
         numberTextField.isHidden = true
         numberTextField.delegate = self
-        numberTextField.setup(title: "Phone", placeholder: "000-000-0000")
+        numberTextField.setup(title: "Phone", placeholder: "000-000-0000", error: "Please enter a valid phone number")
         numberTextField.textField.keyboardType = .phonePad
         view.addSubview(numberTextField)
         
@@ -172,31 +172,32 @@ extension PreferredContactViewController: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        if textField == numberTextField.textField {
-            self.setNextButtonColor(disabled: !self.validateNumber(value: self.numberTextField.textField.text ?? ""))
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
         }
+
+        setNextButtonColor(disabled: !validateNumber(value: textField.text ?? ""))
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if let onboardingTextField = textField as? OnboardingTextField {
-            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
-                associatedView.labeledTextField(isSelected: true)
-                associatedView.hidesLabel(isHidden: false)
-            }
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+            associatedView.hidesLabel(isHidden: false)
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let onboardingTextField = textField as? OnboardingTextField {
-            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
-                associatedView.labeledTextField(isSelected: false)
-                if textField.text?.isEmpty ?? true {
-                    associatedView.hidesLabel(isHidden: true)
-                }
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: false)
+            if textField.text?.isEmpty ?? true {
+                associatedView.hidesLabel(isHidden: true)
             }
         }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
     }

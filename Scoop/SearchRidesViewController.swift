@@ -11,15 +11,12 @@ import UIKit
 class SearchRidesViewController: UIViewController {
     
     // MARK: - Views
-    
-    private let arrivalLabel = UILabel()
-    private let arrivalTextField = ImageTextField()
+
+    private let arrivalTextField = LabeledTextField(isShifted: true)
     private let calendarIconImageView = UIImageView()
     private let datePicker = UIDatePicker()
-    private let departureDateLabel = UILabel()
-    private let departureDateTextField = OnboardingTextField()
-    private let departureLabel = UILabel()
-    private let departureTextField = ImageTextField()
+    private let departureDateTextField = LabeledTextField()
+    private let departureTextField = LabeledTextField(isShifted: true)
     private let findTripsButton = UIButton()
     private let stackView = UIStackView()
     
@@ -40,7 +37,6 @@ class SearchRidesViewController: UIViewController {
         setupStackView()
         setupLocationTextFields()
         setupButton()
-        setupLabels()
     }
     
     // MARK: - Setup View Functions
@@ -98,33 +94,43 @@ class SearchRidesViewController: UIViewController {
         let textFieldBorderWidth = 1.0
         let textFieldCornerRadius = 4.0
         let textFieldHeight = 56
-        
-        departureTextField.textField.textColor = UIColor.scooped.offBlack
+
         departureTextField.textField.delegate = self
-        departureTextField.textField.attributedPlaceholder = NSAttributedString(
-            string: "Departure location",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
+        departureTextField.setup(title: "Departure location")
+
+        // Sets up the icon inside the text field.
+        let iconContainer = UIView(frame: CGRect(x: 0, y: 0, width: 25, height: 15))
+        let departureIcon = UIImageView(frame: CGRect(x: 10, y: -2.5, width: 20, height: 20))
+        departureIcon.image = UIImage(named: "locationIcon")
+        departureIcon.contentMode = .scaleAspectFit
+        iconContainer.addSubview(departureIcon)
+
+        departureTextField.textField.leftView = iconContainer;
+        departureTextField.textField.leftViewMode = UITextField.ViewMode.always
+        departureTextField.textField.leftViewMode = .always
         departureTextField.textField.addTarget(self, action: #selector(presentDepartureSearch), for: .touchDown)
-        departureTextField.imageView.image = UIImage(named: "locationIcon")
         stackView.addArrangedSubview(departureTextField)
-        
-        arrivalTextField.textField.textColor = UIColor.scooped.offBlack
+
         arrivalTextField.textField.delegate = self
-        arrivalTextField.textField.attributedPlaceholder = NSAttributedString(
-            string: "Arrival location",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
-        arrivalTextField.textField.addTarget(self, action: #selector(presentArrivalSearch), for: .touchDown)
-        arrivalTextField.imageView.image = UIImage(named: "destinationIcon")
-        stackView.addArrangedSubview(arrivalTextField)
+        arrivalTextField.setup(title: "Arrival location")
         
-        departureDateTextField.textColor = UIColor.scooped.offBlack
+        // Sets up the icon inside the text field.
+        let iconContainer2 = UIView(frame: CGRect(x: 0, y: 0, width: 25, height: 15))
+        let arrivalIcon = UIImageView(frame: CGRect(x: 10, y: -2.5, width: 20, height: 20))
+        arrivalIcon.image = UIImage(named: "destinationIcon")
+        arrivalIcon.contentMode = .scaleAspectFit
+        iconContainer2.addSubview(arrivalIcon)
+
+        arrivalTextField.textField.leftView = iconContainer2;
+        arrivalTextField.textField.leftViewMode = .always
+        arrivalTextField.textField.addTarget(self, action: #selector(presentArrivalSearch), for: .touchDown)
+        stackView.addArrangedSubview(arrivalTextField)
+
         departureDateTextField.delegate = self
-        departureDateTextField.attributedPlaceholder = NSAttributedString(
-            string: "Departure date",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
-        departureDateTextField.inputView = datePicker
-        departureDateTextField.addTarget(self, action: #selector(updateDate), for: .touchDown)
-        departureDateTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingDidEnd)
+        departureDateTextField.setup(title: "Departure date")
+        departureDateTextField.textField.inputView = datePicker
+        departureDateTextField.textField.addTarget(self, action: #selector(updateDate), for: .touchDown)
+        departureDateTextField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingDidEnd)
         stackView.addArrangedSubview(departureDateTextField)
         
         datePicker.datePickerMode = .date
@@ -136,15 +142,12 @@ class SearchRidesViewController: UIViewController {
         view.addSubview(calendarIconImageView)
         
         calendarIconImageView.snp.makeConstraints { make in
-            make.centerY.equalTo(departureDateTextField)
+            make.centerY.equalTo(departureDateTextField.textField)
             make.trailing.equalTo(departureDateTextField).inset(12)
             make.size.equalTo(24)
         }
         
         [departureTextField, arrivalTextField, departureDateTextField].forEach { text in
-            text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
-            text.layer.cornerRadius = textFieldCornerRadius
             text.snp.makeConstraints { make in
                 make.leading.trailing.equalToSuperview()
                 make.height.equalTo(textFieldHeight)
@@ -170,78 +173,41 @@ class SearchRidesViewController: UIViewController {
         }
     }
     
-    private func setupLabels() {
-        let labelLeading = 10
-        let labelTop = 8
-        
-        [departureLabel, arrivalLabel, departureDateLabel].forEach { label in
-            label.font = .systemFont(ofSize: 12)
-            label.textColor = UIColor.scooped.textFieldBorderColor
-            label.backgroundColor = .white
-            label.textAlignment = .center
-            label.isHidden = true
-            view.addSubview(label)
-        }
-        
-        departureLabel.text = "Departure location"
-        departureLabel.snp.makeConstraints { make in
-            make.top.equalTo(departureTextField).inset(-labelTop)
-            make.leading.equalTo(departureTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(120)
-        }
-        
-        arrivalLabel.text = "Arrival location"
-        arrivalLabel.snp.makeConstraints { make in
-            make.top.equalTo(arrivalTextField).inset(-labelTop)
-            make.leading.equalTo(arrivalTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(99)
-        }
-        
-        departureDateLabel.text = "Departure date"
-        departureDateLabel.snp.makeConstraints { make in
-            make.top.equalTo(departureDateTextField).inset(-labelTop)
-            make.leading.equalTo(departureDateTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(99)
-        }
-    }
-    
     // MARK: - Helper Functions
     
     @objc private func presentDepartureSearch() {
         let depatureVC = DepartureSearchViewController()
         depatureVC.delegate = self
         navigationController?.pushViewController(depatureVC, animated: true)
-        departureLabel.isHidden = false
     }
 
     @objc private func presentArrivalSearch() {
         let arrivalVC = ArrivalSearchViewController()
         arrivalVC.delegate = self
         navigationController?.pushViewController(arrivalVC, animated: true)
-        arrivalLabel.isHidden = false
     }
     
     @objc private func updateDate() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-        departureDateTextField.text = dateFormatter.string(from: datePicker.date)
-        departureDateLabel.isHidden = false
+        departureDateTextField.textField.text = dateFormatter.string(from: datePicker.date)
     }
     
     @objc private func presentMatches() {
         findTripsButton.isEnabled = false
+
+        [departureTextField, arrivalTextField, departureDateTextField].forEach { textField in
+            if (textField.textField.text ?? "").isEmpty {
+                textField.displayError()
+            }
+        }
+
         findTripsButton.backgroundColor = UIColor.scooped.disabledGreen
         guard let departure = self.departureTextField.textField.text, !departure.isEmpty,
               let arrival = self.arrivalTextField.textField.text, !arrival.isEmpty,
               let departureID = departurePlace?.placeID,
-              let dateString = departureDateTextField.text, !dateString.isEmpty,
-              let arrivalID = arrivalPlace?.placeID else {
-                  presentErrorAlert(title: "Error", message: "Please complete all fields.")
-                  return
-              }
+              let dateString = departureDateTextField.textField.text, !dateString.isEmpty,
+              let arrivalID = arrivalPlace?.placeID else { return }
         
         tripDate = formatDate(dateToConvert: self.datePicker.date)
         NetworkManager.shared.searchLocation(depatureDate: tripDate, startLocation: departureID, endLocation: arrivalID) { [weak self] response in
@@ -264,7 +230,7 @@ class SearchRidesViewController: UIViewController {
               !text1.isEmpty,
               let text2 = arrivalTextField.textField.text,
               !text2.isEmpty,
-              let text3 = departureDateTextField.text,
+              let text3 = departureDateTextField.textField.text,
               !text3.isEmpty else {
             findTripsButton.backgroundColor = UIColor.scooped.disabledGreen
             return
@@ -289,6 +255,35 @@ extension SearchRidesViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return false
     }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+            associatedView.hidesLabel(isHidden: false)
+        }
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: false)
+            if textField.text?.isEmpty ?? true {
+                associatedView.hidesLabel(isHidden: true)
+            }
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+    }
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+        }
+    }
     
 }
 
@@ -301,10 +296,14 @@ extension SearchRidesViewController: SearchInitialViewControllerDelegate {
             departurePlace = location
             departureTextField.textField.text = location.name
             self.textFieldDidChange(sender: departureTextField.textField)
+            departureTextField.hidesLabel(isHidden: false)
+            departureTextField.labeledTextField(isSelected: false)
         } else if viewController is ArrivalSearchViewController {
             arrivalPlace = location
             arrivalTextField.textField.text = location.name
             self.textFieldDidChange(sender: arrivalTextField.textField)
+            arrivalTextField.hidesLabel(isHidden: false)
+            arrivalTextField.labeledTextField(isSelected: false)
         }
     }
 

@@ -26,28 +26,21 @@ class PostRideTripDetailsViewController: PostRideViewController {
     
     private let stackView = UIStackView()
     
-    private let dateTextField = OnboardingTextField()
+    private let dateTextField = LabeledTextField()
     private let datePicker = UIDatePicker()
     private let calendarIcon = UIImageView()
-    private let requiredLabel = UILabel()
     
-    private let timeTextField = OnboardingTextField()
+    private let timeTextField = LabeledTextField()
     private let timePicker = UIDatePicker()
     
     private let travelersLabel = UILabel()
-    private let minTextField = OnboardingTextField()
-    private let maxTextField = OnboardingTextField()
+    private let minMaxLabel = UILabel()
+    private let minTextField = LabeledTextField()
+    private let maxTextField = LabeledTextField()
     private let travelersContainerView = UIView()
     
     private let detailsExample = UILabel()
-    private let detailsTextField = UITextView()
-    
-    private let dateLabel = UILabel()
-    private let timeLabel = UILabel()
-    private let minLabel = UILabel()
-    private let maxLabel = UILabel()
-    private let detailsLabel = UILabel()
-    
+    private let detailsTextField = LabeledTextView()
     
     private var ride: Ride!
     
@@ -68,38 +61,51 @@ class PostRideTripDetailsViewController: PostRideViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        nextAction = UIAction { _ in
-            guard let navCtrl = self.navigationController else { return }
+        nextAction = UIAction { [self ]_ in
+            guard let navCtrl = navigationController else { return }
+
+            [dateTextField, timeTextField, minTextField, maxTextField].forEach { textField in
+                if (textField.textField.text ?? "").isEmpty {
+                    textField.displayError()
+                }
+            }
             
-            guard let travelerCountLowerText = self.minTextField.text,
-                  let travelerCountUpperText = self.maxTextField.text else {
-                      self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
-                      return
-                  }
+            guard let travelerCountLowerText = minTextField.textField.text, !travelerCountLowerText.isEmpty,
+                  let travelerCountUpperText = maxTextField.textField.text, !travelerCountUpperText.isEmpty else { return }
             
             guard let travelerCountLower = Int(travelerCountLowerText),
                   let travelerCountUpper = Int(travelerCountUpperText),
                   travelerCountLower <= travelerCountUpper,
-                  let date = self.getTravelDate() else {
-                      self.presentErrorAlert(title: "Error", message: "Please enter valid input.")
-                      return
-                  }
-            
+                  let date = getTravelDate() else {
+                minTextField.displayError()
+                maxTextField.displayError()
+                minTextField.errorLabel.isHidden = true
+                maxTextField.errorLabel.isHidden = true
+                minMaxLabel.text = "The minimum must be less than the maximum"
+                minMaxLabel.isHidden = false
+                return
+            }
+
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             
             if travelerCountLower == 0 {
-                self.presentErrorAlert(title: "Error", message: "You cannot have a minimum of 0 travelers!")
+                minTextField.displayError()
+                maxTextField.displayError()
+                minTextField.errorLabel.isHidden = true
+                maxTextField.errorLabel.isHidden = true
+                minMaxLabel.text = "You cannot have a minimum of 0 travelers!"
+                minMaxLabel.isHidden = false
             } else {
                 NetworkManager.shared.currentRide.minTravelers = travelerCountLower
                 NetworkManager.shared.currentRide.maxTravelers = travelerCountUpper
                 NetworkManager.shared.currentRide.departureDatetime = dateFormatter.string(from: date)
-                NetworkManager.shared.currentRide.description = self.detailsTextField.text ?? ""
+                NetworkManager.shared.currentRide.description = detailsTextField.textView.text ?? ""
                 
-                self.delegate?.didTapNext(navCtrl, nextViewController: nil)
+                delegate?.didTapNext(navCtrl, nextViewController: nil)
             }
             
-            self.summaryDelegate?.updateSummary()
+            summaryDelegate?.updateSummary()
         }
         
         setupStackView()
@@ -107,8 +113,6 @@ class PostRideTripDetailsViewController: PostRideViewController {
         setupTimeView()
         setupTravelersView()
         setupDetailsView()
-        setupLabels()
-        configTextFields()
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
             return
         }))
@@ -138,27 +142,21 @@ class PostRideTripDetailsViewController: PostRideViewController {
         
         travelersContainerView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(88)
         }
         
         stackView.addArrangedSubview(detailsTextField)
-        
     }
     
     private func setupDateView() {
         dateTextField.delegate = self
-        dateTextField.textColor = UIColor.scooped.offBlack
-        dateTextField.backgroundColor = .white
-        dateTextField.attributedPlaceholder = NSAttributedString(
-            string: "Departure date",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
+        dateTextField.setup(title: "Departure date")
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.minimumDate = Date()
         datePicker.isHighlighted = false
         datePicker.addTarget(self, action: #selector(updateDate), for: .valueChanged)
-        dateTextField.addTarget(self, action: #selector(updateDate), for: .touchDown)
-        dateTextField.inputView = datePicker
+        dateTextField.textField.addTarget(self, action: #selector(updateDate), for: .touchDown)
+        dateTextField.textField.inputView = datePicker
         
         dateTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -171,33 +169,20 @@ class PostRideTripDetailsViewController: PostRideViewController {
         view.addSubview(calendarIcon)
         
         calendarIcon.snp.makeConstraints { make in
-            make.centerY.equalTo(dateTextField)
+            make.centerY.equalTo(dateTextField.textField)
             make.trailing.equalTo(dateTextField).inset(iconSpacing)
             make.size.equalTo(iconSize)
-        }
-        
-        requiredLabel.text = "*required"
-        requiredLabel.font = UIFont(name: "Roboto", size: 12)
-        requiredLabel.textColor = UIColor.scooped.offBlack
-        view.addSubview(requiredLabel)
-        
-        requiredLabel.snp.makeConstraints { make in
-            make.leading.equalTo(dateTextField).inset(10)
-            make.top.equalTo(dateTextField.snp.bottom).inset(-4)
         }
     }
     
     private func setupTimeView() {
         timeTextField.delegate = self
-        timeTextField.textColor = UIColor.scooped.offBlack
-        timeTextField.attributedPlaceholder = NSAttributedString(
-            string: "Departure time",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
-        timeTextField.inputView = timePicker
+        timeTextField.setup(title: "Departure time")
+        timeTextField.textField.inputView = timePicker
         timePicker.datePickerMode = .time
         timePicker.preferredDatePickerStyle = .wheels
         timePicker.addTarget(self, action: #selector(updateTime), for: .valueChanged)
-        timeTextField.addTarget(self, action: #selector(updateTime), for: .touchDown)
+        timeTextField.textField.addTarget(self, action: #selector(updateTime), for: .touchDown)
         
         timeTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
@@ -218,49 +203,49 @@ class PostRideTripDetailsViewController: PostRideViewController {
         }
         
         minTextField.delegate = self
-        minTextField.textColor = UIColor.scooped.offBlack
-        minTextField.attributedPlaceholder = NSAttributedString(
-            string: "Minimum",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
-        minTextField.keyboardType = .numberPad
+        minTextField.setup(title: "Minimum", error: "Please complete")
+        minTextField.textField.keyboardType = .numberPad
         travelersContainerView.addSubview(minTextField)
         
         minTextField.snp.makeConstraints { make in
             make.leading.equalToSuperview()
+            make.top.equalTo(travelersLabel.snp.bottom).offset(24)
             make.width.equalTo((stackViewWidth - 15.0)/2)
             make.height.equalTo(textFieldHeight)
-            make.top.equalTo(travelersLabel.snp.bottom).inset(-8)
         }
         
         maxTextField.delegate = self
-        maxTextField.textColor = UIColor.scooped.offBlack
-        maxTextField.attributedPlaceholder = NSAttributedString(
-            string: "Maximum",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
-        maxTextField.keyboardType = .numberPad
+        maxTextField.setup(title: "Maximum", error: "Please complete")
+        maxTextField.textField.keyboardType = .numberPad
         travelersContainerView.addSubview(maxTextField)
         
         maxTextField.snp.makeConstraints { make in
+            make.top.equalTo(minTextField)
             make.leading.equalTo(minTextField.snp.trailing).inset(-15)
             make.trailing.equalToSuperview()
             make.height.equalTo(textFieldHeight)
-            make.top.equalTo(travelersLabel.snp.bottom).inset(-8)
+        }
+
+        minMaxLabel.text = "The minimum must be less than the maximum"
+        minMaxLabel.font = .systemFont(ofSize: 12)
+        minMaxLabel.textColor = UIColor.scooped.errorRed
+        minMaxLabel.isHidden = true
+        travelersContainerView.addSubview(minMaxLabel)
+
+        minMaxLabel.snp.makeConstraints { make in
+            make.leading.equalTo(minTextField).inset(10)
+            make.top.equalTo(minTextField.snp.bottom).offset(-5)
+            make.bottom.equalToSuperview()
         }
     }
     
     private func setupDetailsView() {
         detailsTextField.delegate = self
-        detailsTextField.text = "Details"
-        detailsTextField.textContainerInset = UIEdgeInsets(top: 18.5, left: 16, bottom: 18.5, right: 16)
-        detailsTextField.textColor = .black
-        detailsTextField.layer.borderWidth = textFieldBorderWidth
-        detailsTextField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
-        detailsTextField.layer.cornerRadius = textFieldCornerRadius
-        detailsTextField.font = .systemFont(ofSize: 16)
+        detailsTextField.setup(title: "Details")
         
         detailsTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(textFieldHeight)
+            make.height.equalTo(82)
         }
         
         detailsExample.text = "ie. splitting gas, departure time, etc."
@@ -273,69 +258,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
             make.top.equalTo(detailsTextField.snp.bottom).inset(-4)
         }
     }
-    
-    private func configTextFields() {
-        [dateTextField, timeTextField, minTextField, maxTextField].forEach { text in
-            text.layer.borderWidth = textFieldBorderWidth
-            text.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
-            text.layer.cornerRadius = textFieldCornerRadius
-            text.font = textFieldFont
-        }
-    }
-    
-    private func setupLabels() {
-        let labelLeading = 10
-        let labelTop = 8
-        [dateLabel, timeLabel, minLabel, maxLabel, detailsLabel].forEach { label in
-            label.font = .systemFont(ofSize: 12)
-            label.textColor = UIColor.scooped.scoopDarkGreen
-            label.backgroundColor = .white
-            label.textAlignment = .center
-            label.isHidden = true
-            view.addSubview(label)
-        }
-        
-        dateLabel.text = "Departure date"
-        dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(dateTextField).inset(-labelTop)
-            make.leading.equalTo(dateTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(91)
-        }
-        
-        timeLabel.text = "Departure time"
-        timeLabel.snp.makeConstraints { make in
-            make.top.equalTo(timeTextField).inset(-labelTop)
-            make.leading.equalTo(timeTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(91)
-        }
-        
-        minLabel.text = "Minimum"
-        minLabel.snp.makeConstraints { make in
-            make.top.equalTo(minTextField).inset(-labelTop)
-            make.leading.equalTo(minTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(54)
-        }
-        
-        maxLabel.text = "Maximum"
-        maxLabel.snp.makeConstraints { make in
-            make.top.equalTo(maxTextField).inset(-labelTop)
-            make.leading.equalTo(maxTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(57)
-        }
-        
-        detailsLabel.text = "Details"
-        detailsLabel.snp.makeConstraints { make in
-            make.top.equalTo(detailsTextField).inset(-labelTop)
-            make.leading.equalTo(detailsTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(42)
-        }
-    }
-    
+
     // MARK: - Helper Functions
     
     private func getTravelDate() -> Date? {
@@ -357,13 +280,13 @@ class PostRideTripDetailsViewController: PostRideViewController {
     @objc private func updateDate() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-        dateTextField.text = dateFormatter.string(from: datePicker.date)
+        dateTextField.textField.text = dateFormatter.string(from: datePicker.date)
     }
     
     @objc private func updateTime() {
         let timeFormatter = DateFormatter()
         timeFormatter.timeStyle = .short
-        timeTextField.text = timeFormatter.string(from: timePicker.date)
+        timeTextField.textField.text = timeFormatter.string(from: timePicker.date)
     }
     
 }
@@ -373,7 +296,7 @@ class PostRideTripDetailsViewController: PostRideViewController {
 extension PostRideTripDetailsViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == maxTextField || textField == minTextField {
+        if textField == maxTextField.textField || textField == minTextField.textField {
             let numOnly = CharacterSet.decimalDigits
             let characters = CharacterSet(charactersIn: string)
             // Source: https://stackoverflow.com/a/31363255/5278889
@@ -386,38 +309,49 @@ extension PostRideTripDetailsViewController: UITextFieldDelegate {
             return false
         }
     }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 2
-        textField.layer.borderColor = UIColor.scooped.scoopDarkGreen.cgColor
-        textField.placeholder = ""
-        if textField == dateTextField {
-            dateLabel.textColor = UIColor.scooped.scoopDarkGreen
-            dateLabel.isHidden = false
-        } else if textField == timeTextField {
-            timeLabel.textColor = UIColor.scooped.scoopDarkGreen
-            timeLabel.isHidden = false
-        } else if textField == maxTextField {
-            maxLabel.textColor = UIColor.scooped.scoopDarkGreen
-            maxLabel.isHidden = false
-        } else {
-            minLabel.textColor = UIColor.scooped.scoopDarkGreen
-            minLabel.isHidden = false
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+            associatedView.hidesLabel(isHidden: false)
+        }
+
+        if textField == minTextField.textField || textField == maxTextField.textField {
+            minMaxLabel.isHidden = true
         }
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
-        if textField == dateTextField {
-            dateLabel.textColor = UIColor.scooped.textFieldBorderColor
-        } else if textField == timeTextField {
-            timeLabel.textColor = UIColor.scooped.textFieldBorderColor
-        } else if textField == maxTextField {
-            maxLabel.textColor = UIColor.scooped.textFieldBorderColor
-        } else {
-            minLabel.textColor = UIColor.scooped.textFieldBorderColor
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: false)
+            if textField.text?.isEmpty ?? true {
+                associatedView.hidesLabel(isHidden: true)
+            }
         }
+
+        var responses: [String] = []
+        [dateTextField, timeTextField, minTextField, maxTextField, ].forEach { textField in
+            responses.append(textField.textField.text ?? "")
+        }
+
+        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
+    }
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+        }
+
+        if textField == minTextField.textField || textField == maxTextField.textField {
+            minMaxLabel.isHidden = true
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
     }
     
 }
@@ -427,35 +361,17 @@ extension PostRideTripDetailsViewController: UITextFieldDelegate {
 extension PostRideTripDetailsViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.black {
-                textView.text = nil
-                textView.textColor = UIColor.scooped.offBlack
-            }
-        textView.layer.borderWidth = 2
-        textView.layer.borderColor = UIColor.scooped.scoopDarkGreen.cgColor
-        detailsLabel.textColor = UIColor.scooped.scoopDarkGreen
-        detailsLabel.isHidden = false
-        
-        textView.snp.removeConstraints()
-        textView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(82)
+        if let paddedTextView = textView as? PaddedTextView,
+           let associatedView = paddedTextView.associatedView as? LabeledTextView {
+            associatedView.labeledTextView(isSelected: true)
         }
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
-        detailsLabel.textColor = UIColor.scooped.textFieldBorderColor
-    }
-    
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        var responses: [String] = []
-        [dateTextField, timeTextField, minTextField, maxTextField].forEach { textField in
-            responses.append(textField.text ?? "")
+        if let paddedTextView = textView as? PaddedTextView,
+           let associatedView = paddedTextView.associatedView as? LabeledTextView {
+            associatedView.labeledTextView(isSelected: false)
         }
-        
-        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
     }
     
 }
