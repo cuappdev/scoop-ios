@@ -12,11 +12,9 @@ import UIKit
 class InitialPostRideViewController: PostRideViewController {
     
     // MARK: - Views
-    
-    private let arrivalLabel = UILabel()
-    private let arrivalTextField = ShiftedRightTextField()
-    private let departureLabel = UILabel()
-    private let departureTextField = ShiftedRightTextField()
+
+    private let arrivalTextField = LabeledTextField(isShifted: true)
+    private let departureTextField = LabeledTextField(isShifted: true)
     private let nextButton = UIButton()
     private let prevButton = UIButton()
     private let studentDriverButton = UIButton()
@@ -36,32 +34,35 @@ class InitialPostRideViewController: PostRideViewController {
         
         // MARK: Using OnboardingViewController's views
         
-        nextAction = UIAction { _ in
+        nextAction = UIAction { [self] _ in
             guard let navCtrl = self.navigationController else {
                 return
             }
-            
-            guard let arrival = self.arrivalTextField.text, !arrival.isEmpty,
-                  let departure = self.departureTextField.text, !departure.isEmpty,
-                  self.studentDriverButton.isSelected || self.taxiButton.isSelected
-            else {
-                self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
-                return
+
+            [departureTextField, arrivalTextField].forEach { textField in
+                if (textField.textField.text ?? "").isEmpty {
+                    textField.displayError()
+                }
             }
             
-            NetworkManager.shared.currentRide.type = self.studentDriverButton.isSelected ? "Student Driver" : "Shared Taxi"
-            if let arrival = self.arrivalTextField.text,
-               let departure = self.departureTextField.text,
-               let arrivalID = self.arrivalLocationID,
-               let departureID = self.departureLocationID {
+            guard let arrival = arrivalTextField.textField.text, !arrival.isEmpty,
+                  let departure = departureTextField.textField.text, !departure.isEmpty,
+                  studentDriverButton.isSelected || taxiButton.isSelected
+            else { return }
+            
+            NetworkManager.shared.currentRide.type = studentDriverButton.isSelected ? "Student Driver" : "Shared Taxi"
+            if let arrival = arrivalTextField.textField.text,
+               let departure = departureTextField.textField.text,
+               let arrivalID = arrivalLocationID,
+               let departureID = departureLocationID {
                 NetworkManager.shared.currentRide.path.endLocationPlaceId = arrivalID
                 NetworkManager.shared.currentRide.path.endLocationName = arrival
                 NetworkManager.shared.currentRide.path.startLocationName = departure
                 NetworkManager.shared.currentRide.path.startLocationPlaceId = departureID
             }
             
-            self.setupBackButton()
-            self.delegate?.didTapNext(navCtrl, nextViewController: nil)
+            setupBackButton()
+            delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
         setupNextButton(action: nextAction ?? UIAction(handler: { _ in
@@ -73,7 +74,6 @@ class InitialPostRideViewController: PostRideViewController {
         setupTaxiButton()
         setupDepartureTextField()
         setupArrivalTextField()
-        setupLabels()
         setupBackButton()
         backButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
     }
@@ -140,23 +140,17 @@ class InitialPostRideViewController: PostRideViewController {
     
     private func setupDepartureTextField() {
         let labelFont = UIFont(name: "Rambla-Regular", size: 16)
-        let textFieldBorderWidth = 1.0
-        let textFieldCornerRadius = 8.0
-        let textFieldFont = UIFont(name: "SFPro", size: 16)
+        let textFieldHeight = 56
         
         let departureLabel = UILabel()
         departureLabel.text = "Departure"
         departureLabel.font = labelFont
         departureLabel.accessibilityLabel = "name"
         departureLabel.textColor = UIColor.scooped.offBlack
-        
-        departureTextField.layer.borderWidth = textFieldBorderWidth
-        departureTextField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
-        departureTextField.layer.cornerRadius = textFieldCornerRadius
-        departureTextField.font = textFieldFont
-        departureTextField.textColor = .darkGray
-        departureTextField.attributedPlaceholder = NSAttributedString(string:"Departure location", attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
-        departureTextField.addTarget(self, action: #selector(presentDepartureSearch), for: .touchDown)
+
+        departureTextField.delegate = self
+        departureTextField.setup(title: "Departure location")
+        departureTextField.textField.addTarget(self, action: #selector(presentDepartureSearch), for: .touchDown)
         
         // Sets up the icon inside the text field.
         let iconContainer = UIView(frame: CGRect(x: 0, y: 0, width: 25, height: 15))
@@ -165,36 +159,32 @@ class InitialPostRideViewController: PostRideViewController {
         departureIcon.contentMode = .scaleAspectFit
         iconContainer.addSubview(departureIcon)
         
-        departureTextField.leftView = iconContainer;
-        departureTextField.leftViewMode = UITextField.ViewMode.always
-        departureTextField.leftViewMode = .always
+        departureTextField.textField.leftView = iconContainer;
+        departureTextField.textField.leftViewMode = UITextField.ViewMode.always
+        departureTextField.textField.leftViewMode = .always
         view.addSubview(departureTextField)
         
         departureTextField.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.leading)
-            make.top.equalTo(taxiButton.snp.bottom).offset(24)
+            make.top.equalTo(taxiButton.snp.bottom).offset(36)
             make.trailing.equalToSuperview().inset(32)
+            make.height.equalTo(textFieldHeight)
         }
     }
     
     private func setupArrivalTextField() {
         let labelFont = UIFont(name: "Rambla-Regular", size: 16)
-        let textFieldBorderWidth = 1.0
-        let textFieldCornerRadius = 8.0
-        let textFieldFont = UIFont(name: "SFPro", size: 16)
+        let textFieldHeight = 56
         
         let arrivalLabel = UILabel()
         arrivalLabel.text = "Departure"
         arrivalLabel.font = labelFont
         arrivalLabel.accessibilityLabel = "name"
         arrivalLabel.textColor = UIColor.scooped.offBlack
-        
-        arrivalTextField.textColor = .darkGray
-        arrivalTextField.layer.borderWidth = textFieldBorderWidth
-        arrivalTextField.layer.borderColor = UIColor.scooped.textFieldBorderColor.cgColor
-        arrivalTextField.layer.cornerRadius = textFieldCornerRadius
-        arrivalTextField.font = textFieldFont
-        arrivalTextField.attributedPlaceholder = NSAttributedString(string:"Arrival location", attributes: [NSAttributedString.Key.foregroundColor: UIColor.scooped.offBlack])
+
+        arrivalTextField.delegate = self
+        arrivalTextField.setup(title: "Arrival location")
+
         // Sets up the icon inside the text field.
         let iconContainer = UIView(frame: CGRect(x: 0, y: 0, width: 25, height: 15))
         let arrivalIcon = UIImageView(frame: CGRect(x: 10, y: -2.5, width: 20, height: 20))
@@ -202,45 +192,16 @@ class InitialPostRideViewController: PostRideViewController {
         arrivalIcon.contentMode = .scaleAspectFit
         iconContainer.addSubview(arrivalIcon)
         
-        arrivalTextField.leftView = iconContainer;
-        arrivalTextField.leftViewMode = .always
-        arrivalTextField.addTarget(self, action: #selector(presentArrivalSearch), for: .touchDown)
+        arrivalTextField.textField.leftView = iconContainer;
+        arrivalTextField.textField.leftViewMode = .always
+        arrivalTextField.textField.addTarget(self, action: #selector(presentArrivalSearch), for: .touchDown)
         view.addSubview(arrivalTextField)
         
         arrivalTextField.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.leading)
             make.top.equalTo(departureTextField.snp.bottom).offset(24)
             make.trailing.equalToSuperview().inset(32)
-        }
-    }
-    
-    private func setupLabels() {
-        let labelLeading = 10
-        let labelTop = 8
-        [departureLabel, arrivalLabel].forEach { label in
-            label.font = .systemFont(ofSize: 12)
-            label.textColor = UIColor.scooped.scoopDarkGreen
-            label.backgroundColor = .white
-            label.textAlignment = .center
-            label.isHidden = true
-            view.addSubview(label)
-        }
-        
-        departureLabel.text = "Departure"
-        arrivalLabel.text = "Arrival"
-        
-        departureLabel.snp.makeConstraints { make in
-            make.top.equalTo(departureTextField).inset(-labelTop)
-            make.leading.equalTo(departureTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(65)
-        }
-        
-        arrivalLabel.snp.makeConstraints { make in
-            make.top.equalTo(arrivalTextField).inset(-labelTop)
-            make.leading.equalTo(arrivalTextField).inset(labelLeading)
-            make.height.equalTo(16)
-            make.width.equalTo(40)
+            make.height.equalTo(textFieldHeight)
         }
     }
     
@@ -279,7 +240,7 @@ class InitialPostRideViewController: PostRideViewController {
     private func checkButtonStatus() {
         var responses: [String] = []
         [arrivalTextField, departureTextField].forEach { textField in
-            responses.append(textField.text ?? "")
+            responses.append(textField.textField.text ?? "")
         }
         
         setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
@@ -293,18 +254,59 @@ extension InitialPostRideViewController: SearchInitialViewControllerDelegate {
     
     func didSelectLocation(viewController: UIViewController, location: GMSPlace) {
         if viewController is DepartureSearchViewController {
-            departureTextField.text = location.name
+            departureTextField.textField.text = location.name
             departureLocationID = location.placeID
-            departureLabel.textColor = UIColor.scooped.offBlack
-            departureLabel.isHidden = false
+            departureTextField.hidesLabel(isHidden: false)
+            departureTextField.hideError()
         } else if viewController is ArrivalSearchViewController {
-            arrivalTextField.text = location.name
+            arrivalTextField.textField.text = location.name
             arrivalLocationID = location.placeID
-            arrivalLabel.textColor = UIColor.scooped.offBlack
-            arrivalLabel.isHidden = false
+            arrivalTextField.hidesLabel(isHidden: false)
+            arrivalTextField.hideError()
         }
         
         checkButtonStatus()
     }
     
+}
+
+// MARK: - UITextFieldDelegate
+
+extension InitialPostRideViewController: UITextFieldDelegate {
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+            associatedView.hidesLabel(isHidden: false)
+        }
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: false)
+            if textField.text?.isEmpty ?? true {
+                associatedView.hidesLabel(isHidden: true)
+            }
+        }
+
+        var responses: [String] = []
+        [departureTextField, arrivalTextField].forEach { textField in
+            responses.append(textField.textField.text ?? "")
+        }
+
+        setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
+    }
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+    }
 }

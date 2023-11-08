@@ -17,6 +17,8 @@ extension UIColor {
         let darkerGreen = UIColor(red: 0, green: 0.42, blue: 0.33, alpha: 1)
         let disabledGreen = UIColor(red: 219/255, green: 229/255, blue: 223/255, alpha: 1)
         let disabledGrey = UIColor(red: 136/255, green: 153/255, blue: 155/255, alpha: 1)
+        let errorRed = UIColor(red: 186/255, green: 26/255, blue: 26/255, alpha: 1)
+        let errorRed2 = UIColor(red: 105/255, green: 0/255, blue: 5/255, alpha: 1)
         let labelGray = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1)
         let linearGradient = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         let mutedGrey = UIColor(red: 106/255, green: 115/255, blue: 125/255, alpha: 1)

@@ -19,22 +19,17 @@ class LabeledTextView: UIView {
     // MARK: - Setup Views
 
     func setup(title: String, placeholder: String? = nil) {
-        var text = title
-        if let placeholder = placeholder {
-            text = placeholder
-        }
-
-        setupTextField(placeholder: text)
+        setupTextField()
         setupLabel(title: title)
     }
 
-    private func setupTextField(placeholder: String) {
+    private func setupTextField() {
         textView.font = .systemFont(ofSize: 16)
         textView.textColor = .black
         textView.backgroundColor = .white
         textView.layer.borderWidth = 1
         textView.layer.cornerRadius = 4
-        textView.layer.borderColor = UIColor.black.cgColor
+        textView.layer.borderColor = UIColor.scooped.mutedGrey.cgColor
         textView.delegate = self.delegate
         textView.isUserInteractionEnabled = true
         textView.isSelectable = true
@@ -65,13 +60,20 @@ class LabeledTextView: UIView {
 
     func labeledTextView(isSelected: Bool) {
         if isSelected {
+            nameLabel.isHidden = false
             nameLabel.textColor = UIColor.scooped.scoopDarkGreen
             textView.layer.borderWidth = 2
             textView.layer.borderColor = UIColor.scooped.scoopDarkGreen.cgColor
         } else {
-            nameLabel.textColor = UIColor.scooped.mutedGrey
             textView.layer.borderWidth = 1
-            textView.layer.borderColor = UIColor.black.cgColor
+
+            if let text = textView.text, !text.isEmpty {
+                nameLabel.textColor = UIColor.black
+                textView.layer.borderColor = UIColor.black.cgColor
+            } else {
+                nameLabel.textColor = UIColor.scooped.mutedGrey
+                textView.layer.borderColor = UIColor.scooped.mutedGrey.cgColor
+            }
         }
     }
 

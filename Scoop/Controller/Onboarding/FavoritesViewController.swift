@@ -23,24 +23,28 @@ class FavoritesViewController: OnboardingViewController {
         view.backgroundColor = .white
         setupTitle(name: "Favorites")
         
-        nextAction = UIAction { _ in
-            guard let navCtrl = self.navigationController else { return }
-    
-            guard let snack = self.snackTextField.textField.text, !snack.isEmpty,
-                  let song = self.songTextField.textField.text, !song.isEmpty,
-                  let stop = self.stopTextField.textField.text, !stop.isEmpty else {
-                      self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
-                      
-                      return
-                  }
+        nextAction = UIAction { [self] _ in
+            guard let navCtrl = navigationController else { return }
+            
+            [snackTextField, songTextField, stopTextField].forEach { textField in
+                if (textField.textField.text ?? "").isEmpty {
+                    textField.displayError()
+                }
+            }
+            
+            guard let snack = snackTextField.textField.text, !snack.isEmpty,
+                  let song = songTextField.textField.text, !song.isEmpty,
+                  let stop = stopTextField.textField.text, !stop.isEmpty else {
+                return
+            }
             
             let snackTrimmed = snack.trimmingCharacters(in: .whitespacesAndNewlines)
             let songTrimmed = song.trimmingCharacters(in: .whitespacesAndNewlines)
             let stopTrimmed = stop.trimmingCharacters(in: .whitespacesAndNewlines)
-            self.addPrompt(name: "Snack", placeholder: "Chips", answer: snackTrimmed)
-            self.addPrompt(name: "Song", placeholder: "Favorite Song", answer: songTrimmed)
-            self.addPrompt(name: "Stop", placeholder: "Gates Hall", answer: stopTrimmed)
-            self.delegate?.didTapNext(navCtrl, nextViewController: nil)
+            addPrompt(name: "Snack", placeholder: "Chips", answer: snackTrimmed)
+            addPrompt(name: "Song", placeholder: "Favorite Song", answer: songTrimmed)
+            addPrompt(name: "Stop", placeholder: "Gates Hall", answer: stopTrimmed)
+            delegate?.didTapNext(navCtrl, nextViewController: nil)
         }
         
         setupTitleLines()
@@ -53,9 +57,6 @@ class FavoritesViewController: OnboardingViewController {
     // MARK: - Setup View Functions
     
     private func setupStackView() {
-        let textFieldBorderWidth = 1.0
-        let textFieldCornerRadius = 4.0
-        let textFieldFont = UIFont(name: "SFPro", size: 16)
         let leadingTrailingInset = 32
         let textFieldHeight = 56
         
@@ -105,21 +106,19 @@ class FavoritesViewController: OnboardingViewController {
 extension FavoritesViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if let onboardingTextField = textField as? OnboardingTextField {
-            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
-                associatedView.labeledTextField(isSelected: true)
-                associatedView.hidesLabel(isHidden: false)
-            }
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+            associatedView.hidesLabel(isHidden: false)
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let onboardingTextField = textField as? OnboardingTextField {
-            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
-                associatedView.labeledTextField(isSelected: false)
-                if textField.text?.isEmpty ?? true {
-                    associatedView.hidesLabel(isHidden: true)
-                }
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: false)
+            if textField.text?.isEmpty ?? true {
+                associatedView.hidesLabel(isHidden: true)
             }
         }
         
@@ -129,6 +128,13 @@ extension FavoritesViewController: UITextFieldDelegate {
         }
         
         setNextButtonColor(disabled: !textFieldsComplete(texts: responses))
+    }
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

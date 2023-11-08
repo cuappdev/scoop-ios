@@ -30,18 +30,24 @@ class AboutYouViewController: OnboardingViewController {
         view.backgroundColor = .white
         setupTitle(name: "About you")
         
-        nextAction = UIAction { _ in
+        nextAction = UIAction { [self] _ in
             guard let navCtrl = self.navigationController else {
                 return
+            }
+
+            [nameTextField, pronounsTextField, hometownTextField, yearTextField].forEach { textField in
+                if (textField.textField.text ?? "").isEmpty {
+                    textField.displayError()
+                }
             }
             
             guard let name = self.nameTextField.textField.text, !name.isEmpty,
                   let pronouns = self.pronounsTextField.textField.text, !pronouns.isEmpty,
                   let hometown = self.hometownTextField.textField.text, !hometown.isEmpty,
                   let year = self.yearTextField.textField.text, !year.isEmpty else {
-                      self.presentErrorAlert(title: "Error", message: "Please complete all fields.")
-                      return
-                  }
+                return
+            }
+
             NetworkManager.shared.currentUser.pronouns = pronouns
             NetworkManager.shared.currentUser.grade = year
             let hometownTrimmed = hometown.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -65,9 +71,6 @@ class AboutYouViewController: OnboardingViewController {
         var stackViewMultiplier = 0.20
         let leadingTrailingInset = 32
         let screenSize = UIScreen.main.bounds
-        let textFieldBorderWidth = 1.0
-        let textFieldCornerRadius = 4.0
-        let textFieldFont = UIFont(name: "SFPro", size: 16)
         let textFieldHeight = 56
         
         if screenSize.height < 2000 {
@@ -150,25 +153,23 @@ class AboutYouViewController: OnboardingViewController {
 extension AboutYouViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return !(textField == yearTextField || textField == pronounsTextField)
+        return !(textField == yearTextField.textField || textField == pronounsTextField.textField)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if let onboardingTextField = textField as? OnboardingTextField {
-            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
-                associatedView.labeledTextField(isSelected: true)
-                associatedView.hidesLabel(isHidden: false)
-            }
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+            associatedView.hidesLabel(isHidden: false)
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let onboardingTextField = textField as? OnboardingTextField {
-            if let associatedView = onboardingTextField.associatedView as? LabeledTextField {
-                associatedView.labeledTextField(isSelected: false)
-                if textField.text?.isEmpty ?? true {
-                    associatedView.hidesLabel(isHidden: true)
-                }
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: false)
+            if textField.text?.isEmpty ?? true {
+                associatedView.hidesLabel(isHidden: true)
             }
         }
         
@@ -182,6 +183,13 @@ extension AboutYouViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
+    }
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let onboardingTextField = textField as? OnboardingTextField,
+           let associatedView = onboardingTextField.associatedView as? LabeledTextField {
+            associatedView.labeledTextField(isSelected: true)
+        }
     }
     
 }
