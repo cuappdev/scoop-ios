@@ -57,7 +57,6 @@ extension UIColor {
             UIColor.white.cgColor,
             UIColor.white.cgColor,
             UIColor.white.cgColor,
-            UIColor.white.cgColor,
             UIColor.white.cgColor
         ]
     }

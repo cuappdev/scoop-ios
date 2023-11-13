@@ -14,15 +14,21 @@ extension UIImage {
 
     struct Scooped {
         let blockCallIcon = UIImage(named: "blockCallIcon")
+        let blockIcon = UIImage(named: "blockIcon")
         let cancelIcon = UIImage(named: "cancelIcon")
         let dottedLine = UIImage(named: "dottedline")
+        let editProfileIcon = UIImage(named: "editProfileIcon")
         let emptyImage = UIImage(named: "emptyimage")
         let notifIcon = UIImage(named: "notifIcon")
         let profileBackground = UIImage(named: "profileBackground")
         let profileButton = UIImage(named: "profilebutton")
         let setttingsIcon = UIImage(named: "settingsIcon")
+        let signoutIcon = UIImage(named: "signoutIcon")
         let sliderThumb = UIImage(named: "SliderThumb")
         let sliderTicks = UIImage(named: "SliderTicks")
+        let sliderTrack = UIImage(named: "track")
+        let reportIcon = UIImage(named: "reportIcon")
+        let rideHistoryIcon = UIImage(named: "rideHistoryIcon")
     }
     
     func imageToB64(compression: CGFloat) -> String {

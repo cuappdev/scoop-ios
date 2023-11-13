@@ -449,6 +449,8 @@ class EditProfileViewController: UIViewController {
         talkativeSlider.minimumTrackTintColor = UIColor.black
         talkativeSlider.maximumTrackTintColor = UIColor.black
         talkativeSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
+        talkativeSlider.setMaximumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
+        talkativeSlider.setMinimumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
         preferencesStackView.addArrangedSubview(talkativeSlider)
 
         talkativeSlider.snp.makeConstraints { make in
@@ -503,6 +505,8 @@ class EditProfileViewController: UIViewController {
         musicSlider.minimumTrackTintColor = UIColor.black
         musicSlider.maximumTrackTintColor = UIColor.black
         musicSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
+        musicSlider.setMaximumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
+        musicSlider.setMinimumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
         preferencesStackView.addArrangedSubview(musicSlider)
         
         musicSlider.snp.makeConstraints { make in

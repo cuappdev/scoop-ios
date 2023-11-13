@@ -14,6 +14,7 @@ extension UIFont {
 
     struct Scooped {
         let bodyBold = UIFont.systemFont(ofSize: 16, weight: .bold)
+        let bodyMedium = UIFont(name: "Roboto-Regular", size: 14)
         let bodyNormal = UIFont.systemFont(ofSize: 16)
         let bodySemibold = UIFont.systemFont(ofSize: 16, weight: .semibold)
         let flowHeader = UIFont(name: "Sen-Regular", size: 24)
