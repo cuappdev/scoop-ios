@@ -29,10 +29,6 @@ class PopUpViewController: UIViewController {
         setupBlurEffectView()
         setupContainerView()
         setupStackView()
-        setupTitle()
-        setupSubtitle()
-        setupActionButton()
-        setupCancelButton()
     }
 
     // MARK: - Initializers
@@ -47,11 +43,18 @@ class PopUpViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(title: String, subtitle: String?, actionButtonText: String, delegate: PopUpViewDelegate) {
-        titleLabel.text = title
-        subtitleLabel.text = subtitle ?? ""
+    func configure(title: NSMutableAttributedString, subtitle: String, actionButtonText: String, delegate: PopUpViewDelegate) {
+        titleLabel.attributedText = title
+        subtitleLabel.text = subtitle
         actionButton.setAttributedTitle(NSMutableAttributedString(string: actionButtonText, attributes: [NSAttributedString.Key.font: UIFont.scooped.bodyBold]), for: .normal)
         self.delegate = delegate
+
+        setupTitle()
+        if !subtitle.isEmpty {
+            setupSubtitle()
+        }
+        setupActionButton()
+        setupCancelButton()
     }
 
     // MARK: - Setup View Functions
@@ -84,13 +87,12 @@ class PopUpViewController: UIViewController {
 
         stackView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(40)
-            make.horizontalEdges.equalToSuperview().inset(24)
+            make.horizontalEdges.equalToSuperview().inset(28)
             make.bottom.equalToSuperview().inset(24)
         }
     }
 
     private func setupTitle() {
-        titleLabel.font = UIFont.scooped.bodyNormal
         titleLabel.textColor = UIColor.black
         titleLabel.numberOfLines = 2
         titleLabel.textAlignment = .center

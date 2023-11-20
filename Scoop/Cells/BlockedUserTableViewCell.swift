@@ -93,21 +93,48 @@ class BlockedUserTableViewCell: UITableViewCell {
     // MARK: - Helper Functions
 
     @objc private func tapButton() {
-        var blocked = true
         if unblockButton.titleLabel?.text == "Unblock" {
-            unblockButton.setTitle("Block", for: .normal)
-            unblockButton.backgroundColor = UIColor.white
-            unblockButton.layer.borderColor = UIColor.black.cgColor
+            let popUpVC = PopUpViewController()
+
+            let attributedTitle = NSMutableAttributedString(
+                string: "Are you sure you want to unblock \(user?.firstName ?? "") \(user?.lastName ?? "")?",
+                attributes: [NSAttributedString.Key.font: UIFont.scooped.bodyNormal]
+            )
+            let range = attributedTitle.mutableString.range(of: "\(user?.firstName ?? "") \(user?.lastName ?? "")")
+            attributedTitle.addAttributes([NSAttributedString.Key.font: UIFont.scooped.bodyBold], range: range)
+
+            popUpVC.configure(
+                title: attributedTitle,
+                subtitle: "",
+                actionButtonText: "Unblock",
+                delegate: self
+            )
+
+            delegate?.presentPopUp(popUpVC: popUpVC)
         } else {
             unblockButton.setTitle("Unblock", for: .normal)
             unblockButton.backgroundColor = UIColor.scooped.secondaryGreen
             unblockButton.layer.borderColor = UIColor.scooped.secondaryGreen.cgColor
-            blocked = false
-        }
 
-        if let user = user {
-            delegate?.updateBlockedUsers(user: user, isBlocked: blocked)
+            if let user = user {
+                delegate?.updateBlockedUsers(user: user, isBlocked: true)
+            }
         }
     }
 
 }
+
+extension BlockedUserTableViewCell: PopUpViewDelegate {
+
+    func acceptPopUp() {
+        if let user = user {
+            delegate?.updateBlockedUsers(user: user, isBlocked: false)
+        }
+
+        unblockButton.setTitle("Block", for: .normal)
+        unblockButton.backgroundColor = UIColor.white
+        unblockButton.layer.borderColor = UIColor.black.cgColor
+    }
+
+}
+

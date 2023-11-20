@@ -46,7 +46,7 @@ struct TruncUser: Codable {
 }
 
 extension BaseUser {
-    static var dummyData = [
+    static var blockedUsersDummyData = [
         BaseUser(id: 0, netid: "netid", firstName: "Michelle", lastName: "White", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: []),
         BaseUser(id: 1, netid: "netid", firstName: "Lauren", lastName: "Davidson", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: []),
         BaseUser(id: 2, netid: "netid", firstName: "Victor", lastName: "Hunter", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: []),

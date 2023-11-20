@@ -16,7 +16,18 @@ class BlockedUsersViewController: UIViewController {
 
     // MARK: - User Data
 
-    private var blockedUsers: [BaseUser] = BaseUser.dummyData
+    private var user: BaseUser?
+    private var blockedUsers: [BaseUser] = BaseUser.blockedUsersDummyData
+
+    // MARK: - Initializers
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Lifecycle Functions
 
@@ -144,6 +155,7 @@ extension BlockedUsersViewController: UITableViewDataSource {
 
 protocol BlockedUsersDelegate: AnyObject {
     func updateBlockedUsers(user: BaseUser, isBlocked: Bool)
+    func presentPopUp(popUpVC: PopUpViewController)
 }
 
 extension BlockedUsersViewController: BlockedUsersDelegate {
@@ -152,12 +164,16 @@ extension BlockedUsersViewController: BlockedUsersDelegate {
         if isBlocked {
             blockUser()
             // TODO: Temporary while networking call is unimplemented
-            BaseUser.dummyData.removeAll { $0.id == user.id}
+            BaseUser.blockedUsersDummyData.append(user)
         } else {
             unblockUser()
             // TODO: Temporary while networking call is unimplemented
-            BaseUser.dummyData.append(user)
+            BaseUser.blockedUsersDummyData.removeAll { $0.id == user.id }
         }
+    }
+
+    func presentPopUp(popUpVC: PopUpViewController) {
+        present(popUpVC, animated: true)
     }
 
 }

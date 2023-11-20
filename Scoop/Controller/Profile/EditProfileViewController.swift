@@ -645,8 +645,9 @@ class EditProfileViewController: UIViewController {
 
     @objc private func deleteAccount() {
         let popUpVC = PopUpViewController()
+        let attributedTitle = NSMutableAttributedString(string: "Are you sure you want to delete your account?", attributes: [NSAttributedString.Key.font: UIFont.scooped.bodyNormal])
         popUpVC.configure(
-            title: "Are you sure you want to delete your account?",
+            title: attributedTitle,
             subtitle: "This action cannot be undone.",
             actionButtonText: "Delete",
             delegate: self
