@@ -12,9 +12,9 @@ class EmptyStateView: UIView {
 
     // MARK: - Views
 
-    private let mainView = UIView()
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
+    private let stackView = UIStackView()
     private let subLabel = UILabel()
 
     // MARK: - Set Up Views
@@ -24,29 +24,33 @@ class EmptyStateView: UIView {
         titleLabel.text = title
         subLabel.text = subtitle
 
-        setupMainView()
+        setupStackView()
         setupImageView()
-        setupTitleLabel()
+        if !title.isEmpty { setupTitleLabel() }
         setupSubLabel()
     }
 
-    private func setupMainView() {
-        addSubview(mainView)
+    private func setupStackView() {
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        addSubview(stackView)
 
-        mainView.snp.makeConstraints { make in
+        stackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-64)
+            make.centerY.equalTo(safeAreaLayoutGuide.snp.centerY).offset(-28)
         }
     }
 
     private func setupImageView() {
+        stackView.setCustomSpacing(24, after: imageView)
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
-        mainView.addSubview(imageView)
+        stackView.addArrangedSubview(imageView)
+        stackView.setCustomSpacing(24, after: imageView)
 
         imageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview()
             make.width.height.equalTo(50)
         }
     }
@@ -54,23 +58,13 @@ class EmptyStateView: UIView {
     private func setupTitleLabel() {
         titleLabel.font = UIFont.scooped.bodySemibold
         titleLabel.textColor = UIColor.black
-        mainView.addSubview(titleLabel)
-
-        titleLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(24)
-        }
+        stackView.addArrangedSubview(titleLabel)
     }
 
     private func setupSubLabel() {
         subLabel.font = UIFont.scooped.bodyNormal
         subLabel.textColor = UIColor.secondaryLabel
-        mainView.addSubview(subLabel)
-
-        subLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(16)
-        }
+        stackView.addArrangedSubview(subLabel)
     }
 
 }

@@ -25,7 +25,7 @@ class SettingsCellView: UIView {
     }
 
     private func setupIconImageView() {
-        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.contentMode = .scaleAspectFill
         addSubview(iconImageView)
 
         iconImageView.snp.makeConstraints { make in

@@ -222,8 +222,9 @@ class EditProfileViewController: UIViewController {
         uploadPhotoButton.backgroundColor = UIColor.gray
         uploadPhotoButton.contentMode = .scaleAspectFill
         uploadPhotoButton.clipsToBounds = true
-        uploadPhotoButton.addTarget(self, action: #selector(updateProfileImage), for: .touchUpInside)
         imageView.addSubview(uploadPhotoButton)
+
+        uploadPhotoButton.addTarget(self, action: #selector(updateProfileImage), for: .touchUpInside)
         
         uploadPhotoButton.snp.makeConstraints { make in
             make.top.equalTo(profileImageView).offset(96)
@@ -560,7 +561,7 @@ class EditProfileViewController: UIViewController {
         }
     }
 
-    func setupDeleteButton() {
+    private func setupDeleteButton() {
         deleteButton.setTitle("Delete account", for: .normal)
         deleteButton.setTitleColor(UIColor.white, for: .normal)
         deleteButton.titleLabel?.font = UIFont.scooped.bodyBold
@@ -643,18 +644,14 @@ class EditProfileViewController: UIViewController {
     // MARK: - Helper Functions
 
     @objc private func deleteAccount() {
-        deleteUserRequest(
-            firstName: user?.firstName ?? "",
-            lastName: user?.lastName ?? "",
-            grade: user?.grade,
-            phoneNumber: user?.phoneNumber,
-            pronouns: user?.pronouns,
-            prompts: getUserAnswers()
+        let popUpVC = PopUpViewController()
+        popUpVC.configure(
+            title: "Are you sure you want to delete your account?",
+            subtitle: "This action cannot be undone.",
+            actionButtonText: "Delete",
+            delegate: self
         )
-
-        let loginVC = LoginViewController()
-        loginVC.navigationItem.hidesBackButton = true
-        navigationController?.pushViewController(loginVC, animated: false)
+        present(popUpVC, animated: true)
     }
 
     @objc private func cancelEdit() {
@@ -668,6 +665,7 @@ class EditProfileViewController: UIViewController {
         let grade = classTextField.getText()
         let pronouns = pronounsTextField.getText()
         let phoneNumber = phoneNumTextField.getText()
+        let profilePicUrl = profileImageView.image?.imageToB64(compression: 0.5)
 
         hometown = hometownTextField.getText()
         talkative = talkativeSlider.value
@@ -676,7 +674,7 @@ class EditProfileViewController: UIViewController {
         song = songTextField.getText()
         stop = stopTextField.getText()
 
-        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, prompts: getUserAnswers())
+        updateAuthenticatedUserRequest(firstName: firstName, lastName: lastName, grade: grade, phoneNumber: phoneNumber, pronouns: pronouns, profilePicUrl: profilePicUrl, prompts: getUserAnswers())
 
         self.navigationController?.popViewController(animated: true)
     }
@@ -726,6 +724,7 @@ class EditProfileViewController: UIViewController {
         grade: String?,
         phoneNumber: String?,
         pronouns: String?,
+        profilePicUrl: String?,
         prompts: [UserAnswer]
     ) {
         NetworkManager.shared.updateAuthenticatedUser(
@@ -735,7 +734,7 @@ class EditProfileViewController: UIViewController {
             grade: grade ?? "",
             phone_number: phoneNumber ?? "",
             pronouns: pronouns ?? "",
-            prof_pic: user?.profilePicUrl ?? "",
+            prof_pic: profilePicUrl ?? "",
             prompts: prompts
         ) { [weak self] result in
             guard let self = self else { return }
@@ -756,6 +755,7 @@ class EditProfileViewController: UIViewController {
         grade: String?,
         phoneNumber: String?,
         pronouns: String?,
+        profilePic: String?,
         prompts: [UserAnswer]
     ) {
         NetworkManager.shared.deleteUser(
@@ -765,7 +765,7 @@ class EditProfileViewController: UIViewController {
             grade: grade ?? "",
             phone_number: phoneNumber ?? "",
             pronouns: pronouns ?? "",
-            prof_pic: user?.profilePicUrl ?? "",
+            prof_pic: profilePic ?? "",
             prompts: prompts
         ) { result in
             switch result {
@@ -876,5 +876,25 @@ extension EditProfileViewController: UINavigationControllerDelegate, UIImagePick
         dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension EditProfileViewController: PopUpViewDelegate {
+
+    func acceptPopUp() {
+        deleteUserRequest(
+            firstName: user?.firstName ?? "",
+            lastName: user?.lastName ?? "",
+            grade: user?.grade,
+            phoneNumber: user?.phoneNumber,
+            pronouns: user?.pronouns,
+            profilePic: user?.profilePicUrl,
+            prompts: getUserAnswers()
+        )
+
+        let loginVC = LoginViewController()
+        loginVC.navigationItem.hidesBackButton = true
+        navigationController?.pushViewController(loginVC, animated: false)
+    }
+
 }
 

@@ -75,10 +75,10 @@ class NetworkManager {
                 "pronouns": pronouns,
                 "profile_pic_base64": prof_pic,
                 "prompts": prompts.map({ prompt -> [String: Any] in
-                        return [
-                            "id": prompt.id,
-                            "answer": prompt.answer
-                        ]
+                    return [
+                        "id": prompt.id,
+                        "answer": prompt.answer
+                    ]
                 })
             ]
         AF.request("\(hostEndpoint)/api/me/", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
@@ -155,7 +155,7 @@ class NetworkManager {
         }
     }
     
-    func getAllUsers(completion: @escaping (Result<[BaseUser], Error>) -> Void ) {
+    func getAllUsers(completion: @escaping (Result<[BaseUser], Error>) -> Void) {
         AF.request("\(hostEndpoint)/api/dev/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
@@ -170,6 +170,25 @@ class NetworkManager {
             case .failure(let error):
                 completion(.failure(error))
                 print("Request getAllUsers Failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func getBlockedUsers(completion: @escaping (Result<[BaseUser], Error>) -> Void) {
+        AF.request("\(hostEndpoint)/api/block/", method: .get, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                do {
+                    let blockedUsers = try jsonDecoder.decode([BaseUser].self, from: data)
+                    completion(.success(blockedUsers))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+                print("Request getBlockedUsers Failed: \(error.localizedDescription)")
             }
         }
     }
@@ -346,6 +365,7 @@ class NetworkManager {
             "departure_datetime": departureTime,
             "driver": driver
         ]
+//        print(params.map { "\($0.key): \($0.value)" })
         
         AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
@@ -356,6 +376,10 @@ class NetworkManager {
                 do {
                     let ride = try jsonDecoder.decode(Ride.self, from: data)
                     completion(.success(ride))
+                    print(ride.creator.firstName)
+                    print(ride.driver?.firstName)
+                    print(ride.departureDatetime)
+                    print(ride.description)
                 } catch {
                     completion(.failure(error))
                 }

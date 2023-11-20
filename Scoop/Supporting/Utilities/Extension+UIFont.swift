@@ -17,6 +17,7 @@ extension UIFont {
         let bodyMedium = UIFont(name: "Roboto-Regular", size: 14)
         let bodyNormal = UIFont.systemFont(ofSize: 16)
         let bodySemibold = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        let buttonSemibold = UIFont.systemFont(ofSize: 12, weight: .semibold)
         let flowHeader = UIFont(name: "Sen-Regular", size: 24)
         let subheader = UIFont(name: "Rambla-Regular", size: 16)
     }

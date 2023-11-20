@@ -72,7 +72,7 @@ class SettingsViewController: UIViewController {
 
     private func setupStackView() {
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = 0
         stackView.alignment = .leading
         stackView.distribution = .fill
         view.addSubview(stackView)
@@ -84,20 +84,63 @@ class SettingsViewController: UIViewController {
     }
 
     private func setupSettingsCells() {
+        let line1 = UIImageView()
+        let line2 = UIImageView()
+
+        let lineBreaks = [line1, line2]
+        lineBreaks.forEach { line in
+            line.image = UIImage.scooped.lineBreak
+            line.contentMode = .scaleAspectFit
+
+            line.snp.makeConstraints { make in
+                make.height.equalTo(4)
+            }
+        }
+
+        let blockedTap = UITapGestureRecognizer(target: self, action: #selector(pushBlockedUsersVC))
+        blockedView.addGestureRecognizer(blockedTap)
         blockedView.setup(icon: UIImage.scooped.blockIcon!, text: "Blocked users")
+        stackView.addArrangedSubview(blockedView)
+
+        stackView.addArrangedSubview(line1)
+
+        let reportTap = UITapGestureRecognizer(target: self, action: #selector(pushReportProblemVC))
+        reportView.addGestureRecognizer(reportTap)
         reportView.setup(icon: UIImage.scooped.reportIcon!, text: "Report a problem")
+        stackView.addArrangedSubview(reportView)
+
+        stackView.addArrangedSubview(line2)
+
+        let signoutTap = UITapGestureRecognizer(target: self, action: #selector(signout))
+        signoutView.addGestureRecognizer(signoutTap)
         signoutView.setup(icon: UIImage.scooped.signoutIcon!, text: "Sign out")
+        stackView.addArrangedSubview(signoutView)
 
-        let views = [blockedView, reportView, signoutView]
-
-        views.forEach { view in
-            stackView.addArrangedSubview(view)
-
-            view.snp.makeConstraints { make in
+        let cells = [blockedView, reportView, signoutView]
+        cells.forEach { cell in
+            cell.snp.makeConstraints { make in
                 make.leading.trailing.equalToSuperview()
                 make.height.equalTo(52)
             }
         }
+    }
+
+    // MARK: - Helper Functions
+
+    @objc private func pushBlockedUsersVC() {
+        let blockedUsersVC = BlockedUsersViewController()
+        navigationController?.pushViewController(blockedUsersVC, animated: true)
+    }
+
+    @objc private func pushReportProblemVC() {
+        // TODO: Push report problem VC
+    }
+
+    @objc private func signout() {
+        let loginVC = LoginViewController()
+        loginVC.hidesBottomBarWhenPushed = true
+        loginVC.navigationItem.hidesBackButton = true
+        navigationController?.pushViewController(loginVC, animated: false)
     }
 
 }
