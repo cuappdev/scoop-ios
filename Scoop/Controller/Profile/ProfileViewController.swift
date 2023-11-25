@@ -73,8 +73,15 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         setupContainerView()
         setupProfileImageView()
         setupProfileStackView()
-        isBeingPresented ? updateDriverProfile() : updateUserProfile()
-        isBeingPresented ? setupActionsButton() : setupEditButton(); setupSettingsButton()
+
+        if isBeingPresented {
+            updateDriverProfile()
+            setupActionsButton()
+        } else {
+            updateUserProfile()
+            setupEditButton()
+            setupSettingsButton()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -131,7 +138,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         
         actionsButton.snp.makeConstraints { make in
             make.size.equalTo(30)
-            make.top.trailing.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(64)
+            make.trailing.equalToSuperview().inset(20)
         }
     }
     
