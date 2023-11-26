@@ -45,10 +45,16 @@
 		410D78C029B8166D0007E434 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410D78BF29B8166D0007E434 /* NotificationsViewController.swift */; };
 		412EDB9029B950D300C1C265 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */; };
 		4176A1E9299D2F01008B2BC3 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4176A1E8299D2F01008B2BC3 /* Path.swift */; };
+		890D75882AFB1C4800623E18 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D75872AFB1C4800623E18 /* SettingsViewController.swift */; };
 		8939AD8E2AE016670038B20D /* SFProDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C85C53329E5B6F000A0C387 /* SFProDisplay-Bold.otf */; };
 		8939AD902AE0166C0038B20D /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C85C53229E5B6F000A0C387 /* SFProDisplay-Regular.otf */; };
 		8940F1E72AEDB83A0025D579 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8940F1E62AEDB83A0025D579 /* EmptyStateView.swift */; };
 		8941635C2AC4D69900B0CAE9 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */; };
+		89619B1E2AFBD42600F7EC27 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89619B1D2AFBD42600F7EC27 /* Roboto-Regular.ttf */; };
+		89634CD62B05866F00F5E645 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89634CD52B05866F00F5E645 /* PopUpViewController.swift */; };
+		8978DECF2B01DCA3008C78CC /* BlockedUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978DECE2B01DCA3008C78CC /* BlockedUsersViewController.swift */; };
+		8978DED12B01E140008C78CC /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978DED02B01E140008C78CC /* BlockedUserTableViewCell.swift */; };
+		89B47C082AFC4B8100F3F768 /* SettingsCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B47C072AFC4B8100F3F768 /* SettingsCellView.swift */; };
 		89C410F82ACE0DCC005BB8FC /* Extension+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C410F72ACE0DCC005BB8FC /* Extension+UIImage.swift */; };
 		89C410FA2ACF0B6F005BB8FC /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C410F92ACF0B6F005BB8FC /* Extension+UIFont.swift */; };
 		8E4464A344C5B1529768FAF3 /* Pods_Scoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164EA2836D84BC7164FBB6D6 /* Pods_Scoop.framework */; };
@@ -112,8 +118,6 @@
 		2C5672FD29CBE5EB001E37FB /* Prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompts.swift; sourceTree = "<group>"; };
 		2C67E4FB29945E5E00195BB5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C67E4FF299460DF00195BB5 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
-		2C6BE1AD29EF8106007EA3AA /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Keys.plist; path = ../../../../../../Keys.plist; sourceTree = "<group>"; };
-		2C6BE1AE29EF8106007EA3AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C85C53229E5B6F000A0C387 /* SFProDisplay-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Regular.otf"; sourceTree = "<group>"; };
 		2C85C53329E5B6F000A0C387 /* SFProDisplay-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Bold.otf"; sourceTree = "<group>"; };
 		2C85C53829E5B85300A0C387 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -143,8 +147,14 @@
 		410D78BF29B8166D0007E434 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		4176A1E8299D2F01008B2BC3 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		890D75872AFB1C4800623E18 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8940F1E62AEDB83A0025D579 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyStateView.swift; path = Scoop/View/EmptyStateView.swift; sourceTree = SOURCE_ROOT; };
 		8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		89619B1D2AFBD42600F7EC27 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		89634CD52B05866F00F5E645 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
+		8978DECE2B01DCA3008C78CC /* BlockedUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersViewController.swift; sourceTree = "<group>"; };
+		8978DED02B01E140008C78CC /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
+		89B47C072AFC4B8100F3F768 /* SettingsCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCellView.swift; sourceTree = "<group>"; };
 		89C410F72ACE0DCC005BB8FC /* Extension+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImage.swift"; sourceTree = "<group>"; };
 		89C410F92ACF0B6F005BB8FC /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
 		9430FC737D049567581E79B9 /* Pods-Scoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scoop.debug.xcconfig"; path = "Target Support Files/Pods-Scoop/Pods-Scoop.debug.xcconfig"; sourceTree = "<group>"; };
@@ -212,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				2C42B520290F767600D053A3 /* Rambla-Regular.ttf */,
+				89619B1D2AFBD42600F7EC27 /* Roboto-Regular.ttf */,
 				2C85C53329E5B6F000A0C387 /* SFProDisplay-Bold.otf */,
 				2C85C53229E5B6F000A0C387 /* SFProDisplay-Regular.otf */,
 				2C42B51D290F12B400D053A3 /* Sen-Regular.ttf */,
@@ -225,6 +236,7 @@
 				2C991EB528E0B2E7006301D9 /* LocationTableViewCell.swift */,
 				412EDB8F29B950D300C1C265 /* RequestTableViewCell.swift */,
 				C8CB5E8B2811CEC9007FB8A8 /* HomeTableViewCell.swift */,
+				8978DED02B01E140008C78CC /* BlockedUserTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -243,6 +255,8 @@
 				8941635B2AC4D69900B0CAE9 /* EditProfileViewController.swift */,
 				2CCE49D82AE04F6A0099EAF0 /* BlockUserViewController.swift */,
 				2CCE49DA2AE04F750099EAF0 /* ReportUserViewController.swift */,
+				890D75872AFB1C4800623E18 /* SettingsViewController.swift */,
+				8978DECE2B01DCA3008C78CC /* BlockedUsersViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -280,8 +294,6 @@
 		C845953727ED01A400D2C7F0 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				2C6BE1AE29EF8106007EA3AA /* GoogleService-Info.plist */,
-				2C6BE1AD29EF8106007EA3AA /* Keys.plist */,
 				C845953827ED01B200D2C7F0 /* PhoneFormatter.swift */,
 				C83CD58927F3B27200EDA255 /* Extension+UIViewController.swift */,
 				89C410F72ACE0DCC005BB8FC /* Extension+UIImage.swift */,
@@ -400,6 +412,7 @@
 		C8A544C027D18D1300132ACC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8940F1E62AEDB83A0025D579 /* EmptyStateView.swift */,
 				C8CB5E8D28182CC3007FB8A8 /* HomeTableViewHeader.swift */,
 				C8D2805E27D985FA00EDD5D3 /* ImageLabelView.swift */,
 				2C09F7E629E085A1006003AA /* ImageTextField.swift */,
@@ -408,6 +421,8 @@
 				2CECCDC22AC4D705009CC4A0 /* LabeledTextField.swift */,
 				2CCE49DE2AE076670099EAF0 /* LabeledTextView.swift */,
 				2C2015DE2AB4CFAB0065C436 /* ShiftedRightTextField.swift */,
+				89B47C072AFC4B8100F3F768 /* SettingsCellView.swift */,
+				89634CD52B05866F00F5E645 /* PopUpViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -434,7 +449,6 @@
 			children = (
 				C8A544BC27D18D0200132ACC /* HomeViewController.swift */,
 				410D78BF29B8166D0007E434 /* NotificationsViewController.swift */,
-				8940F1E62AEDB83A0025D579 /* EmptyStateView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -553,6 +567,7 @@
 				2C42B521290F767600D053A3 /* Rambla-Regular.ttf in Resources */,
 				C8A5449927D185BF00132ACC /* LaunchScreen.storyboard in Resources */,
 				2CAB93CD2AB26183009554E7 /* Keys.plist in Resources */,
+				89619B1E2AFBD42600F7EC27 /* Roboto-Regular.ttf in Resources */,
 				C8A5449627D185BF00132ACC /* Assets.xcassets in Resources */,
 				8939AD8E2AE016670038B20D /* SFProDisplay-Bold.otf in Resources */,
 			);
@@ -672,12 +687,14 @@
 				2CCE49DB2AE04F750099EAF0 /* ReportUserViewController.swift in Sources */,
 				4176A1E9299D2F01008B2BC3 /* Path.swift in Sources */,
 				2C991EB828E0B2E7006301D9 /* ArrivalSearchViewController.swift in Sources */,
+				8978DED12B01E140008C78CC /* BlockedUserTableViewCell.swift in Sources */,
 				2CCE49E12AE0770D0099EAF0 /* PaddedTextView.swift in Sources */,
 				C85E2E1F27DC0D850004C506 /* AboutYouViewController.swift in Sources */,
 				C85E2E1D27DBFFFA0004C506 /* ProfilePictureViewController.swift in Sources */,
 				89C410F82ACE0DCC005BB8FC /* Extension+UIImage.swift in Sources */,
 				C83CD58A27F3B27200EDA255 /* Extension+UIViewController.swift in Sources */,
 				410D78C029B8166D0007E434 /* NotificationsViewController.swift in Sources */,
+				89B47C082AFC4B8100F3F768 /* SettingsCellView.swift in Sources */,
 				C8D2806227D9992600EDD5D3 /* Ride.swift in Sources */,
 				C8CB5E892811CC4C007FB8A8 /* Extension+UIColor.swift in Sources */,
 				2CECCDC32AC4D705009CC4A0 /* LabeledTextField.swift in Sources */,
@@ -685,6 +702,7 @@
 				C8EF10CC27E2CEF800642B40 /* FavoritesViewController.swift in Sources */,
 				89C410FA2ACF0B6F005BB8FC /* Extension+UIFont.swift in Sources */,
 				C8D2805F27D985FA00EDD5D3 /* ImageLabelView.swift in Sources */,
+				890D75882AFB1C4800623E18 /* SettingsViewController.swift in Sources */,
 				C8A5448F27D185BD00132ACC /* SceneDelegate.swift in Sources */,
 				412EDB9029B950D300C1C265 /* RequestTableViewCell.swift in Sources */,
 				C845953927ED01B200D2C7F0 /* PhoneFormatter.swift in Sources */,
@@ -694,6 +712,7 @@
 				2CCE49DF2AE076670099EAF0 /* LabeledTextView.swift in Sources */,
 				2CE749E329DBD147009EF309 /* PostRideViewController.swift in Sources */,
 				2CFA071629A67C710085A0B8 /* TripDetailsViewController.swift in Sources */,
+				89634CD62B05866F00F5E645 /* PopUpViewController.swift in Sources */,
 				2C991EBE28E0B2E7006301D9 /* LocationViewController.swift in Sources */,
 				C8A544BD27D18D0200132ACC /* HomeViewController.swift in Sources */,
 				2C85C53929E5B85300A0C387 /* Request.swift in Sources */,
@@ -707,6 +726,7 @@
 				2C8C3EB729D4E6710035880B /* PostRidePageViewController.swift in Sources */,
 				C8D2805D27D96B0000EDD5D3 /* ProfileViewController.swift in Sources */,
 				C8EF10C427E2BB8000642B40 /* PreferredContactViewController.swift in Sources */,
+				8978DECF2B01DCA3008C78CC /* BlockedUsersViewController.swift in Sources */,
 				C8D2805727D9670100EDD5D3 /* PostRideSummaryViewController.swift in Sources */,
 				2CCE49D92AE04F6A0099EAF0 /* BlockUserViewController.swift in Sources */,
 				2C12DEB629C64D11003D6683 /* PostRideTripDetailsViewController.swift in Sources */,

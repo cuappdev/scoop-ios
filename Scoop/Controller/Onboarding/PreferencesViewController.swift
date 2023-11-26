@@ -128,7 +128,9 @@ class PreferencesViewController: OnboardingViewController {
     
         talkativeSlider.minimumTrackTintColor = .black
         talkativeSlider.maximumTrackTintColor = .black
-        talkativeSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
+        talkativeSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
+        talkativeSlider.setMaximumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
+        talkativeSlider.setMinimumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
         talkativeSlider.value = talkativeSlider.maximumValue / 2
         stackView.addArrangedSubview(talkativeSlider)
         stackView.setCustomSpacing(60, after: talkativeSlider)
@@ -138,7 +140,7 @@ class PreferencesViewController: OnboardingViewController {
         }
         
         let talkativeTicks = UIButton()
-        talkativeTicks.setImage(UIImage(named: "SliderTicks"), for: .normal)
+        talkativeTicks.setImage(UIImage.scooped.sliderTicks, for: .normal)
         talkativeSlider.addSubview(talkativeTicks)
         talkativeSlider.sendSubviewToBack(talkativeTicks)
         talkativeTicks.snp.makeConstraints { make in
@@ -178,7 +180,9 @@ class PreferencesViewController: OnboardingViewController {
         
         musicSlider.minimumTrackTintColor = .black
         musicSlider.maximumTrackTintColor = .black
-        musicSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
+        musicSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
+        musicSlider.setMaximumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
+        musicSlider.setMinimumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
         musicSlider.value = musicSlider.maximumValue/2
         stackView.addArrangedSubview(musicSlider)
         
@@ -187,7 +191,7 @@ class PreferencesViewController: OnboardingViewController {
         }
         
         let musicTicks = UIButton()
-        musicTicks.setImage(UIImage(named: "SliderTicks"), for: .normal)
+        musicTicks.setImage(UIImage.scooped.sliderTicks, for: .normal)
         musicSlider.addSubview(musicTicks)
         musicSlider.sendSubviewToBack(musicTicks)
         musicTicks.snp.makeConstraints { make in

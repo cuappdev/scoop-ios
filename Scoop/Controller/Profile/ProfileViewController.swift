@@ -20,19 +20,23 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     private let actionsButton = UIButton()
     private let containerView = UIView()
+    private let detailsStackView = UIStackView()
+    private let editButton = UIButton()
+    private let favoritesStackView = UIStackView()
+    private let gradientLayer = CAGradientLayer()
+    private let gradientView = UIView()
     private let headerImageView = UIImageView()
     private let profileImageView = UIImageView()
     private let profileStackView = UIStackView()
-    private let detailsStackView = UIStackView()
+    private let settingsButton = UIButton()
     private let travelingStackView = UIStackView()
-    private let favoritesStackView = UIStackView()
     
     private let musicSlider = UISlider()
     private let nameLabel = UILabel()
     private let phoneLabel = UILabel()
-    private let snackSection = ImageLabelView()
-    private let songSection = ImageLabelView()
-    private let stopSection = ImageLabelView()
+    private let snackLabel = UILabel()
+    private let songLabel = UILabel()
+    private let stopLabel = UILabel()
     private let subLabel = UILabel()
     private let talkativeSlider = UISlider()
     
@@ -62,21 +66,42 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray5
-        
+        view.backgroundColor = UIColor.systemGray5
+
         getUserPreferences()
-        setupHeaderImage()
+        setupBackground()
         setupContainerView()
         setupProfileImageView()
         setupProfileStackView()
-        isBeingPresented ? updateDriverProfile() : updateUserProfile()
-        isBeingPresented ? setupActionsButton() : setupEditButton()
+
+        if isBeingPresented {
+            updateDriverProfile()
+            setupActionsButton()
+        } else {
+            updateUserProfile()
+            setupEditButton()
+            setupSettingsButton()
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    override func viewDidLayoutSubviews() {
+        gradientLayer.frame = gradientView.bounds
     }
     
     // MARK: - Setup View Functions
     
     private func setupContainerView() {
-        containerView.backgroundColor = UIColor.white
+        containerView.backgroundColor = UIColor.white.withAlphaComponent(0)
         containerView.layer.cornerRadius = 24
         view.addSubview(containerView)
         
@@ -86,14 +111,22 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         }
     }
     
-    private func setupHeaderImage() {
+    private func setupBackground() {
         headerImageView.contentMode = .scaleAspectFill
-        headerImageView.image = UIImage(named: "ProfileHeader")
+        headerImageView.image = UIImage.scooped.profileBackground
         view.addSubview(headerImageView)
         
         headerImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(140)
+        }
+
+        gradientLayer.colors = UIColor.scooped.backgroundGradientColors
+        gradientView.isUserInteractionEnabled = false
+        gradientView.layer.insertSublayer(gradientLayer, at: 0)
+        view.addSubview(gradientView)
+
+        gradientView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     
@@ -101,26 +134,42 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         actionsButton.setImage(UIImage(systemName: "ellipsis", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24, weight: .semibold)), for: .normal)
         actionsButton.tintColor = .black
         actionsButton.addTarget(self, action: #selector(presentActionOptions), for: .touchUpInside)
-        containerView.addSubview(actionsButton)
+        view.addSubview(actionsButton)
         
         actionsButton.snp.makeConstraints { make in
             make.size.equalTo(30)
-            make.top.trailing.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(64)
+            make.trailing.equalToSuperview().inset(20)
         }
     }
     
     private func setupEditButton() {
-        let editButton = UIButton()
-        editButton.setImage(UIImage(systemName: "square.and.pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 36, weight: .semibold)), for: .normal)
+        editButton.setImage(UIImage.scooped.editProfileIcon, for: .normal)
         editButton.tintColor = UIColor.black
         editButton.imageView?.contentMode = .scaleAspectFit
-        containerView.addSubview(editButton)
+        view.addSubview(editButton)
         
         editButton.addTarget(self, action: #selector(pushEditProfileVC), for: .touchUpInside)
         
         editButton.snp.makeConstraints { make in
             make.size.equalTo(30)
-            make.top.trailing.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(64)
+            make.trailing.equalToSuperview().inset(58)
+        }
+    }
+
+    private func setupSettingsButton() {
+        settingsButton.setImage(UIImage.scooped.setttingsIcon, for: .normal)
+        settingsButton.tintColor = UIColor.black
+        settingsButton.imageView?.contentMode = .scaleAspectFit
+        view.addSubview(settingsButton)
+
+        settingsButton.addTarget(self, action: #selector(pushSettingsVC), for: .touchUpInside)
+
+        settingsButton.snp.makeConstraints { make in
+            make.size.equalTo(30)
+            make.top.equalToSuperview().inset(64)
+            make.trailing.equalToSuperview().inset(20)
         }
     }
     
@@ -136,7 +185,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         profileImageView.snp.makeConstraints { make in
             make.size.equalTo(120)
             make.centerX.equalToSuperview()
-            make.centerY.equalTo(containerView.snp.top)
+            make.top.equalToSuperview().inset(68)
         }
     }
     
@@ -178,7 +227,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         view.addSubview(detailsStackView)
         
         detailsStackView.snp.makeConstraints { make in
-            make.top.equalTo(profileStackView.snp.bottom).offset(40)
+            make.top.equalTo(profileStackView.snp.bottom).offset(44)
             make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.lessThanOrEqualToSuperview().inset(40)
         }
@@ -205,7 +254,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         
         travelingStackView.axis = .vertical
         travelingStackView.distribution = .fill
-        travelingStackView.spacing = 10
+        travelingStackView.spacing = 16
         travelingStackView.alignment = .leading
         travelingContainerView.addSubview(travelingStackView)
         
@@ -222,7 +271,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     private func createTalkingSlider() {
         let talkingView = UIView()
         travelingStackView.addArrangedSubview(talkingView)
-        travelingStackView.setCustomSpacing(5, after: talkingView)
+        travelingStackView.setCustomSpacing(8, after: talkingView)
         
         talkingView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -251,9 +300,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         talkativeSlider.isUserInteractionEnabled = false
         talkativeSlider.minimumTrackTintColor = UIColor.black
         talkativeSlider.maximumTrackTintColor = UIColor.black
-        talkativeSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
-        talkativeSlider.setMaximumTrackImage(UIImage(named: "track"), for: .normal)
-        talkativeSlider.setMinimumTrackImage(UIImage(named: "track"), for: .normal)
+        talkativeSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
+        talkativeSlider.setMaximumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
+        talkativeSlider.setMinimumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
         travelingStackView.addArrangedSubview(talkativeSlider)
         
         talkativeSlider.snp.makeConstraints { make in
@@ -264,7 +313,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     private func createMusicSlider() {
         let musicView = UIView()
         travelingStackView.addArrangedSubview(musicView)
-        travelingStackView.setCustomSpacing(5, after: musicView)
+        travelingStackView.setCustomSpacing(8, after: musicView)
         
         musicView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -293,9 +342,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         musicSlider.isUserInteractionEnabled = false
         musicSlider.minimumTrackTintColor = UIColor.black
         musicSlider.maximumTrackTintColor = UIColor.black
-        musicSlider.setThumbImage(UIImage(named: "SliderThumb"), for: .normal)
-        musicSlider.setMaximumTrackImage(UIImage(named: "track"), for: .normal)
-        musicSlider.setMinimumTrackImage(UIImage(named: "track"), for: .normal)
+        musicSlider.setThumbImage(UIImage.scooped.sliderThumb, for: .normal)
+        musicSlider.setMaximumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
+        musicSlider.setMinimumTrackImage(UIImage.scooped.sliderTrack, for: .normal)
         travelingStackView.addArrangedSubview(musicSlider)
         
         musicSlider.snp.makeConstraints { make in
@@ -321,28 +370,25 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         
         favoritesStackView.axis = .vertical
         favoritesStackView.distribution = .fill
-        favoritesStackView.spacing = 10
+        favoritesStackView.spacing = 16
         favoritesStackView.alignment = .leading
         favoritesContainerView.addSubview(favoritesStackView)
         
         favoritesStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(20)
         }
-        
-        songSection.label.font = .systemFont(ofSize: 14)
-        songSection.label.adjustsFontSizeToFitWidth = true
-        songSection.imageView.image = UIImage(systemName: "music.note", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
-        favoritesStackView.addArrangedSubview(songSection)
-        
-        snackSection.label.font = .systemFont(ofSize: 14)
-        snackSection.label.adjustsFontSizeToFitWidth = true
-        snackSection.imageView.image = UIImage(systemName: "fork.knife", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
-        favoritesStackView.addArrangedSubview(snackSection)
-        
-        stopSection.label.font = .systemFont(ofSize: 14)
-        stopSection.label.adjustsFontSizeToFitWidth = true
-        stopSection.imageView.image = UIImage(systemName: "location.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))
-        favoritesStackView.addArrangedSubview(stopSection)
+
+        snackLabel.font = UIFont.systemFont(ofSize: 14)
+        snackLabel.numberOfLines = 1
+        favoritesStackView.addArrangedSubview(snackLabel)
+
+        songLabel.font = UIFont.systemFont(ofSize: 14)
+        songLabel.numberOfLines = 1
+        favoritesStackView.addArrangedSubview(songLabel)
+
+        stopLabel.font = UIFont.systemFont(ofSize: 14)
+        stopLabel.numberOfLines = 1
+        favoritesStackView.addArrangedSubview(stopLabel)
     }
     
     // MARK: - Helper Functions
@@ -372,6 +418,11 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         editProfileVC.hidesBottomBarWhenPushed = true
         editProfileVC.navigationItem.hidesBackButton = true
         navigationController?.pushViewController(editProfileVC, animated: true)
+    }
+
+    @objc private func pushSettingsVC() {
+        let settingsVC = SettingsViewController()
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     private func getUserPreferences() {
@@ -410,9 +461,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         phoneLabel.text = user.phoneNumber
         talkativeSlider.value = talkative ?? 0
         musicSlider.value = music ?? 0
-        songSection.label.attributedText = makeBoldNormalText(bold: "Song / ", normal: song ?? "")
-        snackSection.label.attributedText = makeBoldNormalText(bold: "Snack / ", normal: snack ?? "")
-        stopSection.label.attributedText = makeBoldNormalText(bold: "Stop / ", normal: stop ?? "")
+        songLabel.attributedText = makeBoldNormalText(bold: "Song / ", normal: song ?? "")
+        snackLabel.attributedText = makeBoldNormalText(bold: "Snack / ", normal: snack ?? "")
+        stopLabel.attributedText = makeBoldNormalText(bold: "Stop / ", normal: stop ?? "")
     }
     
     func updateUserProfile() {
@@ -435,9 +486,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
                 strongSelf.phoneLabel.text = user.phoneNumber
                 strongSelf.talkativeSlider.value = strongSelf.talkative ?? 0
                 strongSelf.musicSlider.value = strongSelf.music ?? 0
-                strongSelf.songSection.label.attributedText = strongSelf.makeBoldNormalText(bold: "Song / ", normal: strongSelf.song ?? "")
-                strongSelf.snackSection.label.attributedText = strongSelf.makeBoldNormalText(bold: "Snack / ", normal: strongSelf.snack ?? "")
-                strongSelf.stopSection.label.attributedText = strongSelf.makeBoldNormalText(bold: "Stop / ", normal: strongSelf.stop ?? "")
+                strongSelf.songLabel.attributedText = strongSelf.makeBoldNormalText(bold: "Song / ", normal: strongSelf.song ?? "")
+                strongSelf.snackLabel.attributedText = strongSelf.makeBoldNormalText(bold: "Snack / ", normal: strongSelf.snack ?? "")
+                strongSelf.stopLabel.attributedText = strongSelf.makeBoldNormalText(bold: "Stop / ", normal: strongSelf.stop ?? "")
             case .failure(let error):
                 print("Error in ProfileViewController: \(error.localizedDescription)")
             }
@@ -457,9 +508,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         phoneLabel.text = user.phoneNumber
         talkativeSlider.value = self.talkative ?? 0.5
         musicSlider.value = self.music ?? 0.5
-        songSection.label.attributedText = self.makeBoldNormalText(bold: "Song / ", normal: self.song ?? "")
-        snackSection.label.attributedText = self.makeBoldNormalText(bold: "Snack / ", normal: self.snack ?? "")
-        stopSection.label.attributedText = self.makeBoldNormalText(bold: "Stop / ", normal: self.stop ?? "")
+        songLabel.attributedText = makeBoldNormalText(bold: "Song / ", normal: song ?? "")
+        snackLabel.attributedText = makeBoldNormalText(bold: "Snack / ", normal: snack ?? "")
+        stopLabel.attributedText = makeBoldNormalText(bold: "Stop / ", normal: stop ?? "")
     }
     
     func makeBoldNormalText(bold: String, normal: String) -> NSAttributedString {

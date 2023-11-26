@@ -8,24 +8,6 @@
 import Foundation
 import UIKit
 
-class User: Codable {
-    var id: String = ""
-    var profilePicUrl: String = ""
-    var netid: String = ""
-    var firstName: String = ""
-    var lastName: String = ""
-    var pronouns: String = ""
-    var hometown: String = ""
-    var grade: String = ""
-    var email: String = ""
-    var phoneNumber: String = ""
-    var talkingPref: Float = 0.0
-    var musicPref: Float = 0.0
-    var favoriteSnack: String = ""
-    var favoriteSong: String = ""
-    var favoriteStop: String = ""
-}
-
 class BaseUser: Codable {
     var id: Int
     var netid: String
@@ -37,7 +19,7 @@ class BaseUser: Codable {
     var pronouns: String?
     var prompts: [Prompt]
     var rides: [HomeVCRide]
-    
+
     init(id: Int, netid: String, firstName: String, lastName: String, phoneNumber: String? = nil, profilePicUrl: String? = nil, grade: String? = nil, pronouns: String? = nil, prompts: [Prompt], rides: [HomeVCRide]) {
         self.id = id
         self.netid = netid
@@ -61,4 +43,13 @@ struct TruncUser: Codable {
     var grade: String?
     var pronouns: String?
     var prompts: [Prompt]
+}
+
+extension BaseUser {
+    static var blockedUsersDummyData = [
+        BaseUser(id: 0, netid: "netid", firstName: "Michelle", lastName: "White", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: []),
+        BaseUser(id: 1, netid: "netid", firstName: "Lauren", lastName: "Davidson", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: []),
+        BaseUser(id: 2, netid: "netid", firstName: "Victor", lastName: "Hunter", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: []),
+        BaseUser(id: 3, netid: "netid", firstName: "Finley", lastName: "Carpenter", phoneNumber: "phone", profilePicUrl: "", grade: "grade", pronouns: "pronouns", prompts: [], rides: [])
+    ]
 }

@@ -29,11 +29,27 @@ extension UIColor {
         let skipButtonColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1)
         let textFieldBorderColor = UIColor(red: 106/255, green: 115/255, blue: 125/255, alpha: 1)
 
-        let whiteGradientColors = [
+        let hoverGradientColors = [
             UIColor.white.withAlphaComponent(0).cgColor,
             UIColor.white.withAlphaComponent(0.3).cgColor,
             UIColor.white.withAlphaComponent(0.6).cgColor,
             UIColor.white.withAlphaComponent(0.9).cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor
+        ]
+
+        let backgroundGradientColors = [
+            UIColor.white.withAlphaComponent(0).cgColor,
+            UIColor.white.withAlphaComponent(0).cgColor,
+            UIColor.white.withAlphaComponent(0.1).cgColor,
+            UIColor.white.withAlphaComponent(0.4).cgColor,
+            UIColor.white.cgColor,
             UIColor.white.cgColor,
             UIColor.white.cgColor,
             UIColor.white.cgColor,
