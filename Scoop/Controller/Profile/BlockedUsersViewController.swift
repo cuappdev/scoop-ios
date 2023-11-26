@@ -153,11 +153,11 @@ extension BlockedUsersViewController: BlockedUsersDelegate {
     func updateBlockedUsers(user: BaseUser, isBlocked: Bool) {
         if isBlocked {
             blockUser()
-            // TODO: Temporary while networking call is unimplemented
+            // TODO: Temporary. Remove below once networking call is implemented
             BaseUser.blockedUsersDummyData.append(user)
         } else {
             unblockUser()
-            // TODO: Temporary while networking call is unimplemented
+            // TODO: Temporary. Remove below once networking call is implemented
             BaseUser.blockedUsersDummyData.removeAll { $0.id == user.id }
         }
     }
