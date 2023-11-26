@@ -11,17 +11,9 @@ class SettingsViewController: UIViewController {
 
     // MARK: - Views
 
-    private let blockedImageView = UIImageView()
-    private let blockedLabel = UILabel()
-    private let reportImageView = UIImageView()
-    private let reportLabel = UILabel()
-    private let signoutImageView = UIImageView()
-    private let signoutLabel = UILabel()
-
     private let blockedView = SettingsCellView()
     private let reportView = SettingsCellView()
     private let signoutView = SettingsCellView()
-
     private let stackView = UIStackView()
 
     // MARK: - Lifecycle Functions

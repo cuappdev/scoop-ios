@@ -11,10 +11,10 @@ class PopUpViewController: UIViewController {
 
     // MARK: - Views
 
+    private let actionButton = UIButton()
     private let blurEffectView = UIVisualEffectView()
     private let cancelButton = UIButton()
     private let containerView = UIView()
-    private let actionButton = UIButton()
     private let stackView = UIStackView()
     private let subtitleLabel = UILabel()
     private let titleLabel = UILabel()
@@ -34,7 +34,7 @@ class PopUpViewController: UIViewController {
     // MARK: - Initializers
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .overCurrentContext
         modalTransitionStyle = .crossDissolve
     }

@@ -365,8 +365,7 @@ class NetworkManager {
             "departure_datetime": departureTime,
             "driver": driver
         ]
-//        print(params.map { "\($0.key): \($0.value)" })
-        
+
         AF.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseData { response in
             switch response.result {
             case .success(let data):
@@ -376,10 +375,6 @@ class NetworkManager {
                 do {
                     let ride = try jsonDecoder.decode(Ride.self, from: data)
                     completion(.success(ride))
-                    print(ride.creator.firstName)
-                    print(ride.driver?.firstName)
-                    print(ride.departureDatetime)
-                    print(ride.description)
                 } catch {
                     completion(.failure(error))
                 }
